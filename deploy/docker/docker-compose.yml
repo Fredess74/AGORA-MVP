@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    container_name: agora-api
+    ports:
+      - "8080:8080"
+    environment:
+      - AGORA_HOST=0.0.0.0
+      - AGORA_PORT=8080
+      - DATABASE_URL=postgres://agora:agora@postgres:5432/agora
+      - REDIS_URL=redis://redis:6379
+      - RUST_LOG=info
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - agora-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/v1/health" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: agora-postgres
+    environment:
+      - POSTGRES_USER=agora
+      - POSTGRES_PASSWORD=agora
+      - POSTGRES_DB=agora
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../../packages/api/migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - agora-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U agora" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: agora-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - agora-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  redis_data:
+
+
+networks:
+  agora-network:
+    driver: bridge

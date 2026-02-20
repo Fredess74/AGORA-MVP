@@ -1,0 +1,611 @@
+openapi: 3.1.0
+info:
+  title: Agora Trust Protocol API
+  description: |
+    REST API for the Agora Trust Protocol - a cryptographically-verifiable trust layer for AI agents.
+    
+    ## Authentication
+    All endpoints except `/v1/health` require an API key in the `X-Agora-Key` header.
+    
+    ## Rate Limiting
+    - Default: 100 requests/second with burst of 50
+    - Rate limit headers included in responses
+  version: 1.0.0
+  contact:
+    name: Agora Team
+    url: https://github.com/agora-network/agora
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Local development
+  - url: https://api.agora.network
+    description: Production
+
+tags:
+  - name: Health
+    description: Health check endpoints
+  - name: Agents
+    description: Agent registration and management
+  - name: Events
+    description: Interaction event reporting
+  - name: Trust
+    description: Trust score queries
+  - name: Discovery
+    description: Agent discovery by capabilities
+
+paths:
+  /v1/health:
+    get:
+      operationId: healthCheck
+      summary: Health check
+      description: Returns the health status of the API
+      tags: [Health]
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /v1/agents/register:
+    post:
+      operationId: registerAgent
+      summary: Register a new agent
+      description: |
+        Registers a new AI agent with the Agora network.
+        Returns a unique DID (Decentralized Identifier) for the agent.
+      tags: [Agents]
+      security:
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAgentRequest'
+      responses:
+        '201':
+          description: Agent registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterAgentResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Agent already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/agents/{did}:
+    get:
+      operationId: getAgent
+      summary: Get agent by DID
+      description: Retrieves agent information by their DID
+      tags: [Agents]
+      security:
+        - apiKey: []
+      parameters:
+        - name: did
+          in: path
+          required: true
+          description: Agent's Decentralized Identifier
+          schema:
+            type: string
+            pattern: '^did:agora:[a-z0-9]{32,}$'
+            example: 'did:agora:abc123def456...'
+      responses:
+        '200':
+          description: Agent found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentResponse'
+        '404':
+          description: Agent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/events/report:
+    post:
+      operationId: reportEvent
+      summary: Report an interaction event
+      description: |
+        Reports an interaction event between two agents.
+        Events are used to compute trust scores.
+      tags: [Events]
+      security:
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportEventRequest'
+      responses:
+        '201':
+          description: Event recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportEventResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/events:
+    get:
+      operationId: listEvents
+      summary: List events for an agent
+      description: Returns a paginated list of events for the specified agent
+      tags: [Events]
+      security:
+        - apiKey: []
+      parameters:
+        - name: agent_did
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Events retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventListResponse'
+
+  /v1/trust/{did}:
+    get:
+      operationId: getTrustScore
+      summary: Get trust score for an agent
+      description: |
+        Computes and returns the trust score for the specified agent.
+        Score is computed based on interaction history.
+      tags: [Trust]
+      security:
+        - apiKey: []
+      parameters:
+        - name: did
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Trust score computed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrustScoreResponse'
+        '404':
+          description: Agent not found or insufficient data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/trust/batch:
+    post:
+      operationId: batchTrustQuery
+      summary: Batch trust score query
+      description: Query trust scores for multiple agents in a single request
+      tags: [Trust]
+      security:
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchTrustRequest'
+      responses:
+        '200':
+          description: Trust scores retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchTrustResponse'
+
+  /v1/metrics:
+    get:
+      operationId: getMetrics
+      summary: Prometheus metrics
+      description: Returns Prometheus-formatted metrics
+      tags: [Health]
+      responses:
+        '200':
+          description: Metrics in Prometheus format
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /v1/discovery:
+    get:
+      operationId: discoverAgents
+      summary: Discover agents by capabilities
+      description: |
+        Find agents that match specified criteria including capabilities,
+        trust score threshold, and region.
+      tags: [Discovery]
+      security:
+        - apiKey: []
+      parameters:
+        - name: cap
+          in: query
+          description: Capability pattern (supports wildcards like "vision.*")
+          schema:
+            type: string
+            example: 'vision.*'
+        - name: min_trust
+          in: query
+          description: Minimum trust score (0.0 to 1.0)
+          schema:
+            type: number
+            format: float
+            minimum: 0
+            maximum: 1
+            example: 0.7
+        - name: region
+          in: query
+          description: Region filter (ISO 3166-1 alpha-2)
+          schema:
+            type: string
+            example: 'us'
+        - name: limit
+          in: query
+          description: Maximum results (default 20, max 100)
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: online_only
+          in: query
+          description: Only return recently active agents
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Matching agents found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryResponse'
+
+  /v1/discovery/batch:
+    post:
+      operationId: batchDiscoverAgents
+      summary: Batch discovery for multiple capabilities
+      description: Discover agents for multiple capability patterns in one request
+      tags: [Discovery]
+      security:
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchDiscoveryRequest'
+      responses:
+        '200':
+          description: Discovery results by capability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchDiscoveryResponse'
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Agora-Key
+      description: API key for authentication
+
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, version]
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          example: healthy
+        version:
+          type: string
+          example: '1.0.0'
+        database:
+          type: string
+          enum: [connected, disconnected]
+        redis:
+          type: string
+          enum: [connected, disconnected]
+
+    RegisterAgentRequest:
+      type: object
+      required: [public_key, agent_type]
+      properties:
+        public_key:
+          type: string
+          description: Ed25519 public key in hex format
+          pattern: '^[a-f0-9]{64}$'
+          example: 'a1b2c3d4e5f6...'
+        agent_type:
+          type: string
+          enum: [api, autonomous, human_backed, hybrid]
+          description: Type of AI agent
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Optional agent metadata
+          example:
+            name: 'MyAgent'
+            version: '1.0.0'
+
+    RegisterAgentResponse:
+      type: object
+      required: [did, created_at]
+      properties:
+        did:
+          type: string
+          description: Assigned Decentralized Identifier
+          example: 'did:agora:abc123...'
+        created_at:
+          type: string
+          format: date-time
+
+    AgentResponse:
+      type: object
+      required: [did, agent_type, created_at]
+      properties:
+        did:
+          type: string
+        agent_type:
+          type: string
+        public_key:
+          type: string
+        metadata:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+
+    ReportEventRequest:
+      type: object
+      required: [agent_did, counterparty_did, outcome]
+      properties:
+        agent_did:
+          type: string
+          description: DID of the reporting agent
+        counterparty_did:
+          type: string
+          description: DID of the counterparty
+        outcome:
+          type: string
+          enum: [success, failure, timeout, dispute]
+        latency_ms:
+          type: integer
+          minimum: 0
+          description: Response latency in milliseconds
+        amount_cents:
+          type: integer
+          minimum: 0
+          description: Transaction amount in cents (optional)
+
+    ReportEventResponse:
+      type: object
+      required: [event_id, recorded_at]
+      properties:
+        event_id:
+          type: string
+          format: uuid
+        recorded_at:
+          type: string
+          format: date-time
+
+    EventListResponse:
+      type: object
+      required: [events, total, limit, offset]
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        agent_did:
+          type: string
+        counterparty_did:
+          type: string
+        outcome:
+          type: string
+        latency_ms:
+          type: integer
+        amount_cents:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    TrustScoreResponse:
+      type: object
+      required: [did, score, confidence, computed_at]
+      properties:
+        did:
+          type: string
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Trust score from 0.0 to 1.0
+          example: 0.85
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Confidence level of the score
+          example: 0.92
+        event_count:
+          type: integer
+          description: Number of events used in computation
+        computed_at:
+          type: string
+          format: date-time
+
+    BatchTrustRequest:
+      type: object
+      required: [dids]
+      properties:
+        dids:
+          type: array
+          items:
+            type: string
+          maxItems: 100
+          description: List of DIDs to query
+
+    BatchTrustResponse:
+      type: object
+      required: [scores]
+      properties:
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrustScoreResponse'
+
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+          description: Error code
+          example: 'not_found'
+        message:
+          type: string
+          description: Human-readable error message
+          example: 'Agent not found'
+        details:
+          type: object
+          additionalProperties: true
+
+    DiscoveryResult:
+      type: object
+      required: [did, capabilities, trust_score, online, endpoints]
+      properties:
+        did:
+          type: string
+          description: Agent DID
+        capabilities:
+          type: array
+          items:
+            type: string
+          description: Agent capabilities
+        trust_score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        region:
+          type: string
+          description: Region code
+        online:
+          type: boolean
+          description: Whether agent is recently active
+        endpoints:
+          type: array
+          items:
+            type: string
+          description: Service endpoints
+
+    DiscoveryResponse:
+      type: object
+      required: [agents, total, cached, query_time_ms]
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryResult'
+        total:
+          type: integer
+          description: Total matching agents
+        cached:
+          type: boolean
+          description: Whether result was from cache
+        query_time_ms:
+          type: integer
+          description: Query execution time in ms
+
+    BatchDiscoveryRequest:
+      type: object
+      required: [capabilities]
+      properties:
+        capabilities:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 10
+          description: Capability patterns to search for
+        min_trust:
+          type: number
+          format: float
+        region:
+          type: string
+        limit_per_cap:
+          type: integer
+          default: 20
+
+    BatchDiscoveryResponse:
+      type: object
+      required: [results, query_time_ms]
+      properties:
+        results:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/DiscoveryResult'
+          description: Results grouped by capability pattern
+        query_time_ms:
+          type: integer

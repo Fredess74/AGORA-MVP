@@ -1,0 +1,54 @@
+# Build artifacts
+/target/
+/dist/
+/build/
+*.pyc
+__pycache__/
+*.egg-info/
+.eggs/
+
+# Dependencies
+/node_modules/
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Rust
+Cargo.lock
+*.rs.bk
+
+# ZK circuits
+*.r1cs
+*.wasm
+*.sym
+*.zkey
+*.wtns
+
+# Database
+*.db
+*.sqlite
+
+# Secrets
+*.pem
+*.key
+secrets/
