@@ -28,12 +28,12 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/docs" className={isActive('/docs')}>
+                        <a href="https://github.com/Fredess74/AGORA-MVP#readme" className="navbar__link" target="_blank" rel="noreferrer">
                             Docs
-                        </Link>
+                        </a>
                     </li>
                     <li>
-                        <a href="https://github.com/agora" className="navbar__link" target="_blank" rel="noreferrer">
+                        <a href="https://github.com/Fredess74/AGORA-MVP" className="navbar__link" target="_blank" rel="noreferrer">
                             GitHub
                         </a>
                     </li>
@@ -42,7 +42,10 @@ export default function Navbar() {
                 <div className="navbar__actions">
                     {isAuthenticated && user ? (
                         <>
-                            <Link to="/dashboard" className="btn btn--secondary btn--sm">
+                            <Link to="/create" className="btn btn--primary btn--sm">
+                                + Create
+                            </Link>
+                            <Link to="/dashboard" className="btn btn--ghost btn--sm">
                                 Dashboard
                             </Link>
                             <button onClick={logout} className="btn btn--ghost btn--sm">

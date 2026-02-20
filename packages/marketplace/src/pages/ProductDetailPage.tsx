@@ -97,10 +97,10 @@ export default function ProductDetailPage() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
                         <div
                             className={`product-card__icon ${product.type === 'mcp_server'
-                                    ? 'product-card__icon--mcp'
-                                    : product.type === 'ai_agent'
-                                        ? 'product-card__icon--agent'
-                                        : 'product-card__icon--automation'
+                                ? 'product-card__icon--mcp'
+                                : product.type === 'ai_agent'
+                                    ? 'product-card__icon--agent'
+                                    : 'product-card__icon--automation'
                                 }`}
                             style={{ width: 64, height: 64, fontSize: 'var(--text-3xl)' }}
                         >
@@ -163,6 +163,9 @@ export default function ProductDetailPage() {
                             <div style={{ paddingLeft: 'var(--space-4)' }}>https://api.agora.dev/v1/marketplace/use/{product.did}</div>
                         </div>
                     </div>
+
+                    {/* Endpoint Tester */}
+                    <EndpointTester product={product} />
                 </div>
 
                 {/* Sidebar */}
@@ -213,6 +216,128 @@ export default function ProductDetailPage() {
     );
 }
 
+/* ── Endpoint Tester ──────────────────────────────────── */
+
+function EndpointTester({ product }: { product: Product }) {
+    const [requestBody, setRequestBody] = useState(
+        JSON.stringify(
+            {
+                prompt: 'Hello, what can you do?',
+                context: {},
+                max_tokens: 512,
+            },
+            null,
+            2,
+        ),
+    );
+    const [response, setResponse] = useState<string>('');
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [latency, setLatency] = useState(0);
+
+    const handleSend = async () => {
+        setStatus('loading');
+        setResponse('');
+
+        const start = performance.now();
+
+        // Simulate the request with a realistic mock response
+        await new Promise((resolve) => setTimeout(resolve, 400 + Math.random() * 800));
+
+        const elapsed = Math.round(performance.now() - start);
+        setLatency(elapsed);
+
+        try {
+            JSON.parse(requestBody); // validate JSON
+            setStatus('success');
+            setResponse(
+                JSON.stringify(
+                    {
+                        result: `Response from ${product.name}. Your request was processed successfully.`,
+                        usage: {
+                            tokens_used: Math.floor(Math.random() * 500) + 50,
+                            latency_ms: elapsed,
+                        },
+                        metadata: {
+                            model: product.slug,
+                            did: product.did,
+                            trust_score: product.trustScore,
+                            timestamp: new Date().toISOString(),
+                        },
+                    },
+                    null,
+                    2,
+                ),
+            );
+        } catch {
+            setStatus('error');
+            setResponse(
+                JSON.stringify(
+                    {
+                        error: 'Invalid JSON in request body',
+                        code: 'INVALID_REQUEST',
+                    },
+                    null,
+                    2,
+                ),
+            );
+        }
+    };
+
+    const statusLabel = {
+        idle: '⚪ Ready',
+        loading: '⏳ Sending...',
+        success: `✅ 200 OK — ${latency}ms`,
+        error: `❌ 400 Error — ${latency}ms`,
+    }[status];
+
+    return (
+        <div className="endpoint-tester">
+            <div className="endpoint-tester__header">
+                <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>
+                    🧪 Try It — Endpoint Tester
+                </h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                    <span className={`endpoint-tester__status endpoint-tester__status--${status === 'loading' ? 'idle' : status}`}>
+                        {statusLabel}
+                    </span>
+                    <button
+                        className="btn btn--primary btn--sm"
+                        onClick={handleSend}
+                        disabled={status === 'loading'}
+                    >
+                        {status === 'loading' ? <span className="spinner" /> : '▶ Send'}
+                    </button>
+                </div>
+            </div>
+            <div className="endpoint-tester__body">
+                <div className="endpoint-tester__pane">
+                    <div className="endpoint-tester__pane-label">Request Body</div>
+                    <textarea
+                        className="endpoint-tester__code"
+                        value={requestBody}
+                        onChange={(e) => setRequestBody(e.target.value)}
+                        spellCheck={false}
+                    />
+                </div>
+                <div className="endpoint-tester__pane">
+                    <div className="endpoint-tester__pane-label">Response</div>
+                    <div className="endpoint-tester__output">
+                        {status === 'loading' ? (
+                            <span style={{ color: 'var(--color-text-muted)' }}>Waiting for response...</span>
+                        ) : response ? (
+                            response
+                        ) : (
+                            <span style={{ color: 'var(--color-text-muted)' }}>
+                                Click Send to test the endpoint
+                            </span>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function TrustMetric({ label, value, bar }: { label: string; value: string; bar: number }) {
     const barColor = bar >= 0.8 ? 'var(--color-trust-high)' : bar >= 0.5 ? 'var(--color-trust-medium)' : 'var(--color-trust-low)';
     return (
@@ -236,3 +361,4 @@ function StatRow({ label, value }: { label: string; value: string }) {
         </div>
     );
 }
+

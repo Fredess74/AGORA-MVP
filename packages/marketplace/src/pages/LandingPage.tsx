@@ -141,9 +141,9 @@ export default function LandingPage() {
                         <Link to="/auth" className="btn btn--primary btn--lg">
                             Get Started Free
                         </Link>
-                        <Link to="/docs" className="btn btn--secondary btn--lg">
+                        <a href="https://github.com/Fredess74/AGORA-MVP#readme" className="btn btn--secondary btn--lg" target="_blank" rel="noreferrer">
                             Read the Docs
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </section>

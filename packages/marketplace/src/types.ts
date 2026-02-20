@@ -40,6 +40,7 @@ export interface Product {
     rating: number; // 1-5
     reviewCount: number;
     createdAt: string;
+    status?: 'draft' | 'active' | 'suspended' | 'archived';
 }
 
 export interface User {

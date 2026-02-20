@@ -7,6 +7,8 @@ import MarketplacePage from './pages/MarketplacePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import AuthPage from './pages/AuthPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
+import CreateAgentPage from './pages/CreateAgentPage';
+import DashboardPage from './pages/DashboardPage';
 import { useStore } from './store/useStore';
 
 export default function App() {
@@ -27,6 +29,8 @@ export default function App() {
                     <Route path="/marketplace/:slug" element={<ProductDetailPage />} />
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                    <Route path="/create" element={<CreateAgentPage />} />
+                    <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </main>
