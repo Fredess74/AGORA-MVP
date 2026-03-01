@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGORA — Architecture Diagrams</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --card: #141414;
+            --card-hover: #1A1A1A;
+            --red: #DC1A00;
+            --red-dim: rgba(220, 26, 0, 0.15);
+            --red-glow: rgba(220, 26, 0, 0.3);
+            --white: #FFFFFF;
+            --gray: #999999;
+            --gray-dim: #444444;
+            --green: #00C853;
+            --blue: #448AFF;
+            --orange: #FF9100;
+            --purple: #AA00FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            padding: 60px 40px;
+        }
+
+        .page-break {
+            page-break-after: always;
+            margin-bottom: 100px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        h1 span {
+            color: var(--red);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 16px;
+            margin-bottom: 80px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        h2 span {
+            color: var(--red);
+        }
+
+        .section-label {
+            text-align: center;
+            color: var(--gray);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        /* ── DIAGRAM 1: What We Trade ───────────────────── */
+        .trade-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 960px;
+            margin: 0 auto 64px;
+        }
+
+        .trade-card {
+            background: var(--card);
+            border: 1px solid var(--gray-dim);
+            border-radius: 16px;
+            padding: 32px 28px;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.3s;
+        }
+
+        .trade-card:hover {
+            border-color: var(--red);
+        }
+
+        .trade-card--primary {
+            border-color: var(--red);
+        }
+
+        .trade-card--primary::after {
+            content: 'Основная категория';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--red);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .trade-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        .trade-card:nth-child(1) .trade-icon {
+            background: var(--red-dim);
+        }
+
+        .trade-card:nth-child(2) .trade-icon {
+            background: rgba(68, 138, 255, 0.15);
+        }
+
+        .trade-card:nth-child(3) .trade-icon {
+            background: rgba(255, 145, 0, 0.15);
+        }
+
+        .trade-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .trade-card .trade-desc {
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .trade-examples {
+            list-style: none;
+            text-align: left;
+        }
+
+        .trade-examples li {
+            font-size: 13px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .trade-examples li:last-child {
+            border-bottom: none;
+        }
+
+        .trade-examples li::before {
+            content: '→';
+            color: var(--red);
+            margin-right: 8px;
+            font-weight: 600;
+        }
+
+        .trade-share {
+            margin-top: 16px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--red);
+        }
+
+        .trade-share-label {
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── CONNECTOR ARROWS (SVG) ──────────────────────── */
+        .connector-section {
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* ── DIAGRAM 2: Two Buyer Types ─────────────────── */
+        .buyers-container {
+            max-width: 960px;
+            margin: 0 auto 64px;
+            position: relative;
+        }
+
+        .trust-layer {
+            background: linear-gradient(135deg, rgba(220, 26, 0, 0.08), rgba(220, 26, 0, 0.03));
+            border: 2px solid var(--red);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .trust-layer h3 {
+            color: var(--red);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .trust-layer p {
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        .shield-icon {
+            position: absolute;
+            left: 50%;
+            top: -18px;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 36px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px var(--red-glow);
+        }
+
+        .buyers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .buyer-card {
+            background: var(--card);
+            border: 1px solid var(--gray-dim);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+        }
+
+        .buyer-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .buyer-card h3 .emoji {
+            font-size: 24px;
+        }
+
+        .buyer-card .buyer-subtitle {
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .buyer-steps {
+            list-style: none;
+        }
+
+        .buyer-steps li {
+            font-size: 13px;
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .step-num {
+            background: var(--red-dim);
+            color: var(--red);
+            font-size: 11px;
+            font-weight: 700;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .buyer-card--agent {
+            border-color: var(--blue);
+        }
+
+        .buyer-card--agent .step-num {
+            background: rgba(68, 138, 255, 0.15);
+            color: var(--blue);
+        }
+
+        .buyer-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 16px;
+        }
+
+        .buyer-tag--now {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .buyer-tag--future {
+            background: rgba(68, 138, 255, 0.15);
+            color: var(--blue);
+        }
+
+        /* ── DIAGRAM 3: Agent-to-Agent Flow ─────────────── */
+        .flow-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        .flow-line {
+            width: 3px;
+            background: var(--gray-dim);
+            margin-left: 39px;
+            position: relative;
+        }
+
+        .flow-line--active {
+            background: var(--red);
+            box-shadow: 0 0 8px var(--red-glow);
+        }
+
+        .flow-line--blue {
+            background: var(--blue);
+            box-shadow: 0 0 8px rgba(68, 138, 255, 0.3);
+        }
+
+        .flow-node {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .flow-dot {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .flow-dot--red {
+            background: var(--red);
+            box-shadow: 0 0 16px var(--red-glow);
+        }
+
+        .flow-dot--blue {
+            background: var(--blue);
+            box-shadow: 0 0 16px rgba(68, 138, 255, 0.3);
+        }
+
+        .flow-dot--green {
+            background: var(--green);
+            box-shadow: 0 0 16px rgba(0, 200, 83, 0.3);
+        }
+
+        .flow-dot--orange {
+            background: var(--orange);
+            box-shadow: 0 0 16px rgba(255, 145, 0, 0.3);
+        }
+
+        .flow-dot--purple {
+            background: var(--purple);
+            box-shadow: 0 0 16px rgba(170, 0, 255, 0.3);
+        }
+
+        .flow-content {
+            padding-top: 8px;
+        }
+
+        .flow-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .flow-content p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.5;
+            max-width: 500px;
+        }
+
+        .flow-content .tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+
+        .tag--a2a {
+            background: rgba(68, 138, 255, 0.15);
+            color: var(--blue);
+        }
+
+        .tag--zk {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .tag--x402 {
+            background: rgba(255, 145, 0, 0.15);
+            color: var(--orange);
+        }
+
+        .tag--trust {
+            background: rgba(0, 200, 83, 0.15);
+            color: var(--green);
+        }
+
+        /* ── DIAGRAM 4: Full Platform ───────────────────── */
+        .platform-diagram {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .platform-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .platform-box {
+            background: var(--card);
+            border: 1px solid var(--gray-dim);
+            border-radius: 12px;
+            padding: 20px 24px;
+            text-align: center;
+            flex: 1;
+            max-width: 280px;
+        }
+
+        .platform-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .platform-box ul {
+            list-style: none;
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .platform-box--red {
+            border-color: var(--red);
+        }
+
+        .platform-box--red h4 {
+            color: var(--red);
+        }
+
+        .platform-box--blue {
+            border-color: var(--blue);
+        }
+
+        .platform-box--blue h4 {
+            color: var(--blue);
+        }
+
+        .platform-box--wide {
+            max-width: 600px;
+        }
+
+        .arrow-down {
+            text-align: center;
+            color: var(--gray-dim);
+            font-size: 24px;
+            margin: 8px 0;
+            letter-spacing: 8px;
+        }
+
+        .arrow-down--red {
+            color: var(--red);
+        }
+
+        .commission-banner {
+            background: linear-gradient(135deg, rgba(220, 26, 0, 0.1), rgba(220, 26, 0, 0.03));
+            border: 1px solid var(--red);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            max-width: 600px;
+            margin: 24px auto;
+        }
+
+        .commission-banner strong {
+            color: var(--red);
+            font-size: 18px;
+        }
+
+        .commission-banner p {
+            color: var(--gray);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* ── ANALOGY SECTION ────────────────────────────── */
+        .analogy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 960px;
+            margin: 40px auto;
+        }
+
+        .analogy-card {
+            background: var(--card);
+            border: 1px solid var(--gray-dim);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .analogy-card .analogy-emoji {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .analogy-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .analogy-card p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .analogy-card .vs {
+            color: var(--gray);
+            font-size: 11px;
+            margin: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .analogy-card .us {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ── PRINT STYLES ───────────────────────────────── */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 20px;
+            }
+
+            .trade-card,
+            .buyer-card,
+            .platform-box,
+            .analogy-card {
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+            }
+
+            .trust-layer {
+                border: 2px solid var(--red);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- TITLE                                               -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <h1>AGORA <span>— Product Architecture</span></h1>
+    <p class="subtitle">Что мы продаём · Кто покупает · Как агенты торгуют друг с другом</p>
+
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- DIAGRAM 1: WHAT WE TRADE                            -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="page-break">
+
+        <p class="section-label">Diagram 1</p>
+        <h2>Что продаётся на <span>Agora</span></h2>
+
+        <div class="trade-grid">
+
+            <div class="trade-card trade-card--primary">
+                <div class="trade-icon">🔌</div>
+                <h3>MCP Servers</h3>
+                <p class="trade-desc">Инструменты, которые ИИ модели вызывают для выполнения конкретных действий</p>
+                <ul class="trade-examples">
+                    <li>Поиск в интернете</li>
+                    <li>Работа с базами данных</li>
+                    <li>Code review и анализ</li>
+                    <li>Парсинг PDF / документов</li>
+                    <li>Переводы и NLP</li>
+                </ul>
+                <div class="trade-share">~80%</div>
+                <div class="trade-share-label">доля каталога</div>
+            </div>
+
+            <div class="trade-card">
+                <div class="trade-icon">🤖</div>
+                <h3>AI Agents</h3>
+                <p class="trade-desc">Автономные ИИ, которые самостоятельно решают сложные задачи</p>
+                <ul class="trade-examples">
+                    <li>Customer support бот</li>
+                    <li>Аналитик данных</li>
+                    <li>Контент-райтер</li>
+                    <li>Рекрутинг-агент</li>
+                    <li>Трейдинг-бот</li>
+                </ul>
+                <div class="trade-share">~15%</div>
+                <div class="trade-share-label">доля каталога</div>
+            </div>
+
+            <div class="trade-card">
+                <div class="trade-icon">⚡</div>
+                <h3>Automations</h3>
+                <p class="trade-desc">Готовые workflow-цепочки: нажал кнопку → получил результат</p>
+                <ul class="trade-examples">
+                    <li>Email-рассылка pipeline</li>
+                    <li>Генерация отчётов</li>
+                    <li>Синхронизация данных</li>
+                    <li>CI/CD pipeline</li>
+                    <li>Обработка заказов</li>
+                </ul>
+                <div class="trade-share">~5%</div>
+                <div class="trade-share-label">доля каталога</div>
+            </div>
+
+        </div>
+
+        <!-- Analogy -->
+        <p class="section-label" style="margin-top:40px;">Аналогии</p>
+        <div class="analogy-grid">
+            <div class="analogy-card">
+                <div class="analogy-emoji">🍎</div>
+                <h4>App Store</h4>
+                <p>Продаёт приложения для людей</p>
+                <div class="vs">мы →</div>
+                <div class="us">App Store для AI</div>
+            </div>
+            <div class="analogy-card">
+                <div class="analogy-emoji">🚗</div>
+                <h4>Uber</h4>
+                <p>Не владеет машинами, соединяет</p>
+                <div class="vs">мы →</div>
+                <div class="us">Не владеем агентами</div>
+            </div>
+            <div class="analogy-card">
+                <div class="analogy-emoji">💳</div>
+                <h4>Visa</h4>
+                <p>Trust layer для финансов</p>
+                <div class="vs">мы →</div>
+                <div class="us">Trust layer для AI</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- DIAGRAM 2: WHO BUYS                                 -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="page-break">
+
+        <p class="section-label">Diagram 2</p>
+        <h2>Кто покупает на <span>Agora</span></h2>
+
+        <div class="buyers-container">
+
+            <div class="trust-layer">
+                <div class="shield-icon">🛡</div>
+                <h3 style="margin-top: 4px;">Agora Trust Layer</h3>
+                <p>ZK Proofs · Trust Score 0–1 · Anti-Gaming Detection · Merkle Trees</p>
+            </div>
+
+            <div class="buyers-grid">
+
+                <div class="buyer-card">
+                    <h3><span class="emoji">👤</span> Люди (Разработчики)</h3>
+                    <p class="buyer-subtitle">Ищут и подключают инструменты вручную</p>
+                    <ol class="buyer-steps">
+                        <li><span class="step-num">1</span> Заходят на agora.dev</li>
+                        <li><span class="step-num">2</span> Ищут по категориям, фильтрам, тегам</li>
+                        <li><span class="step-num">3</span> Читают отзывы и Trust Score</li>
+                        <li><span class="step-num">4</span> Подключают (copy-paste конфиг)</li>
+                        <li><span class="step-num">5</span> Платят через Stripe (подписка или per-call)</li>
+                    </ol>
+                    <span class="buyer-tag buyer-tag--now">Основной канал · Год 1–2</span>
+                </div>
+
+                <div class="buyer-card buyer-card--agent">
+                    <h3><span class="emoji">🤖</span> AI Агенты</h3>
+                    <p class="buyer-subtitle">Обнаруживают и платят автоматически</p>
+                    <ol class="buyer-steps">
+                        <li><span class="step-num">1</span> Агент получает задачу от пользователя</li>
+                        <li><span class="step-num">2</span> Запрашивает Agora через A2A протокол</li>
+                        <li><span class="step-num">3</span> Проверяет Trust Score через API</li>
+                        <li><span class="step-num">4</span> Платит $0.001 через x402 микроплатёж</li>
+                        <li><span class="step-num">5</span> Использует сервис → trust обновляется</li>
+                    </ol>
+                    <span class="buyer-tag buyer-tag--future">Растущий канал · Год 2–3</span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- DIAGRAM 3: AGENT-TO-AGENT FLOW                      -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="page-break">
+
+        <p class="section-label">Diagram 3</p>
+        <h2>Agent-to-Agent: как ИИ покупает у <span>другого ИИ</span></h2>
+
+        <div class="flow-container">
+
+            <!-- Step 1 -->
+            <div class="flow-node">
+                <div class="flow-dot flow-dot--red">🤖</div>
+                <div class="flow-content">
+                    <h4>Agent A получает задачу</h4>
+                    <p>Пользователь просит AI-рекрутера: «Найди 10 разработчиков на Rust в Бостоне». Agent A понимает,
+                        что ему нужен инструмент для поиска в LinkedIn.</p>
+                </div>
+            </div>
+            <div class="flow-line flow-line--active" style="height: 24px;"></div>
+
+            <!-- Step 2 -->
+            <div class="flow-node">
+                <div class="flow-dot flow-dot--blue">🔍</div>
+                <div class="flow-content">
+                    <h4>Discovery через Agora</h4>
+                    <p>Agent A отправляет запрос: «Мне нужен LinkedIn MCP-сервер с Trust Score > 0.8». Agora возвращает
+                        список подходящих сервисов, отсортированных по trust.</p>
+                    <span class="tag tag--a2a">A2A Protocol</span>
+                </div>
+            </div>
+            <div class="flow-line flow-line--blue" style="height: 24px;"></div>
+
+            <!-- Step 3 -->
+            <div class="flow-node">
+                <div class="flow-dot flow-dot--purple">🔐</div>
+                <div class="flow-content">
+                    <h4>Trust Verification (ZK Proof)</h4>
+                    <p>Agent A запрашивает ZK-proof для Agent B (LinkedIn MCP, score 0.92). Получает математическое
+                        доказательство того, что score подлинный — без доступа к исходным данным.</p>
+                    <span class="tag tag--zk">ZK Groth16 Proof · &lt;10ms</span>
+                </div>
+            </div>
+            <div class="flow-line flow-line--active" style="height: 24px;"></div>
+
+            <!-- Step 4 -->
+            <div class="flow-node">
+                <div class="flow-dot flow-dot--orange">💰</div>
+                <div class="flow-content">
+                    <h4>Микроплатёж через x402</h4>
+                    <p>Agent A автоматически платит $0.005 за вызов Agent B. Агенту не нужен человек для подтверждения —
+                        x402 протокол обрабатывает транзакцию мгновенно.</p>
+                    <span class="tag tag--x402">x402 Payment · $0.005</span>
+                </div>
+            </div>
+            <div class="flow-line" style="height: 24px;"></div>
+
+            <!-- Step 5 -->
+            <div class="flow-node">
+                <div class="flow-dot flow-dot--blue">🔌</div>
+                <div class="flow-content">
+                    <h4>Сервис исполнен</h4>
+                    <p>Agent B (LinkedIn MCP) возвращает данные: список из 10 Rust-разработчиков в Бостоне. Agent A
+                        получает результат и продолжает работу.</p>
+                </div>
+            </div>
+            <div class="flow-line flow-line--active" style="height: 24px;"></div>
+
+            <!-- Step 6 -->
+            <div class="flow-node">
+                <div class="flow-dot flow-dot--green">✓</div>
+                <div class="flow-content">
+                    <h4>Trust Score обновлён</h4>
+                    <p>Agora записывает: успешная транзакция, latency 45ms, outcome: success. Trust Score Agent B
+                        обновляется. Data moat растёт. Следующая транзакция будет ещё точнее.</p>
+                    <span class="tag tag--trust">Data Moat · Network Effect</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="commission-banner" style="margin-top: 48px;">
+            <strong>Agora удерживает 10% = $0.0005</strong>
+            <p>Agent B получает $0.0045 · Автоматически · Мгновенно</p>
+        </div>
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- DIAGRAM 4: FULL PLATFORM ARCHITECTURE               -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div>
+
+        <p class="section-label">Diagram 4</p>
+        <h2>Полная архитектура <span>платформы</span></h2>
+
+        <div class="platform-diagram">
+
+            <!-- Row 1: Creators -->
+            <div class="platform-row">
+                <div class="platform-box">
+                    <h4>👨‍💻 Создатель MCP</h4>
+                    <ul>
+                        <li>Листит сервер</li>
+                        <li>Получает выплаты</li>
+                    </ul>
+                </div>
+                <div class="platform-box">
+                    <h4>👩‍💻 Создатель Agent</h4>
+                    <ul>
+                        <li>Листит AI-агента</li>
+                        <li>Задаёт pricing</li>
+                    </ul>
+                </div>
+                <div class="platform-box">
+                    <h4>🏢 Компания</h4>
+                    <ul>
+                        <li>Листит автоматизацию</li>
+                        <li>Enterprise контракт</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down arrow-down--red">▼ ▼ ▼</div>
+
+            <!-- Row 2: Agora Platform -->
+            <div class="platform-row">
+                <div class="platform-box platform-box--red">
+                    <h4>🏪 Каталог</h4>
+                    <ul>
+                        <li>Поиск и фильтры</li>
+                        <li>Категории</li>
+                        <li>Отзывы и рейтинги</li>
+                        <li>Premium placement</li>
+                    </ul>
+                </div>
+                <div class="platform-box platform-box--red">
+                    <h4>🔐 Trust Engine</h4>
+                    <ul>
+                        <li>Score 0.0 — 1.0</li>
+                        <li>ZK Proofs (Groth16)</li>
+                        <li>Anti-gaming (4 типа)</li>
+                        <li>Merkle Trees</li>
+                    </ul>
+                </div>
+                <div class="platform-box platform-box--red">
+                    <h4>💰 Payments</h4>
+                    <ul>
+                        <li>Stripe Connect (люди)</li>
+                        <li>x402 (агенты)</li>
+                        <li>AP2 (escrow)</li>
+                        <li>Commission 10%</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down arrow-down--red">▼ ▼ ▼</div>
+
+            <!-- Row 3: Buyers -->
+            <div class="platform-row">
+                <div class="platform-box platform-box--blue" style="max-width: 400px;">
+                    <h4>👤 Люди-разработчики</h4>
+                    <ul>
+                        <li>Веб-интерфейс agora.dev</li>
+                        <li>SDK (TypeScript / Python)</li>
+                        <li>Stripe подписки и per-call</li>
+                    </ul>
+                </div>
+                <div class="platform-box platform-box--blue" style="max-width: 400px;">
+                    <h4>🤖 AI Агенты</h4>
+                    <ul>
+                        <li>A2A протокол (автообнаружение)</li>
+                        <li>Trust API (&lt;10ms верификация)</li>
+                        <li>x402 микроплатежи (авто)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="commission-banner">
+                <strong>Каждая транзакция → Trust Score обновляется → Data Moat растёт</strong>
+                <p>Чем больше транзакций, тем точнее trust → тем больше доверия → тем больше транзакций</p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
