@@ -1,0 +1,23 @@
+{
+    "name": "@agora/trend-agent",
+    "version": "0.1.0",
+    "description": "AGORA Trend Analysis Agent — multi-module AI/MCP ecosystem trend tracker",
+    "type": "module",
+    "scripts": {
+        "start": "tsx src/index.ts",
+        "collect": "tsx src/index.ts --collect",
+        "enrich": "tsx src/index.ts --enrich",
+        "analyze": "tsx src/index.ts --analyze",
+        "report": "tsx src/index.ts --report",
+        "dev": "tsx watch src/index.ts"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.21.0",
+        "dotenv": "^16.4.7"
+    },
+    "devDependencies": {
+        "tsx": "^4.19.0",
+        "typescript": "^5.6.0",
+        "@types/node": "^22.0.0"
+    }
+}

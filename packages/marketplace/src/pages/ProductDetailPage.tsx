@@ -1,8 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { fetchProductBySlug } from '../lib/database';
 import { Product } from '../types';
 import TrustBadge from '../components/TrustBadge';
+import TryAgent from '../components/TryAgent';
+import PricingTiers from '../components/PricingTiers';
+import ReviewSection from '../components/ReviewSection';
+import UsageDashboard from '../components/UsageDashboard';
+import { getStats } from '../lib/usageTracker';
 
 function formatNumber(n: number): string {
     if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
@@ -41,6 +46,9 @@ export default function ProductDetailPage() {
     const { slug } = useParams<{ slug: string }>();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const refresh = useCallback(() => setRefreshKey(k => k + 1), []);
 
     useEffect(() => {
         async function load() {
@@ -79,7 +87,16 @@ export default function ProductDetailPage() {
         );
     }
 
-    const trustPercent = (product.trustScore * 100).toFixed(0);
+    // Use live stats from usageTracker (falls back to seed data)
+    const liveStats = getStats(product.id);
+    const hasLiveData = liveStats.totalCalls > 0;
+    const trustScore = hasLiveData ? liveStats.trustScore : product.trustScore;
+    const trustPercent = (trustScore * 100).toFixed(0);
+    const avgLatency = hasLiveData ? liveStats.avgLatencyMs : product.avgLatencyMs;
+    const uptime = hasLiveData ? liveStats.uptime : product.uptime;
+    const rating = hasLiveData && liveStats.reviewCount > 0 ? liveStats.rating : product.rating;
+    const reviewCount = hasLiveData ? liveStats.reviewCount + product.reviewCount : product.reviewCount;
+    const totalCalls = (hasLiveData ? liveStats.totalCalls : 0) + product.totalCalls;
 
     return (
         <div className="page container">
@@ -139,10 +156,10 @@ export default function ProductDetailPage() {
                             Trust Score Breakdown
                         </h2>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
-                            <TrustMetric label="Overall Trust" value={`${trustPercent}%`} bar={product.trustScore} />
-                            <TrustMetric label="Uptime" value={`${product.uptime}%`} bar={product.uptime / 100} />
-                            <TrustMetric label="Avg Latency" value={`${product.avgLatencyMs}ms`} bar={Math.max(0, 1 - product.avgLatencyMs / 5000)} />
-                            <TrustMetric label="User Rating" value={`${product.rating}/5`} bar={product.rating / 5} />
+                            <TrustMetric label="Overall Trust" value={`${trustPercent}%`} bar={trustScore} />
+                            <TrustMetric label="Uptime" value={`${uptime}%`} bar={uptime / 100} />
+                            <TrustMetric label="Avg Latency" value={`${avgLatency}ms`} bar={Math.max(0, 1 - avgLatency / 5000)} />
+                            <TrustMetric label="User Rating" value={`${rating}/5`} bar={rating / 5} />
                         </div>
                         <div style={{ marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--color-primary-light)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)', color: 'var(--color-primary-hover)' }}>
                             🔐 Trust score verified with ZK-SNARK (Groth16). Proof available for on-chain verification.
@@ -164,8 +181,21 @@ export default function ProductDetailPage() {
                         </div>
                     </div>
 
-                    {/* Endpoint Tester */}
-                    <EndpointTester product={product} />
+                    {/* Pricing Tiers */}
+                    <PricingTiers agentId={product.id} onPlanChange={refresh} />
+
+                    {/* Interactive Agent Demo or Endpoint Tester */}
+                    {product.slug === 'agora-trend-analyst' ? (
+                        <TryAgent onCallComplete={refresh} />
+                    ) : (
+                        <EndpointTester product={product} />
+                    )}
+
+                    {/* Usage Dashboard */}
+                    <UsageDashboard agentId={product.id} refreshKey={refreshKey} />
+
+                    {/* Reviews */}
+                    <ReviewSection agentId={product.id} onReviewAdded={refresh} />
                 </div>
 
                 {/* Sidebar */}
@@ -194,11 +224,11 @@ export default function ProductDetailPage() {
                             Stats
                         </h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-                            <StatRow label="Total Calls" value={formatNumber(product.totalCalls)} />
-                            <StatRow label="Active Users" value={formatNumber(product.totalUsers)} />
-                            <StatRow label="Avg Latency" value={`${product.avgLatencyMs}ms`} />
-                            <StatRow label="Uptime" value={`${product.uptime}%`} />
-                            <StatRow label="Reviews" value={product.reviewCount.toString()} />
+                            <StatRow label="Total Calls" value={formatNumber(totalCalls)} />
+                            <StatRow label="Active Users" value={formatNumber(product.totalUsers + (hasLiveData ? 1 : 0))} />
+                            <StatRow label="Avg Latency" value={`${avgLatency}ms`} />
+                            <StatRow label="Uptime" value={`${uptime}%`} />
+                            <StatRow label="Reviews" value={reviewCount.toString()} />
                         </div>
                     </div>
 
@@ -207,7 +237,7 @@ export default function ProductDetailPage() {
                             <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
                                 Trust Level
                             </h3>
-                            <TrustBadge score={product.trustScore} level={product.trustLevel} size="md" />
+                            <TrustBadge score={trustScore} level={trustScore >= 0.8 ? 'high' : trustScore >= 0.5 ? 'medium' : 'low'} size="md" />
                         </div>
                     </div>
                 </div>

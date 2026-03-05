@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGORA — Pitch Deck</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-alt: #1a1a2e;
+            --accent: #e85d3a;
+            --accent-light: #ff7b5c;
+            --accent-gradient: linear-gradient(135deg, #e85d3a 0%, #ff9a6c 100%);
+            --text-primary: #f0f0f5;
+            --text-secondary: #9999aa;
+            --text-muted: #666680;
+            --border: #2a2a3e;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            margin: 0 auto;
+            padding: 28mm 22mm 20mm 22mm;
+            page-break-after: always;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 12mm;
+            right: 22mm;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 22mm;
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+
+        /* Logo */
+        .logo-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6mm;
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+
+        .logo-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        /* Hero */
+        .hero-title {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 4mm;
+            background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 90%;
+            margin-bottom: 6mm;
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 7mm;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-light);
+        }
+
+        .stat-label {
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 5mm;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 3mm;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-body {
+            font-size: 11px;
+            line-height: 1.65;
+            color: var(--text-secondary);
+        }
+
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 5mm;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .card-icon {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Diagram */
+        .diagram-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 5mm;
+        }
+
+        .diagram-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        /* Flywheel SVG styling */
+        .flywheel-container {
+            display: flex;
+            justify-content: center;
+            margin: 8px 0;
+        }
+
+        /* Comparison table */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 4mm;
+        }
+
+        .comp-table th {
+            background: var(--bg-card-alt);
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .comp-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .comp-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comp-table .highlight {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .comp-table .weak {
+            color: var(--danger);
+        }
+
+        /* Revenue bar chart */
+        .revenue-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .rev-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rev-bar-label {
+            font-size: 9px;
+            color: var(--text-secondary);
+            width: 120px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .rev-bar-track {
+            flex: 1;
+            height: 22px;
+            background: var(--bg-card-alt);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rev-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 9px;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Risk cards */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 4mm 0;
+        }
+
+        .risk-card {
+            background: var(--bg-card);
+            border-left: 3px solid var(--warning);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 12px;
+        }
+
+        .risk-card.mitigated {
+            border-left-color: var(--success);
+        }
+
+        .risk-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .risk-desc {
+            font-size: 9px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .risk-tag {
+            display: inline-block;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .risk-tag.red {
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--danger);
+        }
+
+        .risk-tag.green {
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--success);
+        }
+
+        /* Three col cards */
+        .three-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 4mm;
+        }
+
+        /* Projection table */
+        .proj-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin: 3mm 0;
+        }
+
+        .proj-table th {
+            background: var(--accent);
+            color: white;
+            padding: 8px 10px;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .proj-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .proj-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .proj-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+        }
+
+        .proj-table td:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .proj-table tr:last-child td:first-child {
+            border-radius: 0 0 0 8px;
+        }
+
+        .proj-table tr:last-child td:last-child {
+            border-radius: 0 0 8px 0;
+        }
+
+        .proj-table .big {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--accent-light);
+        }
+
+        .accent-text {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        .inline-badge {
+            display: inline-block;
+            font-size: 8px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: rgba(232, 93, 58, 0.15);
+            color: var(--accent-light);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        @media print {
+            body {
+                background: var(--bg-dark);
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <div class="page">
+
+        <div class="logo-header">
+            <div class="logo-mark">A</div>
+            <div>
+                <div class="logo-text">AGORA</div>
+                <div class="logo-sub">TRUSTED AI AGENT MARKETPLACE</div>
+            </div>
+        </div>
+
+        <div class="hero-title">Маркетплейс для<br>экономики AI-агентов</div>
+        <div class="hero-subtitle">
+            Мы вступаем в эпоху agent-to-agent экономики, где AI-агенты автономно находят, нанимают и&nbsp;оплачивают
+            услуги других агентов. Agora&nbsp;— платформа, которая сводит спрос и&nbsp;предложение: создатели
+            зарабатывают на&nbsp;своих AI&#8209;инструментах, а&nbsp;покупатели находят проверенные сервисы
+            с&nbsp;криптографически подтверждённым доверием.
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-number">15K+</div>
+                <div class="stat-label">MCP сервисов</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">97M</div>
+                <div class="stat-label">загрузок SDK/мес</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">&lt;10ms</div>
+                <div class="stat-label">Trust проверка</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">$0</div>
+                <div class="stat-label">монетизация сейчас</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Проблема</div>
+            <div class="section-body">
+                MCP (Model Context Protocol), принятый OpenAI, Google и Anthropic, стал стандартом для AI-агентов. Но
+                у&nbsp;этой экосистемы две критические проблемы: <span class="accent-text">создатели не могут
+                    зарабатывать</span> на своих инструментах (нет биллинга, нет канала дистрибуции), а&nbsp;<span
+                    class="accent-text">покупатели не могут отличить</span> надёжный сервис от ненадёжного
+                (supply&#8209;chain атаки выросли на 430%).
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Ценностное предложение</div>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🏪</div>
+                <div class="card-title">Для создателей</div>
+                <div class="card-desc">Залистил → установил цену → зарабатываешь. Биллинг через Stripe Connect,
+                    аналитика использования, trust badge. Всё за 10 минут, без написания инфраструктуры.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">Для покупателей</div>
+                <div class="card-desc">Единый каталог верифицированных AI-сервисов с trust score, отзывами, гибкими
+                    тарифами и интеграцией в&nbsp;один клик. Не GitHub stars — а математически доказанное доверие.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔐</div>
+                <div class="card-title">ZK-Proofs</div>
+                <div class="card-desc">Единственная платформа с zero-knowledge доказательствами доверия — математическая
+                    гарантия без раскрытия приватных данных. Ни один конкурент этого не предлагает.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">Multi-Protocol</div>
+                <div class="card-desc">Поддержка MCP, A2A (Google), AP2 и x402 — четыре основных протокола AI-агентов.
+                    Конкуренты обычно привязаны к одному.</div>
+            </div>
+        </div>
+
+        <!-- Flywheel diagram -->
+        <div class="diagram-box">
+            <div class="diagram-title">МАХОВИК РОСТА (FLYWHEEL)</div>
+            <div class="flywheel-container">
+                <svg width="460" height="110" viewBox="0 0 460 110">
+                    <!-- Boxes -->
+                    <rect x="0" y="30" width="100" height="50" rx="8" fill="#1a1a2e" stroke="#e85d3a"
+                        stroke-width="1.5" />
+                    <text x="50" y="52" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">Больше</text>
+                    <text x="50" y="65" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">создателей</text>
+
+                    <rect x="120" y="30" width="100" height="50" rx="8" fill="#1a1a2e" stroke="#e85d3a"
+                        stroke-width="1.5" />
+                    <text x="170" y="52" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">Больше</text>
+                    <text x="170" y="65" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">продуктов</text>
+
+                    <rect x="240" y="30" width="100" height="50" rx="8" fill="#1a1a2e" stroke="#e85d3a"
+                        stroke-width="1.5" />
+                    <text x="290" y="52" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">Больше</text>
+                    <text x="290" y="65" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">покупателей</text>
+
+                    <rect x="360" y="30" width="100" height="50" rx="8" fill="#1a1a2e" stroke="#e85d3a"
+                        stroke-width="1.5" />
+                    <text x="410" y="52" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">Точнее</text>
+                    <text x="410" y="65" text-anchor="middle" fill="#f0f0f5" font-size="9" font-weight="600"
+                        font-family="Inter">trust данные</text>
+
+                    <!-- Arrows -->
+                    <path d="M102 55 L118 55" stroke="#e85d3a" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+                    <path d="M222 55 L238 55" stroke="#e85d3a" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+                    <path d="M342 55 L358 55" stroke="#e85d3a" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+                    <!-- Return arrow -->
+                    <path d="M410 82 L410 100 Q410 108 402 108 L58 108 Q50 108 50 100 L50 82" stroke="#ff9a6c"
+                        stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrow2)" />
+                    <text x="230" y="102" text-anchor="middle" fill="#ff9a6c" font-size="8" font-family="Inter"
+                        font-weight="500">Creators зарабатывают → приводят новых</text>
+
+                    <defs>
+                        <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                            <path d="M0,0 L8,3 L0,6" fill="#e85d3a" />
+                        </marker>
+                        <marker id="arrow2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                            <path d="M0,0 L8,3 L0,6" fill="#ff9a6c" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+
+        <div class="page-footer">AGORA — Trusted AI Agent Marketplace | Февраль 2026</div>
+        <div class="page-number">1 / 3</div>
+    </div>
+
+    <!-- ==================== PAGE 2 ==================== -->
+    <div class="page">
+
+        <div class="logo-header" style="margin-bottom:4mm;">
+            <div class="logo-mark" style="width:28px;height:28px;font-size:15px;border-radius:7px;">A</div>
+            <div class="logo-text" style="font-size:18px;letter-spacing:2px;">AGORA</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Конкурентный ландшафт</div>
+        </div>
+
+        <table class="comp-table">
+            <tr>
+                <th style="width:22%">Критерий</th>
+                <th style="width:26%">Agora 🏛️</th>
+                <th style="width:26%">Zauth ⚡</th>
+                <th style="width:26%">MCP Каталоги</th>
+            </tr>
+            <tr>
+                <td><strong>Тип продукта</strong></td>
+                <td class="highlight">Полный маркетплейс</td>
+                <td>Trust infrastructure</td>
+                <td class="weak">Список ссылок</td>
+            </tr>
+            <tr>
+                <td><strong>Trust</strong></td>
+                <td class="highlight">ZK-proofs, anti-gaming</td>
+                <td>Endpoint uptime</td>
+                <td class="weak">Нет</td>
+            </tr>
+            <tr>
+                <td><strong>Платежи</strong></td>
+                <td class="highlight">Stripe + x402 + AP2</td>
+                <td>x402 / USDC only</td>
+                <td class="weak">Нет</td>
+            </tr>
+            <tr>
+                <td><strong>Скорость</strong></td>
+                <td class="highlight">&lt;10ms</td>
+                <td class="weak">500-1100ms</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td><strong>Протоколы</strong></td>
+                <td class="highlight">MCP, A2A, AP2, x402</td>
+                <td class="weak">Только x402</td>
+                <td>MCP</td>
+            </tr>
+            <tr>
+                <td><strong>Монетизация</strong></td>
+                <td class="highlight">SaaS + Commission</td>
+                <td class="weak">Крипто-токен</td>
+                <td class="weak">Нет</td>
+            </tr>
+            <tr>
+                <td><strong>Безопасность</strong></td>
+                <td class="highlight">ZK, Ed25519</td>
+                <td class="weak">Эксплойты были</td>
+                <td class="weak">Нет проверки</td>
+            </tr>
+        </table>
+
+        <div class="section" style="margin-top:4mm;">
+            <div class="section-title">Риски и как мы их снижаем</div>
+        </div>
+
+        <div class="risk-grid">
+            <div class="risk-card">
+                <div class="risk-title">⚠️ MCP-экосистема может расти медленнее</div>
+                <div class="risk-desc">Если MCP не станет доминирующим стандартом, спрос будет ниже прогнозов.</div>
+                <div class="risk-tag red">РЫНОЧНЫЙ РИСК</div>
+            </div>
+            <div class="risk-card mitigated">
+                <div class="risk-title">✅ Митигация: Multi-protocol</div>
+                <div class="risk-desc">Поддержка 4 протоколов (MCP + A2A + AP2 + x402). Не зависим от одного стандарта.
+                </div>
+                <div class="risk-tag green">СНИЖЕН</div>
+            </div>
+
+            <div class="risk-card">
+                <div class="risk-title">⚠️ Chicken-and-egg проблема</div>
+                <div class="risk-desc">Маркетплейс пуст без создателей, а создатели не придут без покупателей.</div>
+                <div class="risk-tag red">СТРАТЕГИЧЕСКИЙ</div>
+            </div>
+            <div class="risk-card mitigated">
+                <div class="risk-title">✅ Митигация: Supply-first</div>
+                <div class="risk-desc">Бесплатный листинг, 0% комиссия 3 мес., pre-seed 20 сервисов вручную. Каждый
+                    creator приводит 5-10 user.</div>
+                <div class="risk-tag green">СНИЖЕН</div>
+            </div>
+
+            <div class="risk-card">
+                <div class="risk-title">⚠️ AI hype bubble</div>
+                <div class="risk-desc">Если рынок AI охладеет, инвестиции и спрос на AI-инструменты снизятся.</div>
+                <div class="risk-tag red">МАКРОЭКОНОМИЧЕСКИЙ</div>
+            </div>
+            <div class="risk-card mitigated">
+                <div class="risk-title">✅ Митигация: Утилитарная ценность</div>
+                <div class="risk-desc">Фокус на реальных use cases. Trust verification нужен даже при «похолодании» —
+                    безопасность не теряет актуальности.</div>
+                <div class="risk-tag green">СНИЖЕН</div>
+            </div>
+
+            <div class="risk-card">
+                <div class="risk-title">⚠️ Конкуренция от гигантов</div>
+                <div class="risk-desc">Google, AWS, Microsoft могут создать свой marketplace.</div>
+                <div class="risk-tag red">КОНКУРЕНТНЫЙ</div>
+            </div>
+            <div class="risk-card mitigated">
+                <div class="risk-title">✅ Митигация: Data moat</div>
+                <div class="risk-desc">Network effects + trust data + ZK-proofs создают конкурентный ров. Данные о
+                    доверии невозможно скопировать.</div>
+                <div class="risk-tag green">СНИЖЕН</div>
+            </div>
+        </div>
+
+        <div class="page-footer">AGORA — Trusted AI Agent Marketplace | Февраль 2026</div>
+        <div class="page-number">2 / 3</div>
+    </div>
+
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page">
+
+        <div class="logo-header" style="margin-bottom:4mm;">
+            <div class="logo-mark" style="width:28px;height:28px;font-size:15px;border-radius:7px;">A</div>
+            <div class="logo-text" style="font-size:18px;letter-spacing:2px;">AGORA</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Бизнес-модель и Revenue Streams</div>
+        </div>
+
+        <!-- Revenue bars chart -->
+        <div class="diagram-box" style="margin-bottom:4mm;">
+            <div class="diagram-title">ШЕСТЬ ИСТОЧНИКОВ ДОХОДА</div>
+            <div class="revenue-bars">
+                <div class="rev-bar-row">
+                    <div class="rev-bar-label">Commission (40%)</div>
+                    <div class="rev-bar-track">
+                        <div class="rev-bar-fill" style="width:80%;background:linear-gradient(90deg,#e85d3a,#ff7b5c);">
+                            10% с каждой транзакции</div>
+                    </div>
+                </div>
+                <div class="rev-bar-row">
+                    <div class="rev-bar-label">Trust API (20%)</div>
+                    <div class="rev-bar-track">
+                        <div class="rev-bar-fill" style="width:50%;background:linear-gradient(90deg,#d946ef,#f0abfc);">
+                            $0.001/call · Free → $199/mo</div>
+                    </div>
+                </div>
+                <div class="rev-bar-row">
+                    <div class="rev-bar-label">Premium (15%)</div>
+                    <div class="rev-bar-track">
+                        <div class="rev-bar-fill" style="width:40%;background:linear-gradient(90deg,#3b82f6,#93c5fd);">
+                            $49-$499/mo за видимость</div>
+                    </div>
+                </div>
+                <div class="rev-bar-row">
+                    <div class="rev-bar-label">Enterprise (15%)</div>
+                    <div class="rev-bar-track">
+                        <div class="rev-bar-fill" style="width:40%;background:linear-gradient(90deg,#10b981,#6ee7b7);">
+                            $500-$50K/mo · SLA, SSO</div>
+                    </div>
+                </div>
+                <div class="rev-bar-row">
+                    <div class="rev-bar-label">ZK Proofs (5%)</div>
+                    <div class="rev-bar-track">
+                        <div class="rev-bar-fill" style="width:20%;background:linear-gradient(90deg,#f59e0b,#fcd34d);">
+                            $0.01/proof</div>
+                    </div>
+                </div>
+                <div class="rev-bar-row">
+                    <div class="rev-bar-label">Discovery (5%)</div>
+                    <div class="rev-bar-track">
+                        <div class="rev-bar-fill" style="width:20%;background:linear-gradient(90deg,#8b5cf6,#c4b5fd);">
+                            CPC $0.10-0.50</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Unit Economics</div>
+        </div>
+
+        <div class="three-grid">
+            <div class="card" style="text-align:center;">
+                <div style="font-size:22px;font-weight:800;color:#34d399;">85%</div>
+                <div class="card-desc" style="margin-top:4px;">Blended<br>Gross Margin</div>
+            </div>
+            <div class="card" style="text-align:center;">
+                <div style="font-size:22px;font-weight:800;color:#34d399;">50x</div>
+                <div class="card-desc" style="margin-top:4px;">LTV / CAC<br>Ratio</div>
+            </div>
+            <div class="card" style="text-align:center;">
+                <div style="font-size:22px;font-weight:800;color:#34d399;">&lt;1 мес</div>
+                <div class="card-desc" style="margin-top:4px;">Payback<br>Period</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Финансовый прогноз (Base Case)</div>
+        </div>
+
+        <table class="proj-table">
+            <tr>
+                <th>Метрика</th>
+                <th>Год 1 (2026)</th>
+                <th>Год 2 (2027)</th>
+                <th>Год 3 (2028)</th>
+            </tr>
+            <tr>
+                <td>Активные листинги</td>
+                <td>150</td>
+                <td>1,200</td>
+                <td>8,000</td>
+            </tr>
+            <tr>
+                <td>Покупатели/мес</td>
+                <td>300</td>
+                <td>5,000</td>
+                <td>40,000</td>
+            </tr>
+            <tr>
+                <td>MRR</td>
+                <td>$2,000</td>
+                <td>$45,000</td>
+                <td class="big">$400,000</td>
+            </tr>
+            <tr>
+                <td>ARR</td>
+                <td>$24,000</td>
+                <td>$540,000</td>
+                <td class="big">$4,800,000</td>
+            </tr>
+            <tr>
+                <td>Break-even</td>
+                <td colspan="3" style="text-align:center;color:#34d399;font-weight:600;">~Q2-Q3 2027 (14-16 месяцев
+                    после запуска)</td>
+            </tr>
+        </table>
+
+        <!-- Architecture diagram -->
+        <div class="diagram-box" style="margin-top:4mm; padding: 14px 16px;">
+            <div class="diagram-title">АРХИТЕКТУРА ПЛАТФОРМЫ</div>
+            <div class="flywheel-container">
+                <svg width="460" height="120" viewBox="0 0 460 120">
+                    <!-- Creators -->
+                    <rect x="0" y="10" width="80" height="25" rx="5" fill="#1a1a2e" stroke="#9999aa" stroke-width="1" />
+                    <text x="40" y="27" text-anchor="middle" fill="#9999aa" font-size="8" font-family="Inter">AI
+                        Агенты</text>
+                    <rect x="0" y="40" width="80" height="25" rx="5" fill="#1a1a2e" stroke="#9999aa" stroke-width="1" />
+                    <text x="40" y="57" text-anchor="middle" fill="#9999aa" font-size="8" font-family="Inter">MCP
+                        серверы</text>
+                    <rect x="0" y="70" width="80" height="25" rx="5" fill="#1a1a2e" stroke="#9999aa" stroke-width="1" />
+                    <text x="40" y="87" text-anchor="middle" fill="#9999aa" font-size="8"
+                        font-family="Inter">Автоматизации</text>
+
+                    <text x="40" y="110" text-anchor="middle" fill="#text-muted" font-size="7" font-family="Inter"
+                        fill="#666680">СОЗДАТЕЛИ</text>
+
+                    <!-- Arrows left -->
+                    <path d="M82 52 L118 52" stroke="#e85d3a" stroke-width="1.5" marker-end="url(#a3)" />
+
+                    <!-- AGORA Platform Box -->
+                    <rect x="120" y="5" width="220" height="95" rx="10" fill="none" stroke="#e85d3a" stroke-width="2" />
+                    <text x="230" y="22" text-anchor="middle" fill="#e85d3a" font-size="9" font-weight="700"
+                        font-family="Inter" letter-spacing="1">AGORA PLATFORM</text>
+
+                    <rect x="135" y="30" width="90" height="28" rx="6" fill="#e85d3a20" stroke="#e85d3a"
+                        stroke-width="1" />
+                    <text x="180" y="42" text-anchor="middle" fill="#ff9a6c" font-size="8" font-weight="600"
+                        font-family="Inter">🏪 Marketplace</text>
+                    <text x="180" y="53" text-anchor="middle" fill="#ff9a6c" font-size="7" font-family="Inter">Discovery
+                        + Listing</text>
+
+                    <rect x="235" y="30" width="90" height="28" rx="6" fill="#e85d3a20" stroke="#e85d3a"
+                        stroke-width="1" />
+                    <text x="280" y="42" text-anchor="middle" fill="#ff9a6c" font-size="8" font-weight="600"
+                        font-family="Inter">🔐 Trust Engine</text>
+                    <text x="280" y="53" text-anchor="middle" fill="#ff9a6c" font-size="7" font-family="Inter">ZK-Proofs
+                        + Score</text>
+
+                    <rect x="135" y="64" width="90" height="28" rx="6" fill="#e85d3a20" stroke="#e85d3a"
+                        stroke-width="1" />
+                    <text x="180" y="76" text-anchor="middle" fill="#ff9a6c" font-size="8" font-weight="600"
+                        font-family="Inter">💰 Payments</text>
+                    <text x="180" y="87" text-anchor="middle" fill="#ff9a6c" font-size="7" font-family="Inter">Stripe +
+                        x402 + AP2</text>
+
+                    <rect x="235" y="64" width="90" height="28" rx="6" fill="#e85d3a20" stroke="#e85d3a"
+                        stroke-width="1" />
+                    <text x="280" y="76" text-anchor="middle" fill="#ff9a6c" font-size="8" font-weight="600"
+                        font-family="Inter">📊 Analytics</text>
+                    <text x="280" y="87" text-anchor="middle" fill="#ff9a6c" font-size="7" font-family="Inter">Usage +
+                        Revenue</text>
+
+                    <!-- Arrows right -->
+                    <path d="M342 52 L378 52" stroke="#e85d3a" stroke-width="1.5" marker-end="url(#a3)" />
+
+                    <!-- Buyers -->
+                    <rect x="380" y="10" width="80" height="25" rx="5" fill="#1a1a2e" stroke="#9999aa"
+                        stroke-width="1" />
+                    <text x="420" y="27" text-anchor="middle" fill="#9999aa" font-size="8"
+                        font-family="Inter">Enterprise</text>
+                    <rect x="380" y="40" width="80" height="25" rx="5" fill="#1a1a2e" stroke="#9999aa"
+                        stroke-width="1" />
+                    <text x="420" y="57" text-anchor="middle" fill="#9999aa" font-size="8"
+                        font-family="Inter">SMB</text>
+                    <rect x="380" y="70" width="80" height="25" rx="5" fill="#1a1a2e" stroke="#9999aa"
+                        stroke-width="1" />
+                    <text x="420" y="87" text-anchor="middle" fill="#9999aa" font-size="8" font-family="Inter">Indie
+                        Devs</text>
+
+                    <text x="420" y="110" text-anchor="middle" fill="#666680" font-size="7"
+                        font-family="Inter">ПОКУПАТЕЛИ</text>
+
+                    <defs>
+                        <marker id="a3" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                            <path d="M0,0 L6,2.5 L0,5" fill="#e85d3a" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+
+        <div class="page-footer">AGORA — Trusted AI Agent Marketplace | Февраль 2026</div>
+        <div class="page-number">3 / 3</div>
+    </div>
+
+</body>
+
+</html>

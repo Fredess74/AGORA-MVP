@@ -28,6 +28,11 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
+                        <Link to="/trends" className={isActive('/trends')}>
+                            📊 Trends
+                        </Link>
+                    </li>
+                    <li>
                         <a href="https://github.com/Fredess74/AGORA-MVP#readme" className="navbar__link" target="_blank" rel="noreferrer">
                             Docs
                         </a>

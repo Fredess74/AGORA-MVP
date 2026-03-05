@@ -9,6 +9,7 @@ import AuthPage from './pages/AuthPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
 import CreateAgentPage from './pages/CreateAgentPage';
 import DashboardPage from './pages/DashboardPage';
+import TrendsPage from './pages/TrendsPage';
 import { useStore } from './store/useStore';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
                     <Route path="/auth/callback" element={<AuthCallbackPage />} />
                     <Route path="/create" element={<CreateAgentPage />} />
                     <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route path="/trends" element={<TrendsPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </main>

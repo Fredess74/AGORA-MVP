@@ -1,0 +1,383 @@
+/* ═══════════════════════════════════════════════════════════
+   Trends Page — Agora Trend Analyst Dashboard
+   ═══════════════════════════════════════════════════════════ */
+
+.trends-page {
+    padding: var(--space-8) 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+
+.trends-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.trends-header__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    background: rgba(220, 26, 0, 0.12);
+    border: 1px solid rgba(220, 26, 0, 0.25);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #dc1a00;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-3);
+}
+
+.trends-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    margin-bottom: var(--space-2);
+}
+
+.trends-header p {
+    color: var(--color-text-secondary);
+    font-size: var(--text-base);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ── Stats Grid ──────────────────────────────────────────── */
+
+.trends-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+}
+
+.stat-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card__icon {
+    font-size: 1.8rem;
+    margin-bottom: var(--space-2);
+}
+
+.stat-card__value {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+}
+
+.stat-card__label {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ── Trends Table ────────────────────────────────────────── */
+
+.trends-section {
+    margin-bottom: var(--space-8);
+}
+
+.trends-section h2 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trends-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.trends-table th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.trends-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 0.9rem;
+}
+
+.trends-table tr:last-child td {
+    border-bottom: none;
+}
+
+.trends-table tr:hover td {
+    background: rgba(220, 26, 0, 0.04);
+}
+
+.direction-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.direction-badge--rising {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+}
+
+.direction-badge--stable {
+    background: rgba(250, 204, 21, 0.12);
+    color: #facc15;
+}
+
+.direction-badge--declining {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+.type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.type-badge--repo {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+}
+
+.type-badge--package {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+}
+
+/* ── White Spaces ────────────────────────────────────────── */
+
+.whitespace-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-4);
+}
+
+.whitespace-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.whitespace-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.whitespace-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #dc1a00, #ff4d35);
+}
+
+.whitespace-card__score {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(220, 26, 0, 0.12);
+    color: #dc1a00;
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+
+.whitespace-card h3 {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    padding-right: 44px;
+}
+
+.whitespace-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* ── Competitors ─────────────────────────────────────────── */
+
+.competitor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+}
+
+.competitor-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    transition: transform 0.2s;
+}
+
+.competitor-card:hover {
+    transform: translateY(-2px);
+}
+
+.competitor-card__stars {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    min-width: 70px;
+}
+
+.competitor-card__stars span {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    display: block;
+}
+
+.competitor-card__info h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.competitor-card__info p {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.threat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.threat-dot--high {
+    background: #ef4444;
+}
+
+.threat-dot--medium {
+    background: #facc15;
+}
+
+.threat-dot--low {
+    background: #22c55e;
+}
+
+/* ── Sentiment ───────────────────────────────────────────── */
+
+.sentiment-bars {
+    display: flex;
+    gap: 2px;
+    height: 32px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: var(--space-3);
+}
+
+.sentiment-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    min-width: 40px;
+}
+
+.sentiment-bar--positive {
+    background: #22c55e;
+}
+
+.sentiment-bar--neutral {
+    background: #64748b;
+}
+
+.sentiment-bar--negative {
+    background: #ef4444;
+}
+
+.sentiment-legend {
+    display: flex;
+    gap: var(--space-4);
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.sentiment-legend span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+
+.trends-footer {
+    text-align: center;
+    padding: var(--space-6) 0;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-8);
+}
+
+.trends-footer a {
+    color: #dc1a00;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .trends-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .whitespace-grid,
+    .competitor-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,6 @@
+.env
+node_modules/
+data/raw/
+data/enriched/
+data/analysis/
+dist/
