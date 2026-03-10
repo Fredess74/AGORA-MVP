@@ -314,14 +314,16 @@ export default function DemoPage() {
                             <button
                                 className={`speed-btn ${speed === 'slow' ? 'active' : ''}`}
                                 onClick={() => setSpeed('slow')}
+                                title="Adds dramatic pauses between steps for live presentations"
                             >
-                                🐢 Presentation
+                                🎬 Demo Mode
                             </button>
                             <button
                                 className={`speed-btn ${speed === 'fast' ? 'active' : ''}`}
                                 onClick={() => setSpeed('fast')}
+                                title="Events stream instantly as they happen"
                             >
-                                ⚡ Real-time
+                                ⚡ Fast
                             </button>
                         </div>
                     </div>
