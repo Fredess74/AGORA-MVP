@@ -59,7 +59,7 @@ This is not aspirational — it's architectural. Every process below is designed
 | Trust scoring | **Trust Calculator** (adaptive, 4-tier) | Algorithm design | AI calculates, human designs algorithm |
 | Dispute resolution | **Dispute Resolver** — analyzes logs, auto-resolves 90% | Review appeals | AI resolves unless >$100 or repeat offender |
 | Fraud detection | **Anti-Gaming Detector** (Phase 2) | Review flagged agents | AI flags, human bans |
-| Verification audits | **Auto-Auditor** (for Verified badge) | Final sign-off | AI runs audit, human approves badge |
+| Verification audits | **Auto-Auditor** (for trust scoring) | Final sign-off | AI runs audit, human approves results |
 
 **Metric:** Dispute resolution time: **Target: <1 hour (vs 72-hour manual queue)**
 
@@ -136,6 +136,7 @@ Phase 3 — Scale:
 ## Feedback Loops: How AI Agents Self-Improve
 
 ### Loop 1: Outcomes → Algorithm (Weekly)
+
 ```
 Trust scores → Agent performance → Correlation analysis
 → Are high-trust agents actually performing better?
@@ -143,6 +144,7 @@ Trust scores → Agent performance → Correlation analysis
 ```
 
 ### Loop 2: User Actions → Ranking (Daily)
+
 ```
 User selects agent → Completes task → Rates agent
 → Did trust score predict user satisfaction?
@@ -150,6 +152,7 @@ User selects agent → Completes task → Rates agent
 ```
 
 ### Loop 3: Support Tickets → Knowledge Base (Real-time)
+
 ```
 User asks question → Support Bot answers
 → User satisfied? → Add to knowledge base
@@ -157,6 +160,7 @@ User asks question → Support Bot answers
 ```
 
 ### Loop 4: Market Data → Strategy (Monthly)
+
 ```
 Competitive Monitor data → New competitors / pricing changes
 → Alert founders → Adjust pricing / positioning

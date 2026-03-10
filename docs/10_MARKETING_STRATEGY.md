@@ -112,7 +112,7 @@ Prepaid balance ($25 minimum) → micro-transaction economics work
    ↓
 Trust API subscription ($29-99/mo) → for developers who want to integrate scores
    ↓
-Creator tools ($19-49/mo) → analytics, verification, A/B testing
+Premium API ($29-199/mo) → priority resolution, SLA, enhanced trust data
 ```
 
 **Key:** The free tier is not charity. Free users generate trust data (their transactions feed the scoring engine). Their data makes the whole system more valuable. Every free user makes the paid product better.

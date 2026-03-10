@@ -19,7 +19,7 @@ Revenue details and pricing: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md)
 | Marketplace Commission | $18,000 | $48,000 | Per-transaction (10%) |
 | Trust API | $6,000 | $18,000 | SaaS subscriptions |
 | Prepaid Balance Float | $200 | $1,200 | Interest on deposits |
-| Promoted Listings | $2,400 | $9,600 | Creator subscriptions |
+| Premium API | $2,400 | $9,600 | Creator subscriptions |
 | **Total Year 1** | **$26,600** | **$76,800** | |
 
 ## Monthly Projection (Base Case — Revised March 10, 2026)

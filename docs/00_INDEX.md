@@ -15,7 +15,7 @@ last_updated: 2026-03-08
 | Fact | Value |
 |------|-------|
 | What | Trust + discovery + payment infrastructure for AI agents |
-| Revenue | 4 streams: commission (10%), Trust API, convenience fees, creator tools |
+| Revenue | 4 streams: commission (10%), Trust API, convenience fees, premium API access |
 | Payments | Dual-rail: prepaid balance (fiat) + x402 (crypto) |
 | Team | 1 human + 7 AI agents (Phase 1), max 15 humans (Phase 3) |
 | Burn | $4,900/month (Phase 1) |

@@ -108,7 +108,7 @@ Path to first revenue: 4-6 weeks focused engineering on P0 items.
 | Marketplace Commission (10%) | Day 1 | Per-transaction |
 | Trust API | Day 1 | SaaS subscription |
 | Prepaid Balance Float | Month 1 | Interest income |
-| Creator Tools & Visibility | Month 4-6 | Ads + badges + analytics |
+| Premium API Access | Month 4-6 | Priority resolution + SLA + enhanced trust data |
 
 AI-first operations: 7 AI agents, $200/mo. Details: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md#ai-agent-specifications)
 

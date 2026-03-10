@@ -80,7 +80,7 @@ Not star ratings. Not self-reported. Computed.
 |-------------|-------|
 | **Commission** | 10% per transaction |
 | **Trust API** | $29-99/mo |
-| **Creator Tools** | $19-149/mo |
+| **Premium API** | $29-199/mo |
 
 Break-even: 170 transactions/day at $5 avg.
 Monthly burn: $4,900 (AI runs our ops).

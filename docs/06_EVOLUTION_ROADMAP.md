@@ -46,7 +46,7 @@ $4,900/mo burn      $25,500/mo burn     $80,500/mo burn
 |--------|---------------|
 | Commission | $2,500/mo |
 | Trust API | $500/mo |
-| Promoted Listings | $200/mo (just launched) |
+| Premium API | $200/mo (just launched) |
 | Float | $50/mo |
 | **Total** | **~$3,250/mo** |
 
@@ -81,7 +81,7 @@ $4,900/mo burn      $25,500/mo burn     $80,500/mo burn
 | Creator analytics dashboard | P1 | Month 7-9 |
 | Code scanner for seed trust scores | P1 | Month 8-10 |
 | A2A protocol adapter | P1 | Month 10-14 |
-| Promoted listing tiers | P1 | Month 8 |
+| Premium API SLA tiers | P1 | Month 8 |
 
 ### Growth Tactics
 

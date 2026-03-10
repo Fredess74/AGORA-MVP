@@ -8,7 +8,7 @@ last_updated: 2026-03-08
 
 # Funnel and Conversion
 >
-> **TL;DR:** One ranking engine, two interfaces. Humans see a marketplace UI. AI sees structured JSON via MCP. Same ranking algorithm serves both — trust score × performance × promoted boost. Promoted listings work for AI too: higher `priority_score` = AI selects the agent more often.
+> **TL;DR:** One ranking engine, two interfaces. Humans see a marketplace UI. AI sees structured JSON via MCP. Same ranking algorithm serves both — trust score × performance. Premium API users get faster matching and dedicated endpoints. Ranking is 100% merit-based — no paid placement.
 
 ## Three Acquisition Channels
 
@@ -339,7 +339,7 @@ Agora registers as an **MCP server**. Any AI assistant that supports MCP can dis
 
 ### One Algorithm, Two Interfaces
 
-The same ranking algorithm serves humans (web UI) and AI (MCP/API). This is the most scalable design — one system to optimize, one set of signals, one promoted listing that works everywhere.
+The same ranking algorithm serves humans (web UI) and AI (MCP/API). This is the most scalable design — one system to optimize, one set of signals. Premium API users get faster matching, but ranking is purely merit-based.
 
 ```
                         ┌── Web UI (cards, filters, search bar)
@@ -371,8 +371,7 @@ priority_score = (
 
 | What Creators Buy | Effect on Ranking | Effect on Visibility |
 |-------------------|------------------|---------------------|
-| Spotlight Ads | None — separate array | Shown in labeled "Sponsored" section |
-| Verified Badge | Indirect — passing audit improves code quality signal | ✅ badge shown in UI and API |
+| Premium API | Faster matching, dedicated queue | Priority badge shown in API response |
 | Creator Pro Tools | Indirect — analytics help creators improve organically | Better data → better decisions |
 
 ### Search Results: Two Separate Rails
@@ -423,9 +422,7 @@ These are starting assumptions, NOT proven tactics. Each will be tested and meas
 | Prepaid auto-refill reduces churn | Track auto-refill opt-in rate | >30% of active users enable | Month 3-4 |
 | Trust score display increases conversion | A/B test: with/without score | >15% lift in purchase rate | Month 4-5 |
 | AI assistant channel > web channel | Compare revenue by source | AI channel >60% of revenue by Month 9 | Month 6-9 |
-| Promoted listings boost AI selection | Track promoted vs organic selection rate via MCP | Promoted agents selected 2x more | Month 6-8 |
-| Spotlight ads generate clicks (human) | Track CTR on sponsored cards vs organic | >2% CTR on sponsored | Month 5-6 |
-| Verified badge increases conversion | Compare conversion: verified vs non-verified | >20% lift | Month 6-8 |
+| Premium API justifies pricing | Compare selection rate: Priority vs Standard agents | >50% faster matching | Month 6-8 |
 | Sponsored results used by AI | Track % of AI connections from sponsored_results | >5% of AI connections | Month 8-10 |
 
 **Rule:** If a hypothesis fails after 30 days of data, stop investing in it. Move to next.
@@ -435,6 +432,6 @@ These are starting assumptions, NOT proven tactics. Each will be tested and meas
 ## Open Questions
 
 1. **Hypothesis:** AI assistants will select Agora's MCP server over direct agent calls. Depends on whether trust verification has perceived value to LLMs/users.
-2. **Unknown:** Will LLMs consider `sponsored_results` at all? If AI ignores sponsored, Spotlight Ads only work for humans — still valuable but smaller TAM.
-3. **Design decision:** Should `sponsored_results` include full trust/performance data? If yes, AI can make merit-based decisions about sponsored agents too.
+2. **Unknown:** Will AI agents value Premium API enough to pay? If <5% of agents upgrade, Premium API may need restructuring.
+3. **Hypothesis:** SLA contracts have real demand from enterprise AI systems. If <3 enterprise customers in 6 months, shift to per-query premium pricing.sed decisions about sponsored agents too.
 4. **Hypothesis:** Verified badge has real demand. If <5% of creators pay for audit, badge may not be a significant revenue stream.

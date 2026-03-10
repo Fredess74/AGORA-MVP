@@ -37,7 +37,7 @@ Canonical build status: [ARCHITECTURE.md](../technical/ARCHITECTURE.md)
 
 ## Business Model
 
-4 revenue streams in Year 1: marketplace commission (10%), Trust API (SaaS), prepaid balance float, promoted listings. Dual-rail payments (prepaid fiat + x402 crypto) make micro-transactions profitable.
+4 revenue streams in Year 1: marketplace commission (10%), Trust API (SaaS), prepaid balance convenience fees, premium API access (priority resolution + SLA). Dual-rail payments (prepaid fiat + x402 crypto) make micro-transactions profitable.
 
 Full details: [04_BUSINESS_MODEL.md](../04_BUSINESS_MODEL.md)
 

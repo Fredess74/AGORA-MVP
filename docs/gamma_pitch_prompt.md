@@ -160,8 +160,8 @@ Quadrant 2: **Trust API Subscriptions — Day 1**
 Quadrant 3: **Prepaid Balance Fees — Month 1**
 "3% convenience fee on top-ups via Stripe. Funds managed by Stripe (no money transmitter license needed)."
 
-Quadrant 4: **Creator Tools & Visibility — Month 4-6**
-"Spotlight Ads: $29-149/mo (labeled 'Sponsored', separate from organic). Verified Badge: $99 audit. Creator Pro Tools: $49/mo bundle."
+Quadrant 4: **Premium API Access — Month 4-6**
+"Priority Resolution: $29-99/mo (faster matching, dedicated queue, SLA). Guaranteed SLA: $49-199/mo. Enhanced Trust Data: $19-99/mo."
 
 Bottom stats bar:
 

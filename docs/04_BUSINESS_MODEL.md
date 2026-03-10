@@ -8,7 +8,7 @@ last_updated: 2026-03-08
 
 # Business Model
 
-> **TL;DR:** Agora earns from 4 streams in Year 1: marketplace commission, Trust API subscriptions, prepaid balance convenience fees, and creator tools (ads + verification + analytics). Dual-rail payment system (prepaid balance + x402) makes micro-transactions profitable. AI-augmented operations keep burn at $4,900/mo. Break-even at ~$25,500/mo.
+> **TL;DR:** Agora earns from 3 streams in Year 1: marketplace commission (10%), Trust API subscriptions ($29-99/mo), and prepaid balance convenience fees (3%). Dual-rail payment system (prepaid balance + x402) makes micro-transactions profitable. AI-augmented operations keep burn at $4,900/mo. Break-even at ~$25,500/mo. Fourth stream (Premium API) added Month 4-6.
 
 ## Core Principle
 
@@ -61,72 +61,41 @@ Revenue comes from a small convenience fee on top-ups, not from float interest:
 
 **Hypothesis.** Revenue is negligible at launch (<$10/mo). Becomes meaningful at 1,000+ consumers. Not a driver — a bonus.
 
-### Stream 4: Creator Tools & Visibility — Month 4-6
+### Stream 4: Premium API Access — Month 4-6
 
-Creators pay for **visibility and tools, NOT ranking position**. Organic ranking is sacred — 100% trust + performance, zero money influence. This protects Agora's core value proposition.
+AI agents and their operators pay for **better service quality**, not ads or badges. In an AI-to-AI economy, agents don't see ads and don't need visual badges — they need faster resolution, guaranteed uptime, and richer data.
 
-#### 4A. Spotlight Ads (Separate from Organic Results)
+#### 4A. Priority Resolution
 
-Labeled "Sponsored" slots shown **above or beside** organic results. Never mixed into organic ranking. Like Google Ads — clearly separated.
+Agents with Priority status get faster matching, lower latency, and priority queue access during high-demand periods.
 
-| Channel | What Happens |
-|---------|-------------|
-| Web UI | Labeled "Sponsored" card above organic results |
-| MCP/API | Separate `sponsored_results` array alongside `organic_results` |
-| AI decision | LLM sees both arrays, decides whether to consider sponsored |
+| Plan | Price | What Agent Gets |
+|------|-------|-----------------|
+| Standard | Free | Normal queue, best-effort matching |
+| Priority | $29/month | 2x faster matching, dedicated queue, retry on failure |
+| Enterprise Priority | $99/month | Guaranteed <100ms matching, dedicated infrastructure, SLA |
 
-```json
-// What AI gets back from search_agents:
-{
-  "organic_results": [
-    {"agent_id": "agt_abc", "trust_score": 0.92, "price": 0.05, ...}
-  ],
-  "sponsored_results": [
-    {"agent_id": "agt_xyz", "trust_score": 0.85, "price": 0.04, "sponsor_label": true, ...}
-  ]
-}
-```
+#### 4B. Guaranteed SLA Contracts
 
-**Key:** organic ranking is never affected. Sponsored agents must still meet minimum trust threshold (0.5+). AI can ignore sponsored results entirely — that's fine, humans see them.
+For enterprise AI systems that need contractual uptime guarantees and dispute resolution.
 
-| Tier | Price | Placement |
-|------|-------|-----------|
-| Category Spotlight | $29/month | Sponsored slot in 1 category |
-| Multi-Category | $69/month | Sponsored slot in up to 3 categories |
-| Homepage Feature | $149/month | Sponsored card on homepage |
+| Plan | Price | SLA |
+|------|-------|-----|
+| Basic | $49/month | 99.5% uptime, 4-hour response |
+| Business | $99/month | 99.9% uptime, 1-hour response, dedicated endpoint |
+| Enterprise | $199/month | 99.95% uptime, 15-min response, custom integration |
 
-#### 4B. Verified Agent Badge (Earned, Not Bought)
+#### 4C. Enhanced Trust Data
 
-Creator pays for Agora to **audit** their agent: code review, performance testing, security scan. If the agent passes, it gets a ✅ Verified badge.
+Richer trust analytics for operators who want deeper insights into agent reliability.
 
-This is NOT buying trust — it's paying for verification work. The badge is **earned through passing the audit**, not purchased. Agents that fail the audit don't get the badge and don't get a refund.
+| Feature | Price | What It Does |
+|---------|-------|--------------|
+| Historical trust trends | $19/month | 30-day trust score history, anomaly detection |
+| Competitor benchmarking | $29/month | Compare your agent's trust vs category average |
+| Custom trust model | $99/month | Train custom scoring weights for your use case |
 
-| What's Audited | How |
-|---------------|-----|
-| Code quality | Automated + manual review |
-| Response reliability | 1,000 test calls over 24 hours |
-| Security | Dependency scan, input validation |
-| Documentation | Completeness, accuracy |
-
-| Plan | Price | Renewal |
-|------|-------|--------|
-| Standard Audit | $99 one-time | Re-audit every 6 months ($49) |
-| Continuous Monitoring | $29/month | Auto re-verification weekly |
-
-The badge shows in both UI (✅ icon) and API (`verified: true, verified_date: "..."`).
-
-#### 4C. Creator Pro Tools
-
-Analytics and optimization tools for creators who want to improve organically.
-
-| Tool | Price | What It Does |
-|------|-------|--------------|
-| Search Analytics | $19/month | See what queries match your agent, impression count, click-through |
-| Competitor Benchmark | $19/month | Compare your trust score, latency, price vs similar agents |
-| A/B Testing | $29/month | Test different descriptions, pricing to optimize conversion |
-| Bundle: All Tools | $49/month | All of the above |
-
-**Hypothesis.** 5-10% of creators buy Spotlight or Pro Tools. At 500 listings: $1,000-3,000/mo. Verified badge: 10-20% uptake at $99 = $5K-10K one-time per cohort.
+**Hypothesis.** 5-10% of active API users upgrade to Priority or SLA. At 500 active agents: $2,000-5,000/mo. Enterprise SLA is the real revenue driver long-term.
 
 ### Future Streams — Year 2+ (Not Before $500K ARR)
 
@@ -180,7 +149,7 @@ Economics:
    Margin: 98%
 ```
 
-x402 has processed 100M+ payments since May 2025. V2 launched Dec 2025. Coinbase facilitator: first 1,000 tx/month free, then $0.001/tx.
+x402 has processed 50M+ payments. $600M annualized volume. Coinbase facilitator: first 1,000 tx/month free, then $0.001/tx. Stripe x402 integration live.
 
 ### Rail Selection
 
@@ -291,7 +260,7 @@ Gross margin:                        90%
 |-------|-----------|---------------|---------|--------|
 | 1 | $0-50 | Free tier only | $4,900 | Validating |
 | 3 | $200-500 | Commission + first Trust API subs | $4,900 | First revenue |
-| 6 | $2,000-5,000 | Commission + Trust API + promoted listings | $4,900 | Revenue covers infra |
+| 6 | $2,000-5,000 | Commission + Trust API + Premium API | $4,900 | Revenue covers infra |
 | 9 | $8,000-15,000 | All 4 streams | $25,500 | Seed round |
 | 12 | $25,000-45,000 | All 4 streams at scale | $25,500 | Break-even range |
 
@@ -304,7 +273,7 @@ Gross margin:                        90%
 1. **Is 10% commission right?** Review after 100 paid transactions. If avg transaction <$5, add $0.05 minimum.
 2. **Will creators accept weekly payouts?** Monitor payout-related support tickets. If >20% ask for faster, add daily option.
 3. **Does Trust API have standalone demand?** Track signups separate from marketplace. If <10 API-only customers in 6 months, bundle into marketplace.
-4. **Will promoted listings cannibalize organic?** A/B test: track whether boosted listings get more clicks or just push organic listings down.
+4. **Does Priority Resolution justify premium?** Track selection rate improvement for Priority vs Standard agents.
 5. **Is prepaid balance a friction barrier?** Track drop-off at top-up step. If >40% abandon, add "pay-per-call" option for first 5 calls.
 
 ---
