@@ -105,8 +105,9 @@ export function getStats(agentId: string): AgentStats {
     const avgLatency = calls.reduce((sum, c) => sum + c.latencyMs, 0) / calls.length;
     const uniqueQueries = new Set(calls.map(c => c.query.toLowerCase())).size;
 
-    // Trust score: weighted formula
-    // 50% base reliability + 35% success rate + 15% speed factor
+    // Local trust estimate (simplified — canonical formula is in orchestrator/trust/calculator.ts)
+    // This is a client-side approximation for display when Supabase data isn't available
+    // Real trust uses 6-component EWMA via the orchestrator pipeline
     const speedFactor = Math.max(0, 1 - (avgLatency / 15000)); // 15s = 0, 0s = 1
     const trustScore = Math.min(1, 0.5 + (0.35 * successRate) + (0.15 * speedFactor));
 
