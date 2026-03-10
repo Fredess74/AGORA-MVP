@@ -1,0 +1,23 @@
+{
+    "buildCommand": "cd packages/marketplace && npm run build",
+    "outputDirectory": "packages/marketplace/dist",
+    "installCommand": "cd packages/marketplace && npm install",
+    "framework": "vite",
+    "rewrites": [
+        {
+            "source": "/((?!assets/).*)",
+            "destination": "/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/assets/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        }
+    ]
+}
