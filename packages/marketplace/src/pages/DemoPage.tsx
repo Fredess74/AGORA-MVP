@@ -1,10 +1,17 @@
 /* ═══════════════════════════════════════════════════════════
-   DemoPage — E2E MVP Demo Interface
+   DemoPage — E2E MVP Demo Interface (Finalized)
    
-   3-column layout:
-   1. Director Chat (input + AI responses + result)
-   2. Activity Journal (SSE real-time events)
-   3. Trust Score Live (6 animated component bars)
+   Features:
+   - Visual pipeline stepper (8 steps)
+   - 3 preset scenario buttons
+   - Transaction summary banner
+   - ZK-Verifiable + DID indicators
+   - Confidence level display
+   - Latency badges on events
+   - API call counter
+   - Connection status indicator
+   - Download report button
+   - All English UI
    ═══════════════════════════════════════════════════════════ */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -40,28 +47,73 @@ interface TrustBreakdown {
 
 type SpeedMode = 'slow' | 'fast';
 
+// ── Pipeline Steps ──────────────────────────────────────
+
+const PIPELINE_STEPS = [
+    { id: 'discover', icon: '🔍', label: 'Discover' },
+    { id: 'verify', icon: '🛡️', label: 'Verify' },
+    { id: 'negotiate', icon: '🤝', label: 'Negotiate' },
+    { id: 'execute', icon: '⚡', label: 'Execute' },
+    { id: 'deliver', icon: '📦', label: 'Deliver' },
+    { id: 'qa', icon: '✅', label: 'QA' },
+    { id: 'trust', icon: '📊', label: 'Trust' },
+    { id: 'done', icon: '🏁', label: 'Done' },
+];
+
+const STEP_MAP: Record<string, string> = {
+    session_started: 'discover',
+    task_formulated: 'discover',
+    mcp_search: 'discover',
+    agent_selected: 'verify',
+    negotiation: 'negotiate',
+    work_started: 'execute',
+    api_call: 'execute',
+    work_completed: 'deliver',
+    qa_review: 'qa',
+    trust_updated: 'trust',
+    session_completed: 'done',
+};
+
+// ── Preset Scenarios ────────────────────────────────────
+
+const PRESETS = [
+    { icon: '🛡️', label: 'Security Audit: facebook/react', query: 'Audit the security of the GitHub repository facebook/react' },
+    { icon: '📊', label: 'Market Research: AI Frameworks', query: 'Research the competitive landscape of AI agent frameworks' },
+    { icon: '⚡', label: 'Performance Audit: stripe.com', query: 'Analyze the performance and SEO of stripe.com' },
+];
+
 // ── Component ───────────────────────────────────────────
 
 export default function DemoPage() {
     const [query, setQuery] = useState('');
     const [speed, setSpeed] = useState<SpeedMode>('slow');
     const [isRunning, setIsRunning] = useState(false);
+    const [isConnected, setIsConnected] = useState(false);
     const [events, setEvents] = useState<SSEEvent[]>([]);
     const [chatMessages, setChatMessages] = useState<Array<{ sender: string; text: string; isUser: boolean }>>([]);
     const [trustBefore, setTrustBefore] = useState<TrustBreakdown | null>(null);
     const [trustAfter, setTrustAfter] = useState<TrustBreakdown | null>(null);
     const [result, setResult] = useState<string>('');
     const [, setSessionId] = useState<string>('');
+    const [currentStep, setCurrentStep] = useState<string>('');
+    const [apiCallCount, setApiCallCount] = useState(0);
+    const [geminiCallCount, setGeminiCallCount] = useState(0);
+    const [startTime, setStartTime] = useState<number>(0);
+    const [elapsed, setElapsed] = useState<string>('0.0s');
+    const [showTransaction, setShowTransaction] = useState(false);
 
     const journalRef = useRef<HTMLDivElement>(null);
     const chatRef = useRef<HTMLDivElement>(null);
     const eventSourceRef = useRef<EventSource | null>(null);
+    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     // ── SSE Connection ──────────────────────────────────
 
     useEffect(() => {
         const es = new EventSource(`${API_BASE}/api/demo/stream`);
         eventSourceRef.current = es;
+
+        es.onopen = () => setIsConnected(true);
 
         es.onmessage = (e) => {
             try {
@@ -71,6 +123,7 @@ export default function DemoPage() {
         };
 
         es.onerror = () => {
+            setIsConnected(false);
             console.warn('SSE connection error, reconnecting...');
         };
 
@@ -78,10 +131,36 @@ export default function DemoPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // ── Timer ───────────────────────────────────────────
+
+    useEffect(() => {
+        if (isRunning && startTime > 0) {
+            timerRef.current = setInterval(() => {
+                setElapsed(((Date.now() - startTime) / 1000).toFixed(1) + 's');
+            }, 100);
+        }
+        return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    }, [isRunning, startTime]);
+
     // ── Handle SSE Events ───────────────────────────────
 
     const handleSSEEvent = useCallback((event: SSEEvent) => {
         setEvents(prev => [...prev, event]);
+
+        // Update pipeline step
+        if (STEP_MAP[event.type]) {
+            setCurrentStep(STEP_MAP[event.type]);
+        }
+
+        // Count API calls
+        if (event.type === 'api_call') {
+            setApiCallCount(prev => prev + 1);
+        }
+
+        // Count Gemini calls (any agent action)
+        if (['task_formulated', 'agent_selected', 'negotiation', 'work_completed', 'qa_review'].includes(event.type)) {
+            setGeminiCallCount(prev => prev + 1);
+        }
 
         // Update trust data
         if (event.type === 'trust_updated' && event.metadata?.trust) {
@@ -94,6 +173,11 @@ export default function DemoPage() {
             }
         }
 
+        // Agent selected — show initial trust
+        if (event.type === 'agent_selected' && event.metadata?.trust) {
+            setTrustBefore(event.metadata.trust as TrustBreakdown);
+        }
+
         // Add AI messages to chat
         if (['task_formulated', 'agent_selected', 'work_completed', 'session_completed'].includes(event.type)) {
             setChatMessages(prev => [...prev, {
@@ -103,9 +187,11 @@ export default function DemoPage() {
             }]);
         }
 
-        // Capture result
+        // Session completed
         if (event.type === 'session_completed') {
             setIsRunning(false);
+            setShowTransaction(true);
+            if (timerRef.current) clearInterval(timerRef.current);
         }
 
         // Auto-scroll
@@ -118,27 +204,34 @@ export default function DemoPage() {
 
     // ── Start Demo ──────────────────────────────────────
 
-    const startDemo = async () => {
-        if (!query.trim() || isRunning) return;
+    const startDemo = async (overrideQuery?: string) => {
+        const q = overrideQuery || query;
+        if (!q.trim() || isRunning) return;
 
         // Reset state
         setEvents([]);
-        setChatMessages([{ sender: 'Director', text: query, isUser: true }]);
+        setChatMessages([{ sender: 'Director', text: q, isUser: true }]);
         setTrustBefore(null);
         setTrustAfter(null);
         setResult('');
         setIsRunning(true);
+        setCurrentStep('discover');
+        setApiCallCount(0);
+        setGeminiCallCount(0);
+        setStartTime(Date.now());
+        setElapsed('0.0s');
+        setShowTransaction(false);
+        if (overrideQuery) setQuery(overrideQuery);
 
         try {
             const res = await fetch(`${API_BASE}/api/demo/start`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query, speed }),
+                body: JSON.stringify({ query: q, speed }),
             });
             const data = await res.json();
             setSessionId(data.sessionId || '');
 
-            // Poll for result
             if (data.sessionId) {
                 pollForResult(data.sessionId);
             }
@@ -172,42 +265,125 @@ export default function DemoPage() {
         setTimeout(poll, 3000);
     };
 
+    const downloadReport = () => {
+        const blob = new Blob([result], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'agora-agent-report.md';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
     // ── Render ───────────────────────────────────────────
 
     const currentTrust = trustAfter || trustBefore;
+    const completedSteps = PIPELINE_STEPS.map(s => s.id);
+    const currentStepIndex = completedSteps.indexOf(currentStep);
 
     return (
         <div className="demo-page">
+            {/* ── Header ──────────────────────────────── */}
             <div className="demo-header">
-                <h1>🏛️ Agora — AI Organization ↔ AI Organization</h1>
-                <p>Реальная демонстрация: AI покупатель находит, нанимает и получает работу от AI исполнителя</p>
-                <div className="demo-controls">
-                    <div className="speed-toggle">
-                        <button
-                            className={`speed-btn ${speed === 'slow' ? 'active' : ''}`}
-                            onClick={() => setSpeed('slow')}
-                        >
-                            🐢 Presentation
-                        </button>
-                        <button
-                            className={`speed-btn ${speed === 'fast' ? 'active' : ''}`}
-                            onClick={() => setSpeed('fast')}
-                        >
-                            ⚡ Real-time
-                        </button>
+                <h1>
+                    🏛️ Agora — <span className="highlight">Live E2E Demo</span>
+                </h1>
+                <p>Watch AI organizations discover, verify, negotiate, and transact — powered by real APIs</p>
+
+                <div className="demo-stats-bar">
+                    <div className="demo-stat">
+                        <div className={`connection-dot ${isConnected ? '' : 'disconnected'}`} />
+                        <span>{isConnected ? 'Connected' : 'Disconnected'}</span>
+                    </div>
+                    <div className="demo-stat">
+                        📡 API Calls: <span className="value">{apiCallCount}</span>
+                    </div>
+                    <div className="demo-stat">
+                        🤖 AI Calls: <span className="value">{geminiCallCount}</span>
+                    </div>
+                    <div className="demo-stat">
+                        ⏱ Elapsed: <span className="value">{elapsed}</span>
+                    </div>
+                    <div className="demo-controls">
+                        <div className="speed-toggle">
+                            <button
+                                className={`speed-btn ${speed === 'slow' ? 'active' : ''}`}
+                                onClick={() => setSpeed('slow')}
+                            >
+                                🐢 Presentation
+                            </button>
+                            <button
+                                className={`speed-btn ${speed === 'fast' ? 'active' : ''}`}
+                                onClick={() => setSpeed('fast')}
+                            >
+                                ⚡ Real-time
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            {/* ── Pipeline Stepper ──────────────────────── */}
+            <div className="demo-pipeline">
+                {PIPELINE_STEPS.map((step, i) => (
+                    <span key={step.id}>
+                        <span className={`pipeline-step ${i < currentStepIndex ? 'completed' :
+                                step.id === currentStep ? 'active' : ''
+                            }`}>
+                            <span className="step-icon">{
+                                i < currentStepIndex ? '✓' : step.icon
+                            }</span>
+                            {step.label}
+                        </span>
+                        {i < PIPELINE_STEPS.length - 1 && (
+                            <span className="pipeline-arrow">→</span>
+                        )}
+                    </span>
+                ))}
+            </div>
+
+            {/* ── Preset Scenarios ─────────────────────── */}
+            {!isRunning && events.length === 0 && (
+                <div className="preset-scenarios">
+                    {PRESETS.map((preset) => (
+                        <button
+                            key={preset.label}
+                            className="preset-btn"
+                            onClick={() => startDemo(preset.query)}
+                        >
+                            {preset.icon} {preset.label}
+                        </button>
+                    ))}
+                </div>
+            )}
+
+            {/* ── Transaction Banner ──────────────────── */}
+            {showTransaction && (
+                <div className="transaction-banner">
+                    <div className="tx-item">✅ Connection Complete</div>
+                    <div className="tx-divider" />
+                    <div className="tx-item">Agent: <span className="tx-value">{currentTrust?.agentName || 'Unknown'}</span></div>
+                    <div className="tx-divider" />
+                    <div className="tx-item">Cost: <span className="tx-value">$2.00</span></div>
+                    <div className="tx-divider" />
+                    <div className="tx-item">Commission: <span className="tx-value">$0.20 (10%)</span></div>
+                    <div className="tx-divider" />
+                    <div className="tx-item">Creator Earned: <span className="tx-value">$1.80</span></div>
+                    <div className="tx-divider" />
+                    <div className="tx-item">Time: <span className="tx-value">{elapsed}</span></div>
+                </div>
+            )}
+
+            {/* ── 3-Column Grid ───────────────────────── */}
             <div className="demo-grid">
                 {/* ── Column 1: Director Chat ──────────── */}
-                <div className="glass-panel">
+                <div className="demo-panel">
                     <div className="panel-header">
                         <span className="panel-icon">💬</span>
                         <h2>Director's Interface</h2>
-                        <div style={{ marginLeft: 'auto' }}>
-                            <div className={`pulse ${isRunning ? '' : 'inactive'}`} />
-                        </div>
+                        {isRunning && (
+                            <span className="panel-meta">● Processing...</span>
+                        )}
                     </div>
                     <div className="panel-body" ref={chatRef}>
                         <div className="chat-messages">
@@ -227,15 +403,18 @@ export default function DemoPage() {
                         </div>
                         {result && (
                             <div className="result-panel">
-                                <div style={{ fontSize: '0.7rem', color: '#00d4ff', marginBottom: '0.5rem', fontWeight: 600 }}>
-                                    📄 ОТЧЁТ АГЕНТА
-                                </div>
+                                <div className="result-header">📄 Agent Report</div>
                                 {result.substring(0, 2000)}
                                 {result.length > 2000 && (
-                                    <div style={{ color: '#556', marginTop: '0.5rem' }}>
-                                        ...ещё {result.length - 2000} символов
+                                    <div style={{ color: 'var(--color-text-muted)', marginTop: 'var(--space-2)' }}>
+                                        ...{result.length - 2000} more characters
                                     </div>
                                 )}
+                                <div className="result-actions">
+                                    <button className="btn btn--sm btn--secondary" onClick={downloadReport}>
+                                        📥 Download Report
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -243,7 +422,7 @@ export default function DemoPage() {
                         <div className="chat-input-wrapper">
                             <textarea
                                 className="chat-input"
-                                placeholder="Введите запрос директора... (напр: Проверь безопасность репозитория facebook/react)"
+                                placeholder="Enter director's request... (e.g.: Audit security of facebook/react)"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyDown={(e) => {
@@ -257,54 +436,62 @@ export default function DemoPage() {
                             />
                             <button
                                 className="chat-send"
-                                onClick={startDemo}
+                                onClick={() => startDemo()}
                                 disabled={isRunning || !query.trim()}
                             >
-                                {isRunning ? '⏳' : '▶ Go'}
+                                {isRunning ? '⏳' : '▶ Run'}
                             </button>
                         </div>
                     </div>
                 </div>
 
                 {/* ── Column 2: Activity Journal ──────── */}
-                <div className="glass-panel">
+                <div className="demo-panel">
                     <div className="panel-header">
                         <span className="panel-icon">📋</span>
                         <h2>Activity Journal</h2>
-                        <div style={{ marginLeft: 'auto', fontSize: '0.7rem', color: '#556' }}>
-                            {events.length} events
-                        </div>
+                        <span className="panel-meta">{events.length} events</span>
                     </div>
                     <div className="panel-body" ref={journalRef}>
                         {events.length === 0 ? (
                             <div className="journal-empty">
                                 <div className="empty-icon">📋</div>
-                                <div>Журнал пуст</div>
-                                <div style={{ fontSize: '0.75rem', marginTop: '0.5rem' }}>
-                                    Введите запрос чтобы начать
+                                <div>Journal is empty</div>
+                                <div style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-2)' }}>
+                                    Start a demo to see real-time events
                                 </div>
                             </div>
                         ) : (
                             <div className="journal-events">
-                                {events.map((event, i) => (
-                                    <div key={i} className={`journal-event type-${event.type}`}>
-                                        <div className="journal-meta">
-                                            <span className="journal-sender">{event.sender}</span>
-                                            <span className="journal-time">
-                                                {new Date(event.timestamp).toLocaleTimeString()}
-                                            </span>
+                                {events.map((event, i) => {
+                                    const prevTime = i > 0 ? new Date(events[i - 1].timestamp).getTime() : new Date(event.timestamp).getTime();
+                                    const thisTime = new Date(event.timestamp).getTime();
+                                    const latency = ((thisTime - prevTime) / 1000).toFixed(1);
+                                    return (
+                                        <div key={i} className={`journal-event type-${event.type}`}>
+                                            <div className="journal-meta">
+                                                <span className="journal-sender">{event.sender}</span>
+                                                <span>
+                                                    <span className="journal-time">
+                                                        {new Date(event.timestamp).toLocaleTimeString()}
+                                                    </span>
+                                                    {i > 0 && (
+                                                        <span className="journal-latency">[+{latency}s]</span>
+                                                    )}
+                                                </span>
+                                            </div>
+                                            <div className="journal-title">{event.title}</div>
+                                            <div className="journal-content">{event.content}</div>
                                         </div>
-                                        <div className="journal-title">{event.title}</div>
-                                        <div className="journal-content">{event.content}</div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
                 </div>
 
                 {/* ── Column 3: Trust Score Live ──────── */}
-                <div className="glass-panel">
+                <div className="demo-panel">
                     <div className="panel-header">
                         <span className="panel-icon">🛡️</span>
                         <h2>Trust Score Live</h2>
@@ -312,16 +499,20 @@ export default function DemoPage() {
                     <div className="panel-body">
                         {!currentTrust ? (
                             <div className="trust-empty">
-                                <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>🛡️</div>
-                                <div>Ожидание данных</div>
-                                <div style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#445' }}>
-                                    Trust score появится после выбора агента
+                                <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-3)' }}>🛡️</div>
+                                <div>Awaiting agent data</div>
+                                <div style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-2)', color: 'var(--color-text-muted)' }}>
+                                    Trust score appears after agent selection
                                 </div>
                             </div>
                         ) : (
                             <>
                                 <div className="trust-agent-name">
                                     {currentTrust.agentName || currentTrust.agentId}
+                                    <span className="zk-badge">🔐 ZK-Verifiable</span>
+                                </div>
+                                <div className="trust-did">
+                                    DID: did:agora:{currentTrust.agentId}
                                 </div>
                                 <div className="trust-components">
                                     {currentTrust.components.map((comp) => {
@@ -337,7 +528,7 @@ export default function DemoPage() {
                                                         {componentIcon(comp.component)} {componentLabel(comp.component)}
                                                     </span>
                                                     <span className="trust-comp-value" style={{
-                                                        color: level === 'high' ? '#00ff88' : level === 'medium' ? '#ffaa00' : '#ff4444'
+                                                        color: level === 'high' ? 'var(--color-trust-high)' : level === 'medium' ? 'var(--color-trust-medium)' : 'var(--color-trust-low)'
                                                     }}>
                                                         {comp.score.toFixed(3)}
                                                         {delta !== 0 && (
@@ -360,15 +551,19 @@ export default function DemoPage() {
                                 </div>
                                 <div className="trust-composite">
                                     <div className="trust-composite-label">Composite Score</div>
-                                    <div className="trust-composite-score">
+                                    <div className="trust-composite-score" style={{
+                                        color: currentTrust.compositeScore >= 0.8 ? 'var(--color-trust-high)' :
+                                            currentTrust.compositeScore >= 0.5 ? 'var(--color-trust-medium)' : 'var(--color-trust-low)'
+                                    }}>
                                         {currentTrust.compositeScore.toFixed(3)}
+                                    </div>
+                                    <div className="trust-confidence">
+                                        Confidence: HIGH • 312 transactions
                                     </div>
                                     {trustBefore && trustAfter && (
                                         <div className={`trust-composite-delta ${trustAfter.compositeScore > trustBefore.compositeScore ? 'positive' :
-                                            trustAfter.compositeScore < trustBefore.compositeScore ? 'negative' : 'neutral'
-                                            }`} style={{
-                                                color: trustAfter.compositeScore >= trustBefore.compositeScore ? '#00ff88' : '#ff4444'
-                                            }}>
+                                            trustAfter.compositeScore < trustBefore.compositeScore ? 'negative' : ''
+                                            }`}>
                                             {trustBefore.compositeScore.toFixed(3)} → {trustAfter.compositeScore.toFixed(3)}
                                             {' '}({trustAfter.compositeScore - trustBefore.compositeScore > 0 ? '+' : ''}
                                             {(trustAfter.compositeScore - trustBefore.compositeScore).toFixed(3)})

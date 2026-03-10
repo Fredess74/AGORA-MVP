@@ -8,6 +8,24 @@ import type { AgentResponse } from '../types.js';
 
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
+/**
+ * Global rate limiter for Gemini free tier (15 RPM).
+ * Ensures minimum 4.5s gap between calls to avoid 429s during live demos.
+ */
+let lastCallTime = 0;
+const MIN_CALL_GAP_MS = 4500; // 60s / 13 calls ≈ 4.5s per call (with safety margin)
+
+async function rateLimitedWait(): Promise<void> {
+    const now = Date.now();
+    const elapsed = now - lastCallTime;
+    if (elapsed < MIN_CALL_GAP_MS && lastCallTime > 0) {
+        const waitMs = MIN_CALL_GAP_MS - elapsed;
+        console.log(`    ⏱ Rate limiter: waiting ${waitMs}ms before next Gemini call`);
+        await new Promise(r => setTimeout(r, waitMs));
+    }
+    lastCallTime = Date.now();
+}
+
 export abstract class BaseAgent {
     protected name: string;
     protected role: string;
@@ -35,6 +53,7 @@ export abstract class BaseAgent {
                     console.log(`    ⏳ ${this.name}: Retry ${attempt}/3 in ${delayMs}ms...`);
                     await new Promise(r => setTimeout(r, delayMs));
                 }
+                await rateLimitedWait();
                 const result = await model.generateContent(fullPrompt);
                 const text = result.response.text();
                 const latencyMs = Date.now() - start;
@@ -69,6 +88,7 @@ export abstract class BaseAgent {
                     console.log(`    ⏳ ${this.name}: Retry ${attempt}/3 in ${delayMs}ms...`);
                     await new Promise(r => setTimeout(r, delayMs));
                 }
+                await rateLimitedWait();
                 const result = await model.generateContent(fullPrompt);
                 const text = result.response.text();
                 const latencyMs = Date.now() - start;

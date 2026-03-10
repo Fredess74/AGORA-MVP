@@ -28,6 +28,11 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
+                        <Link to="/demo" className={isActive('/demo')}>
+                            🎬 Live Demo
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/trends" className={isActive('/trends')}>
                             📊 Trends
                         </Link>

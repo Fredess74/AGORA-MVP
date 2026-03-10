@@ -4,41 +4,41 @@
 
 import type { TrustBreakdown, TrustComponent, TrustComponentScore } from '../types.js';
 
-/** Trust component weights (sum = 1.0) */
+/** Trust component weights from 02_TRUST_AND_CONNECTIONS.md (sum = 1.0) */
 const WEIGHTS: Record<TrustComponent, number> = {
     code_quality: 0.20,
     repo_health: 0.15,
-    uptime: 0.20,
+    uptime: 0.25,
     transaction_success: 0.25,
     user_reviews: 0.10,
-    account_age: 0.10,
+    account_age: 0.05,
 };
 
-/** Initial trust scores for seed agents */
+/** Initial trust scores for seed agents — deliberately LOW (cold start per docs: 0.35-0.50) */
 export const SEED_TRUST: Record<string, TrustComponentScore[]> = {
     'codeguard-001': [
-        { component: 'code_quality', score: 0.88, weight: WEIGHTS.code_quality, updatedAt: new Date().toISOString() },
-        { component: 'repo_health', score: 0.82, weight: WEIGHTS.repo_health, updatedAt: new Date().toISOString() },
-        { component: 'uptime', score: 0.95, weight: WEIGHTS.uptime, updatedAt: new Date().toISOString() },
-        { component: 'transaction_success', score: 0.90, weight: WEIGHTS.transaction_success, updatedAt: new Date().toISOString() },
-        { component: 'user_reviews', score: 0.85, weight: WEIGHTS.user_reviews, updatedAt: new Date().toISOString() },
-        { component: 'account_age', score: 0.55, weight: WEIGHTS.account_age, updatedAt: new Date().toISOString() },
+        { component: 'code_quality', score: 0.62, weight: WEIGHTS.code_quality, updatedAt: new Date().toISOString() },
+        { component: 'repo_health', score: 0.55, weight: WEIGHTS.repo_health, updatedAt: new Date().toISOString() },
+        { component: 'uptime', score: 0.48, weight: WEIGHTS.uptime, updatedAt: new Date().toISOString() },
+        { component: 'transaction_success', score: 0.35, weight: WEIGHTS.transaction_success, updatedAt: new Date().toISOString() },
+        { component: 'user_reviews', score: 0.40, weight: WEIGHTS.user_reviews, updatedAt: new Date().toISOString() },
+        { component: 'account_age', score: 0.08, weight: WEIGHTS.account_age, updatedAt: new Date().toISOString() },
     ],
     'marketscope-001': [
-        { component: 'code_quality', score: 0.82, weight: WEIGHTS.code_quality, updatedAt: new Date().toISOString() },
-        { component: 'repo_health', score: 0.78, weight: WEIGHTS.repo_health, updatedAt: new Date().toISOString() },
-        { component: 'uptime', score: 0.92, weight: WEIGHTS.uptime, updatedAt: new Date().toISOString() },
-        { component: 'transaction_success', score: 0.87, weight: WEIGHTS.transaction_success, updatedAt: new Date().toISOString() },
-        { component: 'user_reviews', score: 0.80, weight: WEIGHTS.user_reviews, updatedAt: new Date().toISOString() },
-        { component: 'account_age', score: 0.50, weight: WEIGHTS.account_age, updatedAt: new Date().toISOString() },
+        { component: 'code_quality', score: 0.58, weight: WEIGHTS.code_quality, updatedAt: new Date().toISOString() },
+        { component: 'repo_health', score: 0.50, weight: WEIGHTS.repo_health, updatedAt: new Date().toISOString() },
+        { component: 'uptime', score: 0.45, weight: WEIGHTS.uptime, updatedAt: new Date().toISOString() },
+        { component: 'transaction_success', score: 0.32, weight: WEIGHTS.transaction_success, updatedAt: new Date().toISOString() },
+        { component: 'user_reviews', score: 0.38, weight: WEIGHTS.user_reviews, updatedAt: new Date().toISOString() },
+        { component: 'account_age', score: 0.06, weight: WEIGHTS.account_age, updatedAt: new Date().toISOString() },
     ],
     'webpulse-001': [
-        { component: 'code_quality', score: 0.85, weight: WEIGHTS.code_quality, updatedAt: new Date().toISOString() },
-        { component: 'repo_health', score: 0.80, weight: WEIGHTS.repo_health, updatedAt: new Date().toISOString() },
-        { component: 'uptime', score: 0.93, weight: WEIGHTS.uptime, updatedAt: new Date().toISOString() },
-        { component: 'transaction_success', score: 0.88, weight: WEIGHTS.transaction_success, updatedAt: new Date().toISOString() },
-        { component: 'user_reviews', score: 0.82, weight: WEIGHTS.user_reviews, updatedAt: new Date().toISOString() },
-        { component: 'account_age', score: 0.48, weight: WEIGHTS.account_age, updatedAt: new Date().toISOString() },
+        { component: 'code_quality', score: 0.60, weight: WEIGHTS.code_quality, updatedAt: new Date().toISOString() },
+        { component: 'repo_health', score: 0.52, weight: WEIGHTS.repo_health, updatedAt: new Date().toISOString() },
+        { component: 'uptime', score: 0.46, weight: WEIGHTS.uptime, updatedAt: new Date().toISOString() },
+        { component: 'transaction_success', score: 0.33, weight: WEIGHTS.transaction_success, updatedAt: new Date().toISOString() },
+        { component: 'user_reviews', score: 0.35, weight: WEIGHTS.user_reviews, updatedAt: new Date().toISOString() },
+        { component: 'account_age', score: 0.05, weight: WEIGHTS.account_age, updatedAt: new Date().toISOString() },
     ],
 };
 
