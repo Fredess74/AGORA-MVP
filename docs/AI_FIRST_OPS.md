@@ -136,7 +136,6 @@ Phase 3 — Scale:
 ## Feedback Loops: How AI Agents Self-Improve
 
 ### Loop 1: Outcomes → Algorithm (Weekly)
-
 ```
 Trust scores → Agent performance → Correlation analysis
 → Are high-trust agents actually performing better?
@@ -144,7 +143,6 @@ Trust scores → Agent performance → Correlation analysis
 ```
 
 ### Loop 2: User Actions → Ranking (Daily)
-
 ```
 User selects agent → Completes task → Rates agent
 → Did trust score predict user satisfaction?
@@ -152,7 +150,6 @@ User selects agent → Completes task → Rates agent
 ```
 
 ### Loop 3: Support Tickets → Knowledge Base (Real-time)
-
 ```
 User asks question → Support Bot answers
 → User satisfied? → Add to knowledge base
@@ -160,7 +157,6 @@ User asks question → Support Bot answers
 ```
 
 ### Loop 4: Market Data → Strategy (Monthly)
-
 ```
 Competitive Monitor data → New competitors / pricing changes
 → Alert founders → Adjust pricing / positioning
