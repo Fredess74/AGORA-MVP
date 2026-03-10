@@ -1,14 +1,14 @@
 <!--
-purpose: Financial projections, scenarios, and funding requirements. AI-first cost model.
+purpose: Financial projections, scenarios, and funding requirements. AI-first cost model. Agent economy timing.
 audience: Investors, co-founders
 reads_after: 07_RISK_ANALYSIS.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-10
 -->
 
 # Financial Projections
 
-> **TL;DR:** Two scenarios (bear/base). AI-first model breaks even at $25,500/mo instead of $45,000/mo — 6 months earlier. 4 revenue streams. Seed ask: $250K for 18 months runway.
+> **TL;DR:** Two scenarios (bear/base). AI-first model breaks even at $25,500/mo instead of $45,000/mo — 6 months earlier. 4 revenue streams. Month 1 revenue = $0 (payment system not yet built). First real revenue Month 2-3. Runway: 6-7 months without prize money, 9-14 months with.
 
 ## Revenue Model: 4 Streams
 
@@ -22,24 +22,45 @@ Revenue details and pricing: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md)
 | Promoted Listings | $2,400 | $9,600 | Creator subscriptions |
 | **Total Year 1** | **$26,600** | **$76,800** | |
 
-## Monthly Projection (Base Case)
+## Monthly Projection (Base Case — Revised March 10, 2026)
+
+> **Note:** Month 1 revenue = $0 because Stripe Connect is not yet integrated. Revenue projections start from first payment capability.
 
 | Month | Listings | Active Consumers | Commission | Trust API | Promoted | Float | Total Revenue | Burn | Net |
 |-------|---------|-----------------|-----------|----------|---------|-------|--------------|------|-----|
-| 1 | 30 | 5 | $25 | $0 | $0 | $0 | $25 | $4,900 | -$4,875 |
-| 2 | 75 | 20 | $100 | $29 | $0 | $1 | $130 | $4,900 | -$4,770 |
-| 3 | 150 | 50 | $400 | $87 | $0 | $5 | $492 | $4,900 | -$4,408 |
-| 4 | 250 | 100 | $800 | $200 | $0 | $15 | $1,015 | $4,900 | -$3,885 |
-| 5 | 350 | 180 | $1,500 | $350 | $0 | $30 | $1,880 | $4,900 | -$3,020 |
-| 6 | 500 | 300 | $2,500 | $500 | $200 | $50 | $3,250 | $4,900 | -$1,650 |
-| 7 | 600 | 400 | $3,500 | $700 | $400 | $75 | $4,675 | $25,500 | -$20,825 |
-| 8 | 700 | 550 | $5,000 | $900 | $600 | $100 | $6,600 | $25,500 | -$18,900 |
-| 9 | 850 | 750 | $7,000 | $1,200 | $900 | $140 | $9,240 | $25,500 | -$16,260 |
-| 10 | 1,000 | 1,000 | $9,500 | $1,500 | $1,200 | $180 | $12,380 | $25,500 | -$13,120 |
-| 11 | 1,100 | 1,300 | $12,000 | $1,800 | $1,500 | $230 | $15,530 | $25,500 | -$9,970 |
-| 12 | 1,250 | 1,700 | $15,000 | $2,400 | $2,000 | $300 | $19,700 | $25,500 | -$5,800 |
+| 1 | 200 | 0 | $0 | $0 | $0 | $0 | $0 | $4,900 | -$4,900 |
+| 2 | 250 | 10 | $30 | $0 | $0 | $0 | $30 | $4,900 | -$4,870 |
+| 3 | 350 | 25 | $100 | $58 | $0 | $2 | $160 | $4,900 | -$4,740 |
+| 4 | 450 | 60 | $300 | $145 | $0 | $8 | $453 | $4,900 | -$4,447 |
+| 5 | 500 | 120 | $700 | $290 | $0 | $20 | $1,010 | $4,900 | -$3,890 |
+| 6 | 600 | 200 | $1,500 | $435 | $100 | $40 | $2,075 | $4,900 | -$2,825 |
+| 7 | 700 | 350 | $2,800 | $700 | $300 | $65 | $3,865 | $25,500 | -$21,635 |
+| 8 | 800 | 500 | $4,200 | $900 | $500 | $90 | $5,690 | $25,500 | -$19,810 |
+| 9 | 900 | 700 | $6,000 | $1,200 | $750 | $120 | $8,070 | $25,500 | -$17,430 |
+| 10 | 1,000 | 900 | $8,500 | $1,500 | $1,000 | $160 | $11,160 | $25,500 | -$14,340 |
+| 11 | 1,100 | 1,200 | $11,000 | $1,800 | $1,300 | $210 | $14,310 | $25,500 | -$11,190 |
+| 12 | 1,250 | 1,500 | $14,000 | $2,200 | $1,700 | $280 | $18,180 | $25,500 | -$7,320 |
 
-**Month 7 burn jumps:** seed round closes Month 6, team grows to 3-5.
+**Key changes from previous projection (March 8):**
+
+- Month 1: $25 → **$0** (payment system not built yet)
+- Month 3: $492 → **$160** (more realistic consumer acquisition timeline)
+- Month 1 listings: 30 → **200** (Curation Crawler auto-populates from MCP registries)
+- Month 7 burn jumps: seed round closes Month 6, team grows to 3-5
+
+**Revenue accelerators from agent economy (not modeled yet):**
+
+- x402 agent-to-agent micro-transactions (could 3-5x commission revenue)
+- Coinbase Agentic Wallets integration (reduces payment friction to zero)
+- Circle Nanopayments (makes $0.001 transactions profitable)
+
+### Runway Analysis (Pre-Seed)
+
+| Scenario | Starting Cash | Monthly Burn | Runway |
+|----------|-------------|-------------|--------|
+| No prize money | $30,000 | $4,900 | **~6 months** (danger zone Month 6) |
+| Suffolk: $15K (1st from $40K) | $45,000 | $4,900 | **~9 months** |
+| Suffolk: $40K (grand prize) | $70,000 | $4,900 | **~14 months** |
 
 ---
 
@@ -117,4 +138,5 @@ This is not cost-cutting — it's a structural competitive advantage. Competitor
 1. **Hypothesis:** Month 7 burn jump assumes seed closes on schedule. If delayed, extend Phase 1 burn and slow hiring.
 2. **Hypothesis:** Promoted listings revenue assumes 5-10% creator conversion. Will validate with first cohort.
 3. **Unknown:** Float revenue depends on interest rates. Currently 4.5% APY. If rates drop to 2%, float becomes negligible.
-4. **Unknown:** x402 user adoption timeline. If AI-to-AI transactions grow slower than projected, fiat rail carries more weight.
+4. **Agent economy acceleration:** If x402 agent-to-agent transactions grow faster than projected (currently $600M annualized), commission revenue could 3-5x the base case. Circle Nanopayments making micro-transactions economically viable could dramatically increase transaction volume.
+5. **Payment infrastructure readiness:** Coinbase Agentic Wallets + Circle Nanopayments + Stripe x402 all launched Jan-Feb 2026. The payment rails are ready — the question is adoption speed.

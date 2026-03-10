@@ -1,8 +1,8 @@
 ﻿<!--
-purpose: Slide-by-slide pitch deck outline. Musk algorithm applied — deleted 4 slides.
+purpose: Slide-by-slide pitch deck outline. Agent economy focus. Live demo as centerpiece.
 audience: Judges (Suffolk 40K + Fetch Defeat the Odds)
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-10
 -->
 
 # Pitch Deck — Agora (11 Slides)
@@ -56,14 +56,17 @@ Not star ratings. Not self-reported. Computed.
 
 ---
 
-## Slide 4: How Big
+## Slide 4: The Agent Economy Is Here
 
-**$7 billion today → $93 billion by 2032** (46% CAGR)
+**McKinsey: $3–5 TRILLION in agent-mediated commerce by 2030**
 
-- thousands of AI tools exist with zero trust verification
-- 97 million MCP SDK downloads — the protocol is live
-- 25% of enterprises deploying AI agents RIGHT NOW
-- Supply chain attacks up 430%
+- Google launched Universal Commerce Protocol (Jan 2026) — agents shopping for agents
+- Mastercard launched Agent Pay — AI agents with their own payment tokens
+- Coinbase launched Agentic Wallets (Feb 2026) — 50M+ autonomous transactions
+- Circle launched Nanopayments — $0.001 transactions, zero gas fees
+- x402 protocol: **$600M annualized volume** and growing
+
+**Google, Mastercard, Coinbase, Circle — they're building the payment rails. Nobody is building trust. We are.**
 
 **The last time an economy grew this fast without trust infrastructure: early internet. The winners built trust (PayPal, eBay ratings, SSL certificates). We're doing it for AI.**
 
@@ -86,17 +89,18 @@ Monthly burn: $4,900 (AI runs our ops).
 
 ## Slide 6: Competition
 
-**Nobody does what we do.**
+**Everyone is building payment rails. Nobody is building trust.**
 
-| | Skyfire | Masumi | Scalekit | **Agora** |
-|-|---------|--------|----------|-----------|
-| Trust scoring | ❌ | ❌ | ❌ | ✅ |
-| Marketplace | ❌ | ❌ | ❌ | ✅ |
-| Anti-fraud | ❌ | ❌ | ❌ | ✅ |
-| Multi-protocol | 1-2 | 1 | 1 | **4** |
+| | Google UCP | Mastercard | Coinbase | Skyfire | **Agora** |
+|-|-----------|-----------|---------|--------|-----------|
+| Payments | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Trust scoring | ❌ | ❌ | ❌ | ❌ | **✅** |
+| Marketplace | ❌ | ❌ | ❌ | ❌ | **✅** |
+| Anti-fraud | ❌ | Partial | ❌ | ❌ | **✅** |
+| Adaptive scoring | ❌ | ❌ | ❌ | ❌ | **✅** |
 
-Skyfire does payments. Masumi does identity. Scalekit does auth.
-**Nobody combines trust + discovery + payments.**
+Google handles checkout. Mastercard handles cards. Coinbase handles wallets.
+**Nobody tells you: "Is this agent SAFE to give your money to?" We do.**
 
 ---
 
@@ -104,15 +108,15 @@ Skyfire does payments. Masumi does identity. Scalekit does auth.
 
 | Built Today | Proof |
 |------------|-------|
-| Trust Engine (Rust) | 15,000 lines, 6-component trust engine |
-| REST API | 8 endpoints, <10ms response |
-| ZK Proofs | Cryptographic verification |
-| Marketplace UI | 7 pages, React |
-| Anti-Gaming | 4 fraud detectors |
+| Adaptive Trust Engine | TypeScript, 6-component scoring with 4-tier confidence |
+| REST API | 8 endpoints, live SSE streaming |
+| Marketplace UI | 7 pages, React, real-time trust display |
+| 3 Specialist Agents | GitHub API, npm Registry, PageSpeed Insights |
+| Demo Pipeline | 8 AI agents processing real queries end-to-end |
 
-**This isn't a pitch deck company. We have working software.**
+**This isn't a pitch deck company. We have working software. You just saw it.**
 
-Building in next 3 weeks: MCP server + Stripe payments → launch.
+Building in next 3 weeks: Stripe Connect + MCP server → first paid transactions.
 
 ---
 

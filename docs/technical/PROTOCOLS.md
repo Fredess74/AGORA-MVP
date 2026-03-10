@@ -1,34 +1,48 @@
 ﻿<!--
-purpose: Real specification of all 4 AI protocols — what each does, who built it, adoption status, and how Agora integrates.
+purpose: Real specification of AI protocols and agent economy payment infrastructure — what each does, who built it, adoption status, and how Agora integrates.
 audience: AI systems, developers, investors, protocol implementers
 reads_after: technical/ARCHITECTURE.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-10
 -->
 
-# Protocols — MCP, A2A, AP2, x402
+# Protocols & Agent Economy Infrastructure
 
 ## Protocol Landscape (March 2026)
 
-Four protocols define how AI systems discover, communicate, and transact. Each solves a different problem. None of them together provide trust verification.
+Four protocols and a rapidly growing payment infrastructure layer define how AI systems discover, communicate, and transact. Each solves a different problem. **None of them provide trust verification.**
+
+### Communication & Commerce Protocols
 
 | Protocol | Created By | Launch Date | Problem Solved | Adoption |
 |----------|-----------|-------------|---------------|----------|
-| **MCP** | Anthropic | Nov 2024 | AI tools discover and invoke external data/functions | Adopted by OpenAI, Google DeepMind, 97M+ SDK downloads |
+| **MCP** | Anthropic | Nov 2024 | AI tools discover and invoke external data/functions | Adopted by OpenAI, Google DeepMind, 97M+ SDK downloads, 16,000+ servers |
 | **A2A** | Google | Apr 2025 | AI agents communicate and delegate tasks to each other | 150+ orgs (Salesforce, SAP, Adobe), donated to Linux Foundation Jun 2025, v1.0 RC Nov 2025 |
 | **AP2** | Google | Sep 2025 | AI agents initiate and complete financial transactions | 60+ partners (Mastercard, PayPal, American Express, Coinbase, Shopify) |
-| **x402** | Coinbase | May 2025 | Instant stablecoin micropayments via HTTP 402 | Active on Base network, <$0.0001 avg fee, ~2s settlement |
+| **x402** | Coinbase | May 2025 | Instant stablecoin micropayments via HTTP 402 | **$600M annualized volume**, 50M+ transactions, Stripe integrated Feb 2026 |
 
-### What None of Them Provide
+### Agent Economy Payment Infrastructure (NEW — 2026)
 
-| Missing Capability | Status Across All 4 Protocols |
+The agent economy payment layer is evolving at unprecedented speed. Major financial institutions and crypto platforms are racing to build money infrastructure for AI agents:
+
+| System | Created By | Launch Date | What It Does | Agora Integration Potential |
+|--------|-----------|-------------|-------------|----------------------------|
+| **Google UCP** | Google | Jan 2026 | Universal Commerce Protocol — standardizes agent-to-agent shopping (Checkout, Identity Linking, Order Management). Co-developed with Shopify, Walmart, Target, Etsy, Wayfair. Compatible with A2A, MCP, x402. | HIGH — Agora adds trust layer to UCP commerce flows. UCP handles checkout, Agora handles trust verification pre-checkout. |
+| **Mastercard Agent Pay** | Mastercard + Microsoft | 2024, expanded 2026 | Agentic Tokens (tokenized card numbers for AI agents) + Verifiable Intent (cryptographic audit trail). Pilot with Banco Santander. Open-source framework. | MEDIUM — Agora's trust scores can feed into Agent Pay's authentication layer. Agora scores agent reliability, Mastercard handles payment execution. |
+| **Coinbase Agentic Wallets** | Coinbase | Feb 2026 | Non-custodial wallets for AI agents. Gasless trading on Base. Programmable spending policies (session caps, tx limits). Built-in KYT compliance. x402 native. 50M+ transactions processed. | HIGH — x402 is our Rail 2. Coinbase wallets are the wallet agents use. Agora = marketplace where agents with Coinbase wallets find and trust each other. |
+| **Circle Nanopayments** | Circle | Feb 2026 | Gasless USDC micropayments through batched settlement. 1,000 transactions for ~$0.01 in gas. x402 enabled. Private beta. | HIGH — Circle makes $0.001 transactions economically viable. This is critical for Agora's micro-transaction commission model. |
+
+### What ALL of Them (Protocols + Infrastructure) Are Missing
+
+| Missing Capability | Status Across ALL Systems |
 |-------------------|-------------------------------|
-| Trust scoring (is this agent reliable?) | Not addressed |
+| Trust scoring (is this agent reliable?) | **Not addressed by ANY system** |
 | Reputation history (how has this agent performed?) | Not addressed |
 | Anti-gaming (is this agent manipulating its reputation?) | Not addressed |
-| Unified discovery across protocols | Not addressed |
+| Unified discovery + trust-scored marketplace | Not addressed |
+| Adaptive scoring based on transaction history | Not addressed |
 
-This is the gap Agora fills.
+**This is the gap Agora fills.** Google, Mastercard, Coinbase, and Circle are building the PAYMENT RAILS. Agora is building the TRUST and MARKETPLACE layer on top.
 
 ---
 
@@ -191,33 +205,37 @@ x402 revives the HTTP 402 "Payment Required" status code. When an agent requests
 5. Server -> 200 OK + translation result -> Client
 ```
 
-### Real Numbers
+### Real Numbers (Updated March 2026)
 
-| Metric | Value |
-|--------|-------|
-| Average transaction fee | <$0.0001 |
-| Settlement time | ~2 seconds |
-| Supported chain | Base (Coinbase L2) |
-| Payment currency | USDC (stablecoin) |
-| Minimum transaction | No minimum (true micropayments) |
+| Metric | Value | Source |
+|--------|-------|--------|
+| Annualized payment volume | **$600M** | MEXC, The Block |
+| Total transactions processed | **50M+** | Coinbase, bitcoin.com |
+| Average transaction fee | <$0.0001 | x402.org |
+| Settlement time | ~2 seconds | x402.org |
+| Supported chains | Base (primary), Solana | Coinbase, Circle |
+| Payment currency | USDC (stablecoin) | x402 specification |
+| Minimum transaction | No minimum (true micropayments) | x402 specification |
+| Stripe integration | **Live since Feb 2026** | The Block |
+| Circle Nanopayments support | **x402 enabled** | Circle |
+| Coinbase Agentic Wallets | **x402 native** | Coinbase |
 
 ### Limitations
 
-- Crypto-only (no fiat support)
-- Requires wallet setup (friction for non-crypto users)
-- Single chain (Base) as of March 2026
-- No built-in trust or reputation
+- Crypto-only (no fiat support) — mitigated by Stripe x402 integration
+- Requires wallet setup — mitigated by Coinbase Agentic Wallets (auto-provision)
+- No built-in trust or reputation — **this is exactly what Agora provides**
 
 ### How Agora Integrates
 
-Agora wraps x402 endpoints with trust verification:
+Agora wraps x402 endpoints with trust verification. With Coinbase Agentic Wallets + Circle Nanopayments, the payment infrastructure is ready. What's missing is trust:
 
 ```
-Without Agora: Client pays any agent with 402 header (no quality guarantee)
-With Agora: Client checks trust score first, then pays via x402 (verified quality)
+Without Agora: Agent pays any other agent with 402 header (no quality guarantee)
+With Agora: Agent checks trust score first → discovers via marketplace → pays via x402 (verified quality)
 ```
 
-**Status:** x402 payment handler hooks built. Trust wrapper for x402 not built (P2).
+**Status:** x402 payment handler hooks built. Trust wrapper for x402 not built (P2). Priority increased — x402 ecosystem growth makes this more urgent.
 
 ---
 
@@ -258,27 +276,40 @@ With Agora: Client checks trust score first, then pays via x402 (verified qualit
 
 ---
 
-## Agora's Protocol Strategy
+## Agora's Protocol & Infrastructure Strategy
 
 ### Why Protocol-Agnostic Matters
 
-No one knows which protocol wins. By supporting all four, Agora benefits regardless:
+No one knows which protocol or payment rail wins. Google UCP, Mastercard Agent Pay, Coinbase Agentic Wallets, Circle Nanopayments — all launched within weeks of each other (Jan-Feb 2026). By supporting all, Agora benefits regardless:
 
-- If MCP wins → Agora is the trust + payment layer for MCP
+- If MCP wins → Agora is the trust + marketplace layer for MCP
 - If A2A wins → Agora is the trust + discovery layer for A2A
-- If AP2 becomes standard → Agora integrates natively for payments
-- If x402 grows → Agora wraps x402 with trust verification
+- If AP2/UCP becomes standard → Agora integrates natively for commerce flows
+- If x402 grows → Agora wraps x402 with trust verification (already $600M volume)
+- If Mastercard Agent Pay dominates fiat → Agora provides trust scores for Agent Pay authentication
+- If Coinbase Agentic Wallets win crypto → Agora is where those wallets find trusted agents
 
 ### Architecture: Adapter Pattern
 
 ```
-Agora Core (Trust Engine + Marketplace + Payments)
+Agora Core (Trust Engine + Marketplace + Adaptive Scoring)
     |
-    +-- MCP Adapter     (P0 — first integration target)
-    +-- A2A Adapter     (P1 — after MCP)
-    +-- AP2 Adapter     (P1 — payment flow)
-    +-- x402 Adapter    (P2 — crypto micropayments)
-    +-- [Future]        (new adapters: ~500-1000 lines each)
+    +-- MCP Adapter         (P0 — first integration target)
+    +-- A2A Adapter         (P1 — multi-agent coordination)
+    +-- AP2/UCP Adapter     (P1 — commerce + payment flow)
+    +-- x402 Adapter        (P1 — crypto micropayments, priority increased)
+    +-- Coinbase Wallet SDK (P2 — agent wallet integration)
+    +-- [Future]            (new adapters: ~500-1000 lines each)
 ```
 
-Adding a new protocol requires only an adapter module. No changes to core trust engine, marketplace, or payment logic.
+Adding a new protocol or payment infrastructure requires only an adapter module. No changes to core trust engine, marketplace, or scoring logic.
+
+### Key Strategic Insight (March 2026)
+
+Google, Mastercard, Coinbase, Circle, Stripe — they are ALL building **payment infrastructure**. None of them are building:
+
+1. **A marketplace** where agents discover each other
+2. **A trust scoring engine** that rates agent reliability in real-time
+3. **An adaptive scoring system** that improves with more data
+
+Agora sits ABOVE the payment rails. We are to AI agent payments what FICO is to credit cards — the trust and scoring layer that makes the payment ecosystem work.

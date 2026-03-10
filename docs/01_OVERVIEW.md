@@ -3,12 +3,12 @@ purpose: Complete overview of Agora — what it is, why it exists, how it works.
 audience: Anyone — investors, co-founders, AI systems, developers
 reads_after: 00_INDEX.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-10
 -->
 
 # Agora — Overview
 
-> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the AI agent economy. thousands of tools exist with zero trust verification. We provide computed trust scores, a searchable registry, and dual-rail payments (prepaid + crypto). AI-first company: 7 AI agents run operations, max 15 humans ever.
+> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the autonomous AI agent economy. McKinsey projects agent-mediated commerce at $3–5T by 2030. Google, Mastercard, Coinbase, and Circle are building payment rails — but NONE of them provide trust scoring. Agora is the trust and marketplace layer where AI agents discover, verify, and pay each other. AI-first company: 7 AI agents run operations, max 15 humans ever.
 
 ## What Agora Is
 
@@ -58,8 +58,9 @@ thousands of AI tools exist. MCP has 97M+ SDK downloads. But:
 
 | Tier | Who | Example | Avg. Transaction |
 |------|-----|---------|-----------------|
-| **Individual** (now) | Person via AI assistant | "Translate and notarize this" | $3–30 |
-| **Organization** (6-18 months) | Company AI ↔ company AI | AI buyer orders from AI supplier | $100–10,000 |
+| **Agent-to-Agent** (primary) | AI agent discovers + pays AI agent | Research agent pays data extraction agent via x402 | $0.01–$50 |
+| **Human-to-Agent** (secondary) | Person via AI assistant | "Translate and notarize this" | $3–30 |
+| **Organization** (6-18 months) | Company AI ↔ company AI | AI buyer orders from AI supplier | $100–$10,000 |
 
 Government: long-term possibility (36+ months). No resources allocated.
 
@@ -117,7 +118,16 @@ AI-first operations: 7 AI agents, $200/mo. Details: [04_BUSINESS_MODEL.md](04_BU
 
 Named competitors and analysis: [05_MARKET_AND_COMPETITION.md](05_MARKET_AND_COMPETITION.md)
 
-Key competitors: Skyfire (identity + payments), Masumi (decentralized DIDs), Scalekit (auth). None offers trust + discovery + payments together.
+**Payment infrastructure players (NOT competitors — complementary):**
+
+- Google UCP (agent shopping protocol, Jan 2026)
+- Mastercard Agent Pay (agentic tokens + verifiable intent, 2024-2026)
+- Coinbase Agentic Wallets (agent-native wallets, x402 native, Feb 2026)
+- Circle Nanopayments (gasless USDC micro-transactions, Feb 2026)
+
+**Trust competitors:** Skyfire (identity + payments, gone silent), Masumi (decentralized DIDs on Cardano), ERC-8004 (on-chain reputation data). None offers computed trust scoring + discovery + marketplace together.
+
+**Key insight:** ALL major players are building payment rails. NONE are building the trust and marketplace layer. Agora fills this gap.
 
 ---
 
@@ -131,13 +141,16 @@ Agora is that layer. Full philosophy: [09_PHILOSOPHY.md](09_PHILOSOPHY.md)
 
 ---
 
-## Why Now
+## Why Now — The Agent Economy Is Here
 
-1. **Protocols are live** — MCP (97M+ downloads), A2A (150+ orgs), AP2 (Mastercard, PayPal), x402 (100M+ payments)
-2. **No monetization built in** — zero payment mechanism in any protocol
-3. **Trust crisis** — 430% attack increase, 25% of enterprises deploying AI agents
+1. **Payment infrastructure is LIVE** — x402 ($600M annualized, 50M+ transactions), Coinbase Agentic Wallets, Circle Nanopayments, Google UCP, Mastercard Agent Pay — ALL launched Jan-Feb 2026
+2. **Protocols are mature** — MCP (97M+ downloads, 16K+ servers), A2A (150+ orgs, v1.0 RC), AP2 (60+ payment partners)
+3. **Agents ARE paying each other** — autonomous agent-to-agent transactions are happening NOW on x402 + Base
+4. **McKinsey: $3–5T** in agent-mediated commerce by 2030. Global AI agent market: $10.91B in 2026 alone
+5. **Trust crisis** — no one is building trust scoring for this economy. Gartner: 40% of enterprise apps will include AI agents by end 2026
+6. **No marketplace exists** — payment rails exist, but no trust-scored marketplace where agents find and verify each other
 
-**Window:** 12-18 months. Trust data accumulates — first mover has permanent advantage.
+**Window:** 12-18 months. Trust data accumulates — first mover with real transaction data has permanent advantage.
 
 ---
 
