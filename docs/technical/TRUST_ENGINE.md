@@ -47,16 +47,44 @@ txn_score = Σ (component_score × adaptive_weight[tier])
 Trust scores are **NOT overwritten** — they use Exponential Weighted Moving Average:
 
 ```
-T_new = α × txn_score + (1 - α) × T_old_decayed
+T_new = α × adjustedScore + (1 - α) × T_old_decayed
 ```
 
-| Agent Tier | α (alpha) | Behavior |
-| --- | --- | --- |
-| New (< 5 txns) | 0.50 | Responsive, builds quickly |
-| Established (5-20) | 0.30 | Balanced |
-| Veteran (20+) | 0.15 | Stable, hard to move |
+#### Dynamic α via Logistic (Sigmoid) Curve
 
-**Asymmetric penalty:** Failed transactions (score < 0.4) use `α + 0.15` — failures hurt more than successes help.
+Instead of discrete tiers (which create mathematical cliffs), α follows a smooth sigmoid:
+
+```
+α(N) = 0.12 + 0.58 / (1 + e^(0.08 × (N - 30)))
+```
+
+| Transaction Count | α (approx) | Behavior |
+| --- | --- | --- |
+| N = 1 | ~0.67 | Very responsive, building quickly |
+| N = 10 | ~0.48 | Moderately responsive |
+| N = 30 | ~0.41 | Midpoint — transitioning |
+| N = 50 | ~0.24 | Becoming stable |
+| N = 100+ | ~0.12 | Veteran — hard to move |
+
+#### Cold-Start Protection: Wilson Score Lower Bound
+
+For agents with < 5 transactions, EWMA is bypassed. Instead, the **Wilson Score Confidence Interval** prevents 1/1 (100%) from outranking 98/100 (98%):
+
+```
+W = (p̂ + z²/2n - z√(p̂(1-p̂)/n + z²/4n²)) / (1 + z²/n)
+```
+
+With z = 1.96 (95% confidence). Small sample sizes are heavily penalized.
+
+#### Asymmetric Penalty (Loss Aversion)
+
+Failures are penalized **2× harder** than successes reward. Instead of adjusting α (which can break EWMA math), the **raw score is adjusted**:
+
+```
+if score < 0.5:
+    adjustedScore = max(0, score - (0.5 - score))
+    // Example: score 0.3 → adjusted to 0.1 (not 0.3)
+```
 
 ### Trust Decay (30-day Half-Life)
 

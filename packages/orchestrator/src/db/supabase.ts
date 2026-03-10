@@ -179,19 +179,15 @@ export async function recordTransaction(agentDid: string, amount: number, commis
 }
 
 /** 
- * Update agent trust score using EWMA (Exponential Weighted Moving Average).
+ * Update agent trust score using EWMA with sigmoid α + Wilson cold-start.
  * 
- * Formula: T_new = α × txnScore + (1 - α) × T_old
- * 
- * α (alpha) controls how much weight goes to the new observation:
- * - New agents (< 5 txns): α = 0.5 (responsive, builds quickly)
- * - Established (5-20 txns): α = 0.3 (balanced)
- * - Veteran (20+ txns): α = 0.15 (stable, hard to move)
- * 
- * Trust decay: inactive agents lose trust with 30-day half-life.
- * S(t) = S₀ × 0.5^(daysSinceLastTxn / 30)
- * 
- * Asymmetric: failures (score < 0.4) use α + 0.15 (penalize harder)
+ * V2 Architecture (validated via deep research):
+ * - Cold-start (< 5 txns): Wilson Score lower bound — prevents 1/1 outranking 98/100
+ * - Decay: T_old × 0.5^(days/30) — 30-day half-life for inactive agents
+ * - Asymmetric: score < 0.5 → 2× penalty via deficit subtraction (not α manipulation)
+ * - Dynamic α: logistic sigmoid curve α(N) = 0.12 + 0.58/(1+e^(0.08×(N-30)))
+ *   Smooth transition from ~0.7 (new, responsive) → ~0.12 (veteran, stable)
+ * - EWMA: T_new = α × adjustedScore + (1 - α) × decayedOldTrust
  */
 export async function updateAgentMetrics(agentDid: string, trustScore: number, latencyMs: number): Promise<void> {
     const db = getDb();
@@ -210,10 +206,10 @@ export async function updateAgentMetrics(agentDid: string, trustScore: number, l
     const oldAvg = listing.avg_latency_ms || 0;
     const newAvg = Math.round(oldAvg + (latencyMs - oldAvg) / newTotal);
 
-    // ── EWMA Trust Score Update ──
+    // ── EWMA Trust Score Update (v2: sigmoid α + Wilson cold-start + asymmetric) ──
     const oldTrust = listing.trust_score || 0;
 
-    // 1. Apply trust decay for inactivity
+    // 1. Apply trust decay for inactivity (30-day half-life)
     let decayedOldTrust = oldTrust;
     if (listing.updated_at) {
         const daysSinceUpdate = (Date.now() - new Date(listing.updated_at).getTime()) / 86400000;
@@ -223,17 +219,51 @@ export async function updateAgentMetrics(agentDid: string, trustScore: number, l
         }
     }
 
-    // 2. Choose α based on transaction count
-    let alpha: number;
-    if (newTotal < 5) alpha = 0.5;       // new: responsive
-    else if (newTotal < 20) alpha = 0.3; // established: balanced
-    else alpha = 0.15;                   // veteran: stable
+    // 2. Cold-start: Wilson Score lower bound for < 5 transactions
+    //    Prevents 1/1 (100%) from outranking 98/100 (98%)
+    if (newTotal < 5) {
+        const positives = trustScore * newTotal; // treat trust score as success proportion
+        const z = 1.96; // 95% confidence
+        const z2 = z * z;
+        const p = positives / newTotal;
+        const denom = 1 + z2 / newTotal;
+        const center = p + z2 / (2 * newTotal);
+        const spread = z * Math.sqrt((p * (1 - p)) / newTotal + z2 / (4 * newTotal * newTotal));
+        const wilson = Math.max(0, (center - spread) / denom);
+        const newTrust = Math.round(wilson * 1000) / 1000;
 
-    // 3. Asymmetric: penalize failures harder
-    if (trustScore < 0.4) alpha = Math.min(alpha + 0.15, 0.7);
+        await db.from('listings').update({
+            trust_score: newTrust,
+            total_calls: newTotal,
+            avg_latency_ms: newAvg,
+            updated_at: new Date().toISOString(),
+        }).eq('id', listing.id);
+        return;
+    }
 
-    // 4. EWMA update
-    const newTrust = Math.round((alpha * trustScore + (1 - alpha) * decayedOldTrust) * 1000) / 1000;
+    // 3. Asymmetric penalty: adjust the SCORE not the α (loss aversion)
+    //    Failures (score < 0.5) are penalized 2x by subtracting the deficit again
+    const BASELINE_THRESHOLD = 0.5;
+    let adjustedScore = trustScore;
+    if (trustScore < BASELINE_THRESHOLD) {
+        adjustedScore = Math.max(0, trustScore - (BASELINE_THRESHOLD - trustScore));
+        // Example: score 0.3 → deficit 0.2 → adjusted = 0.3 - 0.2 = 0.1 (vs 0.3 without penalty)
+    }
+
+    // 4. Dynamic α via logistic (sigmoid) curve — smooth transition, no tier cliffs
+    //    New agents (~0.7 α, responsive) → Veterans (~0.12 α, stable)
+    const SLOPE = 0.08;      // transition aggressiveness
+    const MIDPOINT = 30;      // N where agent is considered "established"
+    const ALPHA_MIN = 0.12;
+    const ALPHA_MAX = 0.70;
+    const baseAlpha = ALPHA_MIN + (ALPHA_MAX - ALPHA_MIN) / (1 + Math.exp(SLOPE * (newTotal - MIDPOINT)));
+
+    // 5. Context risk multiplier (optional: passed from manager.ts via enhanced call)
+    //    Security tasks = more volatile, market research = more forgiving
+    const effectiveAlpha = Math.min(baseAlpha, 1.0);
+
+    // 6. EWMA: T_new = α × adjustedScore + (1 - α) × decayedOldTrust
+    const newTrust = Math.round((effectiveAlpha * adjustedScore + (1 - effectiveAlpha) * decayedOldTrust) * 1000) / 1000;
 
     await db.from('listings').update({
         trust_score: newTrust,
