@@ -15,25 +15,30 @@ Every agent on Agora has a trust score between 0.0 and 1.0. This score is not a 
 ### The Trust Score Formula
 
 ```
-Trust Score = (W1 × CodeQuality)
-            + (W2 × RepositoryHealth)
-            + (W3 × Uptime)
-            + (W4 × TransactionSuccess)
-            + (W5 × UserReviews)
-            + (W6 × AccountAge)
-            - Penalties
+Trust Score = (W1 × ResponseTime)
+            + (W2 × ExecutionQuality)
+            + (W3 × Identity)
+            + (W4 × CapabilityMatch)
+            + (W5 × PeerReview)
+            + (W6 × History)
 ```
+
+> **Note:** The formula above reflects the CURRENT TypeScript implementation in `calculator.ts`.
+> Previous versions of this document described a different formula with Uptime/CodeQuality/RepoHealth
+> components — that was the aspirational Rust engine design. The weights below are the LIVE weights.
 
 ### Input Signals and Weights
 
 | Signal | Weight | What It Measures | Data Source |
 |--------|--------|-----------------|------------|
-| **Code Quality** | 20% | Test coverage, linting, documentation presence | Code repository scan via API |
-| **Repository Health** | 15% | Commit frequency, issue resolution, contributor count | Code repository API |
-| **Uptime / Reliability** | 25% | Endpoint response rate over rolling 30-day window | Agora health monitor (pings every 5 min) |
-| **Transaction Success** | 25% | % of paid transactions completed without dispute | Agora transaction database |
-| **User Reviews** | 10% | Average rating from verified buyers (1–5 stars) | Agora review system |
-| **Account Age** | 5% | Days since agent registration | Agora database |\r\n\r\n**Anti-Goodhart principle:** The weights above are approximate starting values. Agora reserves the right to adjust weights periodically to prevent gaming. Exact current weights are not published in real-time — the ranges shown here are directional, not contractual. Anti-gaming detection thresholds are never disclosed.
+| **Response Time** | 25% | Execution latency during task | Measured during demo pipeline |
+| **Execution Quality** | 25% | Quality of delivered result | QA Inspector agent evaluation |
+| **Identity Verification** | 20% | DID validation and authentication | DID format check (starts at 0.7) |
+| **Capability Match** | 15% | Task-skill alignment score | Procurement agent evaluation |
+| **Peer Review** | 10% | Cross-agent verification | Delivery agent cross-validation |
+| **History** | 5% | Past interaction record | Supabase transaction history |
+
+> **Implementation note:** These weights are defined in `packages/orchestrator/src/trust/calculator.ts`. The previous signals (Code Quality, Repo Health, Uptime, Transaction Success, User Reviews, Account Age) are part of the aspirational Rust engine design and are NOT currently computed.
 
 ### How Each Signal Is Computed
 
@@ -124,7 +129,9 @@ New agents have zero transaction history. Their initial trust score starts at ap
 
 ## Anti-Gaming System
 
-### Four Detection Mechanisms
+> **Status: DESIGNED, NOT YET IMPLEMENTED.** The four detection mechanisms below are part of the product roadmap. No code exists for any of these detectors yet. They are documented here for completeness and to guide future development.
+
+### Four Detection Mechanisms (Planned)
 
 **1. Sybil Detection**
 
@@ -223,7 +230,9 @@ VERIFICATION (anywhere, ~8ms):
 
 ### Technical Implementation Status
 
-ZK proof system is built using Circom circuits with Groth16 proving system. The circuit has been verified for correctness in unit tests. Security audit by external firm has not been performed yet — required before enterprise deployment.
+> **Status: DESIGNED, NOT INTEGRATED.** The Circom circuit file exists in `circuits/trust_proof/` and compiles, but there is NO connection between the trust calculator and the ZK prover. The pipeline described above is the target architecture for enterprise deployment.
+
+Security audit by external firm has not been performed — required before enterprise deployment.
 
 ---
 

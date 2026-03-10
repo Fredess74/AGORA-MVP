@@ -8,7 +8,7 @@ last_updated: 2026-03-08
 
 # Agora — Overview
 
-> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the AI agent economy. 10,000+ tools exist with zero trust verification. We provide computed trust scores, a searchable registry, and dual-rail payments (prepaid + crypto). AI-first company: 7 AI agents run operations, max 15 humans ever.
+> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the AI agent economy. 17,000+ tools exist with zero trust verification. We provide computed trust scores, a searchable registry, and dual-rail payments (prepaid + crypto). AI-first company: 7 AI agents run operations, max 15 humans ever.
 
 ## What Agora Is
 
@@ -24,7 +24,7 @@ These three functions form a **connection**: discover → verify → pay → exe
 
 ## The Problem
 
-10,000+ AI tools exist. MCP has 97M+ SDK downloads. But:
+17,000+ AI tools exist. MCP has 97M+ SDK downloads. But:
 
 - **No monetization** — protocols handle communication, not commerce
 - **No trust** — no way to verify reliability before sending money or data
@@ -71,14 +71,14 @@ Computed from 6 weighted signals:
 
 | Signal | Weight |
 |--------|--------|
-| Uptime / Reliability | 25% |
-| Transaction Success | 25% |
-| Code Quality | 20% |
-| Repository Health | 15% |
-| User Reviews | 10% |
-| Account Age | 5% |
+| Response Time | 25% |
+| Execution Quality | 25% |
+| Identity Verification | 20% |
+| Capability Match | 15% |
+| Peer Review | 10% |
+| History | 5% |
 
-Not a rating — computed from real data. Anti-gaming detectors catch fake reviews, sybil attacks, wash trading. ZK proofs: "my score ≥ 0.80" — cryptographically verifiable.
+Not a rating — computed from real interaction data. Anti-gaming detectors are designed (not yet deployed). ZK proofs: Circom circuit exists but is not yet integrated into the pipeline.
 
 Full specification: [02_TRUST_AND_CONNECTIONS.md](02_TRUST_AND_CONNECTIONS.md)
 
@@ -88,9 +88,11 @@ Full specification: [02_TRUST_AND_CONNECTIONS.md](02_TRUST_AND_CONNECTIONS.md)
 
 Canonical build status: [technical/ARCHITECTURE.md](technical/ARCHITECTURE.md)
 
-**Built:** Trust Engine (Rust, 15K SLOC, 170+ tests), REST API (8 endpoints), ZK Proofs (Circom + Groth16), Marketplace UI (React, 7 pages), Infrastructure (Docker + K8s).
+**Built:** Trust Calculator (TypeScript, 6 components with live SSE), Orchestrator API (Express, 5 endpoints), Demo Pipeline (8 AI agents), Marketplace UI (React, 7 pages), 3 Specialist Agents with real API integrations (GitHub, npm, PageSpeed).
 
 **Not built (P0):** Payment processing, execution monitoring, MCP discovery endpoint, escrow/disputes.
+
+**Designed but not implemented:** Anti-gaming detectors, ZK proof integration, Merkle tree score history, Rust trust engine.
 
 Path to first revenue: 4-6 weeks focused engineering on P0 items.
 

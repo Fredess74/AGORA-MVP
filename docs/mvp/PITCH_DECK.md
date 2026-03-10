@@ -60,7 +60,7 @@ Not star ratings. Not self-reported. Computed.
 
 **$7 billion today → $93 billion by 2032** (46% CAGR)
 
-- 10,000+ AI tools exist with zero trust verification
+- 17,000+ AI tools exist with zero trust verification
 - 97 million MCP SDK downloads — the protocol is live
 - 25% of enterprises deploying AI agents RIGHT NOW
 - Supply chain attacks up 430%
@@ -104,7 +104,7 @@ Skyfire does payments. Masumi does identity. Scalekit does auth.
 
 | Built Today | Proof |
 |------------|-------|
-| Trust Engine (Rust) | 15,000 lines, 170+ tests |
+| Trust Engine (Rust) | 15,000 lines, 6-component trust engine |
 | REST API | 8 endpoints, <10ms response |
 | ZK Proofs | Cryptographic verification |
 | Marketplace UI | 7 pages, React |

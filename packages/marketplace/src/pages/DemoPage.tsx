@@ -17,7 +17,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import './DemoPage.css';
 
-const API_BASE = 'http://localhost:3001';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3001';
 
 // ── Types ────────────────────────────────────────────────
 
@@ -578,7 +578,7 @@ export default function DemoPage() {
                             <>
                                 <div className="trust-agent-name">
                                     {currentTrust.agentName || currentTrust.agentId}
-                                    <span className="zk-badge">🔐 ZK-Verifiable</span>
+                                    <span className="zk-badge">✅ Trust-Verified</span>
                                 </div>
                                 <div className="trust-did">
                                     DID: did:agora:{currentTrust.agentId}

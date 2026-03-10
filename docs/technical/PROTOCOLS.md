@@ -55,7 +55,7 @@ After MCP:
 | Metric | Value | Source |
 |--------|-------|--------|
 | SDK downloads | 97M+ | npm/PyPI registries |
-| Published MCP servers | 10,000+ | GitHub + MCP registries |
+| Published MCP servers | 17,000+ | GitHub + MCP registries |
 | Major AI providers supporting MCP | All (OpenAI, Google, Anthropic, others) | Public announcements |
 | Monetization built into MCP | None | MCP specification |
 | Security standard built in | Basic (OAuth, but no trust layer) | MCP specification |

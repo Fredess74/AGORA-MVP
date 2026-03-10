@@ -23,7 +23,7 @@ last_updated: 2026-03-08
 | Metric | Value | Source |
 |--------|-------|--------|
 | MCP SDK downloads | 97M+ | npm/PyPI |
-| Published MCP servers | 10,000+ | GitHub + registries |
+| Published MCP servers | 17,000+ | GitHub + registries |
 | A2A partner organizations | 150+ | Google, Linux Foundation |
 | AP2 launch partners | 60+ | Google (Mastercard, PayPal, Shopify) |
 | MCP monetization built in | None | Protocol specification |

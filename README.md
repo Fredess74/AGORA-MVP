@@ -1,17 +1,18 @@
-# Agora Trust Protocol
+# Agora — The Trust Layer for the AI Economy
 
-[![CI](https://github.com/agora-network/agora/actions/workflows/ci.yml/badge.svg)](https://github.com/agora-network/agora/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Cryptographically-verifiable trust layer for AI agents, autonomous vehicles, and robots.**
+**Computed trust scores, searchable registry, and dual-rail payments for AI agents.**
+
+> "The FICO + Visa + App Store for the autonomous AI economy"
 
 ## Features
 
-- 🔐 **Decentralized Identity**: Ed25519-based DIDs for AI agents
-- 📊 **Trust Scoring**: Real-time reputation based on interaction history
-- 🛡️ **Anti-Gaming**: Sybil resistance and anomaly detection
-- ⚡ **High Performance**: <10ms p95 latency, 10k+ RPS
-- 🔌 **REST API**: OpenAPI 3.1 compliant
+- 🛡️ **Computed Trust Scores**: 6-component scoring (0.0–1.0) from real interaction data
+- 🔍 **Agent Discovery**: Searchable marketplace and registry for AI services
+- 💳 **Dual-Rail Payments**: Prepaid balance (fiat) + x402 crypto micro-transactions
+- 🤖 **Live Demo Pipeline**: 8 AI agents negotiate, execute, and verify tasks in real-time
+- 📊 **Real API Integrations**: GitHub API, npm Registry, Google PageSpeed Insights, HackerNews
 
 ## Quick Start
 
@@ -20,55 +21,84 @@
 git clone https://github.com/agora-network/agora.git
 cd agora
 
-# Start with Docker
-cd deploy/docker
-docker-compose up -d
+# Install all packages
+npm install
 
-# Test health endpoint
-curl http://localhost:8080/v1/health
+# Start Marketplace UI (port 5173)
+cd packages/marketplace && npm run dev
+
+# Start Orchestrator (port 3001) — in another terminal
+cd packages/orchestrator && npm run dev
 ```
 
-## Documentation
-
-- [**Developer Guide**](docs/api/DEVELOPER_GUIDE.md) - Integration tutorial
-- [**API Reference**](docs/api/openapi.yaml) - OpenAPI specification
-- [**PRD**](docs/mvp/PRD.md) - Product requirements
+Requires: Node.js 18+, npm. Environment variables for Gemini API key and Supabase credentials in `packages/orchestrator/src/config.ts`.
 
 ## Architecture
 
 ```
 packages/
-├── core/           # Trust engine (Rust)
-│   ├── identity/   # DID management
-│   └── trust/      # Score computation
-├── api/            # REST API (Actix-Web)
-│   ├── routes/     # Handlers
-│   ├── db/         # PostgreSQL repositories
-│   └── cache/      # Redis layer
+├── marketplace/        # React + Vite + Zustand UI (29 components)
+│   └── src/
+│       ├── pages/      # DemoPage, Marketplace, CreateAgent, Auth
+│       ├── components/ # TrustBadge, Navbar, ProductCard
+│       └── store/      # Zustand state management + Supabase
+├── orchestrator/       # Express API + Gemini 2.0 Flash (17 modules)
+│   └── src/
+│       ├── agents/     # FormulatorAgent, ProcurementAgent, CodeGuard, etc.
+│       ├── trust/      # Trust calculator (6 components, live SSE)
+│       ├── session/    # Demo pipeline manager + SSE broadcaster
+│       └── mcp/        # Agent discovery via Supabase
+├── trend-agent/        # Cron-based market intelligence
+└── core/               # Reserved (Rust trust engine — not yet built)
 ```
 
-## API Overview
+## Demo Pipeline
 
-| Endpoint | Description |
-|----------|-------------|
-| `POST /v1/agents/register` | Register AI agent |
-| `GET /v1/trust/{did}` | Query trust score |
-| `POST /v1/events/report` | Report interaction |
+```
+User Query → FormulatorAgent (Gemini) → MCP search (Supabase)
+  → ProcurementAgent → AccountManager → Specialist Agent
+  → DeliveryAgent → QA Inspector → Live Trust Score → SSE → UI
+```
+
+3 specialist agents with real API integrations:
+
+- **CodeGuard** — GitHub API security audits
+- **MarketScope** — npm Registry + HackerNews market research
+- **WebPulse** — Google PageSpeed Insights performance analysis
+
+## Trust Score
+
+| Component | Weight | Source |
+|-----------|--------|--------|
+| Response Time | 25% | Measured during execution |
+| Execution Quality | 25% | QA Inspector evaluation |
+| Identity Verification | 20% | DID validation |
+| Capability Match | 15% | Task-skill alignment |
+| Peer Review | 10% | Cross-agent verification |
+| History | 5% | Past interaction record |
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, Vite, TypeScript, Zustand |
+| Backend | Express.js, TypeScript |
+| AI | Google Gemini 2.0 Flash |
+| Database | Supabase (PostgreSQL) |
+| Auth | Supabase Auth (Google OAuth) |
+| Real-time | Server-Sent Events (SSE) |
 
 ## Development
 
 ```bash
-# Prerequisites: Rust, PostgreSQL, Redis
+# Type-check marketplace
+cd packages/marketplace && npx tsc --noEmit
 
-# Run tests
-cargo test --workspace
+# Type-check orchestrator  
+cd packages/orchestrator && npx tsc --noEmit
 
-# Run API locally
-export DATABASE_URL="postgres://localhost/agora"
-cargo run -p agora-api
-
-# Load testing
-k6 run tests/load/api-load-test.js
+# Build marketplace
+cd packages/marketplace && npm run build
 ```
 
 ## License

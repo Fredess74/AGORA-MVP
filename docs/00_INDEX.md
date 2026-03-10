@@ -19,7 +19,7 @@ last_updated: 2026-03-08
 | Payments | Dual-rail: prepaid balance (fiat) + x402 (crypto) |
 | Team | 1 human + 7 AI agents (Phase 1), max 15 humans (Phase 3) |
 | Burn | $4,900/month (Phase 1) |
-| Built | Trust engine (Rust, 15K SLOC), API, ZK proofs, marketplace UI |
+| Built | Trust engine (Rust, TypeScript-based), API, ZK proofs, marketplace UI |
 | Not built | Payments, escrow, MCP endpoint, execution monitoring |
 
 ## Document Map

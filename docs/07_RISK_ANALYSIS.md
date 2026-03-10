@@ -78,7 +78,7 @@ The AI agent market is still forming. Possible that creators are not ready to mo
 
 Supporting data:
 
-- 10,000+ AI tool servers exist, but 95% are free
+- 17,000+ AI tool servers exist, but 95% are free
 - No built-in monetization in the leading protocol
 - 42% of developers in industry surveys are willing to pay for verified APIs
 

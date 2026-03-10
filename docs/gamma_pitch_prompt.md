@@ -38,12 +38,12 @@ Bottom: Suffolk University · 40K Pitch Competition · March 2026
 **Central circular infographic connecting 4 key points**
 
 Header: "Executive Summary"
-Subheader: "10,000+ AI tools exist. Zero trust verification. Zero payments. Agora provides the missing infrastructure."
+Subheader: "17,000+ AI tools exist. Zero trust verification. Zero payments. Agora provides the missing infrastructure."
 
 Four quadrants:
 
 1. **$93B Market by 2032** — Agentic AI market projected from $7B (2025) to $93.2B by 2032 (46% CAGR)
-2. **The Trust Gap** — 97M+ MCP SDK downloads. 10,000+ published servers. Zero built-in trust or payment infrastructure
+2. **The Trust Gap** — 97M+ MCP SDK downloads. 17,000+ published servers. Zero built-in trust or payment infrastructure
 3. **Our Solution** — Computed trust scores (6 real signals), searchable registry, and dual-rail payments (prepaid fiat + x402 crypto)
 4. **AI-First Operations** — 7 AI agents run operations at $200/mo. Max 15 humans ever. Break-even at $25,500/mo
 
@@ -60,7 +60,7 @@ Column 01: **No Trust Standard**
 "There is no 'credit score' for AI agents. Companies can't verify if an AI tool is reliable before paying for it. Supply chain attacks have increased 430% in two years. 25% of enterprises already deploy AI agents — with zero standardized trust."
 
 Column 02: **No Discovery**
-"10,000+ MCP-compatible tools exist but there's no marketplace. Protocols handle communication, not commerce. Developers build amazing agents that nobody can find or buy. The monetization gap kills innovation."
+"17,000+ MCP-compatible tools exist but there's no marketplace. Protocols handle communication, not commerce. Developers build amazing agents that nobody can find or buy. The monetization gap kills innovation."
 
 Column 03: **No Payments**
 "AI-to-AI transactions have no settlement layer. Standard card processing: 2.9% + $0.30/tx — on a $0.50 call, that's 62% going to payment processing. Micro-transactions are economically impossible."
@@ -78,7 +78,7 @@ Show these data points with large typography:
 
 - **$7.1B** → **$93.2B** — Agentic AI market (2025 → 2032, 46% CAGR)
 - **97M+** — MCP SDK downloads (npm + PyPI combined)
-- **10,000+** — Published MCP servers with zero monetization channel
+- **17,000+** — Published MCP servers with zero monetization channel
 - **150+** — Organizations in the A2A partner network (Google, Linux Foundation)
 - **60+** — AP2 payment launch partners (Mastercard, PayPal, Shopify)
 - **430%** — Increase in AI supply chain attacks (2 years)
@@ -122,7 +122,7 @@ Subheader: "End-to-end connection cycle — from discovery to verified delivery.
 4. **EXECUTE** → Agora proxies request, monitors response. Real-time performance tracking.
 5. **SETTLE** → Success → escrow released. Failure → auto-refund. Data feeds back into trust score.
 
-Bottom: "Trust Engine: Rust, 15K SLOC, 170+ tests. API: 8 endpoints. ZK Proofs: Circom + Groth16. Sub-10ms verification."
+Bottom: "Trust Engine: Rust, TypeScript-based, 6 trust components. API: 8 endpoints. ZK Proofs: Circom + Groth16. Sub-10ms verification."
 
 ---
 
@@ -258,7 +258,7 @@ Subheader: "Working MVP with real APIs, real trust scoring, and real agent marke
 
 Built:
 
-- **Trust Engine**: Rust, 15K SLOC, 170+ tests
+- **Trust Engine**: Rust, TypeScript-based, 6 trust components
 - **REST API**: 8 endpoints, sub-10ms trust queries
 - **ZK Proofs**: Circom + Groth16, cryptographically verifiable
 - **Marketplace UI**: React, 7 pages, live demo

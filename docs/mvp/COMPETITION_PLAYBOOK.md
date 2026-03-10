@@ -33,7 +33,7 @@ last_updated: 2026-03-08
 ### Suffolk Strategy
 
 1. **Lead with demo.** Working trust engine + marketplace UI = huge advantage over idea-stage teams
-2. **Show code.** 15,000 lines of Rust, 170+ tests — this is real, not a slide deck
+2. **Show code.** 15,000 lines of Rust, 6-component trust engine — this is real, not a slide deck
 3. **Be specific.** $4,900/mo burn. 10% commission. Break-even at $25.5K MRR. Numbers win
 4. **March 17 boot camp:** Listen to mentors. Adjust pitch based on feedback. Ask about judge priorities
 

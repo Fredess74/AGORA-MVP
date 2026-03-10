@@ -42,7 +42,7 @@ External systems query Agora's trust scores without using the marketplace. Enter
 | Business | $99/month | 100,000 | Platforms integrating trust |
 | Pay-per-query | $0.001/query | Unlimited | High-volume systems |
 
-**Fact:** Trust engine is built (170+ tests). API is built (8 endpoints). This stream is ready to sell once payment processing is live.
+**Fact:** Trust engine is built (6-component trust engine). API is built (8 endpoints). This stream is ready to sell once payment processing is live.
 
 ### Stream 3: Prepaid Balance Convenience Fees — Month 1
 

@@ -8,11 +8,11 @@ last_updated: 2026-03-08
 
 # Co-Founder Memo
 
-> **TL;DR:** Infrastructure for AI agent economy (trust + discovery + payments). Trust engine built in Rust (15K SLOC, 170+ tests). Need a technical co-founder to build payment processing and scale. AI-first company: 7 AI agents, max 15 humans.
+> **TL;DR:** Infrastructure for AI agent economy (trust + discovery + payments). Trust engine built in Rust (TypeScript-based, 6-component trust engine). Need a technical co-founder to build payment processing and scale. AI-first company: 7 AI agents, max 15 humans.
 
 ## The 30-Second Pitch
 
-10,000+ AI tools exist. Zero way to verify trust before sending money or data. Protocols for communication (MCP, 97M+ downloads) and payment (x402, 100M+ processed) are live. Missing: "Should I trust this agent?"
+17,000+ AI tools exist. Zero way to verify trust before sending money or data. Protocols for communication (MCP, 97M+ downloads) and payment (x402, 100M+ processed) are live. Missing: "Should I trust this agent?"
 
 Agora is the trust + discovery + payment layer for the AI agent economy.
 
@@ -20,7 +20,7 @@ Agora is the trust + discovery + payment layer for the AI agent economy.
 
 Canonical build status: [ARCHITECTURE.md](../technical/ARCHITECTURE.md)
 
-- **Trust Engine** — Rust, 15K SLOC, 170+ unit tests, 6-signal scoring
+- **Trust Engine** — Rust, TypeScript-based, 170+ unit tests, 6-signal scoring
 - **ZK Proofs** — Circom + Groth16, cryptographic trust verification
 - **REST API** — 8 endpoints, full middleware
 - **Marketplace** — React, 7 pages, responsive
