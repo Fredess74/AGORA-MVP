@@ -60,6 +60,7 @@ export async function emit(
             api_call: 1000,
             work_completed: 1500,
             qa_review: 2000,
+            trust_component_update: 800,
             trust_updated: 1500,
             session_completed: 1000,
         };

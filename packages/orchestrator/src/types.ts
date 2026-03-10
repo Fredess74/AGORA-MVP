@@ -49,12 +49,12 @@ export interface StructuredTask {
 // ── Trust ────────────────────────────────────────────────
 
 export type TrustComponent =
-    | 'code_quality'
-    | 'repo_health'
-    | 'uptime'
-    | 'transaction_success'
-    | 'user_reviews'
-    | 'account_age';
+    | 'identity'
+    | 'capability_match'
+    | 'response_time'
+    | 'execution_quality'
+    | 'peer_review'
+    | 'history';
 
 export interface TrustComponentScore {
     component: TrustComponent;
@@ -104,6 +104,7 @@ export type SSEEventType =
     | 'api_call'
     | 'work_completed'
     | 'qa_review'
+    | 'trust_component_update'
     | 'trust_updated'
     | 'session_completed';
 

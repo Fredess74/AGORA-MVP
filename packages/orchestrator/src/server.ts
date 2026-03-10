@@ -5,8 +5,7 @@
    POST /api/demo/start    → Start E2E demo
    GET  /api/demo/stream   → SSE event stream
    GET  /api/demo/session/:id → Get session state
-   GET  /api/mcp/agents    → List agents
-   GET  /api/mcp/trust/:id → Trust breakdown
+   GET  /api/mcp/agents    → List agents (from Supabase)
    GET  /api/health        → Health check
    ═══════════════════════════════════════════════════════════ */
 
@@ -14,8 +13,8 @@ import express from 'express';
 import cors from 'cors';
 import { config, validateConfig } from './config.js';
 import { addClient, removeClient, getClientCount } from './session/sse.js';
-import { runDemo, getSession, getAllSessions } from './session/manager.js';
-import { searchAgents, getAgentTrust, AGENT_REGISTRY } from './mcp/tools.js';
+import { startSession, getSession, initSessions } from './session/manager.js';
+import { searchAgents, getAllAgents } from './mcp/tools.js';
 import { v4 as uuid } from 'uuid';
 
 const app = express();
@@ -24,11 +23,12 @@ app.use(express.json());
 
 // ── Health ──────────────────────────────────────────────
 
-app.get('/api/health', (_req, res) => {
+app.get('/api/health', async (_req, res) => {
+    const agents = await getAllAgents();
     res.json({
         status: 'ok',
-        version: '0.1.0',
-        agents: AGENT_REGISTRY.length,
+        version: '0.2.0',
+        agents: agents.length,
         sseClients: getClientCount(),
         uptime: process.uptime(),
     });
@@ -69,24 +69,10 @@ app.post('/api/demo/start', async (req, res) => {
     }
 
     try {
-        // Start demo asynchronously (SSE will stream events)
-        const sessionPromise = runDemo(query, speed);
-
-        // Return session ID immediately
-        // The client will receive events via SSE
-        sessionPromise.then(session => {
-            console.log(`  ✅ Demo completed: ${session.id} in ${session.totalLatencyMs}ms`);
-        }).catch(err => {
-            console.error(`  ❌ Demo failed:`, err.message);
-        });
-
-        // Wait a bit for session to initialize
-        await new Promise(resolve => setTimeout(resolve, 100));
-        const sessions = getAllSessions();
-        const latest = sessions[sessions.length - 1];
+        const session = await startSession(query, speed);
 
         res.json({
-            sessionId: latest?.id,
+            sessionId: session.id,
             status: 'started',
             message: 'Demo started. Connect to /api/demo/stream for real-time events.',
         });
@@ -101,34 +87,23 @@ app.get('/api/demo/session/:id', (req, res) => {
     res.json(session);
 });
 
-app.get('/api/demo/sessions', (_req, res) => {
-    res.json(getAllSessions());
-});
-
 // ── MCP ─────────────────────────────────────────────────
 
-app.get('/api/mcp/agents', (req, res) => {
-    const { capability, category, minTrust, query } = req.query;
-    const agents = searchAgents({
+app.get('/api/mcp/agents', async (req, res) => {
+    const { capability, category, query } = req.query;
+    const agents = await searchAgents({
         capability: capability as string,
         category: category as string,
-        minTrust: minTrust ? parseFloat(minTrust as string) : undefined,
         query: query as string,
     });
     res.json({ agents, count: agents.length });
-});
-
-app.get('/api/mcp/trust/:id', (req, res) => {
-    const trust = getAgentTrust(req.params.id);
-    if (!trust) return res.status(404).json({ error: 'Agent not found' });
-    res.json(trust);
 });
 
 // ── Start ───────────────────────────────────────────────
 
 async function main() {
     console.log('');
-    console.log('  🏛️  AGORA ORCHESTRATOR v0.1');
+    console.log('  🏛️  AGORA ORCHESTRATOR v0.2');
     console.log('  ═══════════════════════════');
     console.log('');
 
@@ -136,10 +111,16 @@ async function main() {
         process.exit(1);
     }
 
+    // Seed agents into Supabase if needed
+    await initSessions();
+
+    const agents = await getAllAgents();
+
     app.listen(config.port, () => {
         console.log(`  🚀 Server running: http://localhost:${config.port}`);
         console.log(`  📡 SSE stream:     http://localhost:${config.port}/api/demo/stream`);
-        console.log(`  🤖 Agents:         ${AGENT_REGISTRY.length} registered`);
+        console.log(`  🤖 Agents:         ${agents.length} registered`);
+        console.log(`  💾 Supabase:       ${config.supabaseServiceKey ? '✅ Connected' : '⚠️  No service key'}`);
         console.log('');
     });
 }

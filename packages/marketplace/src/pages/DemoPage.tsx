@@ -65,6 +65,7 @@ const STEP_MAP: Record<string, string> = {
     task_formulated: 'discover',
     mcp_search: 'discover',
     agent_selected: 'verify',
+    trust_component_update: 'verify',
     negotiation: 'negotiate',
     work_started: 'execute',
     api_call: 'execute',
@@ -162,20 +163,24 @@ export default function DemoPage() {
             setGeminiCallCount(prev => prev + 1);
         }
 
-        // Update trust data
-        if (event.type === 'trust_updated' && event.metadata?.trust) {
-            const trust = event.metadata.trust as TrustBreakdown;
-            if (event.metadata?.before) {
-                setTrustBefore(event.metadata.before as TrustBreakdown);
-                setTrustAfter(event.metadata.after as TrustBreakdown);
-            } else if (!trustBefore) {
-                setTrustBefore(trust);
-            }
+        // Live trust component updates — animate bars one by one
+        if (event.type === 'trust_component_update' && event.metadata?.allComponents) {
+            const breakdown: TrustBreakdown = {
+                agentId: event.metadata?.agentId as string || '',
+                agentName: event.sender || '',
+                components: event.metadata.allComponents as any[],
+                compositeScore: event.metadata.compositeScore as number || 0,
+                level: (event.metadata.level as string) || 'unrated',
+            };
+            setTrustBefore(breakdown);
         }
 
-        // Agent selected — show initial trust
-        if (event.type === 'agent_selected' && event.metadata?.trust) {
-            setTrustBefore(event.metadata.trust as TrustBreakdown);
+        // Final trust summary
+        if (event.type === 'trust_updated' && event.metadata?.trustBreakdown) {
+            setTrustAfter(event.metadata.trustBreakdown as TrustBreakdown);
+            if (!trustBefore) {
+                setTrustBefore(event.metadata.trustBreakdown as TrustBreakdown);
+            }
         }
 
         // Add AI messages to chat
@@ -328,7 +333,7 @@ export default function DemoPage() {
                 {PIPELINE_STEPS.map((step, i) => (
                     <span key={step.id}>
                         <span className={`pipeline-step ${i < currentStepIndex ? 'completed' :
-                                step.id === currentStep ? 'active' : ''
+                            step.id === currentStep ? 'active' : ''
                             }`}>
                             <span className="step-icon">{
                                 i < currentStepIndex ? '✓' : step.icon
@@ -558,7 +563,7 @@ export default function DemoPage() {
                                         {currentTrust.compositeScore.toFixed(3)}
                                     </div>
                                     <div className="trust-confidence">
-                                        Confidence: HIGH • 312 transactions
+                                        Level: {currentTrust.level.toUpperCase()} • Live calculation
                                     </div>
                                     {trustBefore && trustAfter && (
                                         <div className={`trust-composite-delta ${trustAfter.compositeScore > trustBefore.compositeScore ? 'positive' :
@@ -586,16 +591,16 @@ export default function DemoPage() {
 
 function componentIcon(c: string): string {
     const icons: Record<string, string> = {
-        code_quality: '💻', repo_health: '📊', uptime: '🟢',
-        transaction_success: '✅', user_reviews: '⭐', account_age: '📅',
+        identity: '🔐', capability_match: '🎯', response_time: '⚡',
+        execution_quality: '📊', peer_review: '⭐', history: '📜',
     };
     return icons[c] || '•';
 }
 
 function componentLabel(c: string): string {
     const labels: Record<string, string> = {
-        code_quality: 'Code Quality', repo_health: 'Repo Health', uptime: 'Uptime',
-        transaction_success: 'Tx Success', user_reviews: 'User Reviews', account_age: 'Account Age',
+        identity: 'Identity', capability_match: 'Capability', response_time: 'Response Time',
+        execution_quality: 'Execution', peer_review: 'Peer Review', history: 'History',
     };
     return labels[c] || c;
 }
