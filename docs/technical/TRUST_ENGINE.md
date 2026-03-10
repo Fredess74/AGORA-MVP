@@ -6,9 +6,9 @@ last_updated: 2026-03-10
 
 # Trust Engine — Technical Specification
 
-> **This document describes the CURRENT TypeScript implementation (ADAPTIVE 4-TIER).**
-> Updated Session 7 (2026-03-10) to reflect adaptive scoring.
-> The canonical source code is `packages/orchestrator/src/trust/calculator.ts`.
+> **This document describes the CURRENT TypeScript implementation (EWMA + ADAPTIVE 4-TIER).**
+> Updated Session 16 (2026-03-10) to reflect EWMA scoring, trust decay, and asymmetric penalties.
+> The canonical source code is `packages/orchestrator/src/trust/calculator.ts` + `db/supabase.ts`.
 
 ## Current Implementation
 
@@ -36,13 +36,39 @@ The trust score is a weighted sum of 6 components, each scored 0.0–1.0. **Weig
 
 **Key insight:** New agents are judged on what they CLAIM (identity/capability). Veteran agents are judged on what they've PROVEN (history/peer review).
 
-### Score Calculation
+### Per-Transaction Score
 
 ```
-composite_score = Σ (component_score × adaptive_weight[tier])
+txn_score = Σ (component_score × adaptive_weight[tier])
 ```
 
-The composite score ranges from 0.0 to 1.0 and maps to trust levels:
+### EWMA Score Persistence (Dynamic Formula)
+
+Trust scores are **NOT overwritten** — they use Exponential Weighted Moving Average:
+
+```
+T_new = α × txn_score + (1 - α) × T_old_decayed
+```
+
+| Agent Tier | α (alpha) | Behavior |
+| --- | --- | --- |
+| New (< 5 txns) | 0.50 | Responsive, builds quickly |
+| Established (5-20) | 0.30 | Balanced |
+| Veteran (20+) | 0.15 | Stable, hard to move |
+
+**Asymmetric penalty:** Failed transactions (score < 0.4) use `α + 0.15` — failures hurt more than successes help.
+
+### Trust Decay (30-day Half-Life)
+
+Inactive agents lose trust over time:
+
+```
+T_decayed = T_old × 0.5^(days_since_last_txn / 30)
+```
+
+After 30 days of inactivity: trust halved. After 60 days: quartered.
+
+### Trust Levels
 
 | Level | Range | Display |
 | --- | --- | --- |
@@ -83,13 +109,16 @@ During a demo session, the trust calculator emits SSE events as each component i
 
 The DemoPage UI renders these as live-updating progress bars.
 
-### Persistence
+### Persistence (EWMA)
 
-Trust scores are stored in Supabase via `updateAgentMetrics()`:
+Trust scores are updated in Supabase via `updateAgentMetrics()` using EWMA:
 
-- `trust_score` field on agent record
-- `total_tasks` counter incremented
-- `total_revenue` updated with commission calculation
+1. Read current `trust_score`, `updated_at`, `total_calls` from agent record
+2. Apply decay: `decayed = trust_score × 0.5^(daysSinceUpdate / 30)`
+3. Choose α based on `total_calls` tier
+4. Apply asymmetric α if failure (score < 0.4)
+5. EWMA update: `new_score = α × txn_score + (1 - α) × decayed`
+6. Write `trust_score`, increment `total_calls`, update `avg_latency_ms`
 
 ---
 
@@ -126,13 +155,39 @@ All four are **designed in documentation** (see `docs/02_TRUST_AND_CONNECTIONS.m
 
 ---
 
+## ERC-8004 Integration (Roadmap)
+
+> ERC-8004 ("Trustless Agents") is **LIVE on Ethereum mainnet** since January 2026 with **10,000+ registered agents**.
+> Co-authored by MetaMask, Ethereum Foundation, Google, and Coinbase.
+
+### 3 Registries
+
+| Registry | What It Stores | Agora Integration Status |
+| --- | --- | --- |
+| **Identity Registry** | ERC-721 agent NFT passport + capabilities | ❌ Not integrated |
+| **Reputation Registry** | On-chain feedback from clients | ❌ Not integrated |
+| **Validation Registry** | TEE/zkML proof of work quality | ❌ Not integrated |
+
+### Agora's Role
+
+ERC-8004 stores **raw data** (identity, feedback, validation proofs).
+Agora is the **scoring engine** that interprets this data into actionable trust scores.
+
+**Minimum Viable Integration:**
+
+1. Read from Identity Registry to verify agent DID
+2. Submit trust_score to Reputation Registry after each transaction
+3. Store Agora composite score as attestation
+
+---
+
 ## Integration Points
 
 ### Supabase Tables Used
 
 ```sql
 -- Agent data stored in 'listings' table
--- Trust score stored as field on agent record
+-- Trust score stored as EWMA field on agent record
 -- Transactions logged in 'transactions' table
 -- API usage in 'usage_logs' table
 ```
@@ -143,6 +198,7 @@ All four are **designed in documentation** (see `docs/02_TRUST_AND_CONNECTIONS.m
 | --- | --- |
 | `trust_component_update` | Each component calculated |
 | `trust_updated` | Final composite score ready |
+| `api_call` | Each API call with success/failure status |
 
 ### Config Dependencies
 

@@ -134,9 +134,9 @@ export function computeExecutionScore(apiSuccesses: number, apiTotal: number, da
     return Math.round(score * 1000) / 1000;
 }
 
-/** History score from Supabase: min(1, pastTransactions / 10) */
+/** History score from Supabase: min(1, pastTransactions / 50) — maxes at 50 txns */
 export function computeHistoryScore(transactionCount: number): number {
-    return Math.round(Math.min(1.0, transactionCount / 10) * 1000) / 1000;
+    return Math.round(Math.min(1.0, transactionCount / 50) * 1000) / 1000;
 }
 
 /* ── LiveTrustTracker ────────────────────────────────────── */

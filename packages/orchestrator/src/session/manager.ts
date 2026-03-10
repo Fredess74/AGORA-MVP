@@ -189,11 +189,11 @@ async function runPipeline(session: DemoSession): Promise<void> {
     let apiSuccesses = 0;
     const workStart = Date.now();
 
-    const onApiCall = (api: string, detail: string) => {
+    const onApiCall = (api: string, detail: string, success = true) => {
         session.apiCallsMade++;
         apiCalls++;
-        apiSuccesses++; // assuming success (failures would go to catch)
-        emit('api_call', id, agent.name, `📡 ${api}`, detail, sm, { latencyMs: Date.now() - workStart });
+        if (success) apiSuccesses++;
+        emit('api_call', id, agent.name, `📡 ${api}`, detail, sm, { latencyMs: Date.now() - workStart, success });
     };
 
     try {
@@ -227,7 +227,8 @@ async function runPipeline(session: DemoSession): Promise<void> {
         }
     } catch (err: any) {
         rawReport = `Execution error: ${err.message}`;
-        apiSuccesses = Math.max(0, apiCalls - 1);
+        apiSuccesses = Math.max(0, apiSuccesses - 1); // penalize the failed call
+        emit('api_call', id, agent.name, '❌ Execution Error', err.message, sm, { latencyMs: Date.now() - workStart, success: false });
     }
 
     // Trust Check 5: Execution quality

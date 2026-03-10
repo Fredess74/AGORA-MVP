@@ -27,7 +27,6 @@ Global AI agent market: $10.91B in 2026, projected 46% CAGR.
 | Metric | Value | Source |
 |--------|-------|--------|
 | MCP SDK downloads | 97M+ | npm/PyPI |
-| MCP SDK downloads | 97M+ | npm/PyPI |
 | Published MCP servers | 16,000+ | MCP registries, dev.to |
 | A2A partner organizations | 150+ | Google, Linux Foundation |
 | AP2 launch partners | 60+ | Google (Mastercard, PayPal, Shopify) |
@@ -164,7 +163,7 @@ All 4 systems solve the same problem: **HOW do agents pay?** None of them solve:
 | Capability | Skyfire | Masumi | ERC-8004 | Scalekit | MCP native | **Agora** |
 |-----------|---------|--------|----------|----------|-----------|-----------|
 | Agent identity | Yes (KYA) | Yes (DID) | Yes (NFT) | Yes (auth) | Basic | **Yes (DID + auth)** |
-| Trust scoring (behavioral) | No | No | Raw data only | No | No | **Yes (adaptive 4-tier)** |
+| Trust scoring (behavioral) | No | No | Raw data only | No | No | **Yes (EWMA + adaptive 4-tier)** |
 | Anti-gaming | No | No | No | No | No | **Planned (4 designed)** |
 | ZK proof verification | No | No | zkML (validator) | No | No | **Planned (Groth16)** |
 | Marketplace / discovery | No | No | No | No | No | **Yes** |

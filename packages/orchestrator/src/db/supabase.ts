@@ -178,7 +178,21 @@ export async function recordTransaction(agentDid: string, amount: number, commis
     });
 }
 
-/** Update agent trust score and metrics in Supabase */
+/** 
+ * Update agent trust score using EWMA (Exponential Weighted Moving Average).
+ * 
+ * Formula: T_new = α × txnScore + (1 - α) × T_old
+ * 
+ * α (alpha) controls how much weight goes to the new observation:
+ * - New agents (< 5 txns): α = 0.5 (responsive, builds quickly)
+ * - Established (5-20 txns): α = 0.3 (balanced)
+ * - Veteran (20+ txns): α = 0.15 (stable, hard to move)
+ * 
+ * Trust decay: inactive agents lose trust with 30-day half-life.
+ * S(t) = S₀ × 0.5^(daysSinceLastTxn / 30)
+ * 
+ * Asymmetric: failures (score < 0.4) use α + 0.15 (penalize harder)
+ */
 export async function updateAgentMetrics(agentDid: string, trustScore: number, latencyMs: number): Promise<void> {
     const db = getDb();
     if (!db) return;
@@ -186,7 +200,7 @@ export async function updateAgentMetrics(agentDid: string, trustScore: number, l
     // Get current metrics
     const { data: listing } = await db
         .from('listings')
-        .select('id, total_calls, avg_latency_ms')
+        .select('id, total_calls, avg_latency_ms, trust_score, updated_at')
         .eq('did', agentDid)
         .single();
 
@@ -194,11 +208,35 @@ export async function updateAgentMetrics(agentDid: string, trustScore: number, l
 
     const newTotal = (listing.total_calls || 0) + 1;
     const oldAvg = listing.avg_latency_ms || 0;
-    // Running average of latency
     const newAvg = Math.round(oldAvg + (latencyMs - oldAvg) / newTotal);
 
+    // ── EWMA Trust Score Update ──
+    const oldTrust = listing.trust_score || 0;
+
+    // 1. Apply trust decay for inactivity
+    let decayedOldTrust = oldTrust;
+    if (listing.updated_at) {
+        const daysSinceUpdate = (Date.now() - new Date(listing.updated_at).getTime()) / 86400000;
+        if (daysSinceUpdate > 1) {
+            const HALF_LIFE_DAYS = 30;
+            decayedOldTrust = oldTrust * Math.pow(0.5, daysSinceUpdate / HALF_LIFE_DAYS);
+        }
+    }
+
+    // 2. Choose α based on transaction count
+    let alpha: number;
+    if (newTotal < 5) alpha = 0.5;       // new: responsive
+    else if (newTotal < 20) alpha = 0.3; // established: balanced
+    else alpha = 0.15;                   // veteran: stable
+
+    // 3. Asymmetric: penalize failures harder
+    if (trustScore < 0.4) alpha = Math.min(alpha + 0.15, 0.7);
+
+    // 4. EWMA update
+    const newTrust = Math.round((alpha * trustScore + (1 - alpha) * decayedOldTrust) * 1000) / 1000;
+
     await db.from('listings').update({
-        trust_score: trustScore,
+        trust_score: newTrust,
         total_calls: newTotal,
         avg_latency_ms: newAvg,
         updated_at: new Date().toISOString(),
