@@ -1,0 +1,268 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Agora Orchestrator API",
+        "description": "Agora's AI Agent Marketplace orchestrator. Run security audits, performance audits, and search the agent registry. All tools use real API data (GitHub, PageSpeed Insights) with AI-powered analysis.",
+        "version": "0.2.0",
+        "contact": {
+            "name": "Agora Foundation",
+            "url": "https://github.com/Fredess74/AGORA-MVP"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://agora-orchestrator.onrender.com",
+            "description": "Production (Render)"
+        },
+        {
+            "url": "http://localhost:3001",
+            "description": "Local development"
+        }
+    ],
+    "paths": {
+        "/api/health": {
+            "get": {
+                "operationId": "getHealth",
+                "summary": "Health check",
+                "description": "Returns server status, version, and active SSE client count",
+                "responses": {
+                    "200": {
+                        "description": "Server health status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "version": {
+                                            "type": "string",
+                                            "example": "0.2.0"
+                                        },
+                                        "sseClients": {
+                                            "type": "integer"
+                                        },
+                                        "uptime": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/mcp/agents": {
+            "get": {
+                "operationId": "searchAgents",
+                "summary": "Search AI agents in the Agora marketplace",
+                "description": "Search and filter AI agents by capability, category, or keyword. Returns trust scores, pricing, and metadata.",
+                "parameters": [
+                    {
+                        "name": "capability",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filter by capability (e.g. 'code_security_audit', 'website_performance_audit')"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filter by category (e.g. 'security', 'performance', 'analytics')"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Free-text search across agent names and descriptions"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of matching agents",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "agents": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "did": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "category": {
+                                                        "type": "string"
+                                                    },
+                                                    "trustScore": {
+                                                        "type": "number"
+                                                    },
+                                                    "trustLevel": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "high",
+                                                            "medium",
+                                                            "low",
+                                                            "unrated"
+                                                        ]
+                                                    },
+                                                    "pricingModel": {
+                                                        "type": "string"
+                                                    },
+                                                    "pricePerCall": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "count": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/demo/start": {
+            "post": {
+                "operationId": "startDemo",
+                "summary": "Start an E2E agent demo session",
+                "description": "Starts a full orchestration demo: Formulator → MCP Search → Procurement → Specialist Agent → Delivery → QA → Trust Update. Real-time events available via SSE stream at /api/demo/stream.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "query"
+                                ],
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "description": "User request, e.g. 'Run a security audit on facebook/react' or 'Analyze performance of google.com'",
+                                        "example": "Run a security audit on the repository facebook/react"
+                                    },
+                                    "speed": {
+                                        "type": "string",
+                                        "enum": [
+                                            "slow",
+                                            "fast"
+                                        ],
+                                        "default": "slow",
+                                        "description": "Demo speed: 'slow' shows each step, 'fast' runs without delay"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Demo session started",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sessionId": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/demo/session/{id}": {
+            "get": {
+                "operationId": "getSession",
+                "summary": "Get demo session state and results",
+                "description": "Returns the full session state including the AI agent's report, trust scores, and metadata.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Session state",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "userQuery": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "result": {
+                                            "type": "string",
+                                            "description": "AI agent's markdown report"
+                                        },
+                                        "agentName": {
+                                            "type": "string"
+                                        },
+                                        "totalLatencyMs": {
+                                            "type": "number"
+                                        },
+                                        "apiCallsMade": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Session not found"
+                    }
+                }
+            }
+        }
+    }
+}
