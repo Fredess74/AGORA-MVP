@@ -23,12 +23,10 @@ app.use(express.json());
 
 // ── Health ──────────────────────────────────────────────
 
-app.get('/api/health', async (_req, res) => {
-    const agents = await getAllAgents();
+app.get('/api/health', (_req, res) => {
     res.json({
         status: 'ok',
         version: '0.2.0',
-        agents: agents.length,
         sseClients: getClientCount(),
         uptime: process.uptime(),
     });

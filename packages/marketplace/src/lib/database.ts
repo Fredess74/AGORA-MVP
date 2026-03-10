@@ -519,8 +519,12 @@ export async function logUsage(entry: {
         return false;
     }
 
-    // Increment total_calls on the listing
-    await supabase.rpc('increment_listing_calls', { listing_uuid: entry.listing_id }).catch(() => { });
+    // Increment total_calls on the listing (best-effort, ignore failures)
+    try {
+        await supabase.rpc('increment_listing_calls', { listing_uuid: entry.listing_id });
+    } catch {
+        // RPC may not exist yet — silently ignore
+    }
 
     return true;
 }
