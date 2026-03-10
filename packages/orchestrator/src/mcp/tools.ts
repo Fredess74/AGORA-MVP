@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 import type { AgentListing } from '../types.js';
-import { getTrustBreakdown, calculateCompositeScore, SEED_TRUST } from '../trust/calculator.js';
+import { getTrustBreakdown, calculateCompositeScore, getTrustLevel, SEED_TRUST } from '../trust/calculator.js';
 
 /** Seed agent listings (3 real agents) */
 export const AGENT_REGISTRY: AgentListing[] = [
@@ -17,7 +17,7 @@ export const AGENT_REGISTRY: AgentListing[] = [
         capabilities: ['code_security_audit', 'dependency_analysis', 'code_quality', 'vulnerability_scan', 'github_audit'],
         category: 'security',
         trustScore: calculateCompositeScore(SEED_TRUST['codeguard-001']),
-        trustLevel: 'high',
+        trustLevel: getTrustLevel(calculateCompositeScore(SEED_TRUST['codeguard-001'])),
         pricingModel: 'per_call',
         pricePerCall: 0.05,
         totalCalls: 312,
@@ -34,7 +34,7 @@ export const AGENT_REGISTRY: AgentListing[] = [
         capabilities: ['competitive_intelligence', 'market_research', 'trend_analysis', 'competitor_tracking', 'ecosystem_analysis'],
         category: 'analytics',
         trustScore: calculateCompositeScore(SEED_TRUST['marketscope-001']),
-        trustLevel: 'high',
+        trustLevel: getTrustLevel(calculateCompositeScore(SEED_TRUST['marketscope-001'])),
         pricingModel: 'per_call',
         pricePerCall: 0.03,
         totalCalls: 547,
@@ -51,7 +51,7 @@ export const AGENT_REGISTRY: AgentListing[] = [
         capabilities: ['website_performance_audit', 'seo_audit', 'core_web_vitals', 'security_headers', 'performance_optimization'],
         category: 'performance',
         trustScore: calculateCompositeScore(SEED_TRUST['webpulse-001']),
-        trustLevel: 'high',
+        trustLevel: getTrustLevel(calculateCompositeScore(SEED_TRUST['webpulse-001'])),
         pricingModel: 'per_call',
         pricePerCall: 0.04,
         totalCalls: 428,

@@ -84,7 +84,7 @@ export interface AgentListing {
     capabilities: string[];
     category: string;
     trustScore: number;
-    trustLevel: 'high' | 'medium' | 'low';
+    trustLevel: 'high' | 'medium' | 'low' | 'unrated';
     pricingModel: 'free' | 'per_call' | 'subscription';
     pricePerCall?: number;
     totalCalls: number;
@@ -99,14 +99,13 @@ export type SSEEventType =
     | 'task_formulated'
     | 'mcp_search'
     | 'agent_selected'
-    | 'negotiation_message'
+    | 'negotiation'
     | 'work_started'
     | 'api_call'
-    | 'work_progress'
     | 'work_completed'
+    | 'qa_review'
     | 'trust_updated'
-    | 'session_completed'
-    | 'error';
+    | 'session_completed';
 
 export interface SSEEvent {
     type: SSEEventType;

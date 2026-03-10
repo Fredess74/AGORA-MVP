@@ -55,14 +55,13 @@ export async function emit(
             task_formulated: 2500,
             mcp_search: 2000,
             agent_selected: 2500,
-            negotiation_message: 1800,
+            negotiation: 1800,
             work_started: 1500,
             api_call: 1000,
-            work_progress: 800,
-            work_completed: 2000,
+            work_completed: 1500,
+            qa_review: 2000,
             trust_updated: 1500,
             session_completed: 1000,
-            error: 0,
         };
         await sleep(delays[type] || 1000);
     }

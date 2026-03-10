@@ -15,7 +15,7 @@ import { CodeGuardAgent } from '../agents/specialists/codeguard.js';
 import { MarketScopeAgent } from '../agents/specialists/marketscope.js';
 import { WebPulseAgent } from '../agents/specialists/webpulse.js';
 import { searchAgents, getAgentTrust, AGENT_REGISTRY } from '../mcp/tools.js';
-import { getTrustBreakdown, updateTrustAfterTransaction } from '../trust/calculator.js';
+import { getTrustBreakdown, updateTrustAfterTransaction, getTrustLevel } from '../trust/calculator.js';
 import type { DemoSession, SpeedMode, StructuredTask, TrustBreakdown } from '../types.js';
 
 // Active sessions
@@ -57,27 +57,40 @@ export async function runDemo(userQuery: string, speedMode: SpeedMode = 'slow'):
 
     try {
         // ═══ STEP 1: Session started ═══
-        await emit('session_started', sessionId, 'system', 'Демо запущено', `Запрос директора: "${userQuery}"`, speedMode);
+        await emit('session_started', sessionId, 'system', 'Demo Started', `Director request: "${userQuery}"`, speedMode);
 
         // ═══ STEP 2: Formulate task ═══
-        await emit('task_formulated', sessionId, 'Director\'s AI', 'Формулирует задачу...', 'Анализирует запрос директора и создаёт структурированное ТЗ', speedMode);
+        await emit('task_formulated', sessionId, 'Director\'s AI', 'Formulating task...', 'Analyzing director request and creating structured specification', speedMode);
 
         const { task, latencyMs: formLatency } = await formulator.formulate(userQuery);
         session.structuredTask = task;
         session.status = 'task_formulated';
 
-        await emit('task_formulated', sessionId, 'Director\'s AI', 'Задача оформлена',
-            `Тип: ${task.task_type}\nЦель: ${task.target}\nОбласть: ${task.domain}\nДоставки: ${task.deliverables.join(', ')}`,
+        await emit('task_formulated', sessionId, 'Director\'s AI', 'Task Formulated',
+            `Type: ${task.task_type}\nTarget: ${task.target}\nDomain: ${task.domain}\nDeliverables: ${task.deliverables.join(', ')}`,
             speedMode, { task, latencyMs: formLatency });
 
-        // ═══ STEP 3: MCP Search ═══
+        // ═══ STEP 3: MCP Agent Discovery ═══
         session.status = 'searching';
-        await emit('mcp_search', sessionId, 'Agora MCP', 'Поиск агентов...',
-            `search_agents({ capability: "${task.task_type}", min_trust: 0.7 })`, speedMode);
 
-        const agents = searchAgents({ capability: task.task_type, minTrust: 0.7 });
+        // Search WITHOUT min_trust filter first — then show actual trust scores
+        const agents = searchAgents({ capability: task.task_type });
 
-        await emit('mcp_search', sessionId, 'Agora MCP', `Найдено ${agents.length} агентов`,
+        await emit('mcp_search', sessionId, 'Agora MCP', 'Searching agents...',
+            `search_agents({ capability: "${task.task_type}" })`, speedMode);
+
+        if (agents.length === 0) {
+            // Broadened search — try by category keywords
+            const broadAgents = searchAgents({ query: task.task_type.replace(/_/g, ' ') });
+            if (broadAgents.length > 0) {
+                agents.push(...broadAgents);
+            } else {
+                // Last resort: return all agents
+                agents.push(...AGENT_REGISTRY);
+            }
+        }
+
+        await emit('mcp_search', sessionId, 'Agora MCP', `Found ${agents.length} agents`,
             agents.map(a => `• ${a.name} (trust: ${a.trustScore.toFixed(3)}, calls: ${a.totalCalls})`).join('\n'),
             speedMode, { agents: agents.map(a => ({ id: a.id, name: a.name, trust: a.trustScore })) });
 
@@ -85,48 +98,56 @@ export async function runDemo(userQuery: string, speedMode: SpeedMode = 'slow'):
         const { agentId, agentName, reasoning, brief, latencyMs: procLatency } =
             await procurement.selectAgent(task, agents);
 
-        session.selectedAgentId = agentId || agents[0]?.id;
-        session.agentName = agentName || agents[0]?.name;
+        // Robust fallback: ensure we always have a valid agent
+        session.selectedAgentId = agentId || agents[0]?.id || 'codeguard-001';
+        session.agentName = agentName || agents[0]?.name || 'CodeGuard Security Auditor';
         session.status = 'agent_selected';
 
-        // Get trust breakdown BEFORE
         const selectedId = session.selectedAgentId!;
         const agentDisplayName = session.agentName!;
+
+        // Get trust breakdown BEFORE transaction
         session.trustBefore = getTrustBreakdown(selectedId, agentDisplayName);
 
-        await emit('agent_selected', sessionId, 'Procurement AI', `Выбран: ${agentDisplayName}`,
-            reasoning, speedMode, { agentId: selectedId, latencyMs: procLatency });
+        await emit('agent_selected', sessionId, 'Procurement AI', `Selected: ${agentDisplayName}`,
+            reasoning || `Best match for ${task.task_type} based on capabilities and trust score.`,
+            speedMode, {
+            agentId: selectedId,
+            latencyMs: procLatency,
+            trust: session.trustBefore,
+        });
 
-        // ═══ STEP 5: Trust breakdown before ═══
-        await emit('trust_updated', sessionId, 'Agora Trust', 'Trust Score (до транзакции)',
-            formatTrustBreakdown(session.trustBefore!), speedMode, { trust: session.trustBefore });
+        // ═══ STEP 5: Trust breakdown (before) ═══
+        await emit('trust_updated', sessionId, 'Agora Trust', 'Trust Score (pre-transaction)',
+            formatTrustBreakdown(session.trustBefore), speedMode, { trust: session.trustBefore });
 
         // ═══ STEP 6: AI-to-AI Negotiation ═══
         session.status = 'negotiating';
 
         // Seller: Account Manager receives brief
-        await emit('negotiation_message', sessionId, 'Procurement AI → Seller', 'Отправка ТЗ продавцу',
-            brief, speedMode);
+        const taskBrief = brief || `Task: ${task.task_type} targeting ${task.target}. Deliverables: ${task.deliverables.join(', ')}`;
+        await emit('negotiation', sessionId, 'Procurement AI → Seller', 'Sending task brief',
+            taskBrief, speedMode);
 
         const { response: amResponse, questions, latencyMs: amLatency } =
-            await accountManager.negotiate(brief, task);
+            await accountManager.negotiate(taskBrief, task);
 
-        await emit('negotiation_message', sessionId, 'Account Manager', 'Уточняющие вопросы',
+        await emit('negotiation', sessionId, 'Account Manager', 'Clarification questions',
             amResponse, speedMode, { latencyMs: amLatency });
 
         // Buyer: Responds to questions
         if (questions.length > 0) {
             const { answers, latencyMs: brLatency } = await buyerResponse.respond(task, questions);
 
-            await emit('negotiation_message', sessionId, 'Procurement AI', 'Ответы на вопросы',
+            await emit('negotiation', sessionId, 'Procurement AI', 'Answering questions',
                 answers.map((a, i) => `${i + 1}. ${a}`).join('\n\n'),
                 speedMode, { latencyMs: brLatency });
         }
 
         // ═══ STEP 7: Specialist Work ═══
         session.status = 'executing';
-        await emit('work_started', sessionId, agentDisplayName, 'Начинает работу...',
-            `Специалист приступает к выполнению задачи`, speedMode);
+        await emit('work_started', sessionId, agentDisplayName, 'Starting work...',
+            `Specialist begins executing the task`, speedMode);
 
         let rawResult = '';
         let apiCalls = 0;
@@ -160,33 +181,42 @@ export async function runDemo(userQuery: string, speedMode: SpeedMode = 'slow'):
 
         session.apiCallsMade = apiCalls;
 
-        await emit('work_progress', sessionId, agentDisplayName, 'Работа выполнена',
-            `${rawResult.length} символов, ${apiCalls} API вызовов`, speedMode);
+        await emit('work_completed', sessionId, agentDisplayName, 'Work completed',
+            `${rawResult.length} chars, ${apiCalls} API calls`, speedMode);
 
         // ═══ STEP 8: Delivery formatting ═══
-        await emit('work_progress', sessionId, 'Delivery Manager', 'Форматирование отчёта...',
-            'Подготовка executive report для клиента', speedMode);
+        await emit('work_completed', sessionId, 'Delivery Manager', 'Formatting report...',
+            'Preparing executive report for client', speedMode);
 
         const { report, latencyMs: delLatency } = await delivery.format(rawResult, task);
 
-        await emit('work_completed', sessionId, 'Delivery Manager', 'Отчёт готов',
-            `${report.length} символов, готов к передаче`, speedMode, { latencyMs: delLatency });
+        await emit('work_completed', sessionId, 'Delivery Manager', 'Report ready',
+            `${report.length} chars, ready for delivery`, speedMode, { latencyMs: delLatency });
 
         // ═══ STEP 9: QA Inspection ═══
         const { accepted, rating, summary, latencyMs: qaLatency } = await qaInspector.validate(task, report);
 
-        await emit('negotiation_message', sessionId, 'QA Inspector', `Проверка: ${accepted ? '✅ Принято' : '⚠️ Требует доработки'}`,
-            `Оценка: ${'⭐'.repeat(Math.round(rating))} (${rating}/5)\n${summary}`,
+        await emit('qa_review', sessionId, 'QA Inspector', `Review: ${accepted ? '✅ Accepted' : '⚠️ Needs Revision'}`,
+            `Rating: ${'⭐'.repeat(Math.round(rating))} (${rating}/5)\n${summary}`,
             speedMode, { accepted, rating, latencyMs: qaLatency });
 
         // ═══ STEP 10: Trust Update ═══
         const totalLatency = Date.now() - new Date(session.createdAt).getTime();
-        session.trustAfter = updateTrustAfterTransaction(selectedId, accepted, totalLatency, rating)!;
-        if (session.trustAfter) session.trustAfter.agentName = agentDisplayName;
+        const updatedTrust = updateTrustAfterTransaction(selectedId, accepted, totalLatency, rating);
 
-        await emit('trust_updated', sessionId, 'Agora Trust Engine', 'Trust Score обновлён',
-            formatTrustDelta(session.trustBefore!, session.trustAfter!), speedMode,
-            { before: session.trustBefore, after: session.trustAfter });
+        if (updatedTrust) {
+            updatedTrust.agentName = agentDisplayName;
+            session.trustAfter = updatedTrust;
+
+            await emit('trust_updated', sessionId, 'Agora Trust Engine', 'Trust Score Updated',
+                formatTrustDelta(session.trustBefore, session.trustAfter), speedMode,
+                { before: session.trustBefore, after: session.trustAfter });
+        } else {
+            // Fallback: show the before trust again if update failed
+            await emit('trust_updated', sessionId, 'Agora Trust Engine', 'Trust Score Verified',
+                formatTrustBreakdown(session.trustBefore), speedMode,
+                { trust: session.trustBefore });
+        }
 
         // ═══ DONE ═══
         session.status = 'completed';
@@ -194,15 +224,17 @@ export async function runDemo(userQuery: string, speedMode: SpeedMode = 'slow'):
         session.totalLatencyMs = totalLatency;
         session.completedAt = new Date().toISOString();
 
-        await emit('session_completed', sessionId, 'system', 'Демо завершено',
-            `Общее время: ${(totalLatency / 1000).toFixed(1)}с | API вызовов: ${apiCalls} | Оценка: ${rating}/5`,
+        await emit('session_completed', sessionId, 'system', 'Connection Complete',
+            `Total time: ${(totalLatency / 1000).toFixed(1)}s | API calls: ${apiCalls} | Rating: ${rating}/5`,
             speedMode, { totalLatencyMs: totalLatency, apiCalls, rating });
 
         return session;
 
     } catch (error: any) {
         session.status = 'failed';
-        await emit('error', sessionId, 'system', 'Ошибка', error.message || String(error), speedMode);
+        console.error('❌ Session error:', error);
+        await emit('session_completed', sessionId, 'system', 'Error',
+            error.message || String(error), speedMode);
         throw error;
     }
 }
@@ -211,7 +243,7 @@ export async function runDemo(userQuery: string, speedMode: SpeedMode = 'slow'):
 
 function formatTrustBreakdown(t: TrustBreakdown): string {
     return t.components
-        .map(c => `${componentIcon(c.component)} ${componentLabel(c.component)}: ${c.score.toFixed(3)} (вес: ${(c.weight * 100).toFixed(0)}%)`)
+        .map(c => `${componentIcon(c.component)} ${componentLabel(c.component)}: ${c.score.toFixed(3)} (weight: ${(c.weight * 100).toFixed(0)}%)`)
         .join('\n') + `\n──────────\n🏛️ Composite: ${t.compositeScore.toFixed(3)} [${t.level}]`;
 }
 
