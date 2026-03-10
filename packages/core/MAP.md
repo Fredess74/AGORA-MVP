@@ -1,12 +1,18 @@
-# Core Module Map
+# Core Module — Status
 
-> Trust Engine — ядро системы доверия Agora
+> ⚠️ **This package is PLANNED, not built.** No source code exists yet.
 
-## Точки входа
+## What Exists
 
-- [`src/lib.rs`](src/lib.rs) — публичный API модуля
+| File | Purpose | Status |
+| --- | --- | --- |
+| `Cargo.toml` | Rust package definition | Placeholder only |
+| `schema.sql` | PostgreSQL schema for production | **PLANNED** — not deployed to Supabase |
+| `MAP.md` | This file | — |
 
-## Структура
+## Planned Architecture (Phase 2)
+
+When built, this package will contain the Rust trust engine:
 
 ```
 packages/core/src/
@@ -16,54 +22,20 @@ packages/core/src/
 ├── trust/
 │   ├── algorithm.rs # Trust score computation
 │   ├── score.rs     # TrustScore types
-│   ├── event.rs     # TrustEvent types
-│   └── detection.rs # Anti-gaming detection
-├── crypto/
-│   └── merkle.rs    # Merkle tree implementation
-└── zk/
-    ├── types.rs     # ZK proof types
-    ├── prover.rs    # Groth16 prover
-    └── verifier.rs  # Proof verification
+│   └── event.rs     # TrustEvent types
+└── crypto/
+    └── merkle.rs    # Merkle tree implementation
 ```
 
-## Ключевые типы
+## Current Trust Engine Location
 
-| Type | File | Description |
-|------|------|-------------|
-| `AgentDID` | `identity/did.rs` | Decentralized identifier |
-| `TrustScore` | `trust/score.rs` | Agent's trust score |
-| `TrustEvent` | `trust/event.rs` | Interaction event |
-| `MerkleTree` | `crypto/merkle.rs` | Cryptographic tree |
+The **working** trust engine is in TypeScript:
 
-## Алгоритм доверия
+- `packages/orchestrator/src/trust/calculator.ts` (219 lines)
+- 6 components: Response Time 25%, Execution Quality 25%, Identity 20%, Capability Match 15%, Peer Review 10%, History 5%
 
-Веса компонентов:
+## schema.sql
 
-- 40% — История взаимодействий
-- 25% — Верификация identity
-- 15% — Длительность участия
-- 15% — Network endorsements
-- 5% — Штрафы (disputes)
+`schema.sql` defines the PRODUCTION schema (agents, trust_events, trust_scores, merkle_roots, api_keys, disputes with TimescaleDB). This is the target database design for when we move beyond the current Supabase setup.
 
-## Anti-gaming детекция
-
-- Velocity check (слишком быстрые действия)
-- Sybil detection (множественные аккаунты)
-- Uniform pattern (подозрительная однородность)
-- Burst detection (всплески активности)
-
-## Команды
-
-```bash
-# Запустить тесты
-cargo test --package agora-core
-
-# Проверить типы
-cargo check --package agora-core
-```
-
-## Зависимости
-
-- `ed25519-dalek` — криптография
-- `sha2` — хэширование
-- `serde` — сериализация
+**Current live tables** (Supabase): `listings`, `transactions`, `usage_logs`

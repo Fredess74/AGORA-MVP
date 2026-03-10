@@ -12,7 +12,7 @@ export const config = {
     pageSpeedApiKey: process.env.PAGESPEED_API_KEY || '',
     supabaseUrl: process.env.SUPABASE_URL || 'https://fnwrqgmaqempmcvcozqa.supabase.co',
     supabaseServiceKey: process.env.SUPABASE_SERVICE_KEY || '',
-    supabaseAnonKey: process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZud3JxZ21hcWVtcG1jdmNvenFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDczMTcsImV4cCI6MjA4NzEyMzMxN30.B-0CYbHYASGqsuld1yBt-qrcwQznJHX4BkM81psxb-0',
+    supabaseAnonKey: process.env.SUPABASE_ANON_KEY || '',
 };
 
 export function validateConfig(): boolean {

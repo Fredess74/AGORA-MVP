@@ -1,68 +1,37 @@
-# API Module Map
+# API Module — Status
 
-> REST API сервер — Actix-web интерфейс к Trust Engine
+> ⚠️ **This package is PLANNED, not built.** No source code exists yet.
 
-## Точка входа
+## What Exists
 
-- [`src/main.rs`](src/main.rs) — запуск сервера
+| File | Purpose | Status |
+| --- | --- | --- |
+| `Cargo.toml` | Rust package definition | Placeholder only |
+| `.env.example` | Target env vars for production API | Reference only |
+| `README.md` | API description | Describes planned endpoints |
+| `MAP.md` | This file | — |
 
-## Структура
+## Current API Location
+
+The **working** API is Express.js (TypeScript):
+
+- `packages/orchestrator/src/server.ts` (127 lines)
+- Endpoints: `/api/demo/start`, `/api/demo/stream` (SSE), `/api/demo/session/:id`, `/api/mcp/agents`, `/api/health`
+
+## Planned Architecture (Phase 2)
+
+When built, this Rust API will replace the Express orchestrator for production:
 
 ```
 packages/api/src/
-├── main.rs           # Server startup
-├── config.rs         # Configuration
-├── state.rs          # App state
-├── error.rs          # Error handling (RFC 7807)
-├── cache.rs          # Redis caching
-├── metrics.rs        # Prometheus metrics
-├── routes/           # API endpoints
+├── main.rs           # Actix-web server
+├── routes/
 │   ├── health.rs     # GET /v1/health
 │   ├── agents.rs     # POST /v1/agents/register
 │   ├── trust.rs      # GET /v1/trust/{did}
 │   └── events.rs     # POST /v1/events/report
-├── handlers/         # Request handlers
-├── middleware/       # Auth, rate limiting
-├── db/               # PostgreSQL repositories
-├── models/           # Request/Response types
-└── integrations/     # A2A, AP2, x402
-```
-
-## Эндпоинты
-
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/v1/health` | Health check |
-| POST | `/v1/agents/register` | Register agent |
-| GET | `/v1/trust/{did}` | Get trust score |
-| POST | `/v1/events/report` | Report interaction |
-| GET | `/v1/proofs/{did}` | Get ZK proof |
-
-## Интеграции
-
-- `integrations/a2a.rs` — Google A2A protocol
-- `integrations/ap2.rs` — Agent Payment Protocol
-- `integrations/x402.rs` — Micropayments (HTTP 402)
-
-## Конфигурация
-
-Env переменные:
-
-```
-DATABASE_URL=postgres://localhost/agora
-REDIS_URL=redis://localhost
-API_PORT=8080
-```
-
-## Команды
-
-```bash
-# Запустить сервер
-cargo run --package agora-api
-
-# Тесты
-cargo test --package agora-api
-
-# С Docker
-cd deploy/docker && docker-compose up -d
+└── integrations/
+    ├── a2a.rs        # Google A2A protocol
+    ├── ap2.rs        # Agent Payment Protocol
+    └── x402.rs       # Micropayments (HTTP 402)
 ```
