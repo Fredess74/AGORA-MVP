@@ -363,21 +363,27 @@ export default function DemoPage() {
             )}
 
             {/* ── Transaction Banner ──────────────────── */}
-            {showTransaction && (
-                <div className="transaction-banner">
-                    <div className="tx-item">✅ Connection Complete</div>
-                    <div className="tx-divider" />
-                    <div className="tx-item">Agent: <span className="tx-value">{currentTrust?.agentName || 'Unknown'}</span></div>
-                    <div className="tx-divider" />
-                    <div className="tx-item">Cost: <span className="tx-value">$2.00</span></div>
-                    <div className="tx-divider" />
-                    <div className="tx-item">Commission: <span className="tx-value">$0.20 (10%)</span></div>
-                    <div className="tx-divider" />
-                    <div className="tx-item">Creator Earned: <span className="tx-value">$1.80</span></div>
-                    <div className="tx-divider" />
-                    <div className="tx-item">Time: <span className="tx-value">{elapsed}</span></div>
-                </div>
-            )}
+            {showTransaction && (() => {
+                const completedEvent = events.find(e => e.type === 'session_completed' && e.metadata?.cost);
+                const cost = completedEvent?.metadata?.cost ?? 0.05;
+                const commission = completedEvent?.metadata?.commission ?? cost * 0.1;
+                const earned = completedEvent?.metadata?.creatorEarned ?? (cost - commission);
+                return (
+                    <div className="transaction-banner">
+                        <div className="tx-item">✅ Connection Complete</div>
+                        <div className="tx-divider" />
+                        <div className="tx-item">Agent: <span className="tx-value">{currentTrust?.agentName || 'Unknown'}</span></div>
+                        <div className="tx-divider" />
+                        <div className="tx-item">Cost: <span className="tx-value">${Number(cost).toFixed(2)}</span></div>
+                        <div className="tx-divider" />
+                        <div className="tx-item">Commission: <span className="tx-value">${Number(commission).toFixed(2)} (10%)</span></div>
+                        <div className="tx-divider" />
+                        <div className="tx-item">Creator Earned: <span className="tx-value">${Number(earned).toFixed(2)}</span></div>
+                        <div className="tx-divider" />
+                        <div className="tx-item">Time: <span className="tx-value">{elapsed}</span></div>
+                    </div>
+                );
+            })()}
 
             {/* ── 3-Column Grid ───────────────────────── */}
             <div className="demo-grid">

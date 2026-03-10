@@ -4,7 +4,7 @@
 
 export type ProductType = 'mcp_server' | 'ai_agent' | 'automation';
 export type PricingModel = 'free' | 'per_call' | 'subscription';
-export type TrustLevel = 'high' | 'medium' | 'low';
+export type TrustLevel = 'high' | 'medium' | 'low' | 'unrated';
 
 export interface Product {
     id: string;
@@ -26,7 +26,7 @@ export interface Product {
     // Trust
     trustScore: number;
     trustLevel: TrustLevel;
-    trustConfidence: 'low' | 'medium' | 'high';
+    trustConfidence: 'none' | 'low' | 'medium' | 'high';
 
     // Metrics
     totalCalls: number;

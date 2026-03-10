@@ -1,48 +1,43 @@
 /* ═══════════════════════════════════════════════════════════
-   TrendsPage — Live dashboard powered by Agora Trend Agent
-   Shows real analysis data from the trend-agent pipeline
+   TrendsPage — Agora Platform Analytics (Live from Supabase)
+   Shows real agent metrics, transaction history, and GitHub stats
    ═══════════════════════════════════════════════════════════ */
 
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import './TrendsPage.css';
 
-// ── Embedded analysis data from trend-agent run (2026-03-04) ──
-const ANALYSIS_DATA = {
-    trends: [
-        { name: '@modelcontextprotocol/sdk', type: 'package', metric: 'weekly_downloads', current_value: 23352608, direction: 'rising', velocity_pct: 27, buzz_score: 23353 },
-        { name: 'openai', type: 'package', metric: 'weekly_downloads', current_value: 13987751, direction: 'rising', velocity_pct: 10, buzz_score: 13988 },
-        { name: 'langchain-ai/langchain', type: 'repo', metric: 'stars', current_value: 128243, direction: 'rising', velocity_pct: 0, buzz_score: 12824 },
-        { name: 'n8n-io/n8n', type: 'repo', metric: 'stars', current_value: 177579, direction: 'rising', velocity_pct: 0, buzz_score: 12431 },
-        { name: 'google-gemini/gemini-cli', type: 'repo', metric: 'stars', current_value: 96440, direction: 'rising', velocity_pct: 0, buzz_score: 8680 },
-        { name: 'modelcontextprotocol/servers', type: 'repo', metric: 'stars', current_value: 80116, direction: 'rising', velocity_pct: 0, buzz_score: 7210 },
-        { name: '@anthropic-ai/sdk', type: 'package', metric: 'weekly_downloads', current_value: 7034825, direction: 'rising', velocity_pct: 15, buzz_score: 7035 },
-        { name: 'punkpeye/awesome-mcp-servers', type: 'repo', metric: 'stars', current_value: 82178, direction: 'rising', velocity_pct: 0, buzz_score: 6574 },
-        { name: 'microsoft/autogen', type: 'repo', metric: 'stars', current_value: 55160, direction: 'rising', velocity_pct: 0, buzz_score: 5516 },
-        { name: 'crewAIInc/crewAI', type: 'repo', metric: 'stars', current_value: 45126, direction: 'rising', velocity_pct: 0, buzz_score: 4513 },
-    ],
-    white_spaces: [
-        { niche: 'AI Agent Security & Sandboxing', description: 'Tools for securing AI agents and sandboxing execution environments to prevent malicious behavior.', opportunity_score: 9 },
-        { niche: 'AI Agent Testing & Validation', description: 'Solutions for rigorously testing agent behavior, ensuring performance and ethical compliance.', opportunity_score: 8 },
-        { niche: 'MCP Server Optimization', description: 'Tools for optimizing MCP server performance and reducing operational costs.', opportunity_score: 7 },
-        { niche: 'Agent Coordination & Concurrency', description: 'Frameworks for coordinating multiple AI agents working together on complex tasks.', opportunity_score: 6 },
-        { niche: 'Ethical Governance for AI Agents', description: 'Tools for ethical auditing, risk assessment, and compliance monitoring.', opportunity_score: 6 },
-    ],
-    competitors: [
-        { name: 'MCP Servers', stars: 80116, last_activity: '4 days ago', status: 'active', threat_level: 'high', notes: 'Official Model Context Protocol Servers' },
-        { name: 'AutoGen', stars: 55160, last_activity: '1 days ago', status: 'active', threat_level: 'high', notes: 'Microsoft — agentic AI framework' },
-        { name: 'CrewAI', stars: 45126, last_activity: '0 days ago', status: 'active', threat_level: 'high', notes: 'Multi-agent orchestration framework' },
-        { name: 'A2A Protocol', stars: 22270, last_activity: '0 days ago', status: 'active', threat_level: 'high', notes: 'Google — agent-to-agent communication' },
-        { name: 'LangChain JS', stars: 17085, last_activity: '0 days ago', status: 'active', threat_level: 'high', notes: 'Agent engineering platform' },
-        { name: 'MCP Specification', stars: 7383, last_activity: '0 days ago', status: 'active', threat_level: 'high', notes: 'Anthropic — protocol specification' },
-    ],
-    ecosystem: {
-        total_mcp_repos: 15,
-        avg_relevance: 8,
-        buzz_index: 534,
-        sentiment: { positive: 11, neutral: 9, negative: 10 },
-        total_weekly_downloads: 48559896,
-        fastest_growing: 'autogen (+77%)',
-    },
-};
+// ── Types ────────────────────────────────────────────────
+
+interface AgentMetrics {
+    id: string;
+    name: string;
+    trust_score: number;
+    total_calls: number;
+    avg_latency_ms: number;
+    price: number;
+    category: string;
+}
+
+interface Transaction {
+    id: string;
+    listing_id: string;
+    status: string;
+    amount: number;
+    trust_score: number;
+    metadata: Record<string, any>;
+    created_at: string;
+}
+
+interface GitHubStats {
+    stars: number;
+    forks: number;
+    openIssues: number;
+    latestCommit: string;
+    language: string;
+}
+
+// ── Helpers ──────────────────────────────────────────────
 
 function formatNumber(n: number): string {
     if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
@@ -50,160 +45,300 @@ function formatNumber(n: number): string {
     return n.toString();
 }
 
+function trustColor(score: number): string {
+    if (score >= 0.8) return '#22c55e';
+    if (score >= 0.5) return '#eab308';
+    return '#ef4444';
+}
+
+function trustLabel(score: number): string {
+    if (score >= 0.8) return 'HIGH';
+    if (score >= 0.5) return 'MEDIUM';
+    if (score > 0) return 'LOW';
+    return 'UNRATED';
+}
+
+// ── Component ────────────────────────────────────────────
+
 export default function TrendsPage() {
-    const { trends, white_spaces, competitors, ecosystem } = ANALYSIS_DATA;
-    const sentTotal = ecosystem.sentiment.positive + ecosystem.sentiment.neutral + ecosystem.sentiment.negative;
+    const [agents, setAgents] = useState<AgentMetrics[]>([]);
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [ghStats, setGhStats] = useState<GitHubStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [lastUpdated, setLastUpdated] = useState('');
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    async function loadData() {
+        setLoading(true);
+        try {
+            // Load agents from Supabase listings
+            const { data: listings } = await supabase
+                .from('listings')
+                .select('id, name, trust_score, total_calls, avg_latency_ms, price_per_call_usd, category')
+                .order('trust_score', { ascending: false });
+
+            if (listings) {
+                setAgents(listings.map((l: any) => ({
+                    id: l.id,
+                    name: l.name,
+                    trust_score: l.trust_score || 0,
+                    total_calls: l.total_calls || 0,
+                    avg_latency_ms: l.avg_latency_ms || 0,
+                    price: l.price_per_call_usd || 0,
+                    category: l.category || 'general',
+                })));
+            }
+
+            // Load recent transactions
+            const { data: txns } = await supabase
+                .from('transactions')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(20);
+
+            if (txns) {
+                setTransactions(txns.map((t: any) => ({
+                    id: t.id,
+                    listing_id: t.listing_id,
+                    status: t.status || 'completed',
+                    amount: t.amount || 0,
+                    trust_score: t.trust_score_after || 0,
+                    metadata: t.metadata || {},
+                    created_at: t.created_at,
+                })));
+            }
+
+            // Fetch GitHub repo stats for Agora itself
+            try {
+                const ghRes = await fetch('https://api.github.com/repos/Fredess74/AGORA-MVP', {
+                    headers: { 'Accept': 'application/vnd.github.v3+json' },
+                });
+                if (ghRes.ok) {
+                    const gh: any = await ghRes.json();
+                    setGhStats({
+                        stars: gh.stargazers_count,
+                        forks: gh.forks_count,
+                        openIssues: gh.open_issues_count,
+                        latestCommit: gh.pushed_at,
+                        language: gh.language || 'TypeScript',
+                    });
+                }
+            } catch { /* optional */ }
+
+            setLastUpdated(new Date().toLocaleString());
+        } catch (err) {
+            console.error('Failed to load trends data:', err);
+        }
+        setLoading(false);
+    }
+
+    // Computed
+    const totalTransactions = transactions.length;
+    const successfulTxns = transactions.filter(t => t.status === 'completed').length;
+    const successRate = totalTransactions > 0 ? Math.round((successfulTxns / totalTransactions) * 100) : 0;
+    const avgTrust = agents.length > 0
+        ? agents.reduce((sum, a) => sum + a.trust_score, 0) / agents.length
+        : 0;
+    const totalRevenue = transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
 
     return (
         <div className="page container trends-page">
             {/* Header */}
             <div className="trends-header">
                 <div className="trends-header__badge">
-                    🏛️ Powered by Agora Trend Agent
+                    📊 Agora Platform Analytics
                 </div>
-                <h1>AI/MCP Ecosystem Trends</h1>
+                <h1>Live Trust & Performance Dashboard</h1>
                 <p>
-                    Real-time analysis of the AI agent ecosystem — data from GitHub, npm, and Hacker News.
-                    Updated weekly by our Trend Analyst agent.
+                    Real data from Agora's Supabase backend and GitHub. All metrics are live and verifiable.
+                    {lastUpdated && <span> · Last refreshed: {lastUpdated}</span>}
                 </p>
+                <button className="btn btn--sm btn--primary" onClick={loadData} disabled={loading}>
+                    {loading ? 'Loading...' : '🔄 Refresh'}
+                </button>
             </div>
 
             {/* Key Stats */}
             <div className="trends-stats">
                 <div className="stat-card">
-                    <div className="stat-card__icon">📦</div>
-                    <div className="stat-card__value">{formatNumber(ecosystem.total_weekly_downloads)}</div>
-                    <div className="stat-card__label">Weekly npm Downloads</div>
+                    <div className="stat-card__icon">🤖</div>
+                    <div className="stat-card__value">{agents.length}</div>
+                    <div className="stat-card__label">Registered Agents</div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-card__icon">📊</div>
-                    <div className="stat-card__value">{ecosystem.total_mcp_repos}</div>
-                    <div className="stat-card__label">MCP Repos Tracked</div>
+                    <div className="stat-card__icon">📋</div>
+                    <div className="stat-card__value">{totalTransactions}</div>
+                    <div className="stat-card__label">Total Transactions</div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-card__icon">🔥</div>
-                    <div className="stat-card__value">{ecosystem.buzz_index}</div>
-                    <div className="stat-card__label">Buzz Index</div>
+                    <div className="stat-card__icon">✅</div>
+                    <div className="stat-card__value">{successRate}%</div>
+                    <div className="stat-card__label">Success Rate</div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-card__icon">🚀</div>
-                    <div className="stat-card__value">{ecosystem.fastest_growing}</div>
-                    <div className="stat-card__label">Fastest Growing</div>
+                    <div className="stat-card__icon">💰</div>
+                    <div className="stat-card__value">${totalRevenue.toFixed(2)}</div>
+                    <div className="stat-card__label">Platform Revenue</div>
                 </div>
             </div>
 
-            {/* Top Trends */}
-            <div className="trends-section">
-                <h2>🔥 Top Trends This Week</h2>
-                <table className="trends-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Value</th>
-                            <th>Direction</th>
-                            <th>Velocity</th>
-                            <th>Buzz</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {trends.map((t, i) => (
-                            <tr key={t.name}>
-                                <td style={{ color: 'var(--color-text-secondary)', fontWeight: 600 }}>{i + 1}</td>
-                                <td style={{ fontWeight: 600 }}>
-                                    {t.type === 'repo' ? (
-                                        <a href={`https://github.com/${t.name}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-text-primary)', textDecoration: 'none' }}>
-                                            {t.name}
-                                        </a>
-                                    ) : t.name}
-                                </td>
-                                <td>
-                                    <span className={`type-badge type-badge--${t.type}`}>
-                                        {t.type === 'repo' ? '⭐ Repo' : '📦 Package'}
-                                    </span>
-                                </td>
-                                <td style={{ fontVariantNumeric: 'tabular-nums' }}>
-                                    {formatNumber(t.current_value)}
-                                    <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.75rem', marginLeft: 4 }}>
-                                        {t.metric === 'stars' ? 'stars' : '/week'}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span className={`direction-badge direction-badge--${t.direction}`}>
-                                        {t.direction === 'rising' ? '📈' : t.direction === 'declining' ? '📉' : '➡️'} {t.direction}
-                                    </span>
-                                </td>
-                                <td style={{ fontWeight: 600, color: t.velocity_pct > 0 ? '#22c55e' : 'var(--color-text-secondary)' }}>
-                                    {t.velocity_pct > 0 ? `+${t.velocity_pct}%` : '—'}
-                                </td>
-                                <td style={{ fontVariantNumeric: 'tabular-nums' }}>{formatNumber(t.buzz_score)}</td>
+            {loading && (
+                <div className="trends-loading">Loading live data from Supabase...</div>
+            )}
+
+            {/* Agent Leaderboard */}
+            {!loading && (
+                <div className="trends-section">
+                    <h2>🏆 Agent Leaderboard</h2>
+                    <table className="trends-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Agent</th>
+                                <th>Trust Score</th>
+                                <th>Level</th>
+                                <th>Total Calls</th>
+                                <th>Avg Latency</th>
+                                <th>Price/Call</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            {agents.length === 0 ? (
+                                <tr><td colSpan={7} className="trends-empty">No agents registered yet. Run the demo to populate data.</td></tr>
+                            ) : agents.map((a, i) => (
+                                <tr key={a.id}>
+                                    <td className="trends-rank">{i + 1}</td>
+                                    <td className="trends-name">{a.name}</td>
+                                    <td>
+                                        <span className="trust-score-badge" style={{ color: trustColor(a.trust_score) }}>
+                                            {a.trust_score.toFixed(3)}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span className={`type-badge type-badge--${a.trust_score >= 0.8 ? 'repo' : a.trust_score >= 0.5 ? 'package' : 'low'}`}>
+                                            {trustLabel(a.trust_score)}
+                                        </span>
+                                    </td>
+                                    <td className="trends-num">{a.total_calls}</td>
+                                    <td className="trends-num">
+                                        {a.avg_latency_ms > 0 ? `${(a.avg_latency_ms / 1000).toFixed(1)}s` : '—'}
+                                    </td>
+                                    <td className="trends-num">${a.price.toFixed(2)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            {/* Trust Distribution */}
+            {!loading && agents.length > 0 && (
+                <div className="trends-section">
+                    <h2>🛡️ Trust Distribution</h2>
+                    <div className="trust-dist-grid">
+                        {agents.map(a => (
+                            <div className="trust-dist-card" key={a.id}>
+                                <div className="trust-dist-card__name">{a.name}</div>
+                                <div className="trust-dist-card__bar">
+                                    <div
+                                        className="trust-dist-card__fill"
+                                        style={{ width: `${a.trust_score * 100}%`, background: trustColor(a.trust_score) }}
+                                    />
+                                </div>
+                                <div className="trust-dist-card__score" style={{ color: trustColor(a.trust_score) }}>
+                                    {a.trust_score.toFixed(3)}
+                                </div>
+                            </div>
                         ))}
-                    </tbody>
-                </table>
-            </div>
-
-            {/* White Spaces */}
-            <div className="trends-section">
-                <h2>💡 White Space Opportunities</h2>
-                <div className="whitespace-grid">
-                    {white_spaces.map(ws => (
-                        <div className="whitespace-card" key={ws.niche}>
-                            <div className="whitespace-card__score">{ws.opportunity_score}</div>
-                            <h3>{ws.niche}</h3>
-                            <p>{ws.description}</p>
+                        <div className="trust-dist-summary">
+                            <strong>Average Trust:</strong> <span style={{ color: trustColor(avgTrust) }}>{avgTrust.toFixed(3)}</span>
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
-            {/* Competitors */}
-            <div className="trends-section">
-                <h2>🏢 Competitor Watch</h2>
-                <div className="competitor-grid">
-                    {competitors.map(c => (
-                        <div className="competitor-card" key={c.name}>
-                            <div className="competitor-card__stars">
-                                {formatNumber(c.stars)}
-                                <span>⭐ stars</span>
-                            </div>
-                            <div className="competitor-card__info">
-                                <h3>
-                                    <span className={`threat-dot threat-dot--${c.threat_level}`} />
-                                    {c.name}
-                                </h3>
-                                <p>{c.notes} · {c.last_activity}</p>
-                            </div>
+            {/* Recent Transactions */}
+            {!loading && (
+                <div className="trends-section">
+                    <h2>📋 Recent Transactions</h2>
+                    <table className="trends-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Agent</th>
+                                <th>Task</th>
+                                <th>Status</th>
+                                <th>Trust After</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {transactions.length === 0 ? (
+                                <tr><td colSpan={6} className="trends-empty">No transactions yet. Run the Live Demo to generate real data.</td></tr>
+                            ) : transactions.map(t => (
+                                <tr key={t.id}>
+                                    <td className="trends-time">{new Date(t.created_at).toLocaleString()}</td>
+                                    <td className="trends-name">{t.metadata?.agentName || t.listing_id?.substring(0, 8)}</td>
+                                    <td>{t.metadata?.task_type || 'N/A'}</td>
+                                    <td>
+                                        <span className={`type-badge type-badge--${t.status === 'completed' ? 'repo' : 'low'}`}>
+                                            {t.status === 'completed' ? '✅' : '❌'} {t.status}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span style={{ color: trustColor(t.trust_score) }}>
+                                            {t.trust_score.toFixed(3)}
+                                        </span>
+                                    </td>
+                                    <td className="trends-num">${t.amount.toFixed(2)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            {/* GitHub Stats */}
+            {ghStats && (
+                <div className="trends-section">
+                    <h2>🐙 AGORA-MVP GitHub Repository</h2>
+                    <div className="trends-stats" style={{ marginTop: 'var(--space-4)' }}>
+                        <div className="stat-card">
+                            <div className="stat-card__icon">⭐</div>
+                            <div className="stat-card__value">{formatNumber(ghStats.stars)}</div>
+                            <div className="stat-card__label">Stars</div>
                         </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Sentiment */}
-            <div className="trends-section">
-                <h2>💬 Community Sentiment</h2>
-                <div className="sentiment-bars">
-                    <div className="sentiment-bar sentiment-bar--positive" style={{ flex: ecosystem.sentiment.positive }}>
-                        {Math.round(ecosystem.sentiment.positive / sentTotal * 100)}%
+                        <div className="stat-card">
+                            <div className="stat-card__icon">🍴</div>
+                            <div className="stat-card__value">{ghStats.forks}</div>
+                            <div className="stat-card__label">Forks</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-card__icon">🔧</div>
+                            <div className="stat-card__value">{ghStats.openIssues}</div>
+                            <div className="stat-card__label">Open Issues</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-card__icon">💻</div>
+                            <div className="stat-card__value">{ghStats.language}</div>
+                            <div className="stat-card__label">Primary Language</div>
+                        </div>
                     </div>
-                    <div className="sentiment-bar sentiment-bar--neutral" style={{ flex: ecosystem.sentiment.neutral }}>
-                        {Math.round(ecosystem.sentiment.neutral / sentTotal * 100)}%
-                    </div>
-                    <div className="sentiment-bar sentiment-bar--negative" style={{ flex: ecosystem.sentiment.negative }}>
-                        {Math.round(ecosystem.sentiment.negative / sentTotal * 100)}%
+                    <div className="trends-footer" style={{ marginTop: 'var(--space-4)' }}>
+                        Last push: {new Date(ghStats.latestCommit).toLocaleString()} ·{' '}
+                        <a href="https://github.com/Fredess74/AGORA-MVP" target="_blank" rel="noopener noreferrer">
+                            View on GitHub →
+                        </a>
                     </div>
                 </div>
-                <div className="sentiment-legend">
-                    <span><span className="threat-dot threat-dot--low" /> Positive ({ecosystem.sentiment.positive})</span>
-                    <span><span className="threat-dot threat-dot--medium" style={{ background: '#64748b' }} /> Neutral ({ecosystem.sentiment.neutral})</span>
-                    <span><span className="threat-dot threat-dot--high" /> Negative ({ecosystem.sentiment.negative})</span>
-                </div>
-            </div>
+            )}
 
             {/* Footer */}
             <div className="trends-footer">
-                Generated by <a href="/marketplace/agora-trend-analyst">Agora Trend Analyst</a> · Data from GitHub, npm, Hacker&nbsp;News · March 4, 2026
+                📊 Live data from Agora Supabase · Updated in real-time · <a href="/demo">Run Live Demo →</a>
             </div>
         </div>
     );
