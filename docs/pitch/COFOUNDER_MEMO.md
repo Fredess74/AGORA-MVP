@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 purpose: Pitch for technical co-founder. What Agora is, what's built, what's needed.
 audience: Potential CTO / co-founder
 reads_after: 01_OVERVIEW.md
@@ -12,7 +12,7 @@ last_updated: 2026-03-08
 
 ## The 30-Second Pitch
 
-17,000+ AI tools exist. Zero way to verify trust before sending money or data. Protocols for communication (MCP, 97M+ downloads) and payment (x402, 100M+ processed) are live. Missing: "Should I trust this agent?"
+thousands of AI tools exist. Zero way to verify trust before sending money or data. Protocols for communication (MCP, 97M+ downloads) and payment (x402, 100M+ processed) are live. Missing: "Should I trust this agent?"
 
 Agora is the trust + discovery + payment layer for the AI agent economy.
 

@@ -1,9 +1,9 @@
-<!--
+﻿<!--
 purpose: Market sizing, named competitors, and strategic positioning based on real data.
 audience: AI systems, investors, co-founders
 reads_after: 04_BUSINESS_MODEL.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-10
 -->
 
 # Market & Competition
@@ -23,7 +23,7 @@ last_updated: 2026-03-08
 | Metric | Value | Source |
 |--------|-------|--------|
 | MCP SDK downloads | 97M+ | npm/PyPI |
-| Published MCP servers | 17,000+ | GitHub + registries |
+| Published MCP servers | thousands of | GitHub + registries |
 | A2A partner organizations | 150+ | Google, Linux Foundation |
 | AP2 launch partners | 60+ | Google (Mastercard, PayPal, Shopify) |
 | MCP monetization built in | None | Protocol specification |
@@ -42,10 +42,23 @@ The gap is clear: massive supply of AI tools, zero standardized trust, zero buil
 | Founded | Launched publicly June 2025 |
 | Focus | "Know Your Agent" (KYA) — digital credentials + payment processing |
 | What they do | Identity verification for agents, autonomous micropayments |
-| What they don't do | No behavioral trust scoring from real transaction data, no marketplace/catalog, no anti-gaming |
+| What they don't do | No behavioral trust scoring, no marketplace/catalog, no anti-gaming |
 | Revenue model | Transaction fees on payments |
-| Strengths | Early mover in agent identity, focus on payments, clean UX |
-| Weaknesses | Identity is static (credentials, not behavioral reputation), no discovery mechanism |
+| Strengths | Early mover in agent identity, Visa partnership (Dec 2025) |
+| Weaknesses | Identity is static, no discovery. **Went silent since Jan 2026** — no new products announced |
+
+### ERC-8004 — On-Chain AI Agent Identity & Reputation (Ethereum)
+
+| Aspect | Detail |
+|--------|--------|
+| Launched | Ethereum mainnet, January 29, 2026 |
+| Backed by | MetaMask, Ethereum Foundation, Google, Coinbase |
+| What they do | 3 on-chain registries: Identity (NFT-based), Reputation (raw feedback), Validation (zkML/TEE) |
+| What they don't do | **No scoring algorithm** — stores raw data, expects others to build scoring. No marketplace. No payments. |
+| Traction | 10,000+ agents registered, 20,000+ feedback entries (testnet) |
+| Strengths | Massive backing, true decentralization, composable |
+| Weaknesses | On-chain = slow for real-time. Raw data only, no scoring. Blockchain friction. |
+| **Agora angle** | Agora = the scoring engine that ERC-8004 needs but doesn't have. Integration target, not competitor. |
 
 ### Masumi Network — Decentralized Agent Ecosystem
 
@@ -80,26 +93,27 @@ The gap is clear: massive supply of AI tools, zero standardized trust, zero buil
 
 ## Competitive Comparison
 
-| Capability | Skyfire | Masumi | Scalekit | MCP native | **Agora** |
-|-----------|---------|--------|----------|-----------|-----------|
-| Agent identity | Yes (KYA) | Yes (DID) | Yes (auth) | Basic (OAuth) | **Yes (DID + auth)** |
-| Trust scoring (behavioral) | No | No | No | No | **Yes (6-factor computed)** |
-| Anti-gaming | No | No | No | No | **Yes (4 detectors)** |
-| ZK proof verification | No | No | No | No | **Yes (Groth16)** |
-| Marketplace / discovery | No | No | No | No | **Yes** |
-| Payment processing | Yes | No | No | No | **Planned** |
-| Multi-protocol support | 1-2 | 1 | 1 | 1 | **4 (MCP + A2A + AP2 + x402)** |
-| Revenue model | Tx fees | On-chain fees | SaaS | N/A | **Hybrid SaaS + commission** |
+| Capability | Skyfire | Masumi | ERC-8004 | Scalekit | MCP native | **Agora** |
+|-----------|---------|--------|----------|----------|-----------|-----------|
+| Agent identity | Yes (KYA) | Yes (DID) | Yes (NFT) | Yes (auth) | Basic | **Yes (DID + auth)** |
+| Trust scoring (behavioral) | No | No | Raw data only | No | No | **Yes (adaptive 4-tier)** |
+| Anti-gaming | No | No | No | No | No | **Planned (4 designed)** |
+| ZK proof verification | No | No | zkML (validator) | No | No | **Planned (Groth16)** |
+| Marketplace / discovery | No | No | No | No | No | **Yes** |
+| Payment processing | Yes | No | No | No | No | **Planned (Stripe + x402)** |
+| Multi-protocol support | 1-2 | 1 | 1 (ETH) | 1 | 1 | **4 (MCP + A2A + AP2 + x402)** |
+| Revenue model | Tx fees | On-chain | N/A | SaaS | N/A | **Hybrid SaaS + commission** |
 
 ### The Key Insight
 
 Every competitor solves a piece of the problem:
 
-- Skyfire: identity + payments (but no trust)
+- Skyfire: identity + payments (but no behavioral trust scoring — and went silent in 2026)
 - Masumi: identity + logging (but no marketplace, no payments)
+- ERC-8004: on-chain raw data (but no scoring algorithm, no marketplace)
 - Scalekit: authentication (but nothing else)
 
-No one combines trust scoring + discovery + payments + multi-protocol support. Agora is the only full-stack solution.
+No one does **real-time, adaptive, per-transaction trust scoring**. ERC-8004 stores the data. Agora is the analytics engine that interprets it.
 
 ---
 
@@ -130,7 +144,7 @@ No one combines trust scoring + discovery + payments + multi-protocol support. A
 
 | Factor | Evidence |
 |--------|----------|
-| MCP standardized and adopted by all major AI providers | 97M SDK downloads, 10K+ servers |
+| MCP standardized and adopted by all major AI providers | 97M SDK downloads, thousands of servers |
 | AP2 launched with payment industry support | Mastercard, PayPal, AmEx as partners |
 | No existing trust infrastructure for AI agents | Confirmed — no competitor provides behavioral trust scoring |
 | Enterprise AI budgets growing | 25% deploying agents in 2025, doubling by 2027 |

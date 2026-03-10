@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 purpose: Critical risks, mitigations, SWOT analysis, and strategic pivot triggers.
 audience: AI systems, investors, co-founders
 reads_after: 06_EVOLUTION_ROADMAP.md
@@ -78,7 +78,7 @@ The AI agent market is still forming. Possible that creators are not ready to mo
 
 Supporting data:
 
-- 17,000+ AI tool servers exist, but 95% are free
+- thousands of AI tool servers exist, but 95% are free
 - No built-in monetization in the leading protocol
 - 42% of developers in industry surveys are willing to pay for verified APIs
 

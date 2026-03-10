@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 purpose: Slide-by-slide pitch deck outline. Musk algorithm applied — deleted 4 slides.
 audience: Judges (Suffolk 40K + Fetch Defeat the Odds)
 language: English
@@ -60,7 +60,7 @@ Not star ratings. Not self-reported. Computed.
 
 **$7 billion today → $93 billion by 2032** (46% CAGR)
 
-- 17,000+ AI tools exist with zero trust verification
+- thousands of AI tools exist with zero trust verification
 - 97 million MCP SDK downloads — the protocol is live
 - 25% of enterprises deploying AI agents RIGHT NOW
 - Supply chain attacks up 430%

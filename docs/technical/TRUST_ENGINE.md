@@ -6,9 +6,9 @@ last_updated: 2026-03-10
 
 # Trust Engine — Technical Specification
 
-> **This document describes the CURRENT TypeScript implementation.**
-> The Rust implementation described in previous versions of this document does not exist.
-> The canonical source code is `packages/orchestrator/src/trust/calculator.ts` (219 lines).
+> **This document describes the CURRENT TypeScript implementation (ADAPTIVE 4-TIER).**
+> Updated Session 7 (2026-03-10) to reflect adaptive scoring.
+> The canonical source code is `packages/orchestrator/src/trust/calculator.ts`.
 
 ## Current Implementation
 
@@ -23,36 +23,33 @@ last_updated: 2026-03-10
 | Persistence | Supabase (PostgreSQL) |
 | Real-time | SSE (Server-Sent Events) |
 
-### Trust Score Components
+### Adaptive Trust Score Components
 
-The trust score is a weighted sum of 6 components, each scored 0.0–1.0:
+The trust score is a weighted sum of 6 components, each scored 0.0–1.0. **Weights are ADAPTIVE** — they change based on the agent's transaction history:
 
-```typescript
-const WEIGHTS = {
-  identity: 0.20,           // DID validation
-  capability_match: 0.15,   // Task-skill alignment
-  response_time: 0.25,      // Measured execution latency
-  execution_quality: 0.25,  // QA evaluation quality
-  peer_review: 0.10,        // Cross-agent verification
-  history: 0.05             // Past interaction record
-};
-```
+| Tier | Transactions | Identity | Capability | Response | Execution | Peer | History |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **Cold Start** (`new`) | 0-2 | **35%** | **30%** | 15% | 15% | 5% | 0% |
+| **Emerging** (`low`) | 3-10 | 25% | 20% | 25% | 20% | 5% | 5% |
+| **Established** (`medium`) | 11-50 | 15% | 15% | 25% | 25% | 10% | 10% |
+| **Veteran** (`high`) | 50+ | 10% | 10% | 25% | 25% | **15%** | **15%** |
+
+**Key insight:** New agents are judged on what they CLAIM (identity/capability). Veteran agents are judged on what they've PROVEN (history/peer review).
 
 ### Score Calculation
 
 ```
-composite_score = Σ (component_score × component_weight)
+composite_score = Σ (component_score × adaptive_weight[tier])
 ```
 
 The composite score ranges from 0.0 to 1.0 and maps to trust levels:
 
 | Level | Range | Display |
 | --- | --- | --- |
-| `unrated` | No data | New agent, no interactions |
-| `low` | < 0.30 | ⚠️ Low reliability |
-| `medium` | 0.30 – 0.60 | 🔶 Moderate |
-| `high` | 0.60 – 0.80 | ✅ Reliable |
-| `excellent` | > 0.80 | 🌟 Excellent |
+| `unrated` | 0 | New agent, no interactions |
+| `low` | < 0.45 | ⚠️ Low reliability |
+| `medium` | 0.45 – 0.75 | 🔶 Moderate |
+| `high` | ≥ 0.75 | ✅ Reliable |
 
 ### How Components Are Computed During Demo
 
@@ -77,7 +74,9 @@ During a demo session, the trust calculator emits SSE events as each component i
     "score": 0.85,
     "weight": 0.25,
     "allComponents": [...],
-    "compositeScore": 0.742
+    "compositeScore": 0.742,
+    "confidence": "medium",
+    "dataPoints": 4
   }
 }
 ```

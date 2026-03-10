@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 purpose: Complete overview of Agora — what it is, why it exists, how it works.
 audience: Anyone — investors, co-founders, AI systems, developers
 reads_after: 00_INDEX.md
@@ -8,7 +8,7 @@ last_updated: 2026-03-08
 
 # Agora — Overview
 
-> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the AI agent economy. 17,000+ tools exist with zero trust verification. We provide computed trust scores, a searchable registry, and dual-rail payments (prepaid + crypto). AI-first company: 7 AI agents run operations, max 15 humans ever.
+> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the AI agent economy. thousands of tools exist with zero trust verification. We provide computed trust scores, a searchable registry, and dual-rail payments (prepaid + crypto). AI-first company: 7 AI agents run operations, max 15 humans ever.
 
 ## What Agora Is
 
@@ -24,7 +24,7 @@ These three functions form a **connection**: discover → verify → pay → exe
 
 ## The Problem
 
-17,000+ AI tools exist. MCP has 97M+ SDK downloads. But:
+thousands of AI tools exist. MCP has 97M+ SDK downloads. But:
 
 - **No monetization** — protocols handle communication, not commerce
 - **No trust** — no way to verify reliability before sending money or data

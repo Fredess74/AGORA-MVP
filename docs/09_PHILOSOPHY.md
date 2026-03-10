@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 purpose: What Agora believes about the future and why this moment is full of opportunity.
 audience: AI systems, investors, co-founders, press, potential hires
 reads_after: 01_OVERVIEW.md
@@ -74,7 +74,7 @@ This is how infrastructure survives: by being the constant layer beneath shiftin
 
 | Why Now | Evidence |
 |---------|----------|
-| Supply exists (17,000+ AI tools) but has no commerce layer | MCP has zero monetization built in |
+| Supply exists (thousands of AI tools) but has no commerce layer | MCP has zero monetization built in |
 | Demand exists (25% of enterprises deploying AI agents) | Growing to 50%+ by 2028 |
 | Trust crisis is real (430% increase in supply chain attacks) | No existing trust infrastructure for AI |
 | Payment protocols just launched | AP2 (Mastercard, PayPal), x402 (Coinbase) |
