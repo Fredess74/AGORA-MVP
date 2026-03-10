@@ -47,8 +47,17 @@ export default function ProductDetailPage() {
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [refreshKey, setRefreshKey] = useState(0);
+    const [toast, setToast] = useState<string | null>(null);
 
     const refresh = useCallback(() => setRefreshKey(k => k + 1), []);
+    const showToast = useCallback((msg: string) => {
+        setToast(msg);
+        setTimeout(() => setToast(null), 3000);
+    }, []);
+    const copySnippet = useCallback(() => {
+        navigator.clipboard.writeText(`npx mcp-add agora://${product?.slug || 'unknown'}`);
+        showToast('✅ Copied to clipboard!');
+    }, [product?.slug, showToast]);
 
     useEffect(() => {
         async function load() {
@@ -162,15 +171,20 @@ export default function ProductDetailPage() {
                             <TrustMetric label="User Rating" value={`${rating}/5`} bar={rating / 5} />
                         </div>
                         <div style={{ marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--color-primary-light)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)', color: 'var(--color-primary-hover)' }}>
-                            🔐 Trust score verified with ZK-SNARK (Groth16). Proof available for on-chain verification.
+                            🛡️ Trust score computed via Agora's 6-signal engine: Identity, Capability, Response Time, Execution Quality, Peer Review, History.
                         </div>
                     </div>
 
                     {/* Quick Start */}
                     <div className="card">
-                        <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-4)' }}>
-                            Quick Start
-                        </h2>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
+                            <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 600 }}>
+                                Quick Start
+                            </h2>
+                            <button className="btn btn--sm btn--secondary" onClick={copySnippet}>
+                                📋 Copy
+                            </button>
+                        </div>
                         <div style={{ background: 'var(--color-bg)', padding: 'var(--space-4)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)', color: 'var(--color-primary-hover)', overflowX: 'auto' }}>
                             <div style={{ color: 'var(--color-text-muted)', marginBottom: 'var(--space-2)' }}># Install via MCP</div>
                             <div>npx mcp-add agora://{product.slug}</div>
@@ -211,10 +225,10 @@ export default function ProductDetailPage() {
                                 </div>
                             )}
                         </div>
-                        <button className="btn btn--primary btn--lg" style={{ width: '100%', marginBottom: 'var(--space-3)' }}>
+                        <button className="btn btn--primary btn--lg" style={{ width: '100%', marginBottom: 'var(--space-3)' }} onClick={() => showToast('🚀 Subscription API launching soon!  Join the waitlist.')}>
                             {product.pricingModel === 'free' ? 'Get Started Free' : 'Subscribe Now'}
                         </button>
-                        <button className="btn btn--secondary" style={{ width: '100%' }}>
+                        <button className="btn btn--secondary" style={{ width: '100%' }} onClick={() => window.open(`https://github.com/Fredess74/AGORA-MVP`, '_blank')}>
                             View API Docs
                         </button>
                     </div>
@@ -242,6 +256,19 @@ export default function ProductDetailPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Toast Notification */}
+            {toast && (
+                <div style={{
+                    position: 'fixed', bottom: 'var(--space-6)', left: '50%', transform: 'translateX(-50%)',
+                    background: 'var(--color-bg-card)', border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-lg)', padding: 'var(--space-3) var(--space-6)',
+                    fontSize: 'var(--text-sm)', color: 'var(--color-text)',
+                    boxShadow: 'var(--shadow-lg)', zIndex: 1000, animation: 'fadeInUp 0.3s ease',
+                }}>
+                    {toast}
+                </div>
+            )}
         </div>
     );
 }

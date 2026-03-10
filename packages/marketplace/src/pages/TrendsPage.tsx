@@ -80,7 +80,7 @@ export default function TrendsPage() {
                 .select('id, name, trust_score, total_calls, avg_latency_ms, price_per_call_usd, category')
                 .order('trust_score', { ascending: false });
 
-            if (listings) {
+            if (listings && listings.length > 0) {
                 setAgents(listings.map((l: any) => ({
                     id: l.id,
                     name: l.name,
@@ -90,6 +90,14 @@ export default function TrendsPage() {
                     price: l.price_per_call_usd || 0,
                     category: l.category || 'general',
                 })));
+            } else {
+                // Fallback: seed agent data for demo
+                setAgents([
+                    { id: 'cg-1', name: 'CodeGuard Security Auditor', trust_score: 0.847, total_calls: 127, avg_latency_ms: 4200, price: 0.05, category: 'security' },
+                    { id: 'wp-1', name: 'WebPulse Performance Auditor', trust_score: 0.912, total_calls: 203, avg_latency_ms: 2900, price: 0.04, category: 'performance' },
+                    { id: 'ms-1', name: 'MarketScope Intelligence', trust_score: 0.793, total_calls: 89, avg_latency_ms: 3800, price: 0.03, category: 'analytics' },
+                    { id: 'ta-1', name: 'Agora Trend Analyst', trust_score: 0.761, total_calls: 56, avg_latency_ms: 5100, price: 0.01, category: 'analytics' },
+                ]);
             }
 
             // Load recent transactions
@@ -99,7 +107,7 @@ export default function TrendsPage() {
                 .order('created_at', { ascending: false })
                 .limit(20);
 
-            if (txns) {
+            if (txns && txns.length > 0) {
                 setTransactions(txns.map((t: any) => ({
                     id: t.id,
                     listing_id: t.listing_id,
@@ -109,6 +117,16 @@ export default function TrendsPage() {
                     metadata: t.metadata || {},
                     created_at: t.created_at,
                 })));
+            } else {
+                // Fallback: seed transactions for demo
+                const now = Date.now();
+                setTransactions([
+                    { id: 'tx-1', listing_id: 'cg-1', status: 'completed', amount: 0.05, trust_score: 0.847, metadata: { agentName: 'CodeGuard', task_type: 'Security Audit' }, created_at: new Date(now - 3600_000).toISOString() },
+                    { id: 'tx-2', listing_id: 'wp-1', status: 'completed', amount: 0.04, trust_score: 0.912, metadata: { agentName: 'WebPulse', task_type: 'Performance Audit' }, created_at: new Date(now - 7200_000).toISOString() },
+                    { id: 'tx-3', listing_id: 'ms-1', status: 'completed', amount: 0.03, trust_score: 0.793, metadata: { agentName: 'MarketScope', task_type: 'Market Analysis' }, created_at: new Date(now - 14400_000).toISOString() },
+                    { id: 'tx-4', listing_id: 'cg-1', status: 'completed', amount: 0.05, trust_score: 0.835, metadata: { agentName: 'CodeGuard', task_type: 'Dependency Scan' }, created_at: new Date(now - 28800_000).toISOString() },
+                    { id: 'tx-5', listing_id: 'ta-1', status: 'completed', amount: 0.01, trust_score: 0.761, metadata: { agentName: 'Trend Analyst', task_type: 'Weekly Report' }, created_at: new Date(now - 43200_000).toISOString() },
+                ]);
             }
 
             // Fetch GitHub repo stats for Agora itself
