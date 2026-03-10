@@ -271,11 +271,67 @@ export default function DemoPage() {
     };
 
     const downloadReport = () => {
-        const blob = new Blob([result], { type: 'text/markdown' });
+        // Convert markdown to basic HTML with Agora branding
+        const htmlContent = result
+            .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+            .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+            .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.+?)\*/g, '<em>$1</em>')
+            .replace(/^- (.+)$/gm, '<li>$1</li>')
+            .replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
+            .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>');
+
+        const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agora Agent Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 40px; line-height: 1.7; }
+  .header { text-align: center; padding: 30px 0; border-bottom: 2px solid #dc1a00; margin-bottom: 30px; }
+  .header h1 { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #DC1A00, #ff4433); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .header p { color: #888; font-size: 13px; margin-top: 8px; }
+  .content { max-width: 800px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 800; margin: 24px 0 12px; color: #fff; }
+  h2 { font-size: 20px; font-weight: 700; margin: 20px 0 10px; color: #dc1a00; border-bottom: 1px solid #222; padding-bottom: 6px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 16px 0 8px; color: #ccc; }
+  p { margin-bottom: 12px; color: #bbb; }
+  ul { padding-left: 24px; margin: 8px 0 16px; }
+  li { margin-bottom: 6px; color: #bbb; }
+  strong { color: #fff; }
+  em { color: #aaa; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th { text-align: left; padding: 8px 12px; background: #1a1a1a; color: #dc1a00; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #333; }
+  td { padding: 8px 12px; border-bottom: 1px solid #1a1a1a; color: #ccc; font-size: 14px; }
+  code { background: #1a1a1a; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #f0f0f0; }
+  .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #222; color: #555; font-size: 12px; }
+  @media print { body { background: white; color: #111; } h2 { color: #dc1a00; } p, li { color: #333; } strong { color: #000; } .header h1 { color: #dc1a00; -webkit-text-fill-color: #dc1a00; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🏛️ Agora Agent Report</h1>
+  <p>Generated ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} · Powered by Agora AI Marketplace</p>
+</div>
+<div class="content">${htmlContent}</div>
+<div class="footer">
+  Agora AI Marketplace · Trust-Verified Agent Economy · ${new Date().getFullYear()}<br>
+  Print this page (Ctrl+P) to save as PDF
+</div>
+</body>
+</html>`;
+
+        const blob = new Blob([html], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'agora-agent-report.md';
+        a.download = 'agora-agent-report.html';
         a.click();
         URL.revokeObjectURL(url);
     };

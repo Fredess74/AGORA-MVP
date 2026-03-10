@@ -74,28 +74,66 @@ Be specific. Cite exact numbers. Never be vague.`);
     }> {
         const start = Date.now();
         const topic = task.target || task.domain;
+        let apiCalls = 0;
 
-        // Determine relevant npm packages based on the topic
-        onApiCall?.('Gemini AI', `Identifying relevant npm packages for: ${topic}`);
+        // ────── STEP 1: Smart Topic Classification ──────
+        // Determine if this is a company/product analysis or a technology landscape analysis
+        onApiCall?.('Gemini AI', `Classifying research topic: ${topic}`);
+        apiCalls++;
 
-        const { data: packageList } = await this.callJSON<{ packages: string[] }>(
-            `Given the research topic "${topic}", list 6-8 most relevant npm packages to analyze for competitive intelligence. Include both major players and emerging alternatives.
-            Respond in JSON: { "packages": ["package1", "package2", ...] }`,
-        );
+        const { data: strategy } = await this.callJSON<{
+            topic_type: 'company' | 'technology' | 'market';
+            search_keywords: string[];
+            npm_packages: string[];
+            competitors: string[];
+            industry: string;
+        }>(`Classify this competitive intelligence topic and plan the research strategy.
+Topic: "${topic}"
+Domain: "${task.domain || 'general'}"
 
-        const packages = packageList.packages?.slice(0, 8) || [];
+Determine:
+1. topic_type: "company" (a specific company/product/brand like Fetch Rewards, Stripe, Netflix), "technology" (a tech category like AI frameworks, MCP servers), or "market" (a market segment like mobile rewards, cloud computing)
+2. search_keywords: 3-5 search terms that would find RELEVANT competitive intelligence (not the company's own code)
+3. npm_packages: For "technology" type, list 6-8 relevant npm packages. For "company" or "market" type, list 3-4 packages the company/market is known to use or compete with. If unclear, return empty array.
+4. competitors: List 3-6 known competitors or related companies in this space
+5. industry: The industry this belongs to
 
-        // Fetch REAL npm data
-        onApiCall?.('npm Registry', `Fetching download stats for ${packages.length} packages: ${packages.join(', ')}`);
-        const npmData = await fetchNpmBulk(packages);
+Respond ONLY in JSON.`);
 
-        // Fetch REAL HackerNews discussions
-        onApiCall?.('HackerNews API', `Searching discussions about: ${topic}`);
-        const hnData = await searchHackerNews(topic, 10);
+        const topicType = strategy.topic_type || 'technology';
+        const searchKeywords = strategy.search_keywords || [topic];
+        const competitors = strategy.competitors || [];
 
-        // Fetch GitHub trending repos
-        onApiCall?.('GitHub API', `Searching top repositories for: ${topic}`);
+        // ────── STEP 2: Fetch npm data (adapted by topic type) ──────
+        let npmData: NpmPackageData[] = [];
+        const packages = (strategy.npm_packages || []).slice(0, 8);
+
+        if (packages.length > 0) {
+            onApiCall?.('npm Registry', `Fetching download stats for ${packages.length} packages: ${packages.join(', ')}`);
+            npmData = await fetchNpmBulk(packages);
+            apiCalls += packages.length;
+        }
+
+        // ────── STEP 3: Fetch HackerNews discussions (use best keywords) ──────
+        const hnQuery = topicType === 'technology' ? topic : searchKeywords[0] || topic;
+        onApiCall?.('HackerNews API', `Searching discussions about: ${hnQuery}`);
+        const hnData = await searchHackerNews(hnQuery, 10);
+        apiCalls++;
+
+        // For companies/markets, also search with the company name directly
+        let hnDataExtra: HackerNewsItem[] = [];
+        if (topicType !== 'technology' && searchKeywords.length > 1) {
+            const extraQuery = searchKeywords[1];
+            onApiCall?.('HackerNews API', `Additional search: ${extraQuery}`);
+            hnDataExtra = await searchHackerNews(extraQuery, 5);
+            apiCalls++;
+        }
+        const allHnData = [...hnData, ...hnDataExtra];
+
+        // ────── STEP 4: Fetch GitHub repos ──────
         let githubRepos: any[] = [];
+        const ghQuery = topicType === 'technology' ? topic : searchKeywords.join(' ');
+        onApiCall?.('GitHub API', `Searching repositories for: ${ghQuery}`);
         try {
             const ghHeaders: Record<string, string> = {
                 'Accept': 'application/vnd.github.v3+json',
@@ -104,7 +142,7 @@ Be specific. Cite exact numbers. Never be vague.`);
             if (config.githubToken) ghHeaders['Authorization'] = `Bearer ${config.githubToken}`;
 
             const ghRes = await fetch(
-                `https://api.github.com/search/repositories?q=${encodeURIComponent(topic)}&sort=stars&per_page=10`,
+                `https://api.github.com/search/repositories?q=${encodeURIComponent(ghQuery)}&sort=stars&per_page=10`,
                 { headers: ghHeaders }
             );
             if (ghRes.ok) {
@@ -117,11 +155,15 @@ Be specific. Cite exact numbers. Never be vague.`);
                     updatedAt: r.updated_at,
                 }));
             }
+            apiCalls++;
         } catch { /* optional data */ }
 
-        // Compile data for analysis
+        // ────── STEP 5: Compile data with context ──────
         const dataSummary = JSON.stringify({
             topic,
+            topic_type: topicType,
+            industry: strategy.industry,
+            known_competitors: competitors,
             npm_packages: npmData.map(p => ({
                 name: p.name,
                 version: p.version,
@@ -131,26 +173,38 @@ Be specific. Cite exact numbers. Never be vague.`);
                 lastPublish: p.lastPublished,
                 license: p.license,
             })),
-            hackernews_discussions: hnData.slice(0, 8).map(h => ({
+            hackernews_discussions: allHnData.slice(0, 10).map(h => ({
                 title: h.title,
                 points: h.points,
                 comments: h.numComments,
                 date: h.createdAt,
             })),
-            github_top_repos: githubRepos.slice(0, 8),
+            github_repos: githubRepos.slice(0, 8),
         }, null, 2);
 
-        onApiCall?.('Gemini AI', 'Analyzing market data and generating intelligence report');
+        // ────── STEP 6: Generate intelligence report ──────
+        onApiCall?.('Gemini AI', 'Analyzing collected data and generating competitive intelligence report');
+        apiCalls++;
 
-        const result = await this.call(
-            `Analyze this market data and produce a competitive intelligence report:\n\n${dataSummary}`
-        );
+        const analysisPrompt = topicType === 'technology'
+            ? `Analyze this market data and produce a competitive intelligence report:\n\n${dataSummary}`
+            : `Analyze this competitive intelligence data about the ${topicType} "${topic}" in the ${strategy.industry} industry.
+Known competitors: ${competitors.join(', ')}
+
+IMPORTANT: Focus your analysis on the COMPANY/PRODUCT "${topic}" and its competitive position. 
+Do NOT confuse developer libraries (like node-fetch) with the actual company.
+Use the HackerNews discussions and GitHub data as supplementary signals only.
+If npm data is irrelevant to the company, acknowledge that and focus on what IS relevant.
+
+Data collected:\n\n${dataSummary}`;
+
+        const result = await this.call(analysisPrompt);
 
         return {
             report: result.content,
             npmData,
-            hnData,
-            apiCalls: 2 + packages.length + 1, // HN + npm bulk + GitHub search
+            hnData: allHnData,
+            apiCalls,
             latencyMs: Date.now() - start,
         };
     }
