@@ -263,6 +263,7 @@
     overflow-y: auto;
     padding: var(--space-4);
     min-height: 0;
+    max-height: calc(100vh - 340px);
 }
 
 /* Custom scrollbar */
@@ -443,7 +444,6 @@
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     line-height: 1.6;
-    white-space: pre-wrap;
     word-break: break-word;
     animation: fadeInUp 0.5s ease;
 }
@@ -463,6 +463,130 @@
     margin-top: var(--space-3);
     padding-top: var(--space-3);
     border-top: 1px solid var(--color-border);
+}
+
+/* ── Markdown Content Styling ────────────────────────────── */
+.result-markdown {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: var(--space-2);
+}
+
+.result-markdown h1 {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: var(--space-4) 0 var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-2);
+}
+
+.result-markdown h2 {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-primary-hover);
+    margin: var(--space-3) 0 var(--space-2);
+}
+
+.result-markdown h3 {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: var(--space-2) 0 var(--space-1);
+}
+
+.result-markdown p {
+    margin-bottom: var(--space-2);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.result-markdown strong {
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.result-markdown em {
+    color: var(--color-text-muted);
+}
+
+.result-markdown ul,
+.result-markdown ol {
+    padding-left: var(--space-6);
+    margin: var(--space-2) 0;
+}
+
+.result-markdown li {
+    margin-bottom: var(--space-1);
+    color: var(--color-text-secondary);
+}
+
+.result-markdown table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-3) 0;
+    font-size: var(--text-xs);
+}
+
+.result-markdown th {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-raised);
+    color: var(--color-primary-hover);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.result-markdown td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--color-text-secondary);
+}
+
+.result-markdown tr:hover td {
+    background: rgba(220, 26, 0, 0.03);
+}
+
+.result-markdown code {
+    background: var(--color-bg);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-text);
+}
+
+.result-markdown pre {
+    background: var(--color-bg);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--space-2) 0;
+    border: 1px solid var(--color-border);
+}
+
+.result-markdown pre code {
+    background: none;
+    padding: 0;
+}
+
+.result-markdown blockquote {
+    border-left: 3px solid var(--color-primary);
+    padding-left: var(--space-4);
+    margin: var(--space-2) 0;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.result-markdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.result-markdown::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
 }
 
 /* ── Transaction Banner ──────────────────────────────────── */
@@ -842,5 +966,30 @@
     .demo-stats-bar {
         flex-wrap: wrap;
         gap: var(--space-4);
+    }
+
+    .panel-body {
+        max-height: 400px;
+    }
+
+    .transaction-banner {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .transaction-banner .tx-divider {
+        display: none;
+    }
+
+    .demo-header h1 {
+        font-size: var(--text-2xl);
+    }
+
+    .preset-scenarios {
+        flex-direction: column;
+    }
+
+    .result-markdown {
+        max-height: 300px;
     }
 }

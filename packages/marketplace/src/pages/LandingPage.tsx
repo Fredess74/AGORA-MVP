@@ -13,7 +13,7 @@ export default function LandingPage() {
                 <div className="hero__glow" />
                 <div className="animate-in">
                     <span className="hero__badge">
-                        🚀 Now in Public Beta
+                        🚀 Early Access
                     </span>
                 </div>
                 <h1 className="hero__title animate-in animate-delay-1">
@@ -41,16 +41,16 @@ export default function LandingPage() {
             <section className="container">
                 <div className="stats-row">
                     <div className="stat">
-                        <div className="stat__value">10K+</div>
+                        <div className="stat__value">12K+</div>
                         <div className="stat__label">MCP Servers Indexed</div>
                     </div>
                     <div className="stat">
-                        <div className="stat__value">&lt;10ms</div>
+                        <div className="stat__value">Real-Time</div>
                         <div className="stat__label">Trust Verification</div>
                     </div>
                     <div className="stat">
-                        <div className="stat__value">ZK</div>
-                        <div className="stat__label">Cryptographic Proofs</div>
+                        <div className="stat__value">6-Signal</div>
+                        <div className="stat__label">Trust Engine</div>
                     </div>
                     <div className="stat">
                         <div className="stat__value">4</div>
@@ -137,7 +137,7 @@ export default function LandingPage() {
                 <div className="cta__box">
                     <h2 className="cta__title">Ready to monetize your AI?</h2>
                     <p className="cta__text">
-                        Join creators already earning with their MCP servers,
+                        Be among the first to list your MCP servers,
                         AI agents, and automations on Agora.
                     </p>
                     <div className="hero__actions">

@@ -15,6 +15,8 @@
    ═══════════════════════════════════════════════════════════ */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import './DemoPage.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3001';
@@ -274,7 +276,25 @@ export default function DemoPage() {
         setTimeout(poll, 3000);
     };
 
+    const resetDemo = () => {
+        setEvents([]);
+        setChatMessages([]);
+        setTrustBefore(null);
+        setTrustAfter(null);
+        setResult('');
+        setIsRunning(false);
+        setCurrentStep('');
+        setApiCallCount(0);
+        setGeminiCallCount(0);
+        setStartTime(0);
+        setElapsed('0.0s');
+        setShowTransaction(false);
+        setQuery('');
+        if (timerRef.current) clearInterval(timerRef.current);
+    };
+
     const downloadReport = () => {
+        if (!result) return;
         // Convert markdown to basic HTML with Agora branding
         const htmlContent = result
             .replace(/^### (.+)$/gm, '<h3>$1</h3>')
@@ -424,6 +444,15 @@ export default function DemoPage() {
                 </div>
             )}
 
+            {/* Reset button when demo is done */}
+            {!isRunning && events.length > 0 && !result && (
+                <div className="preset-scenarios">
+                    <button className="preset-btn" onClick={resetDemo}>
+                        🔄 Run Another Demo
+                    </button>
+                </div>
+            )}
+
             {/* ── Transaction Banner ──────────────────── */}
             {showTransaction && (() => {
                 const completedEvent = events.find(e => e.type === 'session_completed' && e.metadata?.cost);
@@ -454,9 +483,11 @@ export default function DemoPage() {
                     <div className="panel-header">
                         <span className="panel-icon">💬</span>
                         <h2>Director's Interface</h2>
-                        {isRunning && (
+                        {isRunning ? (
                             <span className="panel-meta">● Processing...</span>
-                        )}
+                        ) : events.length > 0 ? (
+                            <span className="panel-meta" style={{ color: 'var(--color-trust-high)' }}>✅ Complete</span>
+                        ) : null}
                     </div>
                     <div className="panel-body" ref={chatRef}>
                         <div className="chat-messages">
@@ -477,15 +508,15 @@ export default function DemoPage() {
                         {result && (
                             <div className="result-panel">
                                 <div className="result-header">📄 Agent Report</div>
-                                {result.substring(0, 2000)}
-                                {result.length > 2000 && (
-                                    <div style={{ color: 'var(--color-text-muted)', marginTop: 'var(--space-2)' }}>
-                                        ...{result.length - 2000} more characters
-                                    </div>
-                                )}
+                                <div className="result-markdown">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
+                                </div>
                                 <div className="result-actions">
-                                    <button className="btn btn--sm btn--secondary" onClick={downloadReport}>
+                                    <button className="btn btn--sm btn--primary" onClick={downloadReport}>
                                         📥 Download Report
+                                    </button>
+                                    <button className="btn btn--sm btn--secondary" onClick={resetDemo}>
+                                        🔄 New Task
                                     </button>
                                 </div>
                             </div>
