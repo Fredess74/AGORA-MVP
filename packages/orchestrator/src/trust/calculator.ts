@@ -1,31 +1,89 @@
 /* ═══════════════════════════════════════════════════════════
-   Trust Calculator — LIVE 6-Component Trust Score
+   Trust Calculator — ADAPTIVE 6-Component Trust Score
    
    ALL agents start at 0.000. Trust is EARNED during each
-   transaction through measurable signals:
+   transaction through measurable signals.
    
-   1. Identity (20%)      — DID present + ZK verifiable
-   2. Capability (15%)    — keyword match between task & agent
-   3. Response Time (25%) — actual latency during negotiation
-   4. Execution (25%)     — API success rate × data completeness
-   5. Peer Review (10%)   — QA Inspector rating / 5
-   6. History (5%)        — past transaction count from Supabase
+   ADAPTIVE WEIGHTS: As data accumulates, weight shifts FROM
+   identity/capability (what agent CLAIMS) TO history/peer
+   review (what agent HAS PROVEN).
+   
+   Confidence Tiers:
+   - new      (0-2 txns)   → heavily weighted on identity/capability
+   - low      (3-10 txns)  → balanced weights
+   - medium   (11-50 txns) → weighted toward execution/history
+   - high     (50+ txns)   → veteran weights, proven track record
+   
+   Components:
+   1. Identity (variable)      — DID present + ZK verifiable
+   2. Capability (variable)    — keyword match between task & agent
+   3. Response Time (variable) — actual latency during negotiation
+   4. Execution (variable)     — API success rate × data completeness
+   5. Peer Review (variable)   — QA Inspector rating / 5
+   6. History (variable)       — past transaction count from Supabase
    ═══════════════════════════════════════════════════════════ */
 
-import type { TrustBreakdown, TrustComponent, TrustComponentScore } from '../types.js';
+import type { TrustBreakdown, TrustComponent, TrustComponentScore, TrustConfidenceTier } from '../types.js';
 import { emit } from '../session/sse.js';
 import { getAgentTransactionCount } from '../db/supabase.js';
 import type { SpeedMode } from '../types.js';
 
-/** Trust component weights (sum = 1.0) */
-const WEIGHTS: Record<TrustComponent, number> = {
-    identity: 0.20,
-    capability_match: 0.15,
-    response_time: 0.25,
-    execution_quality: 0.25,
-    peer_review: 0.10,
-    history: 0.05,
+/* ── Adaptive Weight System ──────────────────────────────── */
+
+/** Weight profiles for each confidence tier */
+const TIER_WEIGHTS: Record<TrustConfidenceTier, Record<TrustComponent, number>> = {
+    // Cold start: judge on what we CAN verify (identity + capability)
+    new: {
+        identity: 0.35,
+        capability_match: 0.30,
+        response_time: 0.15,
+        execution_quality: 0.15,
+        peer_review: 0.05,
+        history: 0.00,
+    },
+    // Emerging: balanced, starting to accumulate real data
+    low: {
+        identity: 0.25,
+        capability_match: 0.20,
+        response_time: 0.25,
+        execution_quality: 0.20,
+        peer_review: 0.05,
+        history: 0.05,
+    },
+    // Established: real track record, shift to measured performance
+    medium: {
+        identity: 0.15,
+        capability_match: 0.15,
+        response_time: 0.25,
+        execution_quality: 0.25,
+        peer_review: 0.10,
+        history: 0.10,
+    },
+    // Veteran: proven agent, trust what data shows
+    high: {
+        identity: 0.10,
+        capability_match: 0.10,
+        response_time: 0.25,
+        execution_quality: 0.25,
+        peer_review: 0.15,
+        history: 0.15,
+    },
 };
+
+/** Determine confidence tier from transaction count */
+export function getConfidenceTier(transactionCount: number): TrustConfidenceTier {
+    if (transactionCount >= 50) return 'high';
+    if (transactionCount >= 11) return 'medium';
+    if (transactionCount >= 3) return 'low';
+    return 'new';
+}
+
+/** Get weights for a given tier */
+export function getWeightsForTier(tier: TrustConfidenceTier): Record<TrustComponent, number> {
+    return { ...TIER_WEIGHTS[tier] };
+}
+
+/* ── Score Functions ─────────────────────────────────────── */
 
 /** Get trust level from score */
 export function getTrustLevel(score: number): 'high' | 'medium' | 'low' | 'unrated' {
@@ -81,9 +139,16 @@ export function computeHistoryScore(transactionCount: number): number {
     return Math.round(Math.min(1.0, transactionCount / 10) * 1000) / 1000;
 }
 
+/* ── LiveTrustTracker ────────────────────────────────────── */
+
 /**
- * LiveTrustTracker — tracks trust score as it builds from 0 during a session
- * Emits SSE events on each component update so the UI shows real-time growth
+ * LiveTrustTracker — tracks trust score as it builds from 0 during a session.
+ * 
+ * ADAPTIVE: Weights change based on agent's transaction history.
+ * New agents are judged on identity/capability (what they claim).
+ * Veteran agents are judged on history/execution (what they've proven).
+ * 
+ * Emits SSE events on each component update so the UI shows real-time growth.
  */
 export class LiveTrustTracker {
     private sessionId: string;
@@ -92,6 +157,9 @@ export class LiveTrustTracker {
     private agentDid: string;
     private speedMode: SpeedMode;
     private components: Map<TrustComponent, TrustComponentScore>;
+    private confidenceTier: TrustConfidenceTier;
+    private transactionCount: number;
+    private dataPointsCollected: number;
 
     constructor(sessionId: string, agentId: string, agentName: string, agentDid: string, speedMode: SpeedMode) {
         this.sessionId = sessionId;
@@ -99,11 +167,15 @@ export class LiveTrustTracker {
         this.agentName = agentName;
         this.agentDid = agentDid;
         this.speedMode = speedMode;
+        this.confidenceTier = 'new'; // default until history is loaded
+        this.transactionCount = 0;
+        this.dataPointsCollected = 0;
 
-        // Initialize ALL components to 0
+        // Initialize ALL components to 0 with cold-start weights
         this.components = new Map();
+        const weights = getWeightsForTier('new');
         const now = new Date().toISOString();
-        for (const [comp, weight] of Object.entries(WEIGHTS)) {
+        for (const [comp, weight] of Object.entries(weights)) {
             this.components.set(comp as TrustComponent, {
                 component: comp as TrustComponent,
                 score: 0,
@@ -113,11 +185,23 @@ export class LiveTrustTracker {
         }
     }
 
+    /** Recalculate weights when confidence tier changes */
+    private rebalanceWeights(): void {
+        const newWeights = getWeightsForTier(this.confidenceTier);
+        for (const [comp, weight] of Object.entries(newWeights)) {
+            const entry = this.components.get(comp as TrustComponent);
+            if (entry) {
+                entry.weight = weight;
+            }
+        }
+    }
+
     /** Update a single component and emit SSE event */
     async updateComponent(component: TrustComponent, score: number, reason: string): Promise<void> {
         const entry = this.components.get(component)!;
         entry.score = Math.round(Math.max(0, Math.min(1, score)) * 1000) / 1000;
         entry.updatedAt = new Date().toISOString();
+        this.dataPointsCollected++;
 
         const composite = this.getCompositeScore();
 
@@ -131,6 +215,8 @@ export class LiveTrustTracker {
                 weight: entry.weight,
                 compositeScore: composite,
                 level: getTrustLevel(composite),
+                confidence: this.confidenceTier,
+                dataPoints: this.dataPointsCollected,
                 allComponents: this.getComponentsArray(),
             }
         );
@@ -173,17 +259,33 @@ export class LiveTrustTracker {
             `QA Inspector rated ${rating}/5 — ${rating >= 4 ? 'high quality' : rating >= 3 ? 'acceptable' : 'needs improvement'}`);
     }
 
-    /** Load history from Supabase */
+    /** Load history from Supabase — THIS TRIGGERS ADAPTIVE REBALANCING */
     async loadHistory(): Promise<void> {
         const count = await getAgentTransactionCount(this.agentDid);
+        this.transactionCount = count;
+
+        // Determine confidence tier and rebalance weights
+        const newTier = getConfidenceTier(count);
+        if (newTier !== this.confidenceTier) {
+            this.confidenceTier = newTier;
+            this.rebalanceWeights();
+        }
+
         const score = computeHistoryScore(count);
         await this.updateComponent('history', score,
-            count > 0 ? `${count} past transactions on Agora` : 'New agent — no transaction history');
+            count > 0
+                ? `${count} past transactions → confidence: ${this.confidenceTier} (weights rebalanced)`
+                : `New agent — no history → confidence: ${this.confidenceTier} (identity/capability weighted higher)`);
     }
 
     /** Get current composite score */
     getCompositeScore(): number {
         return calculateCompositeScore(this.getComponentsArray());
+    }
+
+    /** Get confidence tier */
+    getConfidenceTier(): TrustConfidenceTier {
+        return this.confidenceTier;
     }
 
     /** Get breakdown */
@@ -195,6 +297,8 @@ export class LiveTrustTracker {
             components: this.getComponentsArray(),
             compositeScore: composite,
             level: getTrustLevel(composite),
+            confidence: this.confidenceTier,
+            dataPoints: this.dataPointsCollected,
         };
     }
 

@@ -56,6 +56,9 @@ export type TrustComponent =
     | 'peer_review'
     | 'history';
 
+/** How reliable is the trust score based on available data */
+export type TrustConfidenceTier = 'new' | 'low' | 'medium' | 'high';
+
 export interface TrustComponentScore {
     component: TrustComponent;
     score: number;      // 0.0 - 1.0
@@ -70,6 +73,8 @@ export interface TrustBreakdown {
     components: TrustComponentScore[];
     compositeScore: number;
     level: 'high' | 'medium' | 'low' | 'unrated';
+    confidence: TrustConfidenceTier;
+    dataPoints: number;
 }
 
 // ── Agent Registry ──────────────────────────────────────

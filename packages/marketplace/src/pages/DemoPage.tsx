@@ -43,6 +43,8 @@ interface TrustBreakdown {
     components: TrustComponent[];
     compositeScore: number;
     level: string;
+    confidence?: string;
+    dataPoints?: number;
 }
 
 type SpeedMode = 'slow' | 'fast';
@@ -171,6 +173,8 @@ export default function DemoPage() {
                 components: event.metadata.allComponents as any[],
                 compositeScore: event.metadata.compositeScore as number || 0,
                 level: (event.metadata.level as string) || 'unrated',
+                confidence: (event.metadata.confidence as string) || 'new',
+                dataPoints: (event.metadata.dataPoints as number) || 0,
             };
             setTrustBefore(breakdown);
         }
@@ -627,7 +631,12 @@ export default function DemoPage() {
                                         {currentTrust.compositeScore.toFixed(3)}
                                     </div>
                                     <div className="trust-confidence">
-                                        Level: {currentTrust.level.toUpperCase()} • Live calculation
+                                        Level: {currentTrust.level.toUpperCase()} • Confidence: <span style={{
+                                            color: currentTrust.confidence === 'high' ? 'var(--color-trust-high)' :
+                                                currentTrust.confidence === 'medium' ? 'var(--color-trust-medium)' : 'var(--color-trust-low)',
+                                            fontWeight: 600
+                                        }}>{(currentTrust.confidence || 'new').toUpperCase()}</span>
+                                        {currentTrust.dataPoints ? ` • ${currentTrust.dataPoints} signals` : ''}
                                     </div>
                                     {trustBefore && trustAfter && (
                                         <div className={`trust-composite-delta ${trustAfter.compositeScore > trustBefore.compositeScore ? 'positive' :
