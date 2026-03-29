@@ -2,12 +2,23 @@
 
 **The Trust Layer for the AI Agent Economy** — computed trust scores, searchable registry, and dual-rail payments.
 
+## 🎯 Current Goal (2026-03-10)
+
+**3-day sprint** to prepare 3 pitch deliverables:
+
+1. ✅ Standalone website (marketplace) — working
+2. ⏳ MCP server for ChatGPT/Gemini integration — built, needs testing
+3. 🔲 Custom chat UI — founder building separately
+
+**Pitch targets:** Suffolk 40K Competition, Fetch Defeat the Odds
+
 ## Stack
 
 | Layer | Tech | Location | Status |
 |-------|------|----------|--------|
-| Orchestrator | Express + Gemini 2.0 Flash + Supabase | `packages/orchestrator/src/` | ✅ Working |
-| Marketplace UI | React + Vite + Zustand + Supabase Auth | `packages/marketplace/src/` | ✅ Working |
+| Orchestrator | Express + Gemini 2.0 Flash + Supabase | `packages/orchestrator/src/` (17 files) | ✅ Working |
+| Marketplace UI | React + Vite + Zustand + Supabase Auth | `packages/marketplace/src/` (29 files) | ✅ Working |
+| MCP Server | TypeScript + @modelcontextprotocol/sdk | `packages/mcp-server/src/` | ✅ Built |
 | Trend Agent | Node.js cron, GitHub/npm/HN APIs | `packages/trend-agent/` | ✅ Working |
 | ZK Circuit | Circom | `circuits/trust_proof/` | ⚠️ File exists, not integrated |
 | Trust Layer Docs | Markdown strategies | `agora-trust-layer/` | 📄 Docs only |
@@ -26,23 +37,25 @@ User Query → FormulatorAgent (Gemini) → MCP search (Supabase)
 - **MarketScope** → npm Registry + HackerNews Algolia + GitHub Search
 - **WebPulse** → Google PageSpeed Insights
 
-## Trust Score
+## Trust Score — v2 Engine (EWMA + Wilson + Sigmoid)
 
-6 components, live-calculated:
+6 components, live-calculated per transaction via adaptive weights by tier:
 
-| Component | Weight |
-|-----------|--------|
-| Response Time | 25% |
-| Execution Quality | 25% |
-| Identity Verification | 20% |
-| Capability Match | 15% |
-| Peer Review | 10% |
-| History | 5% |
+| Component | New Agent | Veteran |
+|-----------|-----------|---------|
+| Identity | 35% | 10% |
+| Capability Match | 30% | 10% |
+| Response Time | 15% | 25% |
+| Execution Quality | 15% | 25% |
+| Peer Review | 5% | 15% |
+| History | 0% | 15% |
 
-## Текущий статус
+**Persistence (supabase.ts):**
 
-✅ Working MVP with live demo pipeline
-🎯 Focus: pitch competitions (Suffolk 40K, Fetch Defeat the Odds)
+- **Dynamic α**: Sigmoid curve `α(N) = 0.12 + 0.58/(1+e^(0.08×(N-30)))` — no tier cliffs
+- **Cold-start**: Wilson Score lower bound for < 5 transactions (z=1.96)
+- **Asymmetric**: Score < 0.5 → 2× deficit penalty (loss aversion)
+- **Decay**: 30-day half-life: `T_old × 0.5^(days/30)`
 
 ## Development Commands
 
@@ -60,8 +73,18 @@ cd packages/orchestrator && npx tsc --noEmit
 ## Dev Workflows
 
 ```
-/dev-autopilot   # Full CTO cycle: research → audit → execute → verify
-/dev-init        # Load session context
-/dev-fix         # Debug specific bug
-/dev-feature     # Add new feature
+/dev-autopilot              # Full CTO cycle: research → audit → execute → verify
+/chief-strategist           # Deep strategic analysis — 1-2 decisions per session
+/dev-init                   # Load session context
+/dev-fix [bug]              # Debug specific bug
+/dev-feature [feature]      # Add new feature
+
+Session files:
+  .agent/session/current.md       — last session state
+  .agent/session/issues.md        — issue tracker (38 issues, 71% closed)  
+  .agent/session/backlog.md       — prioritized backlog
+  .agent/session/decisions.md     — strategic decisions log
+  .agent/session/research_results.md — web research facts + URLs
+  .agent/session/scan_results.md  — last code audit
+  .agent/session/sprint.md        — current sprint tasks
 ```

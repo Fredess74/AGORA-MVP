@@ -135,6 +135,8 @@ Economics:
 
 ### Rail 2: x402 Protocol (Crypto) — For AI-to-AI
 
+> **⚠️ Status: NOT YET BUILT.** x402 integration is Phase 2. Launch with Stripe Connect (prepaid balance) first. x402 volume is real ($600M annualized) but adoption for marketplace use cases is early. Build crypto AFTER 10 paying fiat customers.
+
 ```
 Flow:
 1. AI system calls Agora API → gets HTTP 402 + payment details

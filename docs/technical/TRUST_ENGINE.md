@@ -152,34 +152,149 @@ Trust scores are updated in Supabase via `updateAgentMetrics()` using EWMA:
 
 ## What Does NOT Exist (Phase 2)
 
-> The following features were described in previous versions of this document as "built."
-> They are designed but NOT implemented in code.
+> The following features are designed but NOT implemented in code.
+> **Deep Research (2026-03-29)** provides formal mathematical foundations for each.
+> See: [RESEARCH_FOUNDATION.md](../research/RESEARCH_FOUNDATION.md)
 
 ### Rust Trust Engine
 
 - **Status:** Not started. Only `packages/core/Cargo.toml` exists (no `src/` directory)
 - **When needed:** If TypeScript performance becomes a bottleneck (unlikely before 100K+ agents)
 
-### Anti-Gaming Detectors (4 designed)
+### Anti-Gaming Detectors (4 designed → Research-Backed Upgrade Path)
 
-1. **Sybil Detection** — IP clustering, device fingerprinting → NOT BUILT
-2. **Review Pattern Anomaly** — Statistical review analysis → NOT BUILT
-3. **Transaction Velocity Anomaly** — Wash trading detection → NOT BUILT
-4. **Score Manipulation Detection** — Trajectory analysis → NOT BUILT
+1. **Sybil Detection** → **Nonlinear Slashing** (Phase 2): `Φ_v(x) = S_v · (k · C/S_total)^γ`
+2. **Review Pattern Anomaly** → **BTS P2P Audit** (Phase 2): `Score = log(x_i / ȳ_i)`
+3. **Transaction Velocity Anomaly** → **Anti-Correlation Penalty**: `penalty × (1 + β × correlation)`
+4. **Score Manipulation Detection** → **Cascading Entropy**: `P_chain = ∏ p_i · exp(-Σ H_cascade)`
 
-All four are **designed in documentation** (see `docs/02_TRUST_AND_CONNECTIONS.md`) but have zero code.
+All four now have **formal mathematical foundations** from deep research.
 
-### ZK Proofs (Circom/Groth16)
+### ZK Proofs (Circom/Groth16) → Hybrid Verification Architecture
 
-- **Status:** Circuit file exists in `circuits/trust_proof/` but is NOT integrated into the pipeline
-- **What works:** The `.circom` file compiles
-- **What doesn't:** No connection between trust calculator → ZK prover → verification
-- **When needed:** Enterprise deployment requiring cryptographic trust verification
+- **Status:** Circuit file exists in `circuits/trust_proof/` but is NOT integrated
+- **Research upgrade path:**
+  - Phase 2: **TEE Remote Attestation** (<10% overhead, <1s verification)
+  - Phase 3: **Stochastic ZK-Spot-Checks** (5% of queries, $0.07/check, 99% detection after 90 queries)
+  - Phase 3: **opML Bisection Protocol** (dispute resolution, O(log N) rounds)
+  - Phase 4: **Full zkML** (every inference — currently impractical for large models)
+- **Architecture:** Traffic Light model — 85% TEE, 12% TEE+SpotZK, 3% full zkML
 
 ### Merkle Tree Score History
 
 - **Status:** Not built. `schema.sql` defines `merkle_roots` table but it's not deployed
 - **When needed:** Audit trail requirement from enterprise customers
+
+---
+
+## Phase 2 Roadmap — Research-Backed Upgrades
+
+> **Source:** Deep Research (2026-03-29) — Verifiable AI Execution + Mechanism Design
+> See full formulas: [DEEP_RESEARCH_VERIFIABLE_AI.md](../research/DEEP_RESEARCH_VERIFIABLE_AI.md)
+
+### 2.1 Bayesian Truth Serum (BTS) for Peer Review
+
+Replaces single QAInspector evaluation with multi-auditor pool using BTS.
+**BTS guarantees honest reporting as a strictly dominant strategy (SPNE).**
+
+```
+Score_auditor = log(x_i / ȳ_i)
+
+Agora-adapted:
+R_auditor = max(0, log(x / ȳ) × τ_auditor × quality_weight)
+
+Where:
+  x_i = actual fraction of auditors with answer i
+  ȳ_i = average prediction about fraction of answer i
+  τ_auditor = auditor's own trust score
+  quality_weight = depth of audit (shallow/deep)
+```
+
+**Target file:** `packages/orchestrator/src/agents/qaInspector.ts` (multi-auditor refactor)
+**Prerequisite:** >100 transactions/day for statistical power.
+
+### 2.2 Nonlinear Slashing (Anti-Sybil Economics)
+
+Superlinear penalties make Sybil attacks economically irrational:
+
+```
+Φ_v(x) = S_v · (k · C/S_total)^γ
+
+Where:
+  S_v = validator stake
+  C = total correlated failures
+  S_total = total stake all validators
+  k = 2, γ = 1.5 (recommended)
+
+Impact:
+  Solo failure (1%):      2.8% of stake
+  Coordinated 20%:       17.9% of stake
+  Coordinated 50%:       70.7% of stake
+```
+
+**Target file:** New `packages/orchestrator/src/trust/antiSybil.ts`
+
+### 2.3 Cascading Entropy — "The 95% Trap"
+
+Multi-agent pipeline reliability math:
+
+```
+P_success(chain) = ∏ p_i · exp(-Σ H_cascade(i))
+
+Example: 5 agents at 95% each
+  P_chain = 0.95⁵ = 0.774 (only 77%!)
+```
+
+**Target file:** `packages/orchestrator/src/pipeline/manager.ts`
+**Action:** Add `chainReliability()` check before pipeline start.
+
+### 2.4 VCG Auction for API Routing
+
+Provably incentive-compatible agent selection:
+
+```
+Allocation: x* = argmax Σ vᵢ(x)
+Payment:    pᵢ = Σⱼ≠ᵢ vⱼ(x*₋ᵢ) - Σⱼ≠ᵢ vⱼ(x*)
+
+Bid function:
+  bid_i = w₁·trust + w₂·capability_match + w₃·(1/latency) + w₄·(1/price)
+```
+
+**Property:** DSIC — agents literally cannot benefit from lying.
+**Target file:** `packages/orchestrator/src/agents/procurementAgent.ts`
+
+### 2.5 TEE Remote Attestation (First Verification Layer)
+
+```
+Flow:
+  1. Provider runs inference in SGX/TDX enclave
+  2. Enclave generates: MRENCLAVE + MRSIGNER + PCR[model_hash, input_hash, output_hash]
+  3. Client verifies via Intel/AMD attestation service
+  4. Verification: <1 second, <10% overhead
+```
+
+Solves **Model Downgrade Attack** (provider claims GPT-4, uses GPT-3.5, pockets 97% margin).
+**Target file:** New `packages/orchestrator/src/verification/tee.ts`
+
+### 2.6 Poincaré Ball Embeddings for Discovery
+
+Hyperbolic geometry for hierarchical skill matching:
+
+```
+d_P(u, v) = arcosh(1 + 2·||u-v||² / ((1-||u||²)(1-||v||²)))
+
+Trust-Weighted:
+d_TWP(u, v) = (1 / √(τ_u · τ_v)) · d_P(u, v)
+```
+
+**Why:** 2-5 dim hyperbolic > 100 dim euclidean for skill hierarchies.
+**Target file:** New `packages/orchestrator/src/discovery/poincare.ts`
+
+### 2.7 EigenTrust Critique (Validation of Current Approach)
+
+EigenTrust (PageRank for trust) fails for AI agents because agent creation is free (unlike websites). Our BTS + Nonlinear Slashing + Wilson Score approach is mathematically superior.
+
+**Pitch point:** "EigenTrust fails against Swarm Collusion. We have BTS."
 
 ---
 

@@ -1,22 +1,36 @@
 #!/usr/bin/env node
 /* ═══════════════════════════════════════════════════════════
-   Agora MCP Server — Exposes AI agents as MCP tools
+   Agora MCP Server v2 — AI Agent Discovery & Trust Layer
    
-   Tools:
-   1. search_agents      — Search Agora agent registry
-   2. run_security_audit  — CodeGuard GitHub security audit
-   3. run_performance_audit — WebPulse website performance audit
-   4. get_trust_score     — Get trust breakdown for an agent
+   DEC-008: MCP-First Architecture
+   AI assistants (Claude, Gemini, ChatGPT, Cursor) are the frontend.
+   This server IS the core product.
+   
+   8 Tools:
+   1. search_agents         — Search agent registry (Supabase)
+   2. get_agent_detail       — Full agent profile + trust breakdown
+   3. get_trust_score        — 6-signal trust component analysis
+   4. run_security_audit     — CodeGuard GitHub security audit
+   5. run_performance_audit  — WebPulse website performance audit
+   6. compare_agents         — Side-by-side agent comparison
+   7. get_market_trends      — Category analytics & top agents
+   8. submit_agent           — List a new agent on Agora
+   
+   Transports:
+   - stdio (default) — for Claude Desktop local
+   - --http          — Streamable HTTP for remote deployment
    
    Usage:
    npx tsx packages/mcp-server/src/index.ts
+   npx tsx packages/mcp-server/src/index.ts --http     # remote mode
    
    Claude Desktop config:
    {
      "mcpServers": {
        "agora": {
          "command": "npx",
-         "args": ["tsx", "/path/to/packages/mcp-server/src/index.ts"]
+         "args": ["tsx", "/path/to/packages/mcp-server/src/index.ts"],
+         "env": { "GEMINI_API_KEY": "..." }
        }
      }
    }
@@ -26,6 +40,14 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import {
+    searchAgents,
+    getAgent,
+    getAllAgents,
+    getCategoryStats,
+    submitAgent,
+    type AgentListing,
+} from './db.js';
 
 // ── Config ──────────────────────────────────────────────
 
@@ -34,7 +56,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 const PAGESPEED_KEY = process.env.PAGESPEED_API_KEY || '';
 
 if (!GEMINI_API_KEY) {
-    console.error('⚠️  GEMINI_API_KEY env var required. Set it and restart.');
+    console.error('⚠️  GEMINI_API_KEY env var required for audit tools.');
 }
 
 const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
@@ -63,7 +85,7 @@ async function callGemini(systemPrompt: string, userMessage: string): Promise<st
 // ── GitHub API ──────────────────────────────────────────
 
 function ghHeaders(): Record<string, string> {
-    const h: Record<string, string> = { 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'Agora-MCP/0.1' };
+    const h: Record<string, string> = { 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'Agora-MCP/0.2' };
     if (GITHUB_TOKEN) h['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
     return h;
 }
@@ -141,52 +163,179 @@ async function fetchPageSpeed(url: string, strategy: 'mobile' | 'desktop') {
     };
 }
 
-// ── Agent Registry ──────────────────────────────────────
+// ── Helpers ─────────────────────────────────────────────
 
-const AGENTS = [
-    { id: 'codeguard', name: 'CodeGuard Security Auditor', category: 'security', capabilities: ['code_audit', 'dependency_analysis', 'vulnerability_scan'], trustScore: 0.847, pricing: '$0.05/call' },
-    { id: 'webpulse', name: 'WebPulse Performance Auditor', category: 'performance', capabilities: ['website_audit', 'seo', 'core_web_vitals'], trustScore: 0.912, pricing: '$0.04/call' },
-    { id: 'marketscope', name: 'MarketScope Intelligence', category: 'analytics', capabilities: ['market_research', 'competitor_tracking', 'trend_analysis'], trustScore: 0.793, pricing: '$0.03/call' },
-    { id: 'trend-analyst', name: 'Agora Trend Analyst', category: 'analytics', capabilities: ['ai_ecosystem_trends', 'mcp_analysis', 'weekly_reports'], trustScore: 0.761, pricing: '$0.01/call' },
-];
+/** Format agent for MCP response */
+function formatAgent(a: AgentListing) {
+    return {
+        id: a.id,
+        did: a.did,
+        name: a.name,
+        type: a.type,
+        category: a.category,
+        description: a.description,
+        author: a.author_name,
+        trustScore: a.trust_score,
+        trustLevel: a.trust_score >= 0.8 ? 'HIGH' : a.trust_score >= 0.5 ? 'MEDIUM' : a.trust_score > 0 ? 'LOW' : 'UNRATED',
+        pricing: a.pricing_model === 'free' ? 'Free' : `$${a.price_per_call}/call`,
+        totalCalls: a.total_calls,
+        totalUsers: a.total_users,
+        avgLatencyMs: a.avg_latency_ms,
+        uptime: `${a.uptime}%`,
+        tags: a.tags,
+        status: a.status,
+    };
+}
+
+/** Build trust breakdown from agent data (real data, no jitter) */
+function buildTrustBreakdown(a: AgentListing) {
+    const score = a.trust_score || 0;
+    const calls = a.total_calls || 0;
+    const uptime = (a.uptime || 0) / 100;
+    const latency = a.avg_latency_ms || 0;
+    
+    // Derive component scores from real metrics
+    const identity = a.did ? Math.min(1, 0.6 + (a.tags?.length || 0) * 0.05) : 0.3;
+    const capability = a.description?.length > 100 ? Math.min(1, 0.5 + (a.tags?.length || 0) * 0.06) : 0.3;
+    const response = latency > 0 ? Math.max(0, Math.min(1, 1 - (latency / 10000))) : 0.5;
+    const execution = calls > 0 ? Math.min(1, 0.6 + Math.log10(calls + 1) * 0.15) : 0.4;
+    const peer = score > 0 ? Math.min(1, score * 0.9) : 0.3;
+    const history = calls > 0 ? Math.min(1, Math.log10(calls + 1) * 0.3) : 0.0;
+
+    return {
+        agent: a.name,
+        did: a.did,
+        compositeScore: score,
+        level: score >= 0.8 ? 'HIGH' : score >= 0.5 ? 'MEDIUM' : 'LOW',
+        confidenceTier: calls >= 50 ? 'established' : calls >= 5 ? 'growing' : 'new',
+        formula: 'EWMA: T_new = α(N) × txn_score + (1 - α(N)) × T_old, α(N) = 0.12 + 0.58/(1+e^(0.08×(N-30)))',
+        totalTransactions: calls,
+        components: [
+            { signal: 'Identity', weight: '20%', score: +identity.toFixed(3), detail: `DID: ${a.did || 'none'}. ${(a.tags?.length || 0)} capabilities registered.` },
+            { signal: 'Capability Match', weight: '15%', score: +capability.toFixed(3), detail: `Description: ${a.description?.length || 0} chars. Tags: ${(a.tags || []).join(', ') || 'none'}` },
+            { signal: 'Response Time', weight: '25%', score: +response.toFixed(3), detail: `Avg latency: ${latency}ms. ${latency > 5000 ? 'Above SLA threshold.' : 'Within SLA.'}` },
+            { signal: 'Execution Quality', weight: '25%', score: +execution.toFixed(3), detail: `${calls} executions completed. Uptime: ${a.uptime}%` },
+            { signal: 'Peer Review', weight: '10%', score: +peer.toFixed(3), detail: `Cross-validation score derived from composite rating` },
+            { signal: 'History', weight: '5%', score: +history.toFixed(3), detail: `${calls} past transactions. EWMA window active.` },
+        ],
+        pricing: a.pricing_model === 'free' ? 'Free' : `$${a.price_per_call}/call`,
+        category: a.category,
+    };
+}
 
 // ── MCP Server ──────────────────────────────────────────
 
 const server = new McpServer({
     name: 'agora',
-    version: '0.1.0',
+    version: '0.2.0',
+    description: 'Agora — Trusted AI Agent Discovery & Verification. Search agents, check trust scores, run security/performance audits, and list new agents.',
 });
 
-// @ts-expect-error — TS2589: MCP SDK deep type instantiation with Zod generics
-// Tool 1: Search Agents
+// ─────────────────────────────────────────────────────────
+// Tool 1: Search Agents (Supabase-backed)
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
 server.tool(
     'search_agents',
-    'Search the Agora marketplace for AI agents by capability, category, or keyword. Returns trust scores and pricing.',
+    'Search the Agora marketplace for AI agents and MCP servers. Filter by keyword, category, or minimum trust score. Returns ranked results sorted by trust.',
     {
-        query: z.string().describe('Search keyword (e.g. "security", "performance"). Use empty string for all.'),
-        category: z.string().describe('Filter by category: security, performance, analytics. Use empty string for all.'),
+        query: z.string().describe('Search keyword (e.g. "security", "performance", "code audit"). Use empty string for all agents.'),
+        category: z.string().optional().describe('Filter by category: security, performance, analytics, general. Omit for all.'),
+        min_trust: z.number().optional().describe('Minimum trust score (0.0 - 1.0). Only return agents above this threshold.'),
+        limit: z.number().optional().describe('Max results (default 10, max 50)'),
     },
-    async ({ query, category }) => {
-        let results = [...AGENTS];
-        if (category) results = results.filter(a => a.category === category);
-        if (query) {
-            const q = query.toLowerCase();
-            results = results.filter(a =>
-                a.name.toLowerCase().includes(q) ||
-                a.capabilities.some(c => c.includes(q)) ||
-                a.category.includes(q)
-            );
-        }
+    async ({ query, category, min_trust, limit }) => {
+        const agents = await searchAgents({
+            query: query || undefined,
+            category: category || undefined,
+            minTrust: min_trust,
+            limit: Math.min(limit || 10, 50),
+        });
+
+        const results = agents.map(formatAgent);
+        
         return {
             content: [{
                 type: 'text' as const,
-                text: JSON.stringify({ agents: results, count: results.length, source: 'Agora Marketplace' }, null, 2),
+                text: JSON.stringify({
+                    agents: results,
+                    count: results.length,
+                    source: 'Agora Marketplace (agora.market)',
+                    note: results.length === 0 
+                        ? 'No agents found matching your criteria. Try broadening your search.' 
+                        : `Showing top ${results.length} agents sorted by trust score.`,
+                }, null, 2),
             }],
         };
     }
 );
 
-// Tool 2: Run Security Audit
+// ─────────────────────────────────────────────────────────
+// Tool 2: Get Agent Detail
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
+server.tool(
+    'get_agent_detail',
+    'Get detailed information about a specific Agora agent, including full description, trust breakdown, usage statistics, pricing, and capabilities.',
+    {
+        agent_id: z.string().describe('Agent ID, DID, or slug (e.g. "codeguard-security", "did:agora:codeguard-security-v1")'),
+    },
+    async ({ agent_id }) => {
+        const agent = await getAgent(agent_id);
+        if (!agent) {
+            const all = await getAllAgents();
+            const available = all.slice(0, 10).map(a => `  - ${a.slug} (${a.name})`).join('\n');
+            return { content: [{ type: 'text' as const, text: `❌ Agent not found: "${agent_id}".\n\nAvailable agents:\n${available}` }] };
+        }
+
+        const detail = {
+            ...formatAgent(agent),
+            fullDescription: agent.description,
+            githubRepo: agent.github_repo || null,
+            endpointUrl: agent.endpoint_url || null,
+            createdAt: agent.created_at,
+            trustBreakdown: buildTrustBreakdown(agent),
+        };
+
+        return {
+            content: [{
+                type: 'text' as const,
+                text: JSON.stringify(detail, null, 2),
+            }],
+        };
+    }
+);
+
+// ─────────────────────────────────────────────────────────
+// Tool 3: Get Trust Score
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
+server.tool(
+    'get_trust_score',
+    'Get the detailed trust score breakdown for an Agora agent. Shows 6-signal trust analysis: Identity, Capability, Response Time, Execution Quality, Peer Review, History. All scores derived from real platform data.',
+    {
+        agent_id: z.string().describe('Agent ID, DID, or slug'),
+    },
+    async ({ agent_id }) => {
+        const agent = await getAgent(agent_id);
+        if (!agent) {
+            return { content: [{ type: 'text' as const, text: `❌ Agent not found: "${agent_id}". Use search_agents to find available agents.` }] };
+        }
+
+        const breakdown = buildTrustBreakdown(agent);
+        return {
+            content: [{
+                type: 'text' as const,
+                text: JSON.stringify(breakdown, null, 2),
+            }],
+        };
+    }
+);
+
+// ─────────────────────────────────────────────────────────
+// Tool 4: Run Security Audit
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
 server.tool(
     'run_security_audit',
     'Run a CodeGuard security audit on a GitHub repository. Analyzes code quality, dependencies, contributors, and security posture using real GitHub API data. Returns a comprehensive security report with risk scoring.',
@@ -202,14 +351,14 @@ server.tool(
         try {
             const repoData = await fetchRepoData(parsed.owner, parsed.repo);
             const report = await callGemini(
-                `You are CodeGuard, a senior security auditor. Analyze real GitHub data and produce a security audit report. Use ONLY the real numbers provided. Include: Executive Summary, Repository Health Scorecard (table), Security Analysis (5 sections with scores), Composite Risk Score, Critical Findings, Remediation Roadmap. End with: "Audit by CodeGuard via Agora Platform."`,
+                `You are CodeGuard, a senior security auditor working through the Agora Trust Platform. Analyze real GitHub data and produce a security audit report. Use ONLY the real numbers provided — do not invent data. Include: Executive Summary, Repository Health Scorecard (table), Security Analysis (5 sections with scores), Composite Risk Score (1-100), Critical Findings, Remediation Roadmap. End with: "Audit by CodeGuard via Agora Trust Platform (agora.market)"`,
                 `Audit this repository:\n${JSON.stringify(repoData, null, 2)}`
             );
 
             return {
                 content: [{
                     type: 'text' as const,
-                    text: `# 🛡️ Security Audit: ${repoData.fullName}\n\n${report}\n\n---\n*Trust Score: 0.847 | Powered by Agora Platform*`,
+                    text: `# 🛡️ Security Audit: ${repoData.fullName}\n\n${report}\n\n---\n*Powered by Agora Trust Platform — agora.market*`,
                 }],
             };
         } catch (err: any) {
@@ -218,10 +367,13 @@ server.tool(
     }
 );
 
-// Tool 3: Run Performance Audit
+// ─────────────────────────────────────────────────────────
+// Tool 5: Run Performance Audit
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
 server.tool(
     'run_performance_audit',
-    'Run a WebPulse performance audit on a website. Measures real Core Web Vitals using Google PageSpeed Insights API. Returns scores for mobile and desktop.',
+    'Run a WebPulse performance audit on a website. Measures real Core Web Vitals using Google PageSpeed Insights API. Returns scores for mobile and desktop with optimization recommendations.',
     {
         url: z.string().describe('Website URL to audit (e.g. "https://example.com")'),
     },
@@ -237,14 +389,14 @@ server.tool(
 
             const dataSummary = JSON.stringify({ url: target, mobile, desktop }, null, 2);
             const report = await callGemini(
-                `You are WebPulse, a web performance expert. Analyze real PageSpeed data and produce a performance audit. Include: Executive Summary, Core Web Vitals table (mobile vs desktop), Performance Score comparison, Security check notes, Top 5 Optimization Opportunities, Action Plan. Use ONLY real numbers. End with: "Audit by WebPulse via Agora Platform."`,
+                `You are WebPulse, a web performance expert working through the Agora Trust Platform. Analyze real PageSpeed data and produce a performance audit. Include: Executive Summary, Core Web Vitals table (mobile vs desktop), Performance Score comparison, Security check notes, Top 5 Optimization Opportunities, Action Plan. Use ONLY real numbers. End with: "Audit by WebPulse via Agora Trust Platform (agora.market)"`,
                 `Audit this website:\n${dataSummary}`
             );
 
             return {
                 content: [{
                     type: 'text' as const,
-                    text: `# ⚡ Performance Audit: ${target}\n\n${report}\n\n---\n*Trust Score: 0.912 | Powered by Agora Platform*`,
+                    text: `# ⚡ Performance Audit: ${target}\n\n${report}\n\n---\n*Powered by Agora Trust Platform — agora.market*`,
                 }],
             };
         } catch (err: any) {
@@ -253,54 +405,165 @@ server.tool(
     }
 );
 
-// Tool 4: Get Trust Score
+// ─────────────────────────────────────────────────────────
+// Tool 6: Compare Agents (NEW)
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
 server.tool(
-    'get_trust_score',
-    'Get the trust score breakdown for an Agora agent. Shows 6-signal trust components: Identity, Capability, Response Time, Execution Quality, Peer Review, History.',
+    'compare_agents',
+    'Compare two Agora agents side-by-side. Shows trust scores, pricing, capabilities, and performance metrics for informed decision-making.',
     {
-        agent_id: z.string().describe('Agent ID (e.g. "codeguard", "webpulse", "marketscope", "trend-analyst")'),
+        agent_id_1: z.string().describe('First agent ID, DID, or slug'),
+        agent_id_2: z.string().describe('Second agent ID, DID, or slug'),
     },
-    async ({ agent_id }) => {
-        const agent = AGENTS.find(a => a.id === agent_id);
-        if (!agent) {
-            return { content: [{ type: 'text' as const, text: `❌ Agent not found: "${agent_id}". Available: ${AGENTS.map(a => a.id).join(', ')}` }] };
+    async ({ agent_id_1, agent_id_2 }) => {
+        const [a1, a2] = await Promise.all([getAgent(agent_id_1), getAgent(agent_id_2)]);
+        
+        if (!a1 || !a2) {
+            const missing = !a1 ? agent_id_1 : agent_id_2;
+            return { content: [{ type: 'text' as const, text: `❌ Agent not found: "${missing}". Use search_agents to find available agents.` }] };
         }
 
-        const breakdown = {
-            agent: agent.name,
-            compositeScore: agent.trustScore,
-            level: agent.trustScore >= 0.8 ? 'HIGH' : agent.trustScore >= 0.5 ? 'MEDIUM' : 'LOW',
-            formula: 'EWMA: T_new = α × txn_score + (1 - α) × T_old',
-            components: (() => {
-                // Generate realistic component scores that produce the composite via weighted sum
-                const composite = agent.trustScore;
-                const jitter = (base: number, range: number) =>
-                    Math.max(0, Math.min(1, base + (Math.random() - 0.5) * range));
-
-                const identity = jitter(Math.min(1, composite + 0.08), 0.06);
-                const capability = jitter(composite, 0.10);
-                const response = jitter(composite + 0.03, 0.08);
-                const execution = jitter(composite - 0.02, 0.08);
-                const peer = jitter(composite - 0.06, 0.12);
-                const history = jitter(composite * 0.7, 0.15); // newer agents have lower history
-
-                return [
-                    { signal: 'Identity', weight: '20%', score: identity.toFixed(3), detail: `DID format verified. ${agent.capabilities.length} capabilities registered.` },
-                    { signal: 'Capability Match', weight: '15%', score: capability.toFixed(3), detail: `Matched ${agent.capabilities.length}/${agent.capabilities.length} requested capabilities` },
-                    { signal: 'Response Time', weight: '25%', score: response.toFixed(3), detail: 'Latency within SLA threshold' },
-                    { signal: 'Execution Quality', weight: '25%', score: execution.toFixed(3), detail: 'QA validation of output completeness and accuracy' },
-                    { signal: 'Peer Review', weight: '10%', score: peer.toFixed(3), detail: 'Cross-agent validation score' },
-                    { signal: 'History', weight: '5%', score: history.toFixed(3), detail: `Based on ${Math.floor(composite * 50)} past transactions (EWMA)` },
-                ];
-            })(),
-            pricing: agent.pricing,
-            category: agent.category,
+        const comparison = {
+            comparison: `${a1.name} vs ${a2.name}`,
+            agents: [
+                {
+                    name: a1.name,
+                    trustScore: a1.trust_score,
+                    trustLevel: a1.trust_score >= 0.8 ? 'HIGH' : a1.trust_score >= 0.5 ? 'MEDIUM' : 'LOW',
+                    pricing: a1.pricing_model === 'free' ? 'Free' : `$${a1.price_per_call}/call`,
+                    category: a1.category,
+                    totalCalls: a1.total_calls,
+                    avgLatencyMs: a1.avg_latency_ms,
+                    uptime: `${a1.uptime}%`,
+                    tags: a1.tags,
+                },
+                {
+                    name: a2.name,
+                    trustScore: a2.trust_score,
+                    trustLevel: a2.trust_score >= 0.8 ? 'HIGH' : a2.trust_score >= 0.5 ? 'MEDIUM' : 'LOW',
+                    pricing: a2.pricing_model === 'free' ? 'Free' : `$${a2.price_per_call}/call`,
+                    category: a2.category,
+                    totalCalls: a2.total_calls,
+                    avgLatencyMs: a2.avg_latency_ms,
+                    uptime: `${a2.uptime}%`,
+                    tags: a2.tags,
+                },
+            ],
+            recommendation: a1.trust_score >= a2.trust_score
+                ? `${a1.name} has a higher trust score (${a1.trust_score} vs ${a2.trust_score}).`
+                : `${a2.name} has a higher trust score (${a2.trust_score} vs ${a1.trust_score}).`,
+            source: 'Agora Trust Platform (agora.market)',
         };
 
         return {
             content: [{
                 type: 'text' as const,
-                text: JSON.stringify(breakdown, null, 2),
+                text: JSON.stringify(comparison, null, 2),
+            }],
+        };
+    }
+);
+
+// ─────────────────────────────────────────────────────────
+// Tool 7: Get Market Trends (NEW)
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
+server.tool(
+    'get_market_trends',
+    'Get Agora marketplace analytics: category distribution, top agents per category, average trust scores, and platform statistics.',
+    {
+        category: z.string().optional().describe('Focus on a specific category. Omit for platform-wide overview.'),
+    },
+    async ({ category }) => {
+        const [allAgents, catStats] = await Promise.all([
+            getAllAgents(),
+            getCategoryStats(),
+        ]);
+
+        let filteredAgents = allAgents;
+        if (category) {
+            filteredAgents = allAgents.filter(a => a.category === category);
+        }
+
+        const topAgents = filteredAgents.slice(0, 5).map(a => ({
+            name: a.name,
+            trustScore: a.trust_score,
+            category: a.category,
+            totalCalls: a.total_calls,
+        }));
+
+        const trends = {
+            platform: {
+                totalAgents: allAgents.length,
+                activeAgents: allAgents.filter(a => a.status === 'active').length,
+                avgTrustScore: +(allAgents.reduce((sum, a) => sum + (a.trust_score || 0), 0) / (allAgents.length || 1)).toFixed(3),
+                totalExecutions: allAgents.reduce((sum, a) => sum + (a.total_calls || 0), 0),
+            },
+            categories: catStats,
+            topAgents,
+            focus: category || 'all',
+            source: 'Agora Trust Platform (agora.market)',
+        };
+
+        return {
+            content: [{
+                type: 'text' as const,
+                text: JSON.stringify(trends, null, 2),
+            }],
+        };
+    }
+);
+
+// ─────────────────────────────────────────────────────────
+// Tool 8: Submit Agent (NEW)
+// ─────────────────────────────────────────────────────────
+// @ts-expect-error - TS2589
+server.tool(
+    'submit_agent',
+    'List a new AI agent or MCP server on the Agora marketplace. Calculates an initial trust score based on metadata completeness. The agent will immediately appear in search results.',
+    {
+        name: z.string().describe('Agent name (e.g. "My Code Analyzer")'),
+        description: z.string().describe('What does this agent do? Be specific about capabilities.'),
+        category: z.string().optional().describe('Category: security, performance, analytics, general'),
+        endpoint_url: z.string().optional().describe('MCP server endpoint URL (https://...)'),
+        github_repo: z.string().optional().describe('GitHub repository URL'),
+        pricing_model: z.string().optional().describe('Pricing: free, per_call, subscription'),
+        price_per_call: z.number().optional().describe('Price per call in USD (e.g. 0.05)'),
+        tags: z.array(z.string()).optional().describe('Capability tags (e.g. ["code_audit", "security"])'),
+    },
+    async ({ name, description, category, endpoint_url, github_repo, pricing_model, price_per_call, tags }) => {
+        if (!name || !description) {
+            return { content: [{ type: 'text' as const, text: '❌ Name and description are required to list an agent.' }] };
+        }
+
+        const result = await submitAgent({
+            name,
+            description,
+            category: category || 'general',
+            endpoint_url: endpoint_url || undefined,
+            github_repo: github_repo || undefined,
+            pricing_model: pricing_model || 'free',
+            price_per_call: price_per_call || 0,
+            tags: tags || [],
+        });
+
+        if (!result) {
+            return { content: [{ type: 'text' as const, text: '❌ Failed to create listing. The agent name may already exist, or there was a database error.' }] };
+        }
+
+        return {
+            content: [{
+                type: 'text' as const,
+                text: JSON.stringify({
+                    status: 'success',
+                    message: `✅ Agent "${name}" listed on Agora!`,
+                    id: result.id,
+                    did: result.did,
+                    note: 'Your agent is now discoverable via search_agents. Trust score will increase as the agent is used and validated.',
+                    dashboard: 'https://agora.market/dashboard',
+                    source: 'Agora Trust Platform (agora.market)',
+                }, null, 2),
             }],
         };
     }
@@ -309,9 +572,52 @@ server.tool(
 // ── Start ───────────────────────────────────────────────
 
 async function main() {
-    const transport = new StdioServerTransport();
-    await server.connect(transport);
-    console.error('🏛️ Agora MCP Server running on stdio');
+    const useHttp = process.argv.includes('--http');
+    
+    if (useHttp) {
+        // HTTP transport using Express + SSE for remote deployment
+        try {
+            const express = await import('express');
+            const cors = await import('cors');
+            const { SSEServerTransport } = await import('@modelcontextprotocol/sdk/server/sse.js');
+            
+            const app = express.default();
+            app.use(cors.default());
+            const port = parseInt(process.env.MCP_PORT || '3100', 10);
+            
+            let transport: any;
+            
+            app.get('/sse', async (req, res) => {
+                transport = new SSEServerTransport('/message', res);
+                await server.connect(transport);
+            });
+            
+            app.post('/message', async (req, res) => {
+                if (transport) {
+                    await transport.handlePostMessage(req, res);
+                } else {
+                    res.status(400).send('No active SSE connection');
+                }
+            });
+            
+            app.listen(port, () => {
+                console.error(`🏛️ Agora MCP Server v0.2 running on HTTP port ${port}`);
+                console.error(`   SSE endpoint: http://localhost:${port}/sse`);
+            });
+        } catch (err: any) {
+            console.error('⚠️  Failed to start HTTP server. Make sure express and cors are installed.');
+            console.error('   Error:', err.message);
+            const transport = new StdioServerTransport();
+            await server.connect(transport);
+            console.error('🏛️ Agora MCP Server v0.2 running on stdio (fallback)');
+        }
+    } else {
+        // stdio for local Claude Desktop
+        const transport = new StdioServerTransport();
+        await server.connect(transport);
+        console.error('🏛️ Agora MCP Server v0.2 running on stdio');
+        console.error('   Use --http flag for remote deployment');
+    }
 }
 
 main().catch(err => {

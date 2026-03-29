@@ -15,6 +15,8 @@ import { CodeGuardAgent } from '../agents/specialists/codeguard.js';
 import { MarketScopeAgent } from '../agents/specialists/marketscope.js';
 import { WebPulseAgent } from '../agents/specialists/webpulse.js';
 import { seedAgentsIfEmpty, recordTransaction, updateAgentMetrics, logUsage } from '../db/supabase.js';
+import { logTrustHistory } from '../trust/trust_history.js';
+import { withTimeoutAndRetry } from './pipeline_utils.js';
 import type { DemoSession, SpeedMode, StructuredTask, AgentListing } from '../types.js';
 
 // Active sessions
@@ -197,8 +199,14 @@ async function runPipeline(session: DemoSession): Promise<void> {
     };
 
     try {
+        const SPECIALIST_TIMEOUT = 60000; // 60s for specialist work (external APIs)
+        const SPECIALIST_RETRIES = 1;
+
         if (agent.slug?.includes('codeguard') || agent.capabilities.includes('code_security_audit')) {
-            const result = await codeguard.audit(task, onApiCall);
+            const result = await withTimeoutAndRetry(
+                () => codeguard.audit(task, onApiCall),
+                SPECIALIST_TIMEOUT, SPECIALIST_RETRIES, `${agent.name} audit`,
+            );
             rawReport = result.report;
             dataPoints = result.repoData ? Object.keys(result.repoData).length : 5;
             expectedDataPoints = 15;
@@ -206,7 +214,10 @@ async function runPipeline(session: DemoSession): Promise<void> {
             apiSuccesses = result.apiCalls;
             session.apiCallsMade++;
         } else if (agent.slug?.includes('marketscope') || agent.capabilities.includes('competitive_intelligence')) {
-            const result = await marketscope.research(task, onApiCall);
+            const result = await withTimeoutAndRetry(
+                () => marketscope.research(task, onApiCall),
+                SPECIALIST_TIMEOUT, SPECIALIST_RETRIES, `${agent.name} research`,
+            );
             rawReport = result.report;
             dataPoints = result.npmData.length + result.hnData.length;
             expectedDataPoints = 15;
@@ -214,7 +225,10 @@ async function runPipeline(session: DemoSession): Promise<void> {
             apiSuccesses = result.apiCalls;
             session.apiCallsMade++;
         } else if (webpulse && (agent.slug?.includes('webpulse') || agent.capabilities.includes('website_performance_audit'))) {
-            const result = await webpulse.audit(task, onApiCall);
+            const result = await withTimeoutAndRetry(
+                () => webpulse.audit(task, onApiCall),
+                SPECIALIST_TIMEOUT, SPECIALIST_RETRIES, `${agent.name} audit`,
+            );
             rawReport = result.report;
             dataPoints = (result.mobileData ? 10 : 0) + (result.desktopData ? 10 : 0) + (result.siteCheck ? 3 : 0);
             expectedDataPoints = 12;
@@ -268,6 +282,12 @@ async function runPipeline(session: DemoSession): Promise<void> {
         `${agent.name}: ${finalBreakdown.compositeScore.toFixed(3)} (${finalBreakdown.level})`,
         sm, { trustBreakdown: finalBreakdown });
 
+    // ── Log trust history (append-only audit trail, DEC-006) ──
+    logTrustHistory(
+        agent.did, id, finalBreakdown.components,
+        finalBreakdown.compositeScore, finalBreakdown.confidence,
+    ).catch(err => console.warn('  ⚠️  Trust history log failed:', err.message));
+
     // ────────── STEP 10: Persist to Supabase ──────────
     const totalMs = Date.now() - startTime;
     session.totalLatencyMs = totalMs;
@@ -287,8 +307,10 @@ async function runPipeline(session: DemoSession): Promise<void> {
         latencyMs: totalMs,
     }).catch(err => console.error('  ⚠️  Failed to record transaction:', err.message));
 
-    updateAgentMetrics(agent.did, finalBreakdown.compositeScore, totalMs)
-        .catch(err => console.error('  ⚠️  Failed to update agent metrics:', err.message));
+    updateAgentMetrics(
+        agent.did, finalBreakdown.compositeScore, totalMs,
+        finalBreakdown.components.map(c => ({ component: c.component, score: c.score, weight: c.weight })),
+    ).catch(err => console.error('  ⚠️  Failed to update agent metrics:', err.message));
 
     logUsage(agent.did, 'demo_execution', totalMs, { apiCalls, dataPoints })
         .catch(err => console.error('  ⚠️  Failed to log usage:', err.message));

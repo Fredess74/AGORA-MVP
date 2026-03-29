@@ -1,7 +1,7 @@
 <!--
 purpose: Real technical architecture of Agora as it exists today
 audience: Developers, AI systems, technical investors
-last_updated: 2026-03-10
+last_updated: 2026-03-29
 -->
 
 # Agora — Technical Architecture
@@ -159,6 +159,49 @@ Standalone Node.js service with cron scheduling:
 ## Phase 2 — Not Yet Built
 
 > These items are described in other documents but DO NOT exist in code.
+> **Deep Research (2026-03-29)** provides formal foundations for verification, routing, and anti-gaming.
+> See: [RESEARCH_FOUNDATION.md](../research/RESEARCH_FOUNDATION.md)
+
+### Verification Layer (from Deep Research)
+
+Hybrid "Traffic Light" architecture for verifiable AI execution:
+
+```
+Client Request --> Risk Tier Classifier
+    |
+    +-- GREEN (85%)  --> TEE only (<10% overhead, ~$0.001)
+    +-- YELLOW (12%) --> TEE + ZK Spot-Check (<25% OH, ~$0.01)
+    +-- RED (3%)     --> Full zkML (>100% OH, ~$0.10+)
+```
+
+| Component | Status | Phase | Key Formula |
+| --- | --- | --- | --- |
+| TEE Remote Attestation | Not started | Phase 2 | MRENCLAVE + PCR binding, <10% overhead |
+| Stochastic ZK-Spot-Checks | Not started | Phase 3 | P(detect) = 1-(1-0.05)^K; $0.07/check |
+| opML Bisection Protocol | Not started | Phase 3 | O(log N) dispute rounds |
+| PoEA (Model Attribution) | Not started | Phase 3 | Registry + TEE + ZK |
+| Full zkML | Not started | Phase 4+ | Impractical for >70B models |
+
+### Discovery/Routing Layer (from Deep Research)
+
+| Component | Status | Phase | Key Formula |
+| --- | --- | --- | --- |
+| Poincare Ball Embeddings | Not started | Phase 2 | 2-5 dim hyperbolic > 100 dim euclidean |
+| Trust-Weighted Distance | Not started | Phase 2 | d_TWP = (1/sqrt(tau)) * d_Poincare |
+| VCG Auction Routing | Not started | Phase 2 | DSIC: agents cannot lie profitably |
+| GAT Intent Decomposition | Not started | Phase 3 | Graph Attention Networks |
+| MDP Chain Optimization | Not started | Phase 3 | Bellman optimality equation |
+| Cascading Entropy Monitor | Not started | Phase 2 | P_chain = product(p_i); "95% Trap" |
+
+### Anti-Gaming Layer (from Deep Research)
+
+| Component | Status | Phase | Key Formula |
+| --- | --- | --- | --- |
+| BTS P2P Audit | Not started | Phase 2 | Score = log(x/y) -- strictly dominant strategy |
+| Nonlinear Slashing | Not started | Phase 2 | Superlinear penalty destroys Sybil economics |
+| Anti-Correlation Penalty | Not started | Phase 2 | Correlated failures penalized exponentially |
+
+### Core Infrastructure (Phase 2)
 
 | Feature | Status | Priority |
 | --- | --- | --- |
@@ -168,8 +211,7 @@ Standalone Node.js service with cron scheduling:
 | A2A adapter | Not started | P1 |
 | AP2 adapter | Not started | P1 |
 | x402 wrapper | Not started | P1 |
-| Anti-Gaming detectors | Designed only | P1 |
-| ZK proof integration (Circom→pipeline) | Circuit exists, not integrated | P2 |
+| ZK proof integration | Circuit exists, not integrated | P2 |
 | Merkle tree score history | Not started | P2 |
 | Rust Trust Engine | Not started | P2 |
 

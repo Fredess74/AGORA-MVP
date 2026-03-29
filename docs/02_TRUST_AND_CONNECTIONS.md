@@ -393,14 +393,16 @@ New data point added to agent's history:
 Trust Engine recalculates:
 - Transaction Success rate updated
 - Uptime/reliability stats updated
-- New score committed to Merkle tree (tamper-proof)
-- ZK proof invalidated, new proof available on demand
+- ~~New score committed to Merkle tree (tamper-proof)~~ `[NOT YET BUILT — see Merkle section below]`
+- ~~ZK proof invalidated, new proof available on demand~~ `[NOT YET BUILT — see ZK section below]`
 - Update latency: <10ms
 ```
 
 ---
 
 ## Merkle Tree: Tamper-Proof Score History
+
+> **⚠️ Status: NOT YET BUILT.** The Merkle tree is a Phase 2 feature. Currently, trust scores are stored in Supabase with `trust_history` append-only table (added in DEC-006). The Merkle tree will wrap this data for cryptographic immutability when enterprise clients require it.
 
 Every trust score change is cryptographically committed to a Merkle tree:
 

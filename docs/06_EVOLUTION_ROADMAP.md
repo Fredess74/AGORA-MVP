@@ -82,6 +82,13 @@ $4,900/mo burn      $25,500/mo burn     $80,500/mo burn
 | Code scanner for seed trust scores | P1 | Month 8-10 |
 | A2A protocol adapter | P1 | Month 10-14 |
 | Premium API SLA tiers | P1 | Month 8 |
+| **TEE Remote Attestation** | P0 | Month 7-9 | 
+| **BTS P2P Audit** | P0 | Month 8-11 |
+| **Poincare Embeddings for Discovery** | P1 | Month 9-12 |
+| **VCG Auction Routing** | P1 | Month 10-14 |
+| **Cascading Entropy Monitor** | P1 | Month 7 |
+
+> New items are from Deep Research (2026-03-29). See: [RESEARCH_FOUNDATION.md](docs/research/RESEARCH_FOUNDATION.md)
 
 ### Growth Tactics
 
@@ -105,7 +112,7 @@ $4,900/mo burn      $25,500/mo burn     $80,500/mo burn
 
 Everything else stays AI-operated.
 
-### Transition → Phase 3
+### Transition to Phase 3
 
 | Metric | Target |
 |--------|--------|
@@ -129,6 +136,12 @@ Everything else stays AI-operated.
 | AP2 production integration | P1 | Month 20-26 |
 | ML anti-gaming (replaces rule-based) | P1 | Month 22-28 |
 | Multi-region deployment | P2 | Month 24-30 |
+| **Stochastic ZK-Spot-Checks** | P1 | Month 18-22 |
+| **opML Bisection Protocol** | P2 | Month 20-26 |
+| **PoEA (Model Attribution)** | P2 | Month 22-28 |
+| **Nonlinear Slashing (full)** | P1 | Month 18-20 |
+
+> Phase 3 items from Deep Research focus on cryptographic verification and dispute resolution.
 
 ### Hiring (8-15 People Total, Never More)
 
