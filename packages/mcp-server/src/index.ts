@@ -234,7 +234,7 @@ const server = new McpServer({
 // ─────────────────────────────────────────────────────────
 // Tool 1: Search Agents (Supabase-backed)
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
+// @ts-expect-error - TS2589: Complex Zod schema with 4 optional params causes deep instantiation
 server.tool(
     'search_agents',
     'Search the Agora marketplace for AI agents and MCP servers. Filter by keyword, category, or minimum trust score. Returns ranked results sorted by trust.',
@@ -273,7 +273,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 2: Get Agent Detail
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'get_agent_detail',
     'Get detailed information about a specific Agora agent, including full description, trust breakdown, usage statistics, pricing, and capabilities.',
@@ -309,7 +308,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 3: Get Trust Score
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'get_trust_score',
     'Get the detailed trust score breakdown for an Agora agent. Shows 6-signal trust analysis: Identity, Capability, Response Time, Execution Quality, Peer Review, History. All scores derived from real platform data.',
@@ -335,7 +333,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 4: Run Security Audit
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'run_security_audit',
     'Run a CodeGuard security audit on a GitHub repository. Analyzes code quality, dependencies, contributors, and security posture using real GitHub API data. Returns a comprehensive security report with risk scoring.',
@@ -370,7 +367,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 5: Run Performance Audit
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'run_performance_audit',
     'Run a WebPulse performance audit on a website. Measures real Core Web Vitals using Google PageSpeed Insights API. Returns scores for mobile and desktop with optimization recommendations.',
@@ -408,7 +404,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 6: Compare Agents (NEW)
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'compare_agents',
     'Compare two Agora agents side-by-side. Shows trust scores, pricing, capabilities, and performance metrics for informed decision-making.',
@@ -468,7 +463,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 7: Get Market Trends (NEW)
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'get_market_trends',
     'Get Agora marketplace analytics: category distribution, top agents per category, average trust scores, and platform statistics.',
@@ -518,7 +512,6 @@ server.tool(
 // ─────────────────────────────────────────────────────────
 // Tool 8: Submit Agent (NEW)
 // ─────────────────────────────────────────────────────────
-// @ts-expect-error - TS2589
 server.tool(
     'submit_agent',
     'List a new AI agent or MCP server on the Agora marketplace. Calculates an initial trust score based on metadata completeness. The agent will immediately appear in search results.',

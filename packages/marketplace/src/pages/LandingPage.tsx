@@ -21,8 +21,8 @@ export default function LandingPage() {
                     <span className="hero__highlight">AI Agents</span>
                 </h1>
                 <p className="hero__subtitle animate-in animate-delay-2">
-                    Discover, publish, and monetize MCP servers, AI agents, and automations
-                    — with cryptographically verified trust scores.
+                    Discover, publish, and compare MCP servers and AI agents
+                    — with real-time computed trust scores.
                 </p>
                 <div className="hero__actions animate-in animate-delay-3">
                     <Link to="/marketplace" className="btn btn--primary btn--lg">
@@ -41,8 +41,8 @@ export default function LandingPage() {
             <section className="container">
                 <div className="stats-row">
                     <div className="stat">
-                        <div className="stat__value">12K+</div>
-                        <div className="stat__label">MCP Servers Indexed</div>
+                        <div className="stat__value">{products.length || '—'}</div>
+                        <div className="stat__label">Registered Agents</div>
                     </div>
                     <div className="stat">
                         <div className="stat__value">Real-Time</div>
@@ -53,8 +53,8 @@ export default function LandingPage() {
                         <div className="stat__label">Trust Engine</div>
                     </div>
                     <div className="stat">
-                        <div className="stat__value">4</div>
-                        <div className="stat__label">Protocols Supported</div>
+                        <div className="stat__value">MCP</div>
+                        <div className="stat__label">Protocol Native</div>
                     </div>
                 </div>
             </section>
@@ -63,17 +63,17 @@ export default function LandingPage() {
             <section className="features container">
                 <h2 className="features__title">Why Agora?</h2>
                 <p className="features__subtitle">
-                    The only marketplace with mathematically provable trust scoring.
+                    The only marketplace with real-time, formula-driven trust scoring.
                 </p>
                 <div className="features__grid">
                     <div className="card feature-card">
                         <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #DC1A00, #8b1a00)' }}>
                             🔐
                         </div>
-                        <h3 className="feature-card__title">ZK-Verified Trust</h3>
+                        <h3 className="feature-card__title">6-Signal Trust Engine</h3>
                         <p className="feature-card__text">
-                            Every trust score is backed by zero-knowledge proofs. Verify without exposing data.
-                            No other marketplace offers this level of cryptographic guarantee.
+                            Every agent is scored across 6 dimensions: Identity, Capability, Response Time,
+                            Execution Quality, Peer Review, and History — computed live, not self-reported.
                         </p>
                     </div>
 
@@ -81,10 +81,10 @@ export default function LandingPage() {
                         <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #ff3318, #DC1A00)' }}>
                             💰
                         </div>
-                        <h3 className="feature-card__title">Instant Monetization</h3>
+                        <h3 className="feature-card__title">List & Discover</h3>
                         <p className="feature-card__text">
-                            List your MCP server, AI agent, or automation in minutes. Set your pricing —
-                            per-call, subscription, or free tier. We handle billing and payouts.
+                            Register your MCP server or AI agent in minutes. Set your pricing model —
+                            per-call, subscription, or free. Buyers find you through trust-ranked search.
                         </p>
                     </div>
 
@@ -92,10 +92,10 @@ export default function LandingPage() {
                         <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #DC1A00, #990000)' }}>
                             🔌
                         </div>
-                        <h3 className="feature-card__title">Multi-Protocol</h3>
+                        <h3 className="feature-card__title">MCP-First Architecture</h3>
                         <p className="feature-card__text">
-                            MCP, A2A, AP2, x402 — we support every major AI agent protocol.
-                            Your agents discover and pay each other automatically.
+                            Built natively on the Model Context Protocol.
+                            Works directly inside Claude, Gemini, ChatGPT, and Cursor — no extra integration needed.
                         </p>
                     </div>
                 </div>
