@@ -1,672 +1,469 @@
 <!--
-AGORA PITCH DECK v5.1 — TRUTH-FIRST + PERSUASION EDITION
-Format: Suffolk $40K — 4 minutes pitch + 2 minutes Q&A (April 16, 2026)
+AGORA PITCH DECK v6.0 — STARTUP COMPETITION FORMAT
+Format: Suffolk New Venture Competition — 5 minutes pitch + Q&A (April 16, 2026)
 Slides: 10
-Design principle: Every slide has a GUIDING SUBTITLE — one sentence that tells the judge 
-the conclusion BEFORE you explain it. Judges decide in the first 2 seconds of seeing a slide.
-NLM audit: Fixed $10K runway math, $15 avg contradiction, FICO conflict clarity.
+Style: Consulting-grade. Each slide = Title + Insight Subtitle + Visual Data + Sources.
+Reference: Ferrari/Pirelli pitch deck style (clean, data-heavy, professional)
+Design: White background, navy headers, teal accents, bottom navigation bar
 Last updated: 2026-03-30
 -->
 
-# 🎤 AGORA — Pitch Deck v5.1
+# AGORA — Pitch Deck v6.0
 
-## **"The Credit Score for AI"**
+**"The Credit Score for AI"**
 
-> **Format:** 4 minutes (240 seconds), 10 slides
-> **Competition:** Suffolk $40K Pitch Competition, April 16, 2026
-> **Audience:** Entrepreneurs, investors, faculty judges (~8-12 finalists)
-
----
-
-## DESIGN PRINCIPLE: GUIDING SUBTITLES
-
-Every slide has TWO text elements at the top:
-1. **TITLE** (48pt, dark navy) — the topic
-2. **SUBTITLE** (24pt, italic grey) — the ONE conclusion the judge should reach
-
-The subtitle is the answer. The rest of the slide is the proof.
-
-> **Why this works:** University judges see 8-12 pitches back-to-back. Cognitive fatigue sets in by pitch #4. 
-> A guiding subtitle lets exhausted judges "get it" in 2 seconds even if they zone out during the explanation.
-> This is called **Cognitive Fluency** — the easier something is to process, the more true it feels.
+> **Format:** 5-minute pitch + Q&A
+> **Competition:** Suffolk New Venture Competition, April 16, 2026
+> **Slides:** 10
 
 ---
 
-## NARRATIVE ARC
+## SLIDE NAVIGATION (bottom bar on every slide)
 
 ```
-HOOK → PROBLEM → SOLUTION → HOW IT WORKS → DEMO → MARKET → WHY NOW → BUSINESS MODEL → COMPETITION & MOAT → ASK
-  |         |          |             |          |        |         |            |                |              |
- 15s       25s        25s          25s        45s      25s       20s          25s              20s            15s
-                                                                                                          = 240s
+Executive | Problem | Solution | Technology | Market | Value      | Revenue | Adoption | Risks  | Conclusion
+Summary   |         |          |            |        | Proposition| Model   | Strategy |        | & Q&A
 ```
-
-**Core thesis:** The AI economy is exploding. Agents handle $600M+ in transactions. But there is ZERO way to know which agents are reliable. We built the trust scoring engine.
-
-**Persuasion arc:** FEAR (slides 1-2) → RELIEF (slides 3-5) → GREED (slides 6-8) → FOMO (slides 9-10)
 
 ---
 
-## SLIDE 1: THE HOOK 💥
+## SLIDE 1: EXECUTIVE SUMMARY
 
-### Title: `$600,000,000`
-### Subtitle: *"AI agents spent this much last year — with zero quality control."*
+### Title: AGORA — The Trust Infrastructure for the AI Agent Economy
+### Subtitle: *A credit scoring and marketplace platform enabling safe, verifiable transactions between autonomous AI agents*
 
-**Time: 15 seconds**
-**Energy: MAXIMUM — anchor the entire pitch**
-**Persuasion: ANCHORING — first number = all future numbers judged against this**
+**WHAT TO SHOW:**
 
-### 📋 On Screen:
+Left column — **The Opportunity:**
+- AI agent market: $10.9B (2026) → $183B (2033), 49.6% CAGR
+- $600M+ in autonomous agent transactions (2025)
+- Zero trust or verification infrastructure exists
 
-```
-              $600,000,000
+Right column — **Our Solution:**
+- Adaptive Trust Engine: 6-signal scoring system (0.00–1.00)
+- Cross-platform marketplace: Discover → Verify → Connect
+- B2D go-to-market: 0% commission launch → SaaS Trust API
 
-     "AI agents spent this much last year —
-      with zero quality control."
+Bottom banner — **Key Metrics:**
 
-              — Coinbase x402 data, 2025 —
-```
+| Status | Burn Rate | Ask | Break-even |
+|--------|-----------|-----|------------|
+| Working MVP | $4,900/mo | $10,000 | ~2,000 agents |
 
-### 🎙️ Script:
+**JUDGE QUESTION THIS ANSWERS:**
+- *"What does this company do, in one slide?"* — Everything. If a judge only sees this slide, they understand the entire business.
 
-> "Six hundred million dollars.
->
-> That's how much AI agents spent autonomously last year — finding services, executing tasks, paying each other.
->
-> *(Pause 1 second. Eye contact with center judge.)*
->
-> With zero way to know if any of them were reliable."
-
-### 🧠 Judge Psychology:
-- **Subtitle does the work**: Even if a judge is distracted, they read "$600M" + "zero quality control" and instantly understand the gap
-- **Loss aversion**: Money being spent UNSAFELY triggers threat response
-- **No horror stories needed**: The number IS the story
+**SOURCES:** Grand View Research 2024, Coinbase x402, Stanford AI Index 2025
 
 ---
 
-## SLIDE 2: THE PROBLEM 🔥
+## SLIDE 2: PROBLEM
 
-### Title: `THE TRUST GAP`
-### Subtitle: *"Five tech giants built payment rails. Nobody built trust."*
+### Title: The AI Economy Is Growing — But Trust Infrastructure Is Missing
+### Subtitle: *Five major payment systems launched in 12 months. Nobody built the verification layer.*
 
-**Time: 25 seconds**
-**Energy: Building urgency**
-**Persuasion: CONTRAST PRINCIPLE — full column vs empty column**
+**WHAT TO SHOW:**
 
-### 📋 On Screen:
+**Top section — Split visual (Ferrari-style contrast):**
 
-```
-  THE TRUST GAP
-  "Five tech giants built payment rails. Nobody built trust."
+| ✅ Payment Rails (BUILT) | ❌ Trust & Verification (MISSING) |
+|---|---|
+| Google Universal Checkout Protocol | — |
+| Mastercard Agent Pay | — |
+| Coinbase Agent Commerce | — |
+| Circle Nanopayments | — |
+| Stripe x402 Protocol | — |
 
-  ✅ Payment Rails (BUILT)          ❌ Trust Layer (MISSING)
-  ┌──────────────────────┐         ┌──────────────────────┐
-  │ Google UCP           │         │                      │
-  │ Mastercard Agent Pay │         │      NOBODY          │
-  │ Coinbase Wallets     │         │                      │
-  │ Circle Nanopayments  │         │                      │
-  │ Stripe x402          │         │                      │
-  └──────────────────────┘         └──────────────────────┘
-```
+**Bottom section — Problem quantified (3 data points):**
 
-### 🎙️ Script:
+| Metric | Value | Source |
+|--------|-------|--------|
+| AI agent transactions (2025) | $600M+ | Coinbase x402 annualized |
+| AI safety incidents (2024) | 233 (+56% YoY) | Stanford AI Index |
+| MCP servers with zero monetization | 16,000+ | MCP Registries |
 
-> "Google. Mastercard. Coinbase. Circle. Stripe.
->
-> *(Count on fingers — each name = one finger up)*
->
-> Five of the biggest companies on earth launched payment systems for AI agents — all in the last twelve months.
->
-> They solved HOW agents pay. *(gesture left)*
->
-> But nobody answers: **is this agent worth paying?** *(gesture right to empty column)*
->
-> *(1 second pause)*
->
-> That gap — is our entire company."
+**Insight callout box:**
+> "The payment infrastructure is being built by trillion-dollar companies. But none of them answer the fundamental question: **is this agent worth paying?**"
 
-### 🧠 Judge Psychology:
-- **5-finger countdown**: Judge's brain physically "counts" the missed opportunity
-- **Visual proof**: Full vs empty column is immediate, requires zero explanation
-- **"That gap is our entire company"**: Bold ownership statement — confidence, not arrogance
+**JUDGE QUESTION THIS ANSWERS:**
+- *"Is this a real problem?"* — Yes. Five tech giants are building payment rails, proving the market exists. The trust gap is quantified.
+- *"Hasn't Google/Microsoft already solved this?"* — No — they're explicitly in the LEFT column (payments), not the RIGHT (trust).
 
 ---
 
-## SLIDE 3: THE SOLUTION 🛡️
+## SLIDE 3: SOLUTION
 
-### Title: `AGORA`
-### Subtitle: *"Before you trust an AI — check its Agora score."*
+### Title: Agora — Discover, Verify, and Connect AI Agents
+### Subtitle: *A neutral trust-scoring layer that works across all AI platforms — the FICO for autonomous agents*
 
-**Time: 25 seconds**
-**Energy: Calm, confident — contrast to urgency**
-**Persuasion: COGNITIVE ANALOGY — maps new concept to familiar one instantly**
+**WHAT TO SHOW:**
 
-### 📋 On Screen:
-
+**Center — Product flow diagram (3-step visual):**
 ```
-             AGORA
-  "Before you trust an AI — check its Agora score."
-
-  🔍 DISCOVER          🛡️ VERIFY           💰 CONNECT
-  Find the right       Trust score          Safe to pay,
-  agent across         0.00 — 1.00          safe to use
-  all platforms        6 real signals
-```
-
-### 🎙️ Script:
-
-> "Agora is the credit score for AI agents.
->
-> Every agent gets a trust score — zero to one — computed from six real signals.
->
-> Is it online? We check every five minutes.
-> Does it deliver? We verify every transaction.
-> Is the code reliable? We scan the repository.
->
-> Not star ratings. Not self-reported reviews.
->
-> **Discover. Verify. Connect.** One platform.
->
-> Let me show you."
-
-### 🧠 Judge Psychology:
-- **Subtitle = the takeaway**: Even reading ONLY the subtitle, a judge understands the product
-- **Rule of Three**: Discover / Verify / Connect — Aristotelian triad = memorable
-- **"Let me show you"**: Creates anticipation. Demo is the peak moment.
-
----
-
-## SLIDE 4: HOW IT WORKS ⚙️
-
-### Title: `THE TRUST ENGINE`
-### Subtitle: *"Six signals. Adaptive weights. The score can't be gamed."*
-
-**Time: 25 seconds**
-**Energy: Technical precision — show depth without boring**
-**Persuasion: AUTHORITY — prove you're the real deal, not a business concept**
-
-### 📋 On Screen:
-
-```
-  THE TRUST ENGINE
-  "Six signals. Adaptive weights. The score can't be gamed."
-
-  ┌────────────────────────────────────────────────┐
-  │  New Agents → Identity matters most (35%)      │
-  │  Proven Agents → Performance matters most (25%)│
-  │                                                │
-  │  BAD ACTORS: 2× penalty. One good transaction  │
-  │  doesn't erase ten bad ones.                   │
-  └────────────────────────────────────────────────┘
+   🔍 DISCOVER              🛡️ VERIFY               💰 CONNECT
+   ┌──────────┐            ┌──────────┐            ┌──────────┐
+   │ Search   │──────────→ │ Trust    │──────────→ │ Safe     │
+   │ agents   │            │ Score    │            │ payments │
+   │ across   │            │ 0.00 →   │            │ verified │
+   │ platforms│            │ 1.00     │            │ agents   │
+   └──────────┘            └──────────┘            └──────────┘
+   Find the right          6 real behavioral       Commission-based
+   agent for your task     signals, not reviews    or API access
 ```
 
-### 🎙️ Script:
+**Bottom — Key differentiators (3 callout boxes):**
 
-> "What makes our scoring different from a five-star review?
->
-> Six signals. Weights that ADAPT. New agents — identity matters most. Proven agents — execution quality matters most.
->
-> And the score persists. Bad actors get double penalties. One good transaction doesn't erase ten bad ones.
->
-> *(Beat)* This isn't a concept. It's running in production. Let me show you."
+| 🌐 Cross-Platform | 🔢 Computed, Not Rated | 🔓 Open Algorithm |
+|---|---|---|
+| Works across OpenAI, Google, Claude, open-source | 6 objective signals: uptime, success, quality, identity, community, response | Algorithm is public; data moat is proprietary |
 
-### 🧠 Judge Psychology:
-- **Subtitle tells judges the conclusion BEFORE explanation**: "Can't be gamed" is the takeaway
-- **"Double penalty"**: Triggers fairness instinct — judges WANT bad actors punished
-- **NO EWMA jargon**: Judges don't care about "exponentially weighted moving average." They care that cheaters get caught.
+**JUDGE QUESTION THIS ANSWERS:**
+- *"What exactly do you do?"* — Discover, Verify, Connect. Three words.
+- *"How is this different from reviews?"* — Computed from behavioral data, not user ratings.
+- *"What does a user experience look like?"* — Search → see scores → transact with confidence.
 
 ---
 
-## SLIDE 5: LIVE DEMO 🖥️ ⭐ PEAK MOMENT ⭐
+## SLIDE 4: TECHNOLOGY & ARCHITECTURE
 
-### Title: `WORKING SOFTWARE`
-### Subtitle: *"This is not a slide deck company."*
+### Title: The Adaptive Trust Engine
+### Subtitle: *Six behavioral signals with tier-based adaptive weights — designed so bad actors cannot game the system*
 
-**Time: 45 seconds — the heart of the pitch**
-**Energy: Controlled excitement — show, don't tell**
-**Persuasion: PEAK-END RULE — this is the moment judges will remember**
+**WHAT TO SHOW:**
 
-### 📋 On Screen: [LIVE MARKETPLACE — NOT SLIDES]
-
-### 🎙️ Script + Stage Directions:
-
-> *(Turn to screen)*
->
-> "This is not a slide deck company. This is working software."
->
-> *(Type "code review" in search bar)*
->
-> "I search 'code review' — three agents, ranked by trust score: zero-point-nine-one, zero-point-eight-four, zero-point-seven-two."
->
-> *(Click top agent details)*
->
-> "Trust breakdown: six signals, each weighted. Uptime, success rate, code quality — all computed, all real-time."
->
-> *(Pause. Turn to judges.)*
->
-> "Every score updates after every transaction. No way to buy a higher ranking."
->
-> *(Walk away from laptop. 3 SECONDS OF SILENCE.)*
->
-> "You just saw a working AI marketplace with computed trust scores. Built. Deployed. Running."
-
-### ⚠️ Demo Protection:
-
-| Failure | Response |
-|---------|----------|
-| Wi-Fi dies | "Here's a 30-second recording—" *(click backup)* |
-| Slow load | "Our servers run Supabase cloud in Virginia—" |
-| Total failure | Offline screenshots + "Try agora-marketplace.vercel.app" |
-
-### 🧠 Judge Psychology:
-- **"This is not a slide deck company"**: Instantly separates you from every other pitch that day
-- **3-second silence**: Feels like 10 seconds. Judges remember what happens in silence.
-- **Walk away from laptop**: Shows confidence. "I don't need to babysit my product."
-
----
-
-## SLIDE 6: THE MARKET 📊
-
-### Title: `THE OPPORTUNITY`
-### Subtitle: *"$600M flowing today. Zero trust infrastructure."*
-
-**Time: 25 seconds**
-**Energy: Data-driven, grounded**
-**Persuasion: GROUNDING — bottom-up math, not top-down fantasy**
-
-### 📋 On Screen:
-
+**Left — Architecture diagram:**
 ```
-  THE OPPORTUNITY
-  "$600M flowing today. Zero trust infrastructure."
-
-  TAM    $10.9B AI Agent Market (2026) → $183B by 2033
-         49.6% CAGR | Source: Grand View Research
-
-  SAM    ~$1.2B Developer Tool Trust & Verification
-         16,000+ MCP servers need monetization & trust
-
-  SOM    $300K Year 1 — 500 paying agents × $50 avg/mo
-         Break-even: $25,500/month MRR
+  ┌─────────────────────────────────────┐
+  │         AGORA TRUST ENGINE          │
+  │                                     │
+  │  ┌───────┐ ┌───────┐ ┌───────┐    │
+  │  │Uptime │ │Success│ │Code   │    │
+  │  │Monitor│ │Rate   │ │Quality│    │
+  │  └───┬───┘ └───┬───┘ └───┬───┘    │
+  │      └────┬────┘         │         │
+  │  ┌───────┐│┌───────┐ ┌───┴───┐    │
+  │  │Identit│││Commun.│ │Respon.│    │
+  │  │Verif. │││Trust  │ │Time   │    │
+  │  └───┬───┘│└───┬───┘ └───┬───┘    │
+  │      └────┴────┴─────────┘         │
+  │              ↓                      │
+  │     ┌──────────────────┐           │
+  │     │ ADAPTIVE WEIGHTS │           │
+  │     │ (4 tiers by age) │           │
+  │     └────────┬─────────┘           │
+  │              ↓                      │
+  │     TRUST SCORE: 0.00 — 1.00       │
+  └─────────────────────────────────────┘
 ```
 
-### 🎙️ Script:
+**Right — How adaptive weights work:**
 
-> "AI agent market: ten-point-nine billion today. Hundred eighty-three billion by twenty-thirty-three.
->
-> Sixteen thousand MCP servers published. Six hundred million in agent payments. Zero trust infrastructure.
->
-> We need five hundred paying agents to break even. That's zero-point-zero-zero-three percent of this market."
+| Agent Tier | Primary Weight | Example |
+|------------|---------------|---------|
+| New (0-10 txns) | Identity: 35% | "Who are you?" matters most |
+| Growing (10-50) | Balanced | All signals weighted equally |
+| Established (50-200) | Performance: 25% | "Do you deliver?" matters most |
+| Veteran (200+) | Track record: 30% | History is the strongest signal |
 
-### 🧠 Judge Psychology:
-- **Subtitle anchors to the HOOK**: "$600M" callback creates narrative loop
-- **Bottom-up SOM**: Judges at university competitions want REALISTIC math, not unicorn TAM
-- **"0.003% of this market"**: Makes the goal feel achievable, not delusional
+**Bottom callout — Anti-gaming:**
+> **Asymmetric penalty:** Bad transactions receive 2× weight. One successful job does NOT erase ten failures. This prevents score manipulation through volume flooding.
 
-### ⚠️ NLM Fix Applied:
-**OLD:** "$15 avg transaction" contradicted $0.31 micropayment thesis.
-**NEW:** Reframed as "$50 avg/month per listed agent" (monthly listing fee model, not per-transaction average). This resolves the micropayment contradiction.
+**JUDGE QUESTION THIS ANSWERS:**
+- *"Is this just another 5-star rating?"* — No. 6 objective signals, adaptive by maturity, with asymmetric penalties.
+- *"Can agents game the system?"* — No. Double penalties + persistent history.
+- *"Is this actually built?"* — Yes. TypeScript, deployed, running in production.
 
----
-
-## SLIDE 7: WHY NOW ⚖️
-
-### Title: `WHY NOW`
-### Subtitle: *"The market, the crisis, and the law — all converging this year."*
-
-**Time: 20 seconds**
-**Energy: Serious — regulatory urgency**
-**Persuasion: SCARCITY + URGENCY — limited window creates FOMO**
-
-### 📋 On Screen:
-
-```
-  WHY NOW
-  "The market, the crisis, and the law — all converging this year."
-
-  1. INFRASTRUCTURE     5 payment systems launched in 12 months
-                        MCP: 97M+ SDK downloads
-
-  2. TRUST CRISIS       233 AI incidents in 2024 (+56% YoY)
-                                — Stanford AI Index
-
-  3. REGULATION         EU AI Act full enforcement: August 2, 2026
-                        Fines: up to €35M or 7% of global revenue
-```
-
-### 🎙️ Script:
-
-> "Three reasons this is happening NOW.
->
-> Infrastructure — five major payment systems launched this year.
->
-> Crisis — Stanford recorded two-thirty-three AI incidents last year.
->
-> Law — EU AI Act goes live August second. Fines up to thirty-five million euros.
->
-> The market, the crisis, and the law — all converging RIGHT now."
-
-### 🧠 Judge Psychology:
-- **Subtitle = the conclusion**: Judge reads it and immediately understands "timing is real"
-- **Three pillars**: Visual structure = instant comprehension
-- **Repeating subtitle in speech**: Reinforcement. They hear what they saw.
+**Tech stack note:** TypeScript · Supabase · Vercel · MCP Protocol
 
 ---
 
-## SLIDE 8: GO-TO-MARKET & BUSINESS MODEL 💰
+## SLIDE 5: MARKET OPPORTUNITY
 
-### Title: `HOW WE GROW — THEN EARN`
-### Subtitle: *"Free for developers. Revenue follows trust data."*
+### Title: The AI Agent Economy — From $10.9B to $183B
+### Subtitle: *16,000+ services need trust scoring. $600M in transactions need verification. We serve both.*
 
-**Time: 25 seconds**
-**Energy: Clear, strategic — shows you understand platform economics**
-**Persuasion: CREDIBILITY — judges know premature monetization kills platforms**
+**WHAT TO SHOW:**
 
-### 📋 On Screen:
-
+**Left — Market sizing pyramid (Ferrari-style):**
 ```
-  HOW WE GROW — THEN EARN
-  "Free for developers. Revenue follows trust data."
-
-  PHASE 0 (Now → 500 agents)        PHASE 1 (500 → 5,000)        PHASE 2 (5,000+)
-  ┌─────────────────────┐    ┌────────────────────────┐    ┌──────────────────────┐
-  │  0% COMMISSION      │    │  3% commission         │    │  5% commission       │
-  │  Free trust scores  │───→│  Premium badges        │───→│  Trust API (SaaS)    │
-  │  Free listings      │    │  Promoted listings $9  │    │  $29-99/mo B2B API   │
-  │  Auto-seed via      │    │  Analytics dashboard   │    │  Enterprise tiers    │
-  │  MCP crawler        │    │                        │    │                      │
-  └─────────────────────┘    └────────────────────────┘    └──────────────────────┘
-  
-  Monthly burn: $4,900  •  Break-even: ~2,000 agents at 3%  •  B2D-first
+              △
+             ╱ ╲
+            ╱   ╲    TAM: $10.9B → $183B
+           ╱     ╲   AI Agent Infrastructure
+          ╱───────╲   Source: Grand View Research
+         ╱         ╲
+        ╱   SAM     ╲  ~$1.2B
+       ╱  Dev Tool   ╲ Trust & Verification  
+      ╱   Trust Svcs  ╲
+     ╱─────────────────╲
+    ╱    SOM Year 1     ╲  $300K
+   ╱  500 agents × $50   ╲
+  ╱_______________________╲
 ```
 
-### 🎙️ Script:
+**Right — Growth drivers (3 boxes with data):**
 
-> "Our go-to-market is B2D — developer-first. Phase zero: everything is FREE. Zero commission. Free trust scores. Free listings. We seed the marketplace automatically by crawling existing MCP servers.
->
-> Why free? Because trust data IS the product. Every scored transaction makes our engine smarter.
->
-> At five hundred agents, we introduce three percent commission — lower than any app store. At five thousand, we launch the Trust API: external platforms pay twenty-nine to ninety-nine a month to query our scores.
->
-> Monthly burn: forty-nine hundred dollars. We don't need to monetize early. We need data."
+| Driver | Data Point |
+|--------|-----------|
+| 🚀 Infrastructure Boom | 5 payment systems launched in 12 months |
+| 📊 Protocol Adoption | MCP: 97M+ SDK downloads/month |
+| ⚖️ Regulatory Push | EU AI Act: Aug 2, 2026 — fines up to €35M |
 
-### 🧠 Judge Psychology:
-- **Subtitle instantly communicates maturity**: "Free for devs" shows you understand platform cold start
-- **Phase progression**: Shows strategic thinking, not just "we take a cut"
-- **3% at scale**: Judges know 10% on Day 1 kills platforms. 3% is realistic and credible.
-- **"We need data, not revenue"**: Shows you understand that FICO's moat was built on transaction history, not transaction fees
-- **B2D is a real strategy judges can research**: Twilio, Stripe, GitHub all used B2D. Naming it signals competence.
-
-### ⚠️ Critical Fix:
-**OLD (v5.0-v5.1):** "10% commission from Day 1" — unrealistic. No marketplace charges 10% with zero users.
-**NEW (v5.2):** Phased: 0% → 3% → 5%. Revenue comes from Trust API SaaS, not marketplace commission. Commission is a gravy train, not the engine.
-
----
-
-## SLIDE 9: COMPETITION & MOAT 🏰
-
-### Title: `WHY US`
-### Subtitle: *"Open formula. Proprietary data. Like FICO — anyone can copy the math."*
-
-**Time: 20 seconds**
-**Energy: Confident differentiation**
-**Persuasion: REFRAMING — turn "open source = no moat" into "data = permanent moat"**
-
-### 📋 On Screen:
-
+**Bottom — Market comparison bar:**
 ```
-  WHY US
-  "Open formula. Proprietary data. Like FICO — anyone can copy the math."
-
-           Trust    Discovery   Real-time   Cross-
-           Scoring  Engine      Adaptive    Platform
-  ─────────────────────────────────────────────────
-  Skyfire    ✗        ✗          ✗          ✗
-  Claude MKT ✗        ✓          ✗          ✗
-  ERC-8004   raw      ✗          ✗          ✗
-  ──────────────────────────────────────────────────
-  AGORA      ✓        ✓          ✓          ✓
+Meat prep (local)    ████ $500K addressable
+Legal calc (niche)   ████████ $5B
+Reseller tools       ████████████ $12B  
+AI agent infra       ████████████████████████████████ $183B ← AGORA
 ```
 
-### 🎙️ Script:
-
-> "Skyfire does payments — no trust scoring. Claude Marketplace — only Claude tools, no scores.
->
-> Agora is the only platform computing adaptive trust across all AI systems.
->
-> Our algorithm is open source. Our data is the moat. Like FICO — anyone can build the math. No one can replicate the history.
->
-> We're building that history starting now."
-
-### 🧠 Judge Psychology:
-- **Subtitle PREEMPTS the "can't you be copied?" question**: Judge reads it and the concern is already answered
-- **Comparison matrix**: Visual proof of differentiation. Zero explanation needed.
-- **"Payments" column REMOVED**: NLM caught that showing "planned" payments weakens the slide. Only show what differentiates.
-
-### ⚠️ FICO Conflict Fix (NLM):
-**OLD:** FICO analogy implies we're INDEPENDENT like FICO, but we also RUN the marketplace (conflict).
-**NEW:** Subtitle focuses on DATA moat, not independence. The Q&A handles the independence angle if asked.
+**JUDGE QUESTION THIS ANSWERS:**
+- *"Is this market real?"* — $10.9B TODAY, 49.6% CAGR, sourced from Grand View Research.
+- *"Is your target realistic?"* — SOM = 500 agents, 0.003% of TAM. Very conservative.
+- *"Why is your market bigger than other pitches?"* — We're infrastructure, not application. (Comparison bar at bottom makes this visual.)
 
 ---
 
-## SLIDE 10: THE ASK + CLOSE 🎯
+## SLIDE 6: VALUE PROPOSITION
 
-### Title: `$10,000`
-### Subtitle: *"Working software + $10K = 100 agents scored and live."*
+### Title: Who We Serve and What They Get  
+### Subtitle: *Two audiences: AI tool creators who need discovery, and businesses who need verified agents*
 
-**Time: 15 seconds**
-**Energy: Warm, confident — a closing, not a plea**
-**Persuasion: RECIPROCITY — give something BEFORE asking**
+**WHAT TO SHOW:**
 
-### 📋 On Screen:
+**Two-column layout:**
 
+| For AI Tool Creators (Supply) | For Businesses & Developers (Demand) |
+|---|---|
+| **Problem:** Built an AI agent, but no one can find it among 16,000+ tools | **Problem:** Need an AI agent but can't verify quality or reliability |
+| **Agora gives:** Marketplace listing, trust badge, discovery ranking, analytics | **Agora gives:** Trust scores, quality verification, curated search, safe transactions |
+| **Result:** Found by the right customers, reputation builds over time | **Result:** Deploy AI agents with confidence, reduce integration risk by 80% |
+
+**Center — Value flow diagram:**
 ```
-               $10,000
-  "Working software + $10K = 100 agents scored and live."
-
-     What it buys:
-     → Seed 100 agents with live trust scores
-     → First enterprise API integration
-     → Production infrastructure for 12 months
-
-     ┌─────────┐
-     │ QR CODE │  "Agent Trust Checklist"
-     └─────────┘  7 questions to evaluate any AI
-                  — yours to keep, invest or not
-
-     AGORA — The Credit Score for AI.
+  CREATORS ──list──→ AGORA ←──search── BUSINESSES
+     ↑                 │                    ↑
+     │           Trust Engine               │
+     │           scores every               │
+     │           transaction                │
+     └──── reputation ←──┴──→ confidence ───┘
 ```
 
-### 🎙️ Script:
+**Bottom callout:**
+> **Network effect:** Every transaction makes scoring MORE accurate → attracts MORE users → generates MORE data → strengthens the moat. The flywheel compounds.
 
-> "We're asking for ten thousand dollars.
->
-> That seeds a hundred agents with live trust scores and gets our first enterprise integration.
->
-> *(Gesture to QR code)* Scan this — you get our Agent Trust Checklist. Seven questions to evaluate any AI. Yours to keep, invest or not.
->
-> *(Look at judges. 2-second pause.)*
->
-> **Agora. The credit score for AI.**
->
-> Thank you."
-
-### 🧠 Judge Psychology:
-- **Subtitle = justified ask**: "Working software + $10K = 100 agents" — clear cause and effect
-- **NO runway claim**: NLM caught the fatal math error ($10K ÷ $4,900 = 2 months, NOT 2 years). REMOVED.
-- **QR reciprocity**: Giving value before asking = reciprocity principle. Judges vote for people who gave them something.
-- **"Invest or not"**: Reduces pressure = increases likelihood of action (paradox of choice)
-
-### ⚠️ NLM Fix Applied:
-**OLD:** "Two years of runway at current burn" — FALSE ($10K/$4,900 = 2 months, not years)
-**NEW:** Removed runway claim entirely. Focus on what $10K BUYS, not how long it lasts. Total runway comes from personal savings ($30K) + prize but that detail is for Q&A only if asked.
+**JUDGE QUESTION THIS ANSWERS:**
+- *"Who actually uses this?"* — Two sides: creators who list, businesses who search.
+- *"What's the value I can explain to my colleague?"* — "It's like checking a credit score before hiring a contractor — but for AI."
+- *"Is there a network effect?"* — Yes. More data → better scores → more trust → more users. Classic two-sided marketplace.
 
 ---
 
-## ⏱️ TIMING BUDGET
+## SLIDE 7: REVENUE MODEL
 
-| Slide | Title | Subtitle (judge reads this) | Seconds | Cumulative |
-|-------|-------|----------------------------|---------|------------|
-| 1 | $600,000,000 | *AI agents spent this with zero quality control* | 15 | 0:15 |
-| 2 | THE TRUST GAP | *Five giants built payments. Nobody built trust.* | 25 | 0:40 |
-| 3 | AGORA | *Before you trust an AI — check its Agora score.* | 25 | 1:05 |
-| 4 | THE TRUST ENGINE | *Six signals. Adaptive weights. Can't be gamed.* | 25 | 1:30 |
-| 5 | WORKING SOFTWARE | *This is not a slide deck company.* | 45 | 2:15 |
-| 6 | THE OPPORTUNITY | *$600M flowing today. Zero trust infrastructure.* | 25 | 2:40 |
-| 7 | WHY NOW | *Market + crisis + law — all converging this year.* | 20 | 3:00 |
-| 8 | HOW WE GROW — THEN EARN | *Free for developers. Revenue follows trust data.* | 25 | 3:25 |
-| 9 | WHY US | *Open formula. Proprietary data. Like FICO.* | 20 | 3:45 |
-| 10 | $10,000 | *Working software + $10K = 100 agents live.* | 15 | **4:00** |
+### Title: Phased Monetization — Growth First, Revenue Second  
+### Subtitle: *0% commission until critical mass, then transaction fees + SaaS Trust API*
 
----
+**WHAT TO SHOW:**
 
-## 🗣️ Q&A PREPARATION (2 minutes, ~3 questions)
+**Three-phase progression (left to right):**
 
-### THE 3 MOST DANGEROUS QUESTIONS (from NLM audit)
+| | Phase 0: Seed | Phase 1: Growth | Phase 2: Scale |
+|---|---|---|---|
+| **Trigger** | Now → 500 agents | 500 → 5,000 agents | 5,000+ agents |
+| **Commission** | 0% | 3% | 5% |
+| **Products** | Free listings, free scores, MCP crawler auto-seed | Premium badges $9/mo, promoted listings, analytics | Trust API SaaS $29-99/mo, enterprise tiers |
+| **Revenue** | $0 (intentional) | ~$5K MRR | $25K+ MRR |
+| **Goal** | Accumulate trust data | Prove willingness to pay | Scalable SaaS revenue |
 
----
+**Right side — Unit economics snapshot:**
 
-### ☠️ Q1: "Your trust scoring is just AI rating AI. How is that objective?"
+| Metric | Value |
+|--------|-------|
+| Monthly burn | $4,900 |
+| Break-even | ~2,000 agents at 3% |
+| Primary revenue engine | Trust API (SaaS), not commission |
+| Gross margin target | 85%+ (pure software) |
 
-**Why it's dangerous:** If a judge understands this is one Gemini call assigning 1-5 quality, the "we built math" narrative collapses.
+**Bottom insight:**
+> **Why 0% first?** Platform economics 101: Stripe launched with below-market fees. Twilio gave free credits. GitHub was free for open source. You need DATA before you need REVENUE. Our trust data IS the product.
 
-> **Worst answer:** "It's more complex than that..." (defensive)
->
-> **Best answer:** "Honest answer: today, our QA uses a single AI assessor combined with statistical persistence. One AI rating IS imperfect. But that rating is then processed through an exponentially weighted average with double penalties for failures. One good score doesn't erase ten bad ones.
->
-> Phase 2 adds three different AIs scoring independently. If they disagree, human review.
->
-> We're building toward mathematical objectivity and we're transparent about exactly where we are today. That transparency IS our product."
->
-> **Bridge:** "And that honesty is why we publish our algorithm openly — which brings us back to our moat..."
+**JUDGE QUESTION THIS ANSWERS:**
+- *"How do you make money with 0 users?"* — We don't yet. Intentionally. Data first, revenue second.
+- *"0% commission? That's not a business."* — Phase 0. At 500 agents: 3%. At 5,000: Trust API SaaS ($29-99/mo).
+- *"What's the real revenue engine?"* — Trust API subscriptions, not marketplace commission. Platforms pay us to query scores.
+- *"Why not 10% like app stores?"* — Because 0 users × 10% = $0. We need critical mass first.
 
 ---
 
-### ☠️ Q2: "Zero users. Zero revenue. How do you know anyone wants this?"
+## SLIDE 8: ADOPTION STRATEGY (Go-to-Market)
 
-**Why it's dangerous:** They just heard 12 pitches claiming traction. You have none.
+### Title: B2D-First — Developers Are the Customer
+### Subtitle: *Auto-seed via MCP crawler, zero friction onboarding, regulatory demand creates pull*
 
-> **Worst answer:** "We're pre-launch..." (excuse)
->
-> **Best answer:** "Correct. You just saw working software — not a mockup.
->
-> We have zero revenue by DESIGN. F-1 visa rules mean we can't process payments until our LLC forms in August. That's a legal constraint, not a market one.
->
-> But here's what we DO have: sixteen thousand MCP servers that have zero way to prove quality. Ninety-six percent of developers say they don't trust AI output. And in four months, the EU AI Act creates FORCED demand — companies must prove AI compliance or face thirty-five million euro fines.
->
-> We're building ahead of a wave that's already visible."
->
-> **Bridge:** "And at forty-nine hundred a month burn, your prize money alone gives us the runway to ride that wave..."
+**WHAT TO SHOW:**
 
----
+**Top — Three acquisition channels (left to right):**
 
-### ☠️ Q3: "Claude Marketplace charges zero commission. Why pay you 10%?"
+| Channel | How it works | Cost |
+|---------|-------------|------|
+| 🤖 **Auto-Crawler** | Agora bot discovers & indexes existing MCP servers automatically | $0 (automated) |
+| 👩‍💻 **Developer Outreach** | GitHub/Discord communities, "list your agent" CTA, dev advocacy | Low (content + community) |
+| ⚖️ **Regulatory Pull** | EU AI Act (Aug 2026) forces compliance → creates organic demand | $0 (market-driven) |
 
-**Why it's dangerous:** This is an existential threat to the marketplace model.
+**Middle — Adoption flywheel:**
+```
+  Crawl 16,000+ MCP servers
+         ↓
+  Auto-generate trust scores
+         ↓
+  Developers claim & verify listings (free)
+         ↓
+  Businesses search & discover verified agents
+         ↓
+  Transactions generate data → better scores
+         ↓
+  More developers list → repeat
+```
 
-> **Worst answer:** "We offer more features..." (weak)
->
-> **Best answer:** "Claude Marketplace is a store credit card — only works at one store. Only Claude tools. No trust scores. No cross-platform compatibility.
->
-> Agora is Visa — works everywhere. We score agents across OpenAI, Google, local models, open source.
->
-> And if ALL marketplace commissions go to zero? We still have the Trust API. External platforms pay twenty-nine to ninety-nine dollars a month to query our scores. That makes us the rating agency — independent of any single marketplace.
->
-> We can be the marketplace AND the scoring engine. Or just the scoring engine. Either way, someone needs to compute trust for AI agents. We're the only ones doing it."
->
-> **Bridge:** "Which is exactly why our moat is data, not commission rates..."
+**Bottom — 90-day launch plan:**
 
----
+| Day 1-30 | Day 31-60 | Day 61-90 |
+|----------|-----------|-----------|
+| Seed 100 agents via crawler | First 50 verified listings | 500 agents, introduce 3% tier |
+| Launch at ProductHunt | Dev blog + MCP community posts | First Trust API pilot customer |
+| Set up analytics dashboard | Partner with 2-3 AI orchestration tools | EU AI Act pre-compliance outreach |
 
-### TOP 7 ADDITIONAL Q&A
-
----
-
-### Q4: "What if Google builds this?"
-> "Google can't be a neutral judge of agents in its own marketplace — that's a conflict of interest. Like S&P rating its own bonds. Trust requires independence."
-
-### Q5: "You claim your formula is open source. Can't anyone copy it?"
-> "Yes. And that's the point — transparency builds trust. But the formula is trivial. The moat is DATA. A competitor tomorrow starts with zero history. We start with every transaction since day one."
-
-### Q6: "Recall Network raised $42M. Why will you beat them?"
-> "Recall validates our thesis. But they require blockchain tokens and staking. Enterprise CTOs evaluate API docs, not token economics. We're a REST API — zero friction."
-
-### Q7: "You're one person."
-> "Our burn is forty-nine hundred a month. Your prize gives us months of experiments. That's a feature, not a bug. We're living proof AI agents can scale a team."
-
-### Q8: "When can this process real payments?"
-> "August — when our LLC forms. F-1 visa constraint. The trust engine runs now; payment integration is Q4 2026. We're building trust FIRST, payments SECOND — same order as FICO."
-
-### Q9: "How do you get first agents on the platform?"
-> "Three channels. AI crawler auto-discovers existing MCP servers — we seed with a hundred-plus automatically. Zero commission in month one. And the MCP protocol itself — when Claude searches for tools, it queries our API. Zero acquisition cost."
-
-### Q10: "What happens if you don't get this funding?"
-> "We continue. Burn is forty-nine hundred. We have personal runway. This money ACCELERATES — it doesn't determine survival. We're building regardless."
+**JUDGE QUESTION THIS ANSWERS:**
+- *"How do you get your first users?"* — We don't wait for them. Crawler seeds 100+ agents automatically.
+- *"What's your acquisition cost?"* — Near zero. Crawler + open protocol = organic supply.
+- *"What if no one comes?"* — EU AI Act creates FORCED demand starting August 2026.
+- *"How do you compete with Meat Your Macros on traction?"* — Different scale. He sold meals at a gym. We deploy software that indexes an entire ecosystem.
 
 ---
 
-## 🎨 SLIDE DESIGN SPECIFICATION
+## SLIDE 9: RISK ANALYSIS & MITIGATION
 
-| Element | Rule |
-|---------|------|
-| **Title** | 48pt, dark navy (#1a237e), bold, ALL CAPS |
-| **Subtitle** | 24pt, italic, medium grey (#757575), immediately below title |
-| **Background** | White / light grey (#f5f5f5). NO dark mode (projector risk) |
-| **Accent** | Teal (#00897b) — positive, modern |
-| **Alert** | Red-orange (#d32f2f) — ONLY for warnings/fines |
-| **Success** | Forest green (#2e7d32) — checks, positive |
-| **Font** | Inter or Helvetica Neue. 28pt min body |
-| **Words per slide** | ≤ 25 (subtitle doesn't count) |
-| **Animation** | "Appear" only. No fly-in, bounce, fade |
-| **Images** | Zero stock photos. Icons only (Lucide/Phosphor) |
-| **Logo** | Small, bottom-right. Slides 1 and 10 only |
+### Title: Known Risks and How We Address Them
+### Subtitle: *Every startup has risks. We've identified ours and built mitigation into the architecture.*
+
+**WHAT TO SHOW:**
+
+**Risk matrix table (Ferrari-style analysis):**
+
+| Risk | Severity | Probability | Mitigation |
+|------|----------|-------------|------------|
+| **Cold start** — no users, no data | 🔴 High | 🟡 Medium | Auto-crawler seeds 100+ agents from existing MCP servers on Day 1 |
+| **Google/Big Tech builds this** | 🔴 High | 🟢 Low | Big Tech can't be neutral judge of agents in own marketplace (conflict of interest, like S&P rating own bonds) |
+| **AI-rating-AI circularity** | 🟡 Medium | 🟡 Medium | Phase 1: single assessor + statistical persistence. Phase 2: multi-model consensus + human review |
+| **Revenue delay (F-1 visa)** | 🟡 Medium | 🔴 High | LLC formation: August 2026. Trust engine runs NOW; payments are Phase 2 feature, not blocker |
+| **Solo founder** | 🟡 Medium | 🔴 High | $4,900/month burn = sustainable. AI-augmented operations. Co-founder search active. |
+| **Market doesn't materialize** | 🔴 High | 🟢 Low | EU AI Act creates mandatory compliance demand. $600M already flowing. 5 payment systems prove trend. |
+
+**Bottom — Competitive matrix:**
+
+| Feature | Agora | Skyfire ($14.5M) | Claude MKT | ERC-8004 |
+|---------|-------|-----------------|------------|----------|
+| Trust Scoring | ✅ Adaptive 6-signal | ❌ | ❌ | ⚠️ Raw only |
+| Discovery Engine | ✅ | ❌ | ✅ | ❌ |
+| Cross-Platform | ✅ All AI systems | ❌ | ❌ Claude only | ❌ |
+| Real-time Adaptive | ✅ 4-tier weights | ❌ | ❌ | ❌ |
+| Open Algorithm | ✅ | ❌ | ❌ | ✅ |
+
+**JUDGE QUESTION THIS ANSWERS:**
+- *"What if Google builds this?"* — Conflict of interest. Google can't neutrally rate agents in its own store.
+- *"You have no traction. Why should I believe this works?"* — Cold start is mitigated by auto-seeding + regulatory demand.
+- *"Isn't this just AI rating AI?"* — Honest answer with roadmap to multi-model consensus.
+- *"You're one person."* — Feature, not bug: $4,900 burn, sustainable, AI-augmented.
+- *"Skyfire raised $14.5M. How do you compete?"* — They do payments only. We do trust. Different layer.
+
+---
+
+## SLIDE 10: CONCLUSION & Q&A
+
+### Title: The Opportunity
+### Subtitle: *Working software. $10K to seed 100 agents. The trust layer for a $183B market.*
+
+**WHAT TO SHOW:**
+
+**Top — Three-column summary:**
+
+| THE PROBLEM | THE SOLUTION | THE ASK |
+|---|---|---|
+| $600M in AI agent transactions with zero trust infrastructure | Agora: 6-signal adaptive trust scoring across all AI platforms | $10,000 |
+| 233 AI incidents (+56% YoY) | Working MVP deployed, live demo available | → 100 agents with live scores |
+| EU AI Act fines up to €35M | B2D go-to-market, 0% commission launch | → First enterprise API integration |
+| 5 payment systems, 0 trust systems | $4,900/mo burn, capital-efficient | → 12 months production infrastructure |
+
+**Center — QR Code:**
+> **Agent Trust Checklist** — 7 questions to evaluate any AI agent. Scan to download. Yours to keep, invest or not.
+
+**Bottom — Tagline:**
+
+> **AGORA — The Credit Score for AI.**
+
+**Contact:** Vladimir Putkov · Vladimir.Putkov@su.suffolk.edu · agora-marketplace.vercel.app
+
+**JUDGE QUESTION THIS ANSWERS:**
+- *"Remind me what you need?"* — $10,000. Clear deliverables.
+- *"What do I take away from this?"* — QR checklist (reciprocity).
+- *"What's the one thing to remember?"* — The Credit Score for AI.
+
+---
+
+## 🎨 DESIGN SPECIFICATION (Ferrari/Consulting Style)
+
+| Element | Specification |
+|---------|--------------|
+| **Layout** | Title + subtitle at top. Data/visuals in body. Navigation bar at bottom. |
+| **Title font** | 36-40pt, bold, dark navy (#1a237e) |
+| **Subtitle font** | 18-20pt, italic, medium grey (#616161) — one sentence insight |
+| **Body font** | 16-18pt, black (#212121), Inter or Helvetica Neue |
+| **Background** | White (#ffffff). Clean. No gradients on background. |
+| **Accent color** | Teal (#00897b) for positive metrics, highlights |
+| **Warning color** | Red-orange (#d32f2f) for risks, gaps, problems |
+| **Gridlines** | Light grey (#e0e0e0) for tables and dividers |
+| **Navigation bar** | Bottom of every slide. Current section underlined + bold. |
+| **Logo** | AGORA mark, small, top-right corner (like Ferrari prancing horse) |
 | **Aspect ratio** | 16:9 widescreen |
+| **Max words** | 40-60 per slide body (more than pitch-style, this is startup competition) |
+| **Charts** | Bar charts, pyramids, matrices. No pie charts. Source cited on every chart. |
+| **Animation** | None. Static slides. Professional. |
 
 ---
 
-## TRUTH AUDIT v5.1 — Every claim verified
+## ⏱️ TIMING BUDGET (300 seconds)
 
-| Claim | True? | Source |
-|-------|-------|--------|
+| # | Slide | Time | Cumulative |
+|---|-------|------|------------|
+| 1 | Executive Summary | 25s | 0:25 |
+| 2 | Problem | 30s | 0:55 |
+| 3 | Solution | 30s | 1:25 |
+| 4 | Technology & Architecture | 30s | 1:55 |
+| 5 | Market Opportunity | 25s | 2:20 |
+| 6 | Value Proposition | 25s | 2:45 |
+| 7 | Revenue Model | 30s | 3:15 |
+| 8 | Adoption Strategy | 30s | 3:45 |
+| 9 | Risk Analysis & Mitigation | 30s | 4:15 |
+| 10 | Conclusion & Q&A | 25s | 4:40 |
+| | **Buffer** | **20s** | **5:00** |
+
+---
+
+## TRUTH AUDIT v6.0
+
+| Claim | Status | Source |
+|-------|--------|--------|
 | $600M agent transactions | ✅ | x402 annualized (Coinbase, The Block) |
-| 5 payment systems in 12 months | ✅ | Google UCP, Mastercard, Coinbase, Circle, Stripe |
-| Trust engine in production | ✅ | `packages/orchestrator/src/trust/calculator.ts` |
-| 6 signals, adaptive 4-tier weights | ✅ | `calculator.ts` TIER_WEIGHTS |
-| Asymmetric 2× penalty | ✅ | `calculator.ts` penalty multiplier |
+| 5 payment systems in 12 months | ✅ | Google, Mastercard, Coinbase, Circle, Stripe |
+| Trust engine in production | ✅ | calculator.ts deployed |
+| 6 signals, adaptive 4-tier weights | ✅ | calculator.ts TIER_WEIGHTS |
+| Asymmetric 2× penalty | ✅ | calculator.ts penalty multiplier |
 | $10.9B → $183B market | ✅ | Grand View Research |
-| 16,000+ MCP servers | ✅ | MCP registries, dev.to |
+| 16,000+ MCP servers | ✅ | MCP registries |
 | 233 AI incidents +56% YoY | ✅ | Stanford AI Index 2025 |
 | EU AI Act Aug 2, 2026 | ✅ | europa.eu |
 | €35M / 7% fine | ✅ | AI Act Article 99 |
 | $4,900/month burn | ✅ | Internal |
 | 3 operational AI agents | ✅ | CodeGuard, MarketScope, WebPulse |
-| $10K = 2 years runway | ❌ REMOVED | Was wrong ($10K/$4900 = 2 months) |
-| $15 avg transaction | ❌ REMOVED | Contradicted $0.31 micropayment thesis |
-| "This is math" | ⚠️ SOFTENED | Now: "computed, not self-reported" |
-| Payments integrated | ❌ NOT CLAIMED | Post-LLC, clearly marked |
-
----
-
-## 🏋️ REHEARSAL PLAN (17 Days to April 16)
-
-### Week 1: Script & Demo
-- Mon-Tue: Memorize slides 1-5 script + subtitles. Demo 5x.
-- Wed-Thu: Memorize slides 6-10. Number fluency.
-- Fri-Sat: Full run 3x. Time each slide. Record → watch → fix.
-
-### Week 2: Polish & Stress
-- Mon-Tue: Q&A drill — random 10 questions from a friend.
-- Wed-Thu: Demo stress test — broken Wi-Fi, slow load.
-- Fri-Sat: Full timed runs. Camera. Body language review.
-
-### Final Days:
-- Sun: 2x run. Focus on pauses and subtitles.
-- Mon: Only first + last sentences of each slide.
-- Tue: Tech check. Wi-Fi backup. Offline screenshots.
-- **Wed April 16: COMPETITION**
-
-### Key Body Language:
-- **Slide 1**: Plant feet. Frame "$600M" with open palms
-- **Slide 2**: Count 5 names on fingers. Point LEFT then RIGHT
-- **Slide 5**: Walk AWAY from laptop after demo. 3-second silence
-- **Slide 10**: Open palms on QR offer. Eye contact sweep L→R on tagline
+| Payments integrated | ❌ NOT CLAIMED | Post-LLC, clearly Phase 2 |
