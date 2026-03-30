@@ -30,20 +30,20 @@ Trust Score = (W1 × ResponseTime)
 ### Input Signals and Adaptive Weights
 
 > **Implementation note:** Weights are NOT fixed — they are **adaptive** across 4 maturity tiers.
-> Defined in `packages/orchestrator/src/trust/calculator.ts` lines 19-62.
+> Defined in `packages/orchestrator/src/trust/calculator.ts` lines 34-71, `TIER_WEIGHTS` constant.
 
-| Signal | Cold Start (≤5 txns) | Emerging (6-29) | Established (30-99) | Veteran (100+) |
-|--------|---------------------|-----------------|---------------------|---------------|
-| Response Time | 15% | 20% | 25% | 25% |
-| Execution Quality | 15% | 20% | 25% | 30% |
-| Identity Verification | 30% | 25% | 15% | 10% |
-| Capability Match | 25% | 20% | 15% | 10% |
-| Peer Review | 10% | 10% | 12% | 15% |
-| History | 5% | 5% | 8% | 10% |
+| Signal | 🟢 New (0-2 txns) | 🟡 Emerging (3-10) | 🔵 Established (11-50) | ⭐ Veteran (50+) |
+|--------|-------------------|--------------------|-----------------------|------------------|
+| Identity | **35%** | 25% | 15% | 10% |
+| Capability Match | **30%** | 20% | 15% | 10% |
+| Response Time | 15% | **25%** | **25%** | **25%** |
+| Execution Quality | 15% | 20% | **25%** | **25%** |
+| Peer Review | 5% | 5% | 10% | **15%** |
+| History | 0% | 5% | 10% | **15%** |
 
-**Cold start agents** weight heavily on identity/capability (55% combined). **Veteran agents** weight heavily on execution/quality (55% combined).
+**New agents** weight heavily on identity/capability (65% combined). **Veteran agents** weight on execution/response (50% combined) and peer/history (30% combined).
 
-The previous signals described below (Code Quality, Repo Health, Uptime, Transaction Success, User Reviews, Account Age) are part of the aspirational future design and are NOT currently computed.
+> **⚠️ ASPIRATIONAL SIGNALS BELOW:** The following six signals (Code Quality, Repo Health, Uptime, Transaction Success, User Reviews, Account Age) describe a FUTURE design. They are **NOT currently computed** and their weights do NOT apply. The 6-component system above IS the production implementation. See `docs/developer/TRUST_SCORE_EXPLAINED.md` for the developer-facing guide.
 
 ### How Each Signal Is Computed
 
@@ -94,14 +94,18 @@ The previous signals described below (Code Quality, Repo Health, Uptime, Transac
 
 ### Penalties
 
-Penalties are subtracted from the composite score after calculation:
+> **What IS built:** Asymmetric 2× penalty in `supabase.ts:258-263` — scores below 0.50 are penalized by doubling the deficit: `adjustedScore = max(0, score - (0.5 - score))`. Trust decay with 30-day half-life in `supabase.ts:227-235`.
+>
+> **What is NOT built:** The penalty table below describes planned Phase 2 features. No fraud detection, dispute resolution, or suspension system exists in code.
 
-| Penalty | Amount | Trigger | Recovery |
-|---------|--------|---------|----------|
-| Fraud flag | -0.30 | Anti-gaming detector fires | Manual review + 30-day clean period |
-| Sustained downtime | -0.10 per incident | Agent offline >24 consecutive hours | Automatic after 7 days uptime |
-| Lost dispute | -0.05 per dispute | Buyer wins dispute, refund issued | Gradual recovery over 30 days per dispute |
-| Suspension | Score frozen at 0.0 | 3+ fraud flags or 5+ lost disputes | Manual reinstatement only |
+| Penalty | Amount | Trigger | Recovery | Status |
+|---------|--------|---------|----------|--------|
+| **Asymmetric loss** | 2× deficit | Score < 0.50 on any transaction | Earn positive scores | ✅ **IN CODE** |
+| **Trust decay** | 50% per 30 days | No transactions for extended period | Resume activity | ✅ **IN CODE** |
+| Fraud flag | -0.30 | Anti-gaming detector fires | Manual review + 30-day clean | ❌ NOT BUILT |
+| Sustained downtime | -0.10 per incident | Agent offline >24 consecutive hours | Automatic after 7 days uptime | ❌ NOT BUILT |
+| Lost dispute | -0.05 per dispute | Buyer wins dispute, refund issued | Gradual recovery over 30 days | ❌ NOT BUILT |
+| Suspension | Score frozen at 0.0 | 3+ fraud flags or 5+ lost disputes | Manual reinstatement only | ❌ NOT BUILT |
 
 ### The Cold Start Problem
 

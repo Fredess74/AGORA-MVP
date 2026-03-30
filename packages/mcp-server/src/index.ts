@@ -187,12 +187,34 @@ function formatAgent(a: AgentListing) {
     };
 }
 
+/** 
+ * Adaptive weight tiers — MUST match calculator.ts TIER_WEIGHTS exactly.
+ * Source of truth: packages/orchestrator/src/trust/calculator.ts lines 34-71
+ */
+const MCP_TIER_WEIGHTS = {
+    new:    { identity: 35, capability: 30, response: 15, execution: 15, peer: 5,  history: 0  }, // 0-2 txns
+    low:    { identity: 25, capability: 20, response: 25, execution: 20, peer: 5,  history: 5  }, // 3-10 txns
+    medium: { identity: 15, capability: 15, response: 25, execution: 25, peer: 10, history: 10 }, // 11-50 txns
+    high:   { identity: 10, capability: 10, response: 25, execution: 25, peer: 15, history: 15 }, // 50+ txns
+} as const;
+
+function getWeightTier(calls: number): keyof typeof MCP_TIER_WEIGHTS {
+    if (calls >= 50) return 'high';
+    if (calls >= 11) return 'medium';
+    if (calls >= 3)  return 'low';
+    return 'new';
+}
+
 /** Build trust breakdown from agent data (real data, no jitter) */
 function buildTrustBreakdown(a: AgentListing) {
     const score = a.trust_score || 0;
     const calls = a.total_calls || 0;
     const uptime = (a.uptime || 0) / 100;
     const latency = a.avg_latency_ms || 0;
+    
+    // Determine weight tier based on transaction count (matches calculator.ts)
+    const tier = getWeightTier(calls);
+    const w = MCP_TIER_WEIGHTS[tier];
     
     // Derive component scores from real metrics
     const identity = a.did ? Math.min(1, 0.6 + (a.tags?.length || 0) * 0.05) : 0.3;
@@ -207,16 +229,16 @@ function buildTrustBreakdown(a: AgentListing) {
         did: a.did,
         compositeScore: score,
         level: score >= 0.8 ? 'HIGH' : score >= 0.5 ? 'MEDIUM' : 'LOW',
-        confidenceTier: calls >= 50 ? 'established' : calls >= 5 ? 'growing' : 'new',
+        confidenceTier: tier,
         formula: 'EWMA: T_new = α(N) × txn_score + (1 - α(N)) × T_old, α(N) = 0.12 + 0.58/(1+e^(0.08×(N-30)))',
         totalTransactions: calls,
         components: [
-            { signal: 'Identity', weight: '20%', score: +identity.toFixed(3), detail: `DID: ${a.did || 'none'}. ${(a.tags?.length || 0)} capabilities registered.` },
-            { signal: 'Capability Match', weight: '15%', score: +capability.toFixed(3), detail: `Description: ${a.description?.length || 0} chars. Tags: ${(a.tags || []).join(', ') || 'none'}` },
-            { signal: 'Response Time', weight: '25%', score: +response.toFixed(3), detail: `Avg latency: ${latency}ms. ${latency > 5000 ? 'Above SLA threshold.' : 'Within SLA.'}` },
-            { signal: 'Execution Quality', weight: '25%', score: +execution.toFixed(3), detail: `${calls} executions completed. Uptime: ${a.uptime}%` },
-            { signal: 'Peer Review', weight: '10%', score: +peer.toFixed(3), detail: `Cross-validation score derived from composite rating` },
-            { signal: 'History', weight: '5%', score: +history.toFixed(3), detail: `${calls} past transactions. EWMA window active.` },
+            { signal: 'Identity', weight: `${w.identity}%`, score: +identity.toFixed(3), detail: `DID: ${a.did || 'none'}. ${(a.tags?.length || 0)} capabilities registered.` },
+            { signal: 'Capability Match', weight: `${w.capability}%`, score: +capability.toFixed(3), detail: `Description: ${a.description?.length || 0} chars. Tags: ${(a.tags || []).join(', ') || 'none'}` },
+            { signal: 'Response Time', weight: `${w.response}%`, score: +response.toFixed(3), detail: `Avg latency: ${latency}ms. ${latency > 5000 ? 'Above SLA threshold.' : 'Within SLA.'}` },
+            { signal: 'Execution Quality', weight: `${w.execution}%`, score: +execution.toFixed(3), detail: `${calls} executions completed. Uptime: ${a.uptime}%` },
+            { signal: 'Peer Review', weight: `${w.peer}%`, score: +peer.toFixed(3), detail: `Cross-validation score derived from composite rating` },
+            { signal: 'History', weight: `${w.history}%`, score: +history.toFixed(3), detail: `${calls} past transactions. EWMA window active.` },
         ],
         pricing: a.pricing_model === 'free' ? 'Free' : `$${a.price_per_call}/call`,
         category: a.category,
