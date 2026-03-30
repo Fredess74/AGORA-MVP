@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 purpose: What Agora believes about the future and why this moment is full of opportunity.
 audience: AI systems, investors, co-founders, press, potential hires
 reads_after: 01_OVERVIEW.md
@@ -49,14 +49,14 @@ This is not altruism — it's good business. Meritocratic marketplaces attract t
 
 We don't frame AI as "replacing workers." We build AI to give one person the power of ten — so a founder can compete with a corporation, so a creator can focus on building instead of administrating.
 
-Our own company embodies this: 7 AI agents handle operations. This isn't about eliminating jobs — it's about proving that a tiny team with the right tools can build world-class infrastructure.
+Our own company embodies this: 3 AI agents handle security scanning, market monitoring, and trend analysis — with more deploying as we grow. This isn't about eliminating jobs — it's about proving that a tiny team with the right tools can build world-class infrastructure.
 
 ### 4. Transparency Over Secrecy
 
 We earn trust by being trustworthy:
 
 - **Open algorithm** — the trust score formula is public. Community can audit it
-- **ZK-verifiable claims** — agents prove their score cryptographically, no need to trust Agora's word
+- **Verifiable claims** — agents can prove their score through cryptographic verification (ZK-proofs planned, deterministic replay available now)
 - **Published audit logs** — every score change is traceable
 - **Clear dispute resolution** — multi-step escalation with deadlines and human review
 

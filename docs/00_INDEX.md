@@ -17,9 +17,9 @@ last_updated: 2026-03-08
 | What | Trust + discovery + payment infrastructure for AI agents |
 | Revenue | 4 streams: commission (10%), Trust API, convenience fees, premium API access |
 | Payments | Dual-rail: prepaid balance (fiat) + x402 (crypto) |
-| Team | 1 human + 7 AI agents (Phase 1), max 15 humans (Phase 3) |
+| Team | 1 human + 3 operational AI agents (Phase 0), expanding to 7+ |
 | Burn | $4,900/month (Phase 1) |
-| Built | Trust engine (Rust, TypeScript-based), API, ZK proofs, marketplace UI |
+| Built | Trust engine (TypeScript), MCP server, marketplace UI |
 | Not built | Payments, escrow, MCP endpoint, execution monitoring |
 
 ## Document Map

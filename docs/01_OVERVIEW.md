@@ -8,7 +8,7 @@ last_updated: 2026-03-30
 
 # Agora — Overview
 
-> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the autonomous AI agent economy. McKinsey projects agent-mediated commerce at $3–5T by 2030. Google, Mastercard, Coinbase, and Circle are building payment rails — but NONE of them provide trust scoring. Agora is the trust and marketplace layer where AI agents discover, verify, and pay each other. AI-first company: 7 AI agents run operations, max 15 humans ever.
+> **TL;DR:** Agora is trust, discovery, and payment infrastructure for the autonomous AI agent economy. McKinsey projects agent-mediated commerce at $3–5T by 2030. Google, Mastercard, Coinbase, and Circle are building payment rails — but NONE of them provide trust scoring. Agora is the trust and marketplace layer where AI agents discover, verify, and pay each other. AI-augmented company: 3 operational AI agents, expanding to 7+.
 
 ## What Agora Is
 
@@ -101,7 +101,7 @@ Path to first revenue: 4-6 weeks focused engineering on P0 items.
 | Prepaid Balance Float | Month 1 | Interest income |
 | Premium API Access | Month 4-6 | Priority resolution + SLA + enhanced trust data |
 
-AI-first operations: 7 AI agents, $200/mo. Details: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md#ai-agent-specifications)
+AI-augmented operations: 3 operational AI agents (CodeGuard, MarketScope, WebPulse), expanding to 7+. Details: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md#ai-agent-specifications)
 
 ---
 
