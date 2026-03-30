@@ -353,48 +353,53 @@ HOOK → PROBLEM → SOLUTION → HOW IT WORKS → DEMO → MARKET → WHY NOW �
 
 ---
 
-## SLIDE 8: BUSINESS MODEL 💰
+## SLIDE 8: GO-TO-MARKET & BUSINESS MODEL 💰
 
-### Title: `HOW WE MAKE MONEY`
-### Subtitle: *"Two revenue streams. $4,900/month burn. The math works."*
+### Title: `HOW WE GROW — THEN EARN`
+### Subtitle: *"Free for developers. Revenue follows trust data."*
 
 **Time: 25 seconds**
-**Energy: Clear, precise — grounded credibility**
-**Persuasion: SIMPLICITY — if a judge can't explain your model in 10 seconds, you lose**
+**Energy: Clear, strategic — shows you understand platform economics**
+**Persuasion: CREDIBILITY — judges know premature monetization kills platforms**
 
 ### 📋 On Screen:
 
 ```
-  HOW WE MAKE MONEY
-  "Two revenue streams. $4,900/month burn. The math works."
+  HOW WE GROW — THEN EARN
+  "Free for developers. Revenue follows trust data."
 
-  ┌── Stream 1: Marketplace Commission ──────────┐
-  │   10% of every transaction                    │
-  │   Agent charges $5 → Agora earns $0.50       │
-  └───────────────────────────────────────────────┘
-
-  ┌── Stream 2: Trust API (SaaS) ────────────────┐
-  │   $29-99/month for platforms querying scores  │
-  │   Enterprise compliance, orchestration tools  │
-  └───────────────────────────────────────────────┘
-
-  Monthly burn: $4,900   |   Break-even: $25,500 MRR
+  PHASE 0 (Now → 500 agents)        PHASE 1 (500 → 5,000)        PHASE 2 (5,000+)
+  ┌─────────────────────┐    ┌────────────────────────┐    ┌──────────────────────┐
+  │  0% COMMISSION      │    │  3% commission         │    │  5% commission       │
+  │  Free trust scores  │───→│  Premium badges        │───→│  Trust API (SaaS)    │
+  │  Free listings      │    │  Promoted listings $9  │    │  $29-99/mo B2B API   │
+  │  Auto-seed via      │    │  Analytics dashboard   │    │  Enterprise tiers    │
+  │  MCP crawler        │    │                        │    │                      │
+  └─────────────────────┘    └────────────────────────┘    └──────────────────────┘
+  
+  Monthly burn: $4,900  •  Break-even: ~2,000 agents at 3%  •  B2D-first
 ```
 
 ### 🎙️ Script:
 
-> "Two revenue streams. Marketplace commission — ten percent of every transaction. An agent charges five dollars, we earn fifty cents.
+> "Our go-to-market is B2D — developer-first. Phase zero: everything is FREE. Zero commission. Free trust scores. Free listings. We seed the marketplace automatically by crawling existing MCP servers.
 >
-> Trust API subscriptions — external platforms query our scores. Twenty-nine to ninety-nine dollars a month.
+> Why free? Because trust data IS the product. Every scored transaction makes our engine smarter.
 >
-> Monthly burn: forty-nine hundred dollars. Break-even at twenty-five thousand MRR.
+> At five hundred agents, we introduce three percent commission — lower than any app store. At five thousand, we launch the Trust API: external platforms pay twenty-nine to ninety-nine a month to query our scores.
 >
-> That's not a unicorn fantasy. That's a math problem we can solve."
+> Monthly burn: forty-nine hundred dollars. We don't need to monetize early. We need data."
 
 ### 🧠 Judge Psychology:
-- **Subtitle tells the whole story**: "Two streams, low burn, math works" — done
-- **$4,900 → $60,000 comparison removed**: NLM audit caught that we can't prove the $60K claim robustly
-- **"Math problem we can solve"**: Reframes from "we need growth" to "we need arithmetic"
+- **Subtitle instantly communicates maturity**: "Free for devs" shows you understand platform cold start
+- **Phase progression**: Shows strategic thinking, not just "we take a cut"
+- **3% at scale**: Judges know 10% on Day 1 kills platforms. 3% is realistic and credible.
+- **"We need data, not revenue"**: Shows you understand that FICO's moat was built on transaction history, not transaction fees
+- **B2D is a real strategy judges can research**: Twilio, Stripe, GitHub all used B2D. Naming it signals competence.
+
+### ⚠️ Critical Fix:
+**OLD (v5.0-v5.1):** "10% commission from Day 1" — unrealistic. No marketplace charges 10% with zero users.
+**NEW (v5.2):** Phased: 0% → 3% → 5%. Revenue comes from Trust API SaaS, not marketplace commission. Commission is a gravy train, not the engine.
 
 ---
 
@@ -509,7 +514,7 @@ HOOK → PROBLEM → SOLUTION → HOW IT WORKS → DEMO → MARKET → WHY NOW �
 | 5 | WORKING SOFTWARE | *This is not a slide deck company.* | 45 | 2:15 |
 | 6 | THE OPPORTUNITY | *$600M flowing today. Zero trust infrastructure.* | 25 | 2:40 |
 | 7 | WHY NOW | *Market + crisis + law — all converging this year.* | 20 | 3:00 |
-| 8 | HOW WE MAKE MONEY | *Two streams. $4,900 burn. The math works.* | 25 | 3:25 |
+| 8 | HOW WE GROW — THEN EARN | *Free for developers. Revenue follows trust data.* | 25 | 3:25 |
 | 9 | WHY US | *Open formula. Proprietary data. Like FICO.* | 20 | 3:45 |
 | 10 | $10,000 | *Working software + $10K = 100 agents live.* | 15 | **4:00** |
 
