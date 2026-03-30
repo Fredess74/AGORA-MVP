@@ -2,7 +2,7 @@
 purpose: Tactical playbook for winning both competitions in the next month.
 audience: Team only
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
 # Competition Playbook — March-June 2026
@@ -33,9 +33,9 @@ last_updated: 2026-03-08
 ### Suffolk Strategy
 
 1. **Lead with demo.** Working trust engine + marketplace UI = huge advantage over idea-stage teams
-2. **Show code.** 15,000 lines of Rust, 6-component trust engine — this is real, not a slide deck
+2. **Show code.** TypeScript trust engine with 6-component adaptive scoring — this is real, not a slide deck
 3. **Be specific.** $4,900/mo burn. 10% commission. Break-even at $25.5K MRR. Numbers win
-4. **March 17 boot camp:** Listen to mentors. Adjust pitch based on feedback. Ask about judge priorities
+4. **Be honest.** What's built vs what's planned — transparency wins trust with experienced judges
 
 ### Suffolk Prep Timeline
 
@@ -115,8 +115,8 @@ computed from REAL data. Not star ratings.
 Is it online? We ping it every 5 minutes.
 Does it actually work? We track every transaction.
 Is the code quality good? We scan the repository.
-This is not 'I gave it 5 stars.' 
-This is math."
+This is not self-reported reviews.
+This is computed from real behavioral data."
 
 [1:00-1:30] SHOW, DON'T TELL
 "And this isn't a pitch deck."
@@ -140,23 +140,23 @@ My AI just hired another AI. Through us."
 "93 billion dollar market by 2032.
 42% of companies abandoned AI projects this year 
 because they picked the wrong vendors.
-Zero competitors offer trust, discovery, AND payments together.
+Zero competitors offer adaptive trust scoring across all AI platforms.
 
-Our trust engine? 15,000 lines of Rust code.
-170 tests. Scores computed in under 10 milliseconds.
-This is already built. Working. Tested."
+Our trust engine? TypeScript with 6-component adaptive scoring,
+EWMA persistence, and asymmetric penalty system.
+This is already built. Working. Deployed."
 
 [2:00-2:30] AI-FIRST OPERATIONS — THE KICKER
 "And here's what makes us different from every other startup.
-We run our own company on seven AI agents.
-Marketing, security, QA, analytics, support — 
-all handled by AI. Total AI bill: 200 dollars a month.
+We run our own company on AI — three agents operational
+for security scanning, market monitoring, and trend analysis.
+More deploying as we grow.
 Our monthly burn? Forty-nine hundred dollars.
-A normal startup with this team? Sixty thousand.
+A normal startup our size? Sixty thousand.
 
 We don't just SELL AI infrastructure.
 We PROVE it works — by running our company on it.
-One founder. Seven AI agents. 
+One founder. AI-augmented operations.
 Building the trust layer for the entire AI economy."
 
 [2:30-2:50] FETCH PARALLEL
@@ -203,22 +203,22 @@ Agora. Verify AI. Trust the future."
 
 ### Key Messages (Memorize These)
 
-1. **"10,000 AI tools, zero trust."** — The problem in 6 words
-2. **"The FICO + Visa for AI."** — What we are in 6 words
-3. **"We don't just sell AI infrastructure. We prove it works by running our company on it."** — AI-ops differentiator
-4. **"Trust data accumulates. A competitor launching 12 months later starts at zero."** — Moat
+1. **"$600M in agent payments. Zero trust infrastructure."** — The problem
+2. **"The credit score for AI."** — What we are
+3. **"Open formula. Proprietary data. Like FICO."** — Moat
+4. **"We're the only platform computing adaptive trust across all AI ecosystems."** — Differentiation
 5. **"The best agent wins, not the richest company."** — Philosophy
 
 ### Q&A Preparation (Most Likely Questions)
 
 | Question | Answer |
 |----------|--------|
-| "How do you get your first users?" | AI Crawler auto-discovers 30+ existing servers. Builder Credits (0% commission Month 1). Free Trust Dashboard drives viral adoption |
-| "What if Google/AWS builds this?" | They'll build payments, not trust. Trust requires accumulated data — they'd start at zero. We pivot to B2B Trust API if needed |
-| "You're just one person?" | One human + 7 AI agents. Our monthly burn is $4,900 — we can run for 2+ years on prize money alone. That's survival advantage |
-| "Revenue projections?" | $3K MRR Month 6, $15K Month 12. Break-even ~Month 10. Low burn = long runway = more experiments |
-| "What if nobody pays for AI tools?" | 42% of developers willing to pay for verified APIs (survey data). $83B spent on SaaS already. We're adding trust to existing market |
-| "Isn't this just an app store?" | App stores rank by downloads and ads. We rank by computed trust — code quality, uptime, transaction history. Zero money influence on ranking |
+| "How do you get your first users?" | AI Crawler auto-discovers 100+ existing MCP servers. Builder Credits (0% commission Month 1). MCP protocol = organic AI discovery |
+| "What if Google/AWS builds this?" | They can't be neutral judges in their own marketplace — conflict of interest. We're the FICO, not the bank. Trust requires independence |
+| "You're just one person?" | One human + 3 operational AI agents (more deploying). $4,900/mo burn = 2+ years on prize money. That's survival advantage |
+| "Revenue projections?" | Honest: projections, not actuals. Break-even = 170 transactions/mo at $15 avg. Post-LLC August 2026 (F-1 visa requirement) |
+| "What if nobody pays for AI tools?" | 96% of devs don't trust AI output (Sonar 2026). Trust verification is becoming a procurement requirement, not an option |
+| "Isn't this just a feature?" | We built it as both: standalone marketplace AND Trust API for integration. Either way, someone needs to compute trust for AI. We're the only ones doing it |
 
 ### Video Recording Tips
 
