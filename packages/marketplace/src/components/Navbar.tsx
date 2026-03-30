@@ -23,6 +23,11 @@ export default function Navbar() {
 
                 <ul className="navbar__links">
                     <li>
+                        <Link to="/search" className={isActive('/search')}>
+                            🔍 Search
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/marketplace" className={isActive('/marketplace')}>
                             Marketplace
                         </Link>

@@ -35,6 +35,7 @@ const DEFAULT_CATEGORIES: Category[] = [
     { id: 'all', name: 'All', icon: '🌐', count: 0 },
     { id: 'mcp_server', name: 'MCP Servers', icon: '🔌', count: 0 },
     { id: 'ai_agent', name: 'AI Agents', icon: '🤖', count: 0 },
+    { id: 'skill', name: 'Skills', icon: '📋', count: 0 },
     { id: 'automation', name: 'Automations', icon: '⚡', count: 0 },
 ];
 

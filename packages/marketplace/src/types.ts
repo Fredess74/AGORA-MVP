@@ -2,9 +2,19 @@
    Agora Marketplace — Core Types
    ═══════════════════════════════════════════════════════════ */
 
-export type ProductType = 'mcp_server' | 'ai_agent' | 'automation';
+export type ProductType = 'mcp_server' | 'ai_agent' | 'skill' | 'automation';
 export type PricingModel = 'free' | 'per_call' | 'subscription';
 export type TrustLevel = 'high' | 'medium' | 'low' | 'unrated';
+
+/** Saved search query snapshot for shareable URLs (/q/:id) */
+export interface SavedQuery {
+    id: string;
+    query: string;
+    filters?: { category?: string; type?: ProductType; minTrust?: number };
+    results: Product[];
+    resultCount: number;
+    createdAt: string;
+}
 
 export interface Product {
     id: string;

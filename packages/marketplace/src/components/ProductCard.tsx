@@ -23,7 +23,9 @@ function typeLabel(type: Product['type']): string {
     switch (type) {
         case 'mcp_server': return 'MCP Server';
         case 'ai_agent': return 'AI Agent';
+        case 'skill': return 'Skill';
         case 'automation': return 'Automation';
+        default: return type;
     }
 }
 
@@ -31,7 +33,9 @@ function typeIcon(type: Product['type']): string {
     switch (type) {
         case 'mcp_server': return '🔌';
         case 'ai_agent': return '🤖';
+        case 'skill': return '📋';
         case 'automation': return '⚡';
+        default: return '•';
     }
 }
 
