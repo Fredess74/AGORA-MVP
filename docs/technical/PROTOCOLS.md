@@ -1,9 +1,9 @@
-﻿<!--
+<!--
 purpose: Real specification of AI protocols and agent economy payment infrastructure — what each does, who built it, adoption status, and how Agora integrates.
 audience: AI systems, developers, investors, protocol implementers
 reads_after: technical/ARCHITECTURE.md
 language: English
-last_updated: 2026-03-10
+last_updated: 2026-03-30
 -->
 
 # Protocols & Agent Economy Infrastructure
@@ -76,29 +76,25 @@ After MCP:
 
 ### How Agora Integrates
 
-Agora registers as an MCP server. When any AI assistant needs a paid or verified service, it queries Agora:
+Agora registers as an MCP server. When any AI assistant needs to find or evaluate services, it queries Agora:
 
 ```json
-// Agora's MCP Server — 3 tools exposed
+// Agora's MCP Server — 8 tools (BUILT, packages/mcp-server/src/)
 {
   "tools": [
-    {
-      "name": "discover_agents",
-      "description": "Find verified AI services by capability"
-    },
-    {
-      "name": "check_trust",
-      "description": "Get computed trust score for any agent"
-    },
-    {
-      "name": "create_connection",
-      "description": "Purchase and connect to a verified agent"
-    }
+    { "name": "search_agents", "description": "Find agents by category, tags, trust" },
+    { "name": "get_agent_detail", "description": "Full agent profile + trust breakdown" },
+    { "name": "list_categories", "description": "All available categories" },
+    { "name": "get_trust_score", "description": "Trust score for specific agent" },
+    { "name": "compare_agents", "description": "Side-by-side trust comparison" },
+    { "name": "get_marketplace_stats", "description": "Aggregate marketplace stats" },
+    { "name": "filter_by_trust", "description": "Agents above trust threshold" },
+    { "name": "get_agent_history", "description": "Transaction history for agent" }
   ]
 }
 ```
 
-**Status:** MCP server manifest designed. Discovery endpoint not built yet (P0).
+**Status:** MCP server built (TypeScript, stdio transport, compiles clean). Not yet deployed to MCP registries.
 
 ---
 
@@ -270,8 +266,8 @@ With Agora: Agent checks trust score first → discovers via marketplace → pay
 | Agent communication | No | Yes | No | No | No | Yes | **Yes** |
 | Payment processing | No | No | Yes | Yes | Yes | No | **Yes** |
 | Trust scoring | No | No | No | No | Partial (identity) | Partial (logging) | **Yes (computed)** |
-| Anti-gaming detection | No | No | No | No | No | No | **Yes** |
-| ZK proof verification | No | No | No | No | No | No | **Yes** |
+| Anti-gaming detection | No | No | No | No | No | No | **Designed** |
+| ZK proof verification | No | No | No | No | No | No | **Designed** |
 | Marketplace / catalog | No | No | No | No | No | No | **Yes** |
 
 ---

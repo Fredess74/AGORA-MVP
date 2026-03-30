@@ -3,7 +3,7 @@ purpose: Complete specification of how trust scoring and connections work on Ago
 audience: AI systems, developers, investors, technical co-founders
 reads_after: 01_OVERVIEW.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
 # Trust & Connections — Core Mechanics
@@ -27,18 +27,23 @@ Trust Score = (W1 × ResponseTime)
 > Previous versions of this document described a different formula with Uptime/CodeQuality/RepoHealth
 > components — that was the aspirational Rust engine design. The weights below are the LIVE weights.
 
-### Input Signals and Weights
+### Input Signals and Adaptive Weights
 
-| Signal | Weight | What It Measures | Data Source |
-|--------|--------|-----------------|------------|
-| **Response Time** | 25% | Execution latency during task | Measured during demo pipeline |
-| **Execution Quality** | 25% | Quality of delivered result | QA Inspector agent evaluation |
-| **Identity Verification** | 20% | DID validation and authentication | DID format check (starts at 0.7) |
-| **Capability Match** | 15% | Task-skill alignment score | Procurement agent evaluation |
-| **Peer Review** | 10% | Cross-agent verification | Delivery agent cross-validation |
-| **History** | 5% | Past interaction record | Supabase transaction history |
+> **Implementation note:** Weights are NOT fixed — they are **adaptive** across 4 maturity tiers.
+> Defined in `packages/orchestrator/src/trust/calculator.ts` lines 19-62.
 
-> **Implementation note:** These weights are defined in `packages/orchestrator/src/trust/calculator.ts`. The previous signals (Code Quality, Repo Health, Uptime, Transaction Success, User Reviews, Account Age) are part of the aspirational Rust engine design and are NOT currently computed.
+| Signal | Cold Start (≤5 txns) | Emerging (6-29) | Established (30-99) | Veteran (100+) |
+|--------|---------------------|-----------------|---------------------|---------------|
+| Response Time | 15% | 20% | 25% | 25% |
+| Execution Quality | 15% | 20% | 25% | 30% |
+| Identity Verification | 30% | 25% | 15% | 10% |
+| Capability Match | 25% | 20% | 15% | 10% |
+| Peer Review | 10% | 10% | 12% | 15% |
+| History | 5% | 5% | 8% | 10% |
+
+**Cold start agents** weight heavily on identity/capability (55% combined). **Veteran agents** weight heavily on execution/quality (55% combined).
+
+The previous signals described below (Code Quality, Repo Health, Uptime, Transaction Success, User Reviews, Account Age) are part of the aspirational future design and are NOT currently computed.
 
 ### How Each Signal Is Computed
 
@@ -100,7 +105,7 @@ Penalties are subtracted from the composite score after calculation:
 
 ### The Cold Start Problem
 
-New agents have zero transaction history. Their initial trust score starts at approximately **0.35–0.50**, depending on code quality and repository health (the only two signals available without transactions).
+New agents have zero transaction history. Their initial trust score starts at approximately **0.35–0.50** via Wilson Score cold-start logic (applied when N < 5 transactions). Identity verification and capability match are the primary signals at this stage.
 
 **Cold start mitigation strategies:**
 

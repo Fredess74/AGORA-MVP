@@ -200,6 +200,9 @@ export async function updateAgentMetrics(
     agentDid: string,
     trustScore: number,
     latencyMs: number,
+    // TODO(Phase 2): Currently unused. Per-component EWMA runs on composite score.
+    // When we migrate to per-component EWMA (see TRUST_ENGINE.md §2.1), 
+    // this parameter will store individual component EWMAs independently.
     componentScores?: { component: string; score: number; weight: number }[],
 ): Promise<void> {
     const db = getDb();

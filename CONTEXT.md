@@ -2,25 +2,25 @@
 
 **The Trust Layer for the AI Agent Economy** — computed trust scores, searchable registry, and dual-rail payments.
 
-## 🎯 Current Goal (2026-03-10)
+## 🎯 Current Goal (2026-03-30)
 
-**3-day sprint** to prepare 3 pitch deliverables:
+**17-day sprint** to prepare pitch for Suffolk $40K Competition (April 16):
 
-1. ✅ Standalone website (marketplace) — working
-2. ⏳ MCP server for ChatGPT/Gemini integration — built, needs testing
-3. 🔲 Custom chat UI — founder building separately
+1. ✅ Standalone website (marketplace) — working, builds clean
+2. ✅ MCP server for Claude/Gemini integration — built, compiles, needs live testing
+3. ⬜ Pitch deck v5.0 — in progress
 
-**Pitch targets:** Suffolk 40K Competition, Fetch Defeat the Odds
+**Primary target:** Suffolk $40K Competition (April 16, 2026)
 
 ## Stack
 
 | Layer | Tech | Location | Status |
 |-------|------|----------|--------|
-| Orchestrator | Express + Gemini 2.0 Flash + Supabase | `packages/orchestrator/src/` (17 files) | ✅ Working |
-| Marketplace UI | React + Vite + Zustand + Supabase Auth | `packages/marketplace/src/` (29 files) | ✅ Working |
-| MCP Server | TypeScript + @modelcontextprotocol/sdk | `packages/mcp-server/src/` | ✅ Built |
+| Orchestrator | Express + Gemini 2.0 Flash + Supabase | `packages/orchestrator/src/` (19 files) | ✅ Working |
+| Marketplace UI | React + Vite + Zustand + Supabase Auth | `packages/marketplace/src/` (19 tsx files) | ✅ Working |
+| MCP Server | TypeScript + @modelcontextprotocol/sdk | `packages/mcp-server/src/` | ✅ Compiles, not deployed |
 | Trend Agent | Node.js cron, GitHub/npm/HN APIs | `packages/trend-agent/` | ✅ Working |
-| ZK Circuit | Circom | `circuits/trust_proof/` | ⚠️ File exists, not integrated |
+| ZK Circuit | Circom | `circuits/trust_proof/` | ⚠️ File exists, NOT production-ready |
 | Trust Layer Docs | Markdown strategies | `agora-trust-layer/` | 📄 Docs only |
 
 ## Architecture

@@ -1,12 +1,12 @@
-﻿<!--
+<!--
 purpose: Critical risks, mitigations, SWOT analysis, and strategic pivot triggers.
 audience: AI systems, investors, co-founders
 reads_after: 06_EVOLUTION_ROADMAP.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
-> **TL;DR:** 13 risks tracked. Top 3: cold start, funded competitors, no PMF. AI-first burn ($4,900/mo) extends runway. Dual-rail payments mitigate micro-transaction economics. Pre-defined pivot triggers with deadlines.
+> **TL;DR:** 15 risks tracked. Top 3: cold start, funded competitors, no PMF. AI-first burn ($4,900/mo) extends runway. Pre-defined pivot triggers with deadlines. **Payment system not yet built.**
 
 # Risk Analysis
 
@@ -59,7 +59,7 @@ Existing competitors have live products and user bases. Major platform companies
 
 | Action | Why It Works |
 |--------|-------------|
-| ZK proofs as differentiator | Cryptographic trust is harder to replicate than ratings |
+| Dynamic behavioral trust (vs static security scans) | BlueRock does code scanning; Agora scores actual performance |
 | Multi-protocol support (4 protocols) | Competitors are locked to 1 protocol |
 | SaaS model (predictable revenue) | Preferred by investors over token models |
 | Speed (<10ms vs 500ms+) | Architectural advantage for AI-speed operations |
@@ -153,7 +153,7 @@ AI agent transactions touch financial regulation, EU AI Act, KYC/AML for payment
 
 MVP built rapidly. Potential bottlenecks at scale: database with 1M+ events/day, memory limits, caching overhead.
 
-**Mitigation:** TimescaleDB hypertables already configured. Horizontal scaling via container orchestration. Load testing before each milestone.
+**Mitigation:** Supabase PostgreSQL with append-only tables. No TimescaleDB yet — upgrade path clear when needed. Load testing before each milestone.
 
 ### R8: Single Founder
 
@@ -169,7 +169,7 @@ All knowledge, code, and contacts concentrated in one person.
 
 Fake listings, scam agents, fake reviews, trust score manipulation.
 
-**Mitigation:** 4 anti-gaming detectors built into trust engine. Identity verification via code repository OAuth. AI Dispute Resolver handles 90%+ cases automatically. Community reporting system planned. Automatic suspension after 3+ disputes.
+**Mitigation:** 4 anti-gaming detectors **designed but not yet implemented**. Identity verification via code repository OAuth. AI Dispute Resolver designed (not built). Community reporting system planned. Automatic suspension after 3+ disputes.
 
 ### R10-R12: Additional Risks
 
@@ -200,21 +200,21 @@ Agora's AI-first model depends on AI API providers for content, support, dispute
 +-------------------------------+-------------------------------+
 |       STRENGTHS               |       WEAKNESSES              |
 |                               |                               |
-| ZK proofs (unique)            | Solo founder                  |
+| Adaptive 6-signal trust score | Solo founder                  |
 | <10ms latency                 | Zero users / zero revenue     |
-| Multi-protocol (4)            | Limited runway                |
-| Working MVP (170+ tests)      | No payment processing yet     |
+| Multi-protocol design (4)     | Limited runway                |
+| Working MCP server (8 tools)  | No payment processing yet     |
 | AI-first ops ($4,900/mo burn) | No brand awareness            |
 | SaaS model (predictable)      | AI provider dependency        |
 +-------------------------------+-------------------------------+
 |       OPPORTUNITIES           |       THREATS                 |
 |                               |                               |
-| 10K+ AI tool servers exist    | Funded competitors live       |
-| AI agent market -> $93B       | Major platforms may enter     |
+| 16K+ MCP servers exist        | Recall Network ($42M funded)  |
+| AI agent market -> $183B      | BlueRock (trust confusion)    |
 | No monetization in protocols  | Regulatory changes            |
 | AI-first cost advantage       | AI hype cycle correction      |
 | Competition prize opportunity | Protocol spec changes         |
-| First-mover in trust + MCP   | AI API price increases        |
+| First-mover in trust + MCP   | Major platforms may enter     |
 +-------------------------------+-------------------------------+
 ```
 

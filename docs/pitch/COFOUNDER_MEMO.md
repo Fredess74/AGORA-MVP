@@ -1,14 +1,14 @@
-﻿<!--
+<!--
 purpose: Pitch for technical co-founder. What Agora is, what's built, what's needed.
 audience: Potential CTO / co-founder
 reads_after: 01_OVERVIEW.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
 # Co-Founder Memo
 
-> **TL;DR:** Infrastructure for AI agent economy (trust + discovery + payments). Trust engine built in Rust (TypeScript-based, 6-component trust engine). Need a technical co-founder to build payment processing and scale. AI-first company: 7 AI agents, max 15 humans.
+> **TL;DR:** Infrastructure for AI agent economy (trust + discovery + payments). TypeScript-based 6-component adaptive trust engine with EWMA, Wilson Score cold-start, and sigmoid α. Need a technical co-founder to build payment processing and scale. AI-first company: 8 AI agents in pipeline, max 15 humans.
 
 ## The 30-Second Pitch
 
@@ -20,11 +20,12 @@ Agora is the trust + discovery + payment layer for the AI agent economy.
 
 Canonical build status: [ARCHITECTURE.md](../technical/ARCHITECTURE.md)
 
-- **Trust Engine** — Rust, TypeScript-based, 170+ unit tests, 6-signal scoring
-- **ZK Proofs** — Circom + Groth16, cryptographic trust verification
-- **REST API** — 8 endpoints, full middleware
-- **Marketplace** — React, 7 pages, responsive
-- **Infrastructure** — Docker + K8s, deployment-ready
+- **Trust Engine** — TypeScript, 323-line calculator + EWMA persistence, 1 test file (209 lines), 6-signal adaptive scoring with 4 confidence tiers
+- **ZK Proofs** — Circom circuit file exists in `circuits/` but is NOT integrated into the system
+- **REST API** — 5 endpoints (health, agents, demo/start, demo/stream, demo/session)
+- **Marketplace** — React, 7 routes, 19 components, responsive
+- **MCP Server** — TypeScript, 8 tools, stdio transport, compiles cleanly
+- **Infrastructure** — Vercel + Render configs exist, no Docker/K8s
 
 ## What's Not Built (Your Job)
 
@@ -51,9 +52,9 @@ Full details: [04_BUSINESS_MODEL.md](../04_BUSINESS_MODEL.md)
 
 ## Market
 
-$7B (2025) → $93B (2032), 46% CAGR. No trust infrastructure exists.
+$10.9B (2026) → $183B (2030), 76% CAGR (Precedence Research). No trust infrastructure exists.
 
-Competitors: Skyfire (identity+payments, no trust), Masumi (DIDs, no marketplace), Scalekit (auth only). None combines trust + discovery + payments.
+Competitors: Recall Network ($42M, blockchain trust — high friction), BlueRock.io (static security scanning, not behavioral trust), Smithery (discovery-only, no trust). None combines dynamic behavioral trust + MCP-native discovery + compliance layer.
 
 Full analysis: [05_MARKET_AND_COMPETITION.md](../05_MARKET_AND_COMPETITION.md)
 

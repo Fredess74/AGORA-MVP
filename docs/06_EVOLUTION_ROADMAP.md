@@ -3,7 +3,7 @@ purpose: 3-phase evolution plan. Revenue milestones. Max 15 humans.
 audience: AI systems, investors, co-founders, team
 reads_after: 05_MARKET_AND_COMPETITION.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
 # Evolution Roadmap — 3 Phases
@@ -47,7 +47,7 @@ $4,900/mo burn      $25,500/mo burn     $80,500/mo burn
 | Commission | $2,500/mo |
 | Trust API | $500/mo |
 | Premium API | $200/mo (just launched) |
-| Float | $50/mo |
+| Convenience Fees | $50/mo |
 | **Total** | **~$3,250/mo** |
 
 ### How to Get First 50 Listings

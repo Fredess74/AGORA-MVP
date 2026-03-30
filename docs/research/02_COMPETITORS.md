@@ -184,15 +184,36 @@ Self-hosted, unvetted agent code = existential security risk.
 ## Infrastructure Players (Complementary, NOT Competitors)
 
 | Player | What They Build | Trust Gap |
-|--------|----------------|-----------|
+|--------|----------------|-----------| 
 | **Google UCP** | Agent shopping checkout, 60+ partners | No agent evaluation |
 | **Mastercard Agent Pay** | Verifiable Intent, cryptographic audit | Verifies human intent, not agent quality |
 | **Stripe** | Shared Payment Tokens, x402 USDC | Processes transactions, no vendor quality control |
 | **Coinbase** | Agentic Wallets, TEE-secured, KYT | Wallet + compliance, not behavioral trust |
 | **Circle** | Nanopayments, gasless USDC | Settlement layer, no discovery/curation |
 | **Visa** | Trusted Agent Protocol, 100+ partners | Secures checkout, not performance rating |
+| **Bifrost** (Maxim AI) | Enterprise MCP Gateway — Go, RBAC, audit, SAML/OIDC, SOC2/GDPR/HIPAA | Routes traffic, no behavioral scoring |
+| **Composio** ($29M, Lightspeed) | Agent-tool auth & orchestration, managed OAuth, SDK, MCP support | Integration layer, no trust scoring |
 
 > **UNIVERSAL PATTERN:** Everyone verifies the TRANSACTION. Nobody verifies the AGENT.
+
+---
+
+## 11. BlueRock.io — ⚠️ NEW DIRECT COMPETITOR (March 2026)
+
+**Product:** MCP Trust Registry (mcp-trust.com)  
+**Pricing:** FREE  
+**Scale:** 9,000+ public MCP server builds scanned  
+**Engine:** 22-rule security scoring (SSRF, command injection, supply chain, etc.)  
+**Output:** Risk ratings (Low/Medium/High/Critical) + OWASP/MITRE CWE mapping  
+**Private:** Also supports private repo scanning for enterprises  
+
+**CRITICAL DISTINCTION:**
+> BlueRock does **STATIC SECURITY ANALYSIS** (scanning code for vulnerabilities).  
+> Agora does **DYNAMIC BEHAVIORAL TRUST** (scoring agents by actual performance over time).  
+> This is the difference between a **Penetration Test** and a **Credit Rating**.  
+> Both are needed. They solve different problems.
+
+**Our messaging:** "BlueRock tells you if the code is safe. Agora tells you if the agent is reliable."
 
 ---
 
@@ -207,11 +228,14 @@ Self-hosted, unvetted agent code = existential security risk.
 | **Identity** (who is this agent?) | Skyfire KYA, Scalekit OAuth | ❌ Not our layer |
 | **Payment** (how to pay) | Stripe, Coinbase, Circle, x402 | ❌ Not our layer |
 | **Intent** (what did human authorize?) | Mastercard Verifiable Intent | ❌ Not our layer |
-| **Trust** (is this agent reliable?) | **NOBODY** | ✅ **THIS IS US** |
+| **Routing** (how to get to agents) | Bifrost, Composio | ❌ Not our layer |
+| **Static Security** (is the code safe?) | BlueRock.io (22-rule scan) | ❌ Not our layer |
+| **Dynamic Trust** (is this agent reliable?) | **NOBODY** | ✅ **THIS IS US** |
 
-### Biggest Threats (Ranked)
+### Biggest Threats (Ranked, Updated 2026-03-30)
 
-1. **Recall Network** ($42M, same thesis, Web3 approach) — friction defense
-2. **Anthropic Claude Marketplace** (zero-commission, MCP channel risk) — neutrality defense
-3. **Skyfire pivot to scoring** ($14.5M, could recognize the gap) — technical moat defense
-4. **Google adding scoring** (20% probability, not in A2A roadmap) — independence defense
+1. **BlueRock.io** (NEW — same "trust" messaging, confusing positioning. Must clarify static vs dynamic)
+2. **Recall Network** ($42M, same thesis, Web3 approach) — friction defense
+3. **Anthropic Claude Marketplace** (zero-commission, MCP channel risk) — neutrality defense
+4. **Skyfire pivot to scoring** ($14.5M, could recognize the gap) — technical moat defense
+5. **Google adding scoring** (20% probability, not in A2A roadmap) — independence defense

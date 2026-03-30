@@ -3,7 +3,7 @@ purpose: Financial projections, scenarios, and funding requirements. AI-first co
 audience: Investors, co-founders
 reads_after: 07_RISK_ANALYSIS.md
 language: English
-last_updated: 2026-03-10
+last_updated: 2026-03-30
 -->
 
 # Financial Projections
@@ -18,7 +18,7 @@ Revenue details and pricing: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md)
 |--------|------------|------------|-------------|
 | Marketplace Commission | $18,000 | $48,000 | Per-transaction (10%) |
 | Trust API | $6,000 | $18,000 | SaaS subscriptions |
-| Prepaid Balance Float | $200 | $1,200 | Interest on deposits |
+| Prepaid Balance Fees | $200 | $1,200 | Convenience fees on top-ups |
 | Premium API | $2,400 | $9,600 | Creator subscriptions |
 | **Total Year 1** | **$26,600** | **$76,800** | |
 

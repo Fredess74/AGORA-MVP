@@ -2,15 +2,14 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Computed trust scores, searchable registry, and dual-rail payments for AI agents.**
+**Computed trust scores and searchable registry for AI agents. MCP-native.**
 
 > "The FICO + Visa + App Store for the autonomous AI economy"
 
 ## Features
 
-- 🛡️ **Computed Trust Scores**: 6-component scoring (0.0–1.0) from real interaction data
-- 🔍 **Agent Discovery**: Searchable marketplace and registry for AI services
-- 💳 **Dual-Rail Payments**: Prepaid balance (fiat) + x402 crypto micro-transactions
+- 🛡️ **Adaptive Trust Scores**: 6-component scoring (0.0–1.0) with EWMA, Wilson Score cold-start, sigmoid α
+- 🔍 **Agent Discovery**: Searchable marketplace and MCP server for AI assistant integration
 - 🤖 **Live Demo Pipeline**: 8 AI agents negotiate, execute, and verify tasks in real-time
 - 📊 **Real API Integrations**: GitHub API, npm Registry, Google PageSpeed Insights, HackerNews
 
@@ -37,17 +36,18 @@ Requires: Node.js 18+, npm. Environment variables for Gemini API key and Supabas
 
 ```
 packages/
-├── marketplace/        # React + Vite + Zustand UI (29 components)
+├── marketplace/        # React + Vite + Zustand UI (19 components)
 │   └── src/
 │       ├── pages/      # DemoPage, Marketplace, CreateAgent, Auth
 │       ├── components/ # TrustBadge, Navbar, ProductCard
 │       └── store/      # Zustand state management + Supabase
-├── orchestrator/       # Express API + Gemini 2.0 Flash (17 modules)
+├── orchestrator/       # Express API + Gemini 2.0 Flash (19 source files)
 │   └── src/
 │       ├── agents/     # FormulatorAgent, ProcurementAgent, CodeGuard, etc.
-│       ├── trust/      # Trust calculator (6 components, live SSE)
+│       ├── trust/      # Trust calculator (6 components, adaptive weights, live SSE)
 │       ├── session/    # Demo pipeline manager + SSE broadcaster
 │       └── mcp/        # Agent discovery via Supabase
+├── mcp-server/         # MCP stdio server (8 tools, agent discovery + trust queries)
 ├── trend-agent/        # Cron-based market intelligence
 └── core/               # Reserved (Rust trust engine — not yet built)
 ```
@@ -68,14 +68,16 @@ User Query → FormulatorAgent (Gemini) → MCP search (Supabase)
 
 ## Trust Score
 
-| Component | Weight | Source |
-|-----------|--------|--------|
-| Response Time | 25% | Measured during execution |
-| Execution Quality | 25% | QA Inspector evaluation |
-| Identity Verification | 20% | DID validation |
-| Capability Match | 15% | Task-skill alignment |
-| Peer Review | 10% | Cross-agent verification |
-| History | 5% | Past interaction record |
+Weights are **adaptive** — they shift as agents build track record:
+
+| Tier | Txns | Identity | Capability | Response | Execution | Peer | History |
+|------|------|----------|------------|----------|-----------|------|---------|
+| Cold Start | 0-2 | **35%** | **30%** | 15% | 15% | 5% | 0% |
+| Emerging | 3-10 | 25% | 20% | 25% | 20% | 5% | 5% |
+| Established | 11-50 | 15% | 15% | 25% | 25% | 10% | 10% |
+| Veteran | 50+ | 10% | 10% | 25% | 25% | **15%** | **15%** |
+
+Persistence: EWMA with sigmoid α, Wilson Score cold-start, 30-day decay, 2× asymmetric penalty.
 
 ## Tech Stack
 

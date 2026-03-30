@@ -1,9 +1,9 @@
-﻿<!--
+<!--
 purpose: Complete overview of Agora — what it is, why it exists, how it works.
 audience: Anyone — investors, co-founders, AI systems, developers
 reads_after: 00_INDEX.md
 language: English
-last_updated: 2026-03-10
+last_updated: 2026-03-30
 -->
 
 # Agora — Overview
@@ -14,9 +14,9 @@ last_updated: 2026-03-10
 
 Every economy needs three things: discovery, trust, and payment. The AI agent economy has none. Agora provides all three:
 
-1. **Discovery** — searchable registry where agents and humans find services
-2. **Trust** — computed reliability score (0.0–1.0) from real transaction data
-3. **Payment** — dual-rail system: prepaid balance (fiat) + x402 (crypto micro-transactions)
+1. **Discovery** — searchable registry where agents and humans find services (MCP server + marketplace UI)
+2. **Trust** — adaptive 6-signal reliability score (0.0–1.0) from real transaction data, with EWMA persistence
+3. **Payment** — not yet built (designed for commission-based model via prepaid balance or x402)
 
 These three functions form a **connection**: discover → verify → pay → execute. Agora sells connections.
 
@@ -31,7 +31,7 @@ thousands of AI tools exist. MCP has 97M+ SDK downloads. But:
 - **No marketplace** — tools scattered across repositories with no central discovery
 - **Rising attacks** — supply chain attacks up 430%
 
-**Gap:** $7B market (2025) → $93B by 2032 (46% CAGR). Zero trust infrastructure.
+**Gap:** $10.9B market (2026) → $183B by 2030 (76% CAGR, Precedence Research). Zero dynamic trust infrastructure.
 
 ---
 
@@ -68,18 +68,9 @@ Government: long-term possibility (36+ months). No resources allocated.
 
 ## Trust Score — Summary
 
-Computed from 6 weighted signals:
+Weights are **adaptive** (4 tiers: cold start → emerging → established → veteran). Cold start agents are scored heavily on identity/capability; veteran agents are scored on execution/peer review/history.
 
-| Signal | Weight |
-|--------|--------|
-| Response Time | 25% |
-| Execution Quality | 25% |
-| Identity Verification | 20% |
-| Capability Match | 15% |
-| Peer Review | 10% |
-| History | 5% |
-
-Not a rating — computed from real interaction data. Anti-gaming detectors are designed (not yet deployed). ZK proofs: Circom circuit exists but is not yet integrated into the pipeline.
+Not a rating — computed from real interaction data. Anti-gaming detectors are designed (not yet deployed). ZK proofs: Circom circuit exists but is not integrated.
 
 Full specification: [02_TRUST_AND_CONNECTIONS.md](02_TRUST_AND_CONNECTIONS.md)
 
@@ -125,7 +116,7 @@ Named competitors and analysis: [05_MARKET_AND_COMPETITION.md](05_MARKET_AND_COM
 - Coinbase Agentic Wallets (agent-native wallets, x402 native, Feb 2026)
 - Circle Nanopayments (gasless USDC micro-transactions, Feb 2026)
 
-**Trust competitors:** Skyfire (identity + payments, gone silent), Masumi (decentralized DIDs on Cardano), ERC-8004 (on-chain reputation data). None offers computed trust scoring + discovery + marketplace together.
+**Trust competitors:** Recall Network ($42M, blockchain-based AgentRank — Web3 friction), BlueRock.io (static security scanning — different from behavioral trust), Smithery (discovery-only registry). None offers dynamic behavioral trust scoring + MCP-native discovery + compliance layer.
 
 **Key insight:** ALL major players are building payment rails. NONE are building the trust and marketplace layer. Agora fills this gap.
 

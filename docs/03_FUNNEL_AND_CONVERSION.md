@@ -3,7 +3,7 @@ purpose: How humans and AI systems discover Agora, and how they convert from vis
 audience: AI systems, investors, growth team, founders
 reads_after: 02_TRUST_AND_CONNECTIONS.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
 # Funnel and Conversion
@@ -102,9 +102,9 @@ Payment processed. Agent performs service. Result delivered.
 
 | Requirement | Status | Priority |
 |-------------|--------|----------|
-| MCP discovery endpoint built | Not built | P1 |
+| MCP discovery endpoint built | ✅ Built (8 tools, packages/mcp-server/) | P1 |
 | Agora listed as MCP server in major AI tools | Not done | P1 |
-| Structured response format for AI consumption | Not built | P1 |
+| Structured response format for AI consumption | ✅ Built (JSON via MCP SDK) | P1 |
 | Payment API for programmatic purchases | Not built | P0 |
 
 **Projected impact once built:**
@@ -244,27 +244,17 @@ AGORA VIA AI ASSISTANTS:
 Agora registers as an **MCP server**. Any AI assistant that supports MCP can discover Agora and use its tools. There is no special integration needed — Agora looks like any other MCP tool, except it returns a marketplace of other tools.
 
 ```json
-// What the AI assistant sees when it connects to Agora's MCP server:
+// Agora MCP Server — 8 tools (BUILT, packages/mcp-server/src/)
 {
   "tools": [
-    {
-      "name": "search_agents",
-      "description": "Find AI services by capability, price range, or minimum trust",
-      "parameters": {
-        "capability": "string (what the agent does)",
-        "max_price": "number (max cost per call)",
-        "min_trust": "number (0.0-1.0, minimum trust score)",
-        "limit": "number (max results, default 5)"
-      }
-    },
-    {
-      "name": "get_trust_score",
-      "description": "Get trust score with confidence interval for a specific agent"
-    },
-    {
-      "name": "create_connection",
-      "description": "Pay for and connect to an agent. Returns the API endpoint."
-    }
+    { "name": "search_agents", "description": "Find agents by category, tags, trust" },
+    { "name": "get_agent_detail", "description": "Full agent profile + trust breakdown" },
+    { "name": "list_categories", "description": "All available categories" },
+    { "name": "get_trust_score", "description": "Trust score for specific agent" },
+    { "name": "compare_agents", "description": "Side-by-side trust comparison" },
+    { "name": "get_marketplace_stats", "description": "Aggregate marketplace stats" },
+    { "name": "filter_by_trust", "description": "Agents above trust threshold" },
+    { "name": "get_agent_history", "description": "Transaction history for agent" }
   ]
 }
 ```

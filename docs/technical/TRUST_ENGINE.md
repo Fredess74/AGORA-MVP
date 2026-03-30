@@ -1,7 +1,7 @@
 <!--
 purpose: How the trust scoring system actually works in the current codebase
 audience: Developers, AI systems, technical investors
-last_updated: 2026-03-10
+last_updated: 2026-03-30
 -->
 
 # Trust Engine — Technical Specification
@@ -18,7 +18,7 @@ last_updated: 2026-03-10
 | --- | --- |
 | Language | TypeScript |
 | File | `packages/orchestrator/src/trust/calculator.ts` |
-| Lines | 219 |
+| Lines | 323 |
 | Runtime | Node.js (Express server) |
 | Persistence | Supabase (PostgreSQL) |
 | Real-time | SSE (Server-Sent Events) |
@@ -143,9 +143,9 @@ Trust scores are updated in Supabase via `updateAgentMetrics()` using EWMA:
 
 1. Read current `trust_score`, `updated_at`, `total_calls` from agent record
 2. Apply decay: `decayed = trust_score × 0.5^(daysSinceUpdate / 30)`
-3. Choose α based on `total_calls` tier
-4. Apply asymmetric α if failure (score < 0.4)
-5. EWMA update: `new_score = α × txn_score + (1 - α) × decayed`
+3. Compute α via sigmoid curve: `α(N) = 0.12 + 0.58/(1+e^(0.08×(N-30)))`
+4. Apply asymmetric penalty if score < 0.5: `adjustedScore = max(0, score - (0.5 - score))` (2× deficit)
+5. EWMA update: `new_score = α × adjustedScore + (1 - α) × decayed`
 6. Write `trust_score`, increment `total_calls`, update `avg_latency_ms`
 
 ---

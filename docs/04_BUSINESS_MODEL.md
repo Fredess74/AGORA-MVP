@@ -1,14 +1,14 @@
 <!--
-purpose: How Agora makes money. 4 revenue streams in Year 1. Dual-rail payments. AI-first cost structure.
+purpose: How Agora makes money. 4 revenue streams in Year 1. AI-first cost structure.
 audience: AI systems, investors, co-founders
 reads_after: 03_FUNNEL_AND_CONVERSION.md
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-03-30
 -->
 
 # Business Model
 
-> **TL;DR:** Agora earns from 3 streams in Year 1: marketplace commission (10%), Trust API subscriptions ($29-99/mo), and prepaid balance convenience fees (3%). Dual-rail payment system (prepaid balance + x402) makes micro-transactions profitable. AI-augmented operations keep burn at $4,900/mo. Break-even at ~$25,500/mo. Fourth stream (Premium API) added Month 4-6.
+> **TL;DR:** Agora earns from 3 streams in Year 1: marketplace commission (10%), Trust API subscriptions ($29-99/mo), and prepaid balance convenience fees (3%). AI-augmented operations keep burn at $4,900/mo. Break-even at ~$25,500/mo. Fourth stream (Premium API) added Month 4-6. **⚠️ No payment processing code exists yet — all payment flows described below are target architecture.**
 
 ## Core Principle
 
@@ -42,7 +42,7 @@ External systems query Agora's trust scores without using the marketplace. Enter
 | Business | $99/month | 100,000 | Platforms integrating trust |
 | Pay-per-query | $0.001/query | Unlimited | High-volume systems |
 
-**Fact:** Trust engine is built (6-component trust engine). API is built (8 endpoints). This stream is ready to sell once payment processing is live.
+**Fact:** Trust engine is built (6-component adaptive trust engine). MCP server is built (8 tools via MCP SDK). Orchestrator has 5 REST endpoints. This stream is ready to sell once payment processing is live.
 
 ### Stream 3: Prepaid Balance Convenience Fees — Month 1
 
@@ -107,7 +107,9 @@ Richer trust analytics for operators who want deeper insights into agent reliabi
 
 ---
 
-## Dual-Rail Payment System
+## Payment System (Target Architecture)
+
+> **⚠️ Status: NOT YET BUILT.** No payment code exists in the codebase. Stripe Connect is not integrated. x402 handlers are hooks only. The payment flows described below are the target implementation.
 
 ### Why Not Just Stripe?
 

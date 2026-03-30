@@ -1,7 +1,7 @@
 <!--
 purpose: Real technical architecture of Agora as it exists today
 audience: Developers, AI systems, technical investors
-last_updated: 2026-03-29
+last_updated: 2026-03-30
 -->
 
 # Agora — Technical Architecture
@@ -13,35 +13,48 @@ last_updated: 2026-03-29
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│                    Marketplace UI                      │
-│          React + Vite + Zustand + Supabase Auth        │
-│               packages/marketplace/src/                │
-│                   (29 components)                      │
-└──────────────┬───────────────────────────┬────────────┘
-               │  HTTP/SSE                  │  Supabase SDK
-               ▼                            ▼
-┌──────────────────────┐    ┌───────────────────────────┐
-│   Orchestrator API    │    │       Supabase Cloud       │
-│   Express + TS        │    │  PostgreSQL + Auth + RLS   │
-│   port 3001           │    │                            │
-│                       │    │  Tables:                   │
-│  ┌─────────────────┐  │    │  - listings                │
-│  │ Session Manager  │  │    │  - transactions            │
-│  │ (pipeline ctrl)  │──│───▶│  - usage_logs              │
-│  └─────────────────┘  │    │  - (agent_registry)        │
-│  ┌─────────────────┐  │    └───────────────────────────┘
-│  │ Trust Calculator │  │
-│  │ (6 components)   │  │
-│  └─────────────────┘  │
-│  ┌─────────────────┐  │    ┌───────────────────────────┐
-│  │  Agent Chains    │──│───▶│    External APIs           │
-│  │  8 AI agents     │  │    │  - Gemini 2.0 Flash       │
-│  └─────────────────┘  │    │  - GitHub API              │
-│  ┌─────────────────┐  │    │  - npm Registry            │
-│  │  SSE Manager     │  │    │  - PageSpeed Insights      │
-│  │  (real-time)     │  │    │  - HackerNews Algolia      │
-│  └─────────────────┘  │    └───────────────────────────┘
+│                    USER LAYER                          │
+│  ┌─────────────┐    ┌───────────────────────────────┐ │
+│  │ Marketplace  │    │ AI Assistants (Claude, Gemini) │ │
+│  │ React UI     │    │ via MCP stdio transport        │ │
+│  │ port:5173    │    │                                │ │
+│  └──────┬───────┘    └──────────────┬────────────────┘ │
+│         │ HTTP/SSE                  │ stdio             │
+└─────────┼───────────────────────────┼──────────────────┘
+          ▼                           ▼
+┌──────────────────────┐    ┌──────────────────────────┐
+│   Orchestrator API    │    │      MCP Server           │
+│   Express + TS        │    │  8 tools (search, trust)  │
+│   port 3001           │    │  stdio transport          │
+│                       │    └───────────┬──────────────┘
+│  ┌─────────────────┐  │                │
+│  │ Session Manager  │  │                │
+│  │ (pipeline ctrl)  │  │                │
+│  └─────────────────┘  │                │
+│  ┌─────────────────┐  │                │
+│  │ Trust Calculator │  │                │
+│  │ (6 components)   │  │                │
+│  │ Adaptive 4-tier  │  │                │
+│  └─────────────────┘  │                │
+│  ┌─────────────────┐  │    ┌───────────▼──────────────┐
+│  │  Agent Chains    │──│───▶│       Supabase Cloud      │
+│  │  8 AI agents     │  │    │  PostgreSQL + Auth + RLS  │
+│  └─────────────────┘  │    │  Tables:                  │
+│  ┌─────────────────┐  │    │  - listings               │
+│  │  SSE Manager     │  │    │  - transactions           │
+│  │  (real-time)     │  │    │  - usage_logs             │
+│  └─────────────────┘  │    └──────────────────────────┘
 └──────────────────────┘
+          │
+          ▼
+┌──────────────────────────┐
+│    External APIs          │
+│  - Gemini 2.0 Flash      │
+│  - GitHub API             │
+│  - npm Registry           │
+│  - PageSpeed Insights     │
+│  - HackerNews Algolia     │
+└──────────────────────────┘
 ```
 
 ## Components
@@ -63,7 +76,7 @@ last_updated: 2026-03-29
 - `store/useStore.ts` — Zustand store for products, auth state
 - `lib/supabase.ts` — Supabase client configuration
 
-### 2. Orchestrator (`packages/orchestrator/src/`)
+### 2. Orchestrator (`packages/orchestrator/src/`, 19 source files)
 
 | Item | Detail |
 | --- | --- |
@@ -104,25 +117,28 @@ Specialists (real API integrations):
      WebPulseAgent      — PageSpeed Insights performance audit
 ```
 
-### 3. Trust Calculator (`packages/orchestrator/src/trust/calculator.ts`)
+### 3. Trust Calculator (`packages/orchestrator/src/trust/calculator.ts`, 323 lines)
 
 **THIS IS THE CANONICAL TRUST FORMULA.** Any other formula in any other document is aspirational.
 
-| Component | Weight | How Computed |
-| --- | --- | --- |
-| `response_time` | 25% | Measured latency during execution |
-| `execution_quality` | 25% | QA Inspector agent evaluation |
-| `identity` | 20% | DID validation (starts at 0.7 for demo) |
-| `capability_match` | 15% | Task-skill alignment score |
-| `peer_review` | 10% | Cross-agent verification |
-| `history` | 5% | Past interaction record |
+**Weights are ADAPTIVE** — they change based on the agent's transaction history (4 tiers):
+
+| Tier | Transactions | Identity | Capability | Response | Execution | Peer | History |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **Cold Start** (`new`) | 0-2 | **35%** | **30%** | 15% | 15% | 5% | 0% |
+| **Emerging** (`low`) | 3-10 | 25% | 20% | 25% | 20% | 5% | 5% |
+| **Established** (`medium`) | 11-50 | 15% | 15% | 25% | 25% | 10% | 10% |
+| **Veteran** (`high`) | 50+ | 10% | 10% | 25% | 25% | **15%** | **15%** |
+
+See full specification: [TRUST_ENGINE.md](TRUST_ENGINE.md)
 
 **Scoring:**
 
 - Range: 0.0 to 1.0
-- Levels: `unrated` (new), `low` (<0.3), `medium` (0.3-0.6), `high` (0.6-0.8), `excellent` (>0.8)
+- Levels: `unrated` (score=0), `low` (0 < score < 0.45), `medium` (0.45–0.75), `high` (≥0.75)
+- Persistence: EWMA with sigmoid α, Wilson Score cold-start (<5 txns), 30-day decay
 - Updates: Real-time via SSE during demo execution
-- Storage: Supabase (agent_registry fields)
+- Storage: Supabase `listings.trust_score` field
 
 ### 4. Trend Agent (`packages/trend-agent/`)
 
