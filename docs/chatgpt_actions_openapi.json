@@ -111,18 +111,5 @@
         }
       }
     }
-  },
-  "components": {
-    "securitySchemes": {
-      "apiKey": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "apikey",
-        "description": "Supabase anon key for public read access"
-      }
-    }
-  },
-  "security": [
-    { "apiKey": [] }
-  ]
+  }
 }
