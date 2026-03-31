@@ -7,8 +7,18 @@ interface TrustBadgeProps {
 }
 
 export default function TrustBadge({ score, level, size = 'sm' }: TrustBadgeProps) {
+    // Handle unrated / zero-score state
+    if (score === 0 || level === 'unrated') {
+        return (
+            <span className="trust-badge trust-badge--unrated">
+                <span>○</span>
+                <span>New</span>
+            </span>
+        );
+    }
+
     const icon = level === 'high' ? '✓' : level === 'medium' ? '~' : '!';
-    const label = level === 'high' ? 'Trusted' : level === 'medium' ? 'Moderate' : 'Low Trust';
+    const label = level === 'high' ? 'Trusted' : level === 'medium' ? 'Initial' : 'Low Trust';
 
     return (
         <span className={`trust-badge trust-badge--${level}`}>

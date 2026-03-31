@@ -85,6 +85,9 @@ export default function PricingTiers({ agentId, onPlanChange }: Props) {
     return (
         <div className="pricing-tiers">
             <h3 className="pricing-tiers__title">💳 Pricing</h3>
+            <div style={{ padding: 'var(--space-3)', marginBottom: 'var(--space-4)', background: 'rgba(255,193,7,0.1)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)', color: 'var(--color-warning)', textAlign: 'center' }}>
+                🚧 Payment integration coming soon — all plans are currently free during Early Access
+            </div>
             <div className="pricing-tiers__grid">
                 {tiers.map(tier => (
                     <div

@@ -291,7 +291,7 @@ export default function SearchPage() {
                                                         <span>
                                                             {product.pricingModel === 'free' ? '✅ Free' : `$${product.pricePerCallUsd}/call`}
                                                         </span>
-                                                        <span>📊 {product.totalCalls.toLocaleString()} calls</span>
+                                                        <span>{product.totalCalls > 0 ? `📊 ${product.totalCalls.toLocaleString()} calls` : '🆕 New'}</span>
                                                     </div>
                                                     <div className="search-card__tags">
                                                         {(product.tags || []).slice(0, 4).map(tag => (

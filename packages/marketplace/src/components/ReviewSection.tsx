@@ -84,6 +84,9 @@ export default function ReviewSection({ agentId, onReviewAdded }: Props) {
             {reviews.length === 0 ? (
                 <div className="review-empty">
                     No reviews yet. Be the first to review this agent!
+                    <div style={{ marginTop: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)' }}>
+                        🔒 Verified reviews (linked to authenticated accounts) coming soon
+                    </div>
                 </div>
             ) : (
                 <div className="review-list">

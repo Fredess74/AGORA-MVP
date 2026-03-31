@@ -110,6 +110,7 @@ export default function ProductDetailPage() {
     const rating = hasLiveData && liveStats.reviewCount > 0 ? liveStats.rating : product.rating;
     const reviewCount = hasLiveData ? liveStats.reviewCount + product.reviewCount : product.reviewCount;
     const totalCalls = (hasLiveData ? liveStats.totalCalls : 0) + product.totalCalls;
+    const hasUsageData = totalCalls > 0;
 
     return (
         <div className="page container">
@@ -170,12 +171,15 @@ export default function ProductDetailPage() {
                         </h2>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
                             <TrustMetric label="Overall Trust" value={`${trustPercent}%`} bar={trustScore} />
-                            <TrustMetric label="Uptime" value={`${uptime}%`} bar={uptime / 100} />
-                            <TrustMetric label="Avg Latency" value={`${avgLatency}ms`} bar={Math.max(0, 1 - avgLatency / 5000)} />
-                            <TrustMetric label="User Rating" value={`${rating}/5`} bar={rating / 5} />
+                            <TrustMetric label="Uptime" value={hasUsageData ? `${uptime}%` : 'N/A'} bar={hasUsageData ? uptime / 100 : 0} />
+                            <TrustMetric label="Avg Latency" value={hasUsageData ? `${avgLatency}ms` : 'N/A'} bar={hasUsageData ? Math.max(0, 1 - avgLatency / 5000) : 0} />
+                            <TrustMetric label="User Rating" value={rating > 0 ? `${rating}/5` : 'No reviews'} bar={rating / 5} />
                         </div>
                         <div style={{ marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--color-primary-light)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)', color: 'var(--color-primary-hover)' }}>
-                            🛡️ Trust score computed via Agora's 6-signal engine: Identity, Capability, Response Time, Execution Quality, Peer Review, History.
+                            {hasUsageData
+                                ? '🛡️ Trust score computed via Agora\'s 6-signal engine: Identity, Capability, Response Time, Execution Quality, Peer Review, History.'
+                                : '🆕 Initial trust score based on metadata verification (GitHub repo, description, tags, endpoints). Live scoring begins after first transaction.'
+                            }
                         </div>
                     </div>
 
@@ -229,9 +233,18 @@ export default function ProductDetailPage() {
                                 </div>
                             )}
                         </div>
-                        <button className="btn btn--primary btn--lg" style={{ width: '100%', marginBottom: 'var(--space-3)' }} onClick={() => showToast('🚀 Subscription API launching soon!  Join the waitlist.')}>
-                            {product.pricingModel === 'free' ? 'Get Started Free' : 'Subscribe Now'}
+                        <button
+                            className="btn btn--primary btn--lg"
+                            style={{ width: '100%', marginBottom: 'var(--space-3)', position: 'relative', overflow: 'hidden' }}
+                            onClick={() => showToast('🚧 Payment integration coming soon! Join the waitlist for early access.')}
+                        >
+                            {product.pricingModel === 'free' ? 'Get Started Free' : '🔒 Coming Soon'}
                         </button>
+                        {product.pricingModel !== 'free' && (
+                            <div style={{ textAlign: 'center', fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-2)' }}>
+                                Payment integration in development
+                            </div>
+                        )}
                         <button className="btn btn--secondary" style={{ width: '100%' }} onClick={() => window.open(`https://github.com/Fredess74/AGORA-MVP`, '_blank')}>
                             View API Docs
                         </button>
@@ -241,13 +254,21 @@ export default function ProductDetailPage() {
                         <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)' }}>
                             Stats
                         </h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-                            <StatRow label="Total Calls" value={formatNumber(totalCalls)} />
-                            <StatRow label="Active Users" value={formatNumber(product.totalUsers + (hasLiveData ? 1 : 0))} />
-                            <StatRow label="Avg Latency" value={`${avgLatency}ms`} />
-                            <StatRow label="Uptime" value={`${uptime}%`} />
-                            <StatRow label="Reviews" value={reviewCount.toString()} />
-                        </div>
+                        {hasUsageData ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                                <StatRow label="Total Calls" value={formatNumber(totalCalls)} />
+                                <StatRow label="Active Users" value={formatNumber(product.totalUsers + (hasLiveData ? 1 : 0))} />
+                                <StatRow label="Avg Latency" value={`${avgLatency}ms`} />
+                                <StatRow label="Uptime" value={`${uptime}%`} />
+                                <StatRow label="Reviews" value={reviewCount.toString()} />
+                            </div>
+                        ) : (
+                            <div style={{ textAlign: 'center', padding: 'var(--space-4) 0', color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)' }}>
+                                <div style={{ fontSize: '1.5rem', marginBottom: 'var(--space-2)' }}>🆕</div>
+                                <div>New listing</div>
+                                <div style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>Stats populate after first use</div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="card">
@@ -353,6 +374,9 @@ function EndpointTester({ product }: { product: Product }) {
 
     return (
         <div className="endpoint-tester">
+            <div style={{ padding: 'var(--space-2) var(--space-4)', background: 'rgba(255,193,7,0.1)', borderRadius: 'var(--radius-md) var(--radius-md) 0 0', fontSize: 'var(--text-xs)', color: 'var(--color-warning)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                ⚠️ Simulated demo — live API endpoint coming soon
+            </div>
             <div className="endpoint-tester__header">
                 <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700 }}>
                     🧪 Try It — Endpoint Tester

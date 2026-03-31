@@ -4,7 +4,7 @@ import { useStore } from '../store/useStore';
 
 export default function LandingPage() {
     const { products, isLoading } = useStore();
-    const featured = products.filter((p) => p.trustScore >= 0.8).slice(0, 3);
+    const featured = [...products].sort((a, b) => b.trustScore - a.trustScore).slice(0, 3);
 
     return (
         <div>

@@ -51,6 +51,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                 ? 'product-card__icon--agent'
                 : 'product-card__icon--automation';
 
+    const hasUsageData = product.totalCalls > 0;
+
     return (
         <Link to={`/marketplace/${product.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="card card--clickable product-card">
@@ -79,15 +81,25 @@ export default function ProductCard({ product }: ProductCardProps) {
 
                 <div className="product-card__footer">
                     <div className="product-card__stats">
-                        <span className="product-card__stat">
-                            ⬆ {formatNumber(product.totalCalls)} calls
-                        </span>
-                        <span className="product-card__stat">
-                            👥 {formatNumber(product.totalUsers)} users
-                        </span>
-                        <span className="product-card__stat">
-                            ⭐ {product.rating.toFixed(1)}
-                        </span>
+                        {hasUsageData ? (
+                            <>
+                                <span className="product-card__stat">
+                                    ⬆ {formatNumber(product.totalCalls)} calls
+                                </span>
+                                <span className="product-card__stat">
+                                    👥 {formatNumber(product.totalUsers)} users
+                                </span>
+                                {product.rating > 0 && (
+                                    <span className="product-card__stat">
+                                        ⭐ {product.rating.toFixed(1)}
+                                    </span>
+                                )}
+                            </>
+                        ) : (
+                            <span className="product-card__stat" style={{ color: 'var(--color-text-muted)' }}>
+                                🆕 New · No usage data yet
+                            </span>
+                        )}
                     </div>
                     <span className={`product-card__price ${product.pricingModel === 'free' ? 'product-card__price--free' : ''}`}>
                         {formatPrice(product)}
