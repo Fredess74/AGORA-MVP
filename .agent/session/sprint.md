@@ -1,36 +1,32 @@
-# Sprint — 2026-03-30 (Supabase Focus)
+# Sprint — 2026-03-31 (Honest Zero + Chat Readiness)
 
 ## CTO Decision Logic
 
 **Q1: "Если инвестор нажмёт кнопку демо ЗАВТРА — это помешает?"**
-- Marketplace работает на seed data даже без Supabase (3s timeout fallback) ✅
-- НО: listings в Supabase содержат только 3 agent'а, а seed имеет 8 — рассинхрон
-- SearchPage работает на seed data и НЕ зависит от Supabase ✅
+- Все метрики честные ✅ — нет фейковых данных нигде
+- SearchPage работает как чат-интерфейс ✅ — автопоиск по URL работает
+- ChatGPT может линковать на /search?query=TERM ✅
 
 **Q2: "Что улучшит WOW-эффект?"**
-- Синхронизация seed data → Supabase: Trends page показывает LIVE данные из Supabase
-- Если listings в Supabase = 3, а на UI = 8, инвестор увидит рассинхрон на /trends
+- Honest Zero: "New" вместо нулей выглядит профессионально ✅
+- Coming Soon вместо неработающих кнопок — честно и ожидаемо ✅
 
-**Вердикт**: 3 задачи на сессию:
+**Вердикт**: 2 задачи выполнены, чат frontend готов.
 
 ---
 
-### Задача 1: Seed новые listings в Supabase (Skills + MCP)
-**Усилие:** S
-**Влияние на demo:** HIGH — Trends page и SearchPage должны видеть одни данные
-**Файлы:** SQL в Supabase SQL Editor
-**AC:** `listings` таблица содержит 8 записей (3 agent + 2 skill + 2 MCP + 1 exist GitHub MCP)
-**Risk:** Column mismatch между seed data и реальной schema
+### ✅ DONE: Honest Zero Transition
+**Файлы:** 8 UI/data файлов (database.ts, ProductCard, ProductDetailPage, TrustBadge, PricingTiers, SearchPage, LandingPage, ReviewSection)
+**AC:** Все 16 listings показывают честные метрики, Coming Soon на оплату, "New" на новые
+**Commit:** 3d0ddb5
 
-### Задача 2: Добавить `skill` категорию в `categories` таблицу
-**Усилие:** XS
-**Влияние на demo:** MEDIUM — marketplace фильтрация по Skills должна работать
-**Файлы:** SQL в Supabase
-**AC:** categories содержит 4 записи
+### ✅ DONE: ChatGPT URL Integration  
+**Файлы:** SearchPage.tsx
+**AC:** /search?query=TERM автоматически выполняет поиск при загрузке
+**Commit:** fdba001
 
-### Задача 3: Создать `query_results` таблицу для shareable snapshots
-**Усилие:** M
-**Влияние на demo:** HIGH — позволит перенести shareable URLs из localStorage в Supabase
-**Файлы:** SQL migration + update SearchPage.tsx to use Supabase
-**AC:** `/search?q=...` URLs работают через Supabase, не localStorage
-**Risk:** RLS policy нужна для public read
+### Следующие шаги (backlog)
+1. Refactor inline styles to CSS modules (post-demo)
+2. Payment integration (Stripe) — replace "Coming Soon"  
+3. Orchestrator + SearchPage real-time integration (SSE from backend)
+4. ChatGPT custom GPT configuration pointing to /search?query=

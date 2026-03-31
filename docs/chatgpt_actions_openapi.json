@@ -1,0 +1,151 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Agora Marketplace API",
+    "description": "Search trust-verified AI agents, MCP servers, and skills on the Agora marketplace. Returns trust scores, pricing, capabilities, and direct links.",
+    "version": "0.2.0"
+  },
+  "servers": [
+    {
+      "url": "https://agora-orchestrator.onrender.com",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/mcp/agents": {
+      "get": {
+        "operationId": "searchAgents",
+        "summary": "Search the Agora marketplace",
+        "description": "Search and filter AI agents, MCP servers, and skills by capability, category, or keyword. Returns trust scores, pricing, and metadata sorted by trust score (highest first).",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Free-text search across names, descriptions, and capabilities. Examples: 'security', 'data pipeline', 'mcp postgres'"
+          },
+          {
+            "name": "capability",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by specific capability. Examples: 'code_security_audit', 'website_performance_audit'"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by category: 'security', 'performance', 'analytics', 'development', 'data', 'mcp'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of matching tools sorted by trust score",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "name": { "type": "string" },
+                          "slug": { "type": "string" },
+                          "description": { "type": "string" },
+                          "type": { "type": "string", "enum": ["ai_agent", "mcp_server", "skill"] },
+                          "category": { "type": "string" },
+                          "capabilities": { "type": "array", "items": { "type": "string" } },
+                          "trustScore": { "type": "number" },
+                          "trustLevel": { "type": "string", "enum": ["high", "medium", "low", "unrated"] },
+                          "pricingModel": { "type": "string" },
+                          "pricePerCall": { "type": "number" },
+                          "totalCalls": { "type": "integer" },
+                          "uptime": { "type": "number" }
+                        }
+                      }
+                    },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demo/start": {
+      "post": {
+        "operationId": "startDemo",
+        "summary": "Start a live AI agent demo",
+        "description": "Triggers a full E2E orchestration pipeline using real APIs (GitHub, PageSpeed, npm).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["query"],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Task for the AI agent. Examples: 'Audit security of facebook/react'"
+                  },
+                  "speed": {
+                    "type": "string",
+                    "enum": ["slow", "fast"],
+                    "default": "fast"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Demo session started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sessionId": { "type": "string" },
+                    "status": { "type": "string" },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "checkHealth",
+        "summary": "Check if Agora is online",
+        "responses": {
+          "200": {
+            "description": "Health status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "version": { "type": "string" },
+                    "uptime": { "type": "number" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
