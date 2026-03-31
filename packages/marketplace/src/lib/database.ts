@@ -242,7 +242,7 @@ export async function fetchProducts(): Promise<Product[]> {
         const result = await Promise.race([
             supabase.from('listings').select('*').eq('status', 'active').order('created_at', { ascending: false }),
             new Promise<{ data: null; error: { message: string } }>((resolve) =>
-                setTimeout(() => resolve({ data: null, error: { message: 'Supabase timeout' } }), 3000)
+                setTimeout(() => resolve({ data: null, error: { message: 'Supabase timeout' } }), 8000)
             ),
         ]);
 

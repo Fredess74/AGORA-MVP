@@ -8,6 +8,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { supabase } from '../lib/supabase';
 import type { Product, SavedQuery } from '../types';
 
 // ── Nanoid-like short ID generator ──────────────────────
@@ -19,19 +20,52 @@ function nanoid(size = 8): string {
     return id;
 }
 
-// ── Local storage for saved queries ─────────────────────
-const QUERIES_KEY = 'agora_saved_queries';
+// ── Supabase-backed query persistence ───────────────────
+// Falls back to localStorage if Supabase is unreachable
 
-function saveQueryToStorage(q: SavedQuery): void {
-    const existing = JSON.parse(localStorage.getItem(QUERIES_KEY) || '[]');
-    existing.unshift(q);
-    if (existing.length > 50) existing.length = 50; // cap at 50
-    localStorage.setItem(QUERIES_KEY, JSON.stringify(existing));
+async function saveQueryToSupabase(q: SavedQuery): Promise<void> {
+    try {
+        await supabase.from('query_results').insert({
+            id: q.id,
+            query: q.query,
+            results: q.results,
+            result_count: q.resultCount,
+        });
+    } catch (err) {
+        console.warn('Supabase save failed, using localStorage fallback:', err);
+        // localStorage fallback
+        const existing = JSON.parse(localStorage.getItem('agora_saved_queries') || '[]');
+        existing.unshift(q);
+        if (existing.length > 50) existing.length = 50;
+        localStorage.setItem('agora_saved_queries', JSON.stringify(existing));
+    }
 }
 
-function getQueryFromStorage(id: string): SavedQuery | null {
-    const existing: SavedQuery[] = JSON.parse(localStorage.getItem(QUERIES_KEY) || '[]');
-    return existing.find(q => q.id === id) || null;
+async function getQueryFromSupabase(id: string): Promise<SavedQuery | null> {
+    try {
+        const { data, error } = await supabase
+            .from('query_results')
+            .select('*')
+            .eq('id', id)
+            .single();
+
+        if (error || !data) {
+            // Try localStorage fallback
+            const existing: SavedQuery[] = JSON.parse(localStorage.getItem('agora_saved_queries') || '[]');
+            return existing.find(q => q.id === id) || null;
+        }
+
+        return {
+            id: data.id,
+            query: data.query,
+            results: data.results as Product[],
+            resultCount: data.result_count,
+            createdAt: data.created_at,
+        };
+    } catch {
+        const existing: SavedQuery[] = JSON.parse(localStorage.getItem('agora_saved_queries') || '[]');
+        return existing.find(q => q.id === id) || null;
+    }
 }
 
 // ── Suggested queries for empty state ───────────────────
@@ -106,18 +140,20 @@ export default function SearchPage() {
     useEffect(() => {
         const sharedId = searchParams.get('q');
         if (sharedId && messages.length === 0) {
-            const saved = getQueryFromStorage(sharedId);
-            if (saved) {
-                setMessages([
-                    { id: nanoid(), role: 'user', content: saved.query, timestamp: new Date(saved.createdAt) },
-                    {
-                        id: nanoid(), role: 'system',
-                        content: `Found ${saved.resultCount} results`,
-                        results: saved.results, queryId: saved.id,
-                        timestamp: new Date(saved.createdAt),
-                    },
-                ]);
-            }
+            (async () => {
+                const saved = await getQueryFromSupabase(sharedId);
+                if (saved) {
+                    setMessages([
+                        { id: nanoid(), role: 'user', content: saved.query, timestamp: new Date(saved.createdAt) },
+                        {
+                            id: nanoid(), role: 'system',
+                            content: `Found ${saved.resultCount} results`,
+                            results: saved.results, queryId: saved.id,
+                            timestamp: new Date(saved.createdAt),
+                        },
+                    ]);
+                }
+            })();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams]);
@@ -149,7 +185,7 @@ export default function SearchPage() {
                 return terms.every(term => searchable.includes(term));
             }).sort((a, b) => b.trustScore - a.trustScore);
 
-            // Generate shareable query ID
+            // Generate shareable query ID and persist to Supabase
             const queryId = nanoid();
             const savedQuery: SavedQuery = {
                 id: queryId,
@@ -158,7 +194,7 @@ export default function SearchPage() {
                 resultCount: results.length,
                 createdAt: new Date().toISOString(),
             };
-            saveQueryToStorage(savedQuery);
+            saveQueryToSupabase(savedQuery); // fire-and-forget, non-blocking
 
             const systemMsg: ChatMessage = {
                 id: nanoid(), role: 'system',
