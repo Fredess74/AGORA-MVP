@@ -136,9 +136,11 @@ export default function SearchPage() {
         }
     }, [messages]);
 
-    // Handle shared query via URL params (?q=...)
+    // Handle shared query via URL params (?q=... for saved, ?query=... for live search)
     useEffect(() => {
         const sharedId = searchParams.get('q');
+        const liveQuery = searchParams.get('query');
+
         if (sharedId && messages.length === 0) {
             (async () => {
                 const saved = await getQueryFromSupabase(sharedId);
@@ -154,9 +156,12 @@ export default function SearchPage() {
                     ]);
                 }
             })();
+        } else if (liveQuery && messages.length === 0 && products.length > 0) {
+            // Auto-search from URL param (for ChatGPT integration)
+            performSearch(liveQuery);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams]);
+    }, [searchParams, products.length]);
 
     // ── Search logic ─────────────────────────────────────
     const performSearch = useCallback((queryText: string) => {
