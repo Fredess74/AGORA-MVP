@@ -1,0 +1,115 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Agora Marketplace — Supabase Direct",
+    "description": "Direct access to Agora's trust-verified AI agent marketplace database. Search listings, filter by type/category, and get trust scores.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://fnwrqgmaqempmcvcozqa.supabase.co/rest/v1",
+      "description": "Agora Supabase (Production)"
+    }
+  ],
+  "paths": {
+    "/listings": {
+      "get": {
+        "operationId": "searchListings",
+        "summary": "Search all AI agents, MCP servers, and skills in the Agora marketplace",
+        "description": "Query the Agora marketplace database. Use PostgREST filter syntax. Returns listings with trust scores, pricing, descriptions, and tags. Always filter by status=eq.active to get published listings only.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "default": "eq.active" },
+            "description": "Always set to eq.active to get published listings"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "name,type,slug,description,trust_score,price_per_call,category,tags,author_name,created_at" },
+            "description": "Columns to return. Default returns all useful fields."
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by type using PostgREST syntax: eq.ai_agent, eq.mcp_server, or eq.skill"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by name using PostgREST syntax: ilike.*search_term* for fuzzy search"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by description using PostgREST syntax: ilike.*search_term* for fuzzy search"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by category: eq.security, eq.analytics, eq.performance, eq.general, eq.ai_agent"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Filter by tags using PostgREST array syntax: cs.{security} means contains 'security'"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "trust_score.desc" },
+            "description": "Sort order. Default: trust_score.desc (highest trust first)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 20 },
+            "description": "Max results to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of matching listings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "type": { "type": "string", "enum": ["ai_agent", "mcp_server", "skill"] },
+                      "slug": { "type": "string" },
+                      "description": { "type": "string" },
+                      "trust_score": { "type": "number", "description": "0.0-1.0 trust score" },
+                      "price_per_call": { "type": "number", "description": "Price in USD per API call, 0 = free" },
+                      "category": { "type": "string" },
+                      "tags": { "type": "array", "items": { "type": "string" } },
+                      "author_name": { "type": "string" },
+                      "created_at": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

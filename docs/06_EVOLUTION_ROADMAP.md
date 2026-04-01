@@ -18,9 +18,9 @@ Every process that does not require human judgment runs on AI. AI agent specs, c
 Phase 1             Phase 2             Phase 3
 BUILD + SEED   →    GROW           →    SCALE
 (0-6 mo)            (6-18 mo)           (18-36 mo)
-1 human             3-5 humans          8-15 humans
+3 co-founders       3-5 + hires         8-15 humans
 4-6 AI agents       7+ AI agents        50+ AI agents
-$4,900/mo burn      $25,500/mo burn     $80,500/mo burn
+~$850/mo burn       ~$25,000/mo burn    ~$70,000/mo burn
 ```
 
 ---
@@ -169,6 +169,6 @@ Everything else stays AI-operated.
 
 ## Open Questions
 
-1. **Hypothesis:** Phase 2 hiring assumes seed round closes by Month 6. If delayed, extend Phase 1 with 1 human.
+1. **Hypothesis:** Phase 2 hiring assumes seed round closes by Month 6. If delayed, extend Phase 1 (affordable since ~$850/mo burn).
 2. **Hypothesis:** MCP integration in 2+ platforms by Month 12. Depends on partnership velocity. Fallback: focus on direct-to-developer.
 3. **Unknown:** Enterprise demand timing. If enterprises show up in Phase 1, may need to pull Phase 3 features forward.

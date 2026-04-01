@@ -8,7 +8,7 @@ last_updated: 2026-03-30
 
 # Financial Projections
 
-> **TL;DR:** Two scenarios (bear/base). AI-first model breaks even at $25,500/mo instead of $45,000/mo — 6 months earlier. 4 revenue streams. Month 1 revenue = $0 (payment system not yet built). First real revenue Month 2-3. Runway: 6-7 months without prize money, 9-14 months with.
+> **TL;DR:** Two scenarios (bear/base). AI-first model with ~$400-700/mo burn (no salaries, tools + infra only). 4 revenue streams. Month 1 revenue = $0 (payment system not yet built). First real revenue Month 2-3. Runway: 40-75 months on savings alone. Competition prize money extends further. Break-even target: ~$2,000-5,000/mo (covers tools + early marketing).
 
 ## Revenue Model: 4 Streams
 
@@ -26,27 +26,29 @@ Revenue details and pricing: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md)
 
 > **Note:** Month 1 revenue = $0 because Stripe Connect is not yet integrated. Revenue projections start from first payment capability.
 
-| Month | Listings | Active Consumers | Commission | Trust API | Promoted | Float | Total Revenue | Burn | Net |
+| Month | Listings | Active Consumers | Commission | Trust API | Promoted | Prepaid Fees | Total Revenue | Burn | Net |
 |-------|---------|-----------------|-----------|----------|---------|-------|--------------|------|-----|
-| 1 | 200 | 0 | $0 | $0 | $0 | $0 | $0 | $4,900 | -$4,900 |
-| 2 | 250 | 10 | $30 | $0 | $0 | $0 | $30 | $4,900 | -$4,870 |
-| 3 | 350 | 25 | $100 | $58 | $0 | $2 | $160 | $4,900 | -$4,740 |
-| 4 | 450 | 60 | $300 | $145 | $0 | $8 | $453 | $4,900 | -$4,447 |
-| 5 | 500 | 120 | $700 | $290 | $0 | $20 | $1,010 | $4,900 | -$3,890 |
-| 6 | 600 | 200 | $1,500 | $435 | $100 | $40 | $2,075 | $4,900 | -$2,825 |
-| 7 | 700 | 350 | $2,800 | $700 | $300 | $65 | $3,865 | $25,500 | -$21,635 |
-| 8 | 800 | 500 | $4,200 | $900 | $500 | $90 | $5,690 | $25,500 | -$19,810 |
-| 9 | 900 | 700 | $6,000 | $1,200 | $750 | $120 | $8,070 | $25,500 | -$17,430 |
-| 10 | 1,000 | 900 | $8,500 | $1,500 | $1,000 | $160 | $11,160 | $25,500 | -$14,340 |
-| 11 | 1,100 | 1,200 | $11,000 | $1,800 | $1,300 | $210 | $14,310 | $25,500 | -$11,190 |
-| 12 | 1,250 | 1,500 | $14,000 | $2,200 | $1,700 | $280 | $18,180 | $25,500 | -$7,320 |
+| 1 | 200 | 0 | $0 | $0 | $0 | $0 | $0 | $850 | -$850 |
+| 2 | 250 | 10 | $30 | $0 | $0 | $0 | $30 | $850 | -$820 |
+| 3 | 350 | 25 | $100 | $58 | $0 | $2 | $160 | $850 | -$690 |
+| 4 | 450 | 60 | $300 | $145 | $0 | $8 | $453 | $850 | -$397 |
+| 5 | 500 | 120 | $700 | $290 | $0 | $20 | $1,010 | $900 | +$110 |
+| 6 | 600 | 200 | $1,500 | $435 | $100 | $40 | $2,075 | $1,000 | +$1,075 |
+| 7 | 700 | 350 | $2,800 | $700 | $300 | $65 | $3,865 | $20,000 | -$16,135 |
+| 8 | 800 | 500 | $4,200 | $900 | $500 | $90 | $5,690 | $20,000 | -$14,310 |
+| 9 | 900 | 700 | $6,000 | $1,200 | $750 | $120 | $8,070 | $20,000 | -$11,930 |
+| 10 | 1,000 | 900 | $8,500 | $1,500 | $1,000 | $160 | $11,160 | $20,000 | -$8,840 |
+| 11 | 1,100 | 1,200 | $11,000 | $1,800 | $1,300 | $210 | $14,310 | $20,000 | -$5,690 |
+| 12 | 1,250 | 1,500 | $14,000 | $2,200 | $1,700 | $280 | $18,180 | $20,000 | -$1,820 |
 
 **Key changes from previous projection (March 8):**
 
 - Month 1: $25 → **$0** (payment system not built yet)
 - Month 3: $492 → **$160** (more realistic consumer acquisition timeline)
 - Month 1 listings: 30 → **200** (Curation Crawler auto-populates from MCP registries)
-- Month 7 burn jumps: seed round closes Month 6, team grows to 3-5
+- Month 7 burn jumps: seed round closes Month 6, team hires begin (~$25K/mo)
+- Phase 1 burn (Mon 1-6): **~$800-1,100/mo** (tools + infra + legal, no salaries)
+- **Months 5-6: Revenue exceeds burn** on tools-only model
 
 **Revenue accelerators from agent economy (not modeled yet):**
 
@@ -58,9 +60,12 @@ Revenue details and pricing: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md)
 
 | Scenario | Starting Cash | Monthly Burn | Runway |
 |----------|-------------|-------------|--------|
-| No prize money | $30,000 | $4,900 | **~6 months** (danger zone Month 6) |
-| Suffolk: $15K (1st from $40K) | $45,000 | $4,900 | **~9 months** |
-| Suffolk: $40K (grand prize) | $70,000 | $4,900 | **~14 months** |
+| Savings only | $30,000 | ~$850 | **~35 months** |
+| Suffolk: $15K (1st from $40K) | $45,000 | ~$850 | **~53 months** |
+| Suffolk: $40K (grand prize) | $70,000 | ~$850 | **~82 months** |
+| Post-seed (with salaries) | $250,000 | ~$25,000 | **~10 months** |
+
+> **Note:** Phase 1 burn is dramatically low because 3 co-founders work without salaries. Burn = tools + infrastructure + legal (~$850/mo). See [04_BUSINESS_MODEL.md] for line-item breakdown.
 
 ---
 
@@ -86,11 +91,10 @@ Same structure, 40% lower conversion, 2-month delay on every milestone.
 | Content (freelancer) | $1,500/mo | $20/mo (AI generator) | 99% |
 | Bookkeeping | $1,000/mo | $15/mo (AI finance) | 99% |
 | Dispute resolution | $3,000/mo | $25/mo (AI resolver) | 99% |
-| Total non-engineering ops | $9,500/mo | $200/mo | **98%** |
-| **Phase 1 total burn** | **$8,400/mo** | **$4,900/mo** | **42%** |
-| **Break-even revenue** | **$45,000/mo** | **$25,500/mo** | **43%** |
+| Total non-engineering ops | $9,500/mo | ~$100/mo | **99%** |
+| **Phase 1 total burn** | **$8,000-15,000/mo** | **~$400-700/mo** | **95%+** |
 
-This is not cost-cutting — it's a structural competitive advantage. Competitors need 3-5x more revenue to reach profitability.
+This is not cost-cutting — it's a structural competitive advantage. No founder salaries in Phase 1. Revenue goes back into the business from day one.
 
 ---
 
@@ -102,7 +106,7 @@ This is not cost-cutting — it's a structural competitive advantage. Competitor
 |--------|--------|--------|
 | Personal savings | $30,000 | Committed |
 | Competition prize (Suffolk 40K) | $10,000-40,000 | Applied |
-| Runway at $4,900/mo | 6-8 months | |
+| Runway at ~$850/mo (Phase 1) | 35-53 months | Extremely long pre-seed |
 
 ### Seed Round (Month 6-9)
 
@@ -115,7 +119,7 @@ This is not cost-cutting — it's a structural competitive advantage. Competitor
 | Use: Legal + compliance | $20,000 |
 | Use: Marketing + growth | $30,000 |
 | Use: Reserve | $20,000 |
-| Runway at $25,500/mo | 18 months |
+| Runway at ~$20,000/mo | ~12 months |
 
 **Trigger:** $2K MRR + 500 listings + 100 active consumers.
 
@@ -138,5 +142,5 @@ This is not cost-cutting — it's a structural competitive advantage. Competitor
 1. **Hypothesis:** Month 7 burn jump assumes seed closes on schedule. If delayed, extend Phase 1 burn and slow hiring.
 2. **Hypothesis:** Promoted listings revenue assumes 5-10% creator conversion. Will validate with first cohort.
 3. **Unknown:** Float revenue depends on interest rates. Currently 4.5% APY. If rates drop to 2%, float becomes negligible.
-4. **Agent economy acceleration:** If x402 agent-to-agent transactions grow faster than projected (currently $600M annualized), commission revenue could 3-5x the base case. Circle Nanopayments making micro-transactions economically viable could dramatically increase transaction volume.
+4. **Agent economy acceleration:** If x402 agent-to-agent transactions grow (headline: $600M annualized, real daily volume: ~$28K after removing wash trading), commission revenue could scale significantly. Circle Nanopayments making micro-transactions economically viable could dramatically increase transaction volume.
 5. **Payment infrastructure readiness:** Coinbase Agentic Wallets + Circle Nanopayments + Stripe x402 all launched Jan-Feb 2026. The payment rails are ready — the question is adoption speed.

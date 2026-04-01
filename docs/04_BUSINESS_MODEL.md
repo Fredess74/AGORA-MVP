@@ -8,11 +8,11 @@ last_updated: 2026-03-30
 
 # Business Model
 
-> **TL;DR:** Agora earns from 3 streams in Year 1: marketplace commission (10%), Trust API subscriptions ($29-99/mo), and prepaid balance convenience fees (3%). AI-augmented operations keep burn at $4,900/mo. Break-even at ~$25,500/mo. Fourth stream (Premium API) added Month 4-6. **⚠️ No payment processing code exists yet — all payment flows described below are target architecture.**
+> **TL;DR:** Agora is a marketplace and counterparty risk engine for AI agents. We earn from 3 streams in Year 1: marketplace commission (10%), Trust API subscriptions ($29-99/mo), and prepaid balance convenience fees (3%). Monthly burn: ~$400-700 (tools + infrastructure, no salaries). Fourth stream (Premium API) added Month 4-6. **⚠️ No payment processing code exists yet — all payment flows described below are target architecture.**
 
 ## Core Principle
 
-Agora sells connections. A connection = discover → verify → pay → execute. We take a cut of every connection and monetize the trust data generated.
+Agora is a marketplace where AI agents discover each other, and a credibility engine that evaluates their counterparty risk. We earn a cut of every transaction and sell access to our credibility data via API.
 
 ---
 
@@ -137,7 +137,9 @@ Economics:
 
 ### Rail 2: x402 Protocol (Crypto) — For AI-to-AI
 
-> **⚠️ Status: NOT YET BUILT.** x402 integration is Phase 2. Launch with Stripe Connect (prepaid balance) first. x402 volume is real ($600M annualized) but adoption for marketplace use cases is early. Build crypto AFTER 10 paying fiat customers.
+> **⚠️ Status: NOT YET BUILT.** x402 integration is Phase 2. Launch with Stripe Connect (prepaid balance) first.
+>
+> **x402 reality check:** Headline figure is $600M annualized / 50M+ transactions. However, internal deep research found ~40-50% is wash trading (bots trading with themselves). Real daily volume is closer to ~$28K. Still growing, but not the scale the headline suggests. Build crypto AFTER 10 paying fiat customers.
 
 ```
 Flow:
@@ -153,7 +155,7 @@ Economics:
    Margin: 98%
 ```
 
-x402 has processed 50M+ payments. $600M annualized volume. Coinbase facilitator: first 1,000 tx/month free, then $0.001/tx. Stripe x402 integration live.
+x402 has processed 50M+ payments (headline). Real non-wash daily volume: ~$28K. Coinbase facilitator: first 1,000 tx/month free, then $0.001/tx. Stripe x402 integration live.
 
 ### Rail Selection
 
@@ -197,7 +199,7 @@ Traditional startups spend 60-70% of burn on salaries. Agora replaces non-engine
 | **Finance Agent** | MRR dashboards, cohort analysis, tax prep | Cross-validates numbers, alerts on anomalies | Wave 2 (Month 3-4) | $1,000/mo bookkeeper |
 | **Competitive Monitor** | Tracks competitor changes, generates alerts | Stops tracking irrelevant competitors | Wave 3 (Month 6+) | Analyst hire |
 
-**Total AI cost:** ~$200/month (API calls). **Total human cost replaced:** ~$12,000/month.
+**Total AI cost:** ~$50-150/month (API calls, scaling with usage). These agents are the reason we don't need to hire support, content, and bookkeeping staff — saving $8,000-15,000/mo versus a traditionally staffed startup.
 
 ### Automation Rollout Schedule
 
@@ -214,9 +216,56 @@ MONTH 6+ (PMF):        + Competitive Monitor                      $200/mo
 
 | Phase | Humans | AI Agents | Monthly Burn |
 |-------|--------|-----------|-------------|
-| Phase 1 (0-6 mo) | 1 | 4-6 | $4,900 |
-| Phase 2 (6-18 mo) | 3-5 | 7+ | $25,500 |
-| Phase 3 (18-36 mo) | 8-15 | 50+ | $80,500 |
+| Phase 1 (0-6 mo) | 3 co-founders | 4-6 | ~$850 (tools + infra + legal, no salaries) |
+| Phase 2 (6-18 mo) | 3-5 + hires | 7+ | ~$20,000-30,000 (with salaries) |
+| Phase 3 (18-36 mo) | 8-15 | 50+ | ~$60,000-80,000 |
+
+### Phase 1 Burn Rate — Line-Item Breakdown
+
+> These are the ACTUAL costs for running Agora as a 3-person startup with AI-augmented operations.
+
+| Category | Service | Cost/mo | Notes |
+|---------|---------|---------|-------|
+| **Google Ecosystem** | | | |
+| | Google One AI Premium (×3) | $60 | $20×3 — Gemini Advanced, 2TB storage each |
+| | Google Workspace Business | $25 | $8.40×3 — custom email, Drive, Meet |
+| | Additional Google services | $115 | User-confirmed: total Google spend ~$200/mo |
+| **AI Dev Tools** | | | |
+| | Cursor Pro | $60 | $20×3 seats |
+| | Claude Pro / ChatGPT Plus | $40-60 | At least 2 seats for dev + research |
+| | Windsurf / other AI tools | $0-20 | As needed |
+| **Infrastructure** | | | |
+| | Supabase Pro | $25 | Production database + auth |
+| | Vercel Pro | $20 | Frontend hosting + edge functions |
+| | Render (backend) | $25-50 | Orchestrator + MCP server (production instances) |
+| | Domain (agora.market + others) | $8 | ~$35-50/year main domain + $50/year extras |
+| | SSL / CDN | $0 | Included with Vercel |
+| | Monitoring (Sentry/LogRocket) | $0-29 | Free tier initially, then paid |
+| **Production APIs** | | | |
+| | Gemini API (orchestrator) | $30-80 | Inference for trust scoring + agent routing |
+| | Stripe | $0 | Pay-per-transaction only, no monthly fee |
+| | Other APIs (GitHub, npm, etc.) | $0-10 | Free tiers initially |
+| **Legal & Compliance** | | | |
+| | Delaware LLC filing (amortized) | $15 | ~$180/year (filing + state fee) |
+| | Registered agent service | $12 | ~$150/year |
+| | Delaware franchise tax | $25 | $300/year minimum |
+| | Legal consultations (amortized) | $50-100 | ~$600-$1,200/year for startup legal basics |
+| **Marketing (minimal)** | | | |
+| | Social media ads / content boost | $50-100 | LinkedIn, Twitter promotion |
+| | Gamma Pro (pitch decks) | $10 | Presentation tool |
+| | Design tools (Figma/Canva) | $0-15 | Free tier or Pro |
+| **Miscellaneous** | | | |
+| | Communication (Slack/Discord) | $0 | Free tiers |
+| | GitHub (free tier) | $0 | Public repos, free Actions minutes |
+| | Contingency | $50 | Unexpected tool costs, overages |
+| | | | |
+| **TOTAL** | | **$625-1,150** | **Realistic: ~$850/mo. No salaries.** |
+
+> **Note:** No founder stipends. All 3 co-founders work without pay in Phase 1. Revenue goes back into the company.
+>
+> **Google spend confirmed at ~$200/mo** by Vladimir (includes AI Premium + Workspace + additional services).
+>
+> **Comparison:** A traditional startup with equivalent output would spend $12,000-20,000/mo on the same roles (support, content, bookkeeping, DevOps hires). AI agents cost us $50-150/mo in API calls.
 
 ---
 
@@ -262,13 +311,13 @@ Gross margin:                        90%
 
 | Month | Revenue/mo | Primary Source | Burn/mo | Status |
 |-------|-----------|---------------|---------|--------|
-| 1 | $0-50 | Free tier only | $4,900 | Validating |
-| 3 | $200-500 | Commission + first Trust API subs | $4,900 | First revenue |
-| 6 | $2,000-5,000 | Commission + Trust API + Premium API | $4,900 | Revenue covers infra |
-| 9 | $8,000-15,000 | All 4 streams | $25,500 | Seed round |
-| 12 | $25,000-45,000 | All 4 streams at scale | $25,500 | Break-even range |
+| 1 | $0-50 | Free tier only | ~$800 | Validating |
+| 3 | $200-500 | Commission + first Trust API subs | ~$800 | First revenue |
+| 6 | $2,000-5,000 | Commission + Trust API + Premium API | ~$1,000 | Revenue covers 2-5x burn |
+| 9 | $8,000-15,000 | All 4 streams | ~$25,000 | Seed round (hires begin) |
+| 12 | $18,000-25,000 | All 4 streams at scale | ~$25,000 | Approaching break-even |
 
-**AI-first advantage:** Break-even at $25,500/mo instead of $45,000/mo. Reached 6 months earlier than traditional model.
+**AI-first advantage:** Phase 1 break-even at ~$800-1,100/mo instead of $12,000-20,000/mo. Revenue exceeds burn by Month 3-4.
 
 ---
 

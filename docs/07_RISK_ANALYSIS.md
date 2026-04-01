@@ -6,7 +6,7 @@ language: English
 last_updated: 2026-03-30
 -->
 
-> **TL;DR:** 15 risks tracked. Top 3: cold start, funded competitors, no PMF. AI-first burn ($4,900/mo) extends runway. Pre-defined pivot triggers with deadlines. **Payment system not yet built.**
+> **TL;DR:** 15 risks tracked. Top 3: cold start, funded competitors, no PMF. AI-first burn (~$850/mo, tools + infra + legal, no salaries) gives 37-50+ months runway. Pre-defined pivot triggers with deadlines. **Payment system not yet built.**
 
 # Risk Analysis
 
@@ -116,11 +116,10 @@ MCP, A2A, AP2, x402 are all controlled by large companies. They could change spe
 
 **Likelihood:** Medium | **Impact:** High
 
-Pre-seed startup without external funding. AI-first burn is $4,900/month, extending runway vs traditional model.
+Pre-seed startup without external funding. AI-first burn is ~$850/month (tools + infrastructure + legal, 3 co-founders work without salaries), giving 37-50+ months pre-seed runway.
 
-**Mitigation:**
-
-- AI-first burn: $4,900/month (vs $8,400 traditional — 42% lower)
+**Numbers:**
+- AI-first burn: ~$850/month (vs $12,000-20,000 traditional — 95%+ lower)
 - Revenue-first: launch paid features before fundraising
 - Competition grants as bridge funding
 - Angel investor outreach (targeted list of 20 in AI/dev-tools)
@@ -200,11 +199,11 @@ Agora's AI-first model depends on AI API providers for content, support, dispute
 +-------------------------------+-------------------------------+
 |       STRENGTHS               |       WEAKNESSES              |
 |                               |                               |
-| Adaptive 6-signal trust score | Solo founder                  |
+| Adaptive 6-signal trust score | 3-person team (no external hires) |
 | <10ms latency                 | Zero users / zero revenue     |
 | Multi-protocol design (4)     | Limited runway                |
 | Working MCP server (8 tools)  | No payment processing yet     |
-| AI-first ops ($4,900/mo burn) | No brand awareness            |
+| AI-first ops (~$850/mo burn) | No brand awareness            |
 | SaaS model (predictable)      | AI provider dependency        |
 +-------------------------------+-------------------------------+
 |       OPPORTUNITIES           |       THREATS                 |

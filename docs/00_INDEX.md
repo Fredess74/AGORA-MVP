@@ -14,11 +14,11 @@ last_updated: 2026-03-08
 
 | Fact | Value |
 |------|-------|
-| What | Trust + discovery + payment infrastructure for AI agents |
+| What | Marketplace + counterparty risk engine for AI agents |
 | Revenue | 4 streams: commission (10%), Trust API, convenience fees, premium API access |
 | Payments | Dual-rail: prepaid balance (fiat) + x402 (crypto) |
-| Team | 1 human + 3 operational AI agents (Phase 0), expanding to 7+ |
-| Burn | $4,900/month (Phase 1) |
+| Team | 3 co-founders + AI agents (Phase 1), expanding to 7+ agents |
+| Burn | ~$850/month (Phase 1, tools + infra + legal, no salaries) |
 | Built | Trust engine (TypeScript), MCP server, marketplace UI |
 | Not built | Payments, escrow, MCP endpoint, execution monitoring |
 

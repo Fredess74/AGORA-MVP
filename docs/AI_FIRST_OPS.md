@@ -8,7 +8,7 @@ last_updated: 2026-03-10
 
 # AI-First Operations Playbook
 
-> **TL;DR:** Agora is not a company that "uses AI." It's a company where **AI is the default operator** and humans intervene only when AI cannot proceed. Every business process has an AI owner, escalation criteria, and self-improvement feedback loop. This reduces burn from $45K/mo (traditional) to $4.9K/mo while increasing speed 10-50x.
+> **TL;DR:** Agora is not a company that "uses AI." It's a company where **AI is the default operator** and humans intervene only when AI cannot proceed. Every business process has an AI owner, escalation criteria, and self-improvement feedback loop. This reduces operational cost from $45K/mo (traditional with salaries) to ~$200/mo in AI tooling while 3 co-founders work without salaries.
 
 ---
 
@@ -178,9 +178,9 @@ Competitive Monitor data → New competitors / pricing changes
 | Bookkeeper | $2,000/mo | $20/mo (AI) | $1,980 |
 | Business Analyst | $8,000/mo | $50/mo (AI) | $7,950 |
 | DevOps | $7,000/mo | $60/mo (CI/CD) | $6,940 |
-| **Total** | **$45,000/mo** | **$4,900/mo** | **$40,100/mo** |
+| **Total** | **$45,000/mo** | **~$200/mo** | **$44,800/mo** |
 
-**Break-even at $25,500/mo** instead of $45,000/mo. Reached **6 months earlier** than traditional model.
+**Note:** The ~$200/mo figure is AI tooling cost only. Total Phase 1 burn including all infrastructure, legal, and marketing is ~$850/mo. No founder salaries.
 
 ---
 
