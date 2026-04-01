@@ -44,18 +44,21 @@ The agentic economy is emerging — but it has a critical infrastructure gap:
 
 Three integrated components that work together:
 
-**1. Marketplace (agora.market)**
-- Search and discover AI agents, MCP servers, and tools
+**1. Marketplace (agora.market) — Agents, MCP Servers, and Skills**
+- Search and discover AI agents, MCP servers, and reusable Skills
 - Filter by capability, trust score, protocol, pricing
-- Auto-Crawler seeds 100+ agents from public registries on Day 1
+- 3 product categories: Agents (API services), MCP Servers (tool integrations), Skills (reusable instruction sets)
 
-**2. Trust Engine**
-- Multi-dimensional trust scoring (0-100) based on:
-  - Code quality analysis (static + runtime)
-  - Uptime and reliability metrics
-  - Transaction history and dispute rate
-  - Peer attestations (cryptographically signed)
-- Real-time recalculation — not a static rating
+**2. Trust Engine (6 signals — built and running in production code)**
+- Adaptive scoring (0.0–1.0) based on 6 real signals:
+  - **Identity** (10-35%) — verified agent identity (DID, OAuth)
+  - **Capability Match** (10-30%) — keyword overlap with task requirements
+  - **Response Time** (15-25%) — actual latency during execution
+  - **Execution Quality** (15-30%) — task success rate, error handling
+  - **Peer Review** (5-15%) — QA Inspector + independent auditor ratings
+  - **History** (0-15%) — transaction count, dispute rate, longevity
+- EWMA persistence + Wilson Score cold-start + 2× failure penalty + 30-day decay
+- Weights are ADAPTIVE by tier: new agents judged on claims, veterans on results
 
 **3. MCP Server (8 tools)**
 - Any AI agent can query Agora programmatically
@@ -152,60 +155,71 @@ Three integrated components that work together:
 
 ## Slide 7: Revenue Model
 
-### 4 Revenue Streams — Launching Month 1
+### 4 Revenue Streams — Trust API SaaS is Primary
 
-| Stream | Price | Launch |
-|--------|-------|--------|
-| **Marketplace Commission** | 10% per transaction | Month 1 |
-| **Trust API Subscriptions** | $29-199/mo | Month 1 |
-| **Prepaid Balance Fees** | 3% convenience fee | Month 1 |
-| **Premium API Access** | $29-199/mo | Month 4-6 |
+| Stream | Price | Launch | Type |
+|--------|-------|--------|------|
+| **Trust API Subscriptions** (PRIMARY) | $29-199/mo | Post-LLC (Aug 2026) | SaaS — immune to marketplace commission wars |
+| **Marketplace Commission** | 10% per transaction | Post-LLC | Transactional — bonus, not core |
+| **Prepaid Balance Fees** | 3% convenience fee | Post-LLC | Top-up fees via Stripe |
+| **Premium API Access** | $29-199/mo | Month 4-6 post-LLC | Priority matching + SLA |
 
-**Unit Economics:**
-- Avg. transaction: $50 → $5 commission
-- Trust API subscriber: $58/mo avg (blended)
-- Target: 200 active consumers by Month 6
+**Why Trust API SaaS, not Commission:**
+- Anthropic Claude Marketplace: 0% commission (loss leader). Google, OpenAI building same.
+- Commission revenue = vulnerable to platform subsidies
+- Trust API SaaS = defensible — nobody else has behavioral trust data
+- Unit economics: $58/mo avg subscriber vs $5 avg commission
 
-**Path to Break-Even:**
+**Pre-revenue Phase (now through Aug 2026 — F-1 visa constraint):**
+- Build trust data & developer community. No revenue legally possible.
+- LLC + OPT authorization: August 2026
+- Revenue projections start post-LLC
 
-| Month | Revenue | Burn | Net |
-|-------|---------|------|-----|
-| 1 | $0 | $850 | -$850 |
-| 3 | $160 | $850 | -$690 |
-| 5 | $1,010 | $900 | +$110 |
-| 6 | $2,075 | $1,000 | +$1,075 |
+**Path to Break-Even (post-LLC):**
 
-**Break-even: Month 5.** Revenue exceeds burn before any external funding.
+| Month (post-LLC) | Trust API | Commission | Total Revenue | Burn | Net |
+|-------|---------|------|------|------|-----|
+| 1 | $0 | $0 | $0 | $850 | -$850 |
+| 3 | $145 | $100 | $245 | $850 | -$605 |
+| 6 | $435 | $300 | $735 | $900 | -$165 |
+| 9 | $1,200 | $700 | $1,900 | $1,000 | +$900 |
+
+**Break-even: ~Month 9 post-LLC.** Conservative, honest projection.
 
 ---
 
 ## Slide 8: Adoption Strategy (Go-to-Market)
 
-### Phase 1: Supply-First (Months 0-3)
+### Phase 1: Developer Flywheel (Months 0-6, pre-LLC)
 
-1. **Auto-Crawler** seeds 100+ agents from public MCP registries on Day 1
-2. **Direct outreach** to 50 top MCP server developers
-3. **Free listings** — zero friction to onboard supply
-4. **Trust scores** provided automatically — developers get value without paying
+**The question:** Why do developers come? Why stay? Why share?
 
-### Phase 2: Demand Activation (Months 3-6)
+1. **Free CLI tool:** `npx agora-score <github-url>` → instant trust report for any repo
+2. **Embeddable trust badge:** SVG for GitHub README (like Shields.io but for trust)
+3. **Free analytics dashboard:** usage stats, trust trends, competitor comparison
+4. **Claimed profiles:** Auto-Crawler discovers agents → notifies developer → they claim profile → get badge
+5. **Viral loop:** Developer sees badge on competitor's README → wants their own → flywheel
 
-1. **Content marketing:** "State of AI Agent Trust" reports
-2. **Developer communities:** Discord, GitHub, HackerNews
-3. **Integration partnerships:** IDE plugins, CI/CD hooks
-4. **Suffolk competition win** → PR and credibility
+**Why this works (npm model):** Entry = free utility → Retention = analytics → Sharing = badge visibility
 
-### Phase 3: Enterprise (Months 6-18)
+### Phase 2: Platform Stickiness (Months 6-12, post-LLC)
 
-1. **Compliance Engine** for regulated industries
-2. **Enterprise API** with SLA guarantees
-3. **White-label trust scoring** for platforms
-4. **Strategic partnerships** with AI infrastructure companies
+1. **Trust API SaaS** for programmatic queries ($29-199/mo)
+2. **Skills marketplace** — reusable instruction sets for AI agents
+3. **CI/CD integration:** GitHub Action `agora/trust-check@v1` — trust gate in every PR
+4. **"State of AI Agent Trust"** quarterly reports — free PR, thought leadership
+5. **Content marketing:** Developer communities, Discord, HackerNews
+
+### Phase 3: AI Economy Transition (Months 12-24)
+
+1. **Agent-to-agent autonomous discovery + payments** (machine-readable listings)
+2. **Compliance Engine** for EU AI Act ($5K-50K/year enterprise contracts)
+3. **White-label Trust API** for payment rails (Google UCP, Mastercard Agent Pay, Coinbase)
+4. **Enterprise API** with SLA guarantees
 
 **AI-First Advantage:**
 - 3 co-founders + AI agents handle all operations
 - ~$850/mo burn (tools + infra + legal, no salaries)
-- AI does: support, content, bookkeeping, code review, monitoring
 - Traditional startup equivalent: $12,000-20,000/mo
 
 ---
@@ -214,23 +228,25 @@ Three integrated components that work together:
 
 | Risk | Likelihood | Mitigation |
 |------|-----------|------------|
-| **Cold start** (no agents) | High | Auto-Crawler seeds 100+ Day 1 |
-| **Funded competitor** | Medium | 6+ month head start + trust moat |
-| **No product-market fit** | Medium | Pivot triggers at Month 3 & 6 |
-| **Regulatory changes** | Low | Compliance Engine is revenue source |
-| **AI provider dependency** | Low | Multi-provider (Gemini + fallbacks) |
+| **Cold start** (no agents) | High | CLI tool + badges create developer flywheel. Claimed profiles, not ghost listings. |
+| **10+ discovery competitors** | High | Glama, Smithery, BlueRock do static scanning. We do behavioral trust — different layer. |
+| **Anthropic/Google 0% commission** | High | Trust API SaaS is primary revenue — immune to commission wars. |
+| **No product-market fit** | Medium | Pivot triggers at Month 3 & 6 (see below) |
+| **F-1 visa legal constraint** | Certain | No revenue until LLC + OPT (Aug 2026). Pre-revenue phase = data accumulation. |
 
 **Financial resilience:**
 - ~$850/mo burn = 35 months runway on savings alone
 - With $40K prize = 82+ months runway
 - No salaries → can survive any downturn
-- Revenue-first model: monetize before fundraising
 
 **Pivot triggers (pre-defined):**
-- Month 3: If <50 listings → pivot to B2B trust API only
-- Month 6: If <$500/mo revenue → pivot to enterprise compliance tool
+- Month 3: If <50 claimed profiles → pivot to standalone Trust API
+- Month 6 post-LLC: If <$500/mo revenue → pivot to enterprise compliance tool
 
-**Payment system:** NOT YET BUILT. This is an honest gap. Stripe Connect integration is Month 1-2 priority.
+**Honest gaps (what's NOT built):**
+- ❌ Payment processing (Stripe Connect — post-LLC priority)
+- ❌ Agent self-registration endpoint
+- ❌ Execution monitoring pipeline
 
 ---
 
@@ -265,14 +281,15 @@ Three integrated components that work together:
 
 ### Agora — The Credibility Infrastructure for the AI Economy
 
-**The opportunity:** $53B market by 2030 with no credibility layer.
+**The opportunity:** $53B market by 2030. Everyone builds payment rails — nobody builds trust verification.
 
-**What we've built:** Working marketplace + trust engine + MCP server.
+**What we've built:** Working marketplace + 6-signal trust engine + MCP server + CLI tools.
 
 **What makes us different:**
-- Only platform combining discovery + trust + payments
+- Only platform computing BEHAVIORAL trust (not static code scans)
+- Trust API SaaS as primary revenue — immune to commission wars
+- Developer flywheel: free CLI → badge → analytics → paid API
 - AI-first operations: ~$850/mo burn, not $15K
-- Revenue-first: break-even by Month 5
 - 35-82 months runway without external funding
 
 **The ask:** $40K Suffolk 40K Competition prize

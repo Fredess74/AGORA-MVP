@@ -85,16 +85,16 @@ Heading: "Carfax for AI — Discover, Verify, Transact"
 Three columns showing product flow:
 
 Column 1 — 🔍 DISCOVER
-"Search 10,000+ AI agents by capability, category, or trust score"
+"Search 10,000+ AI agents, MCP servers, and Skills by capability or trust score"
 
 Column 2 — 🛡️ VERIFY  
-"6-signal adaptive trust score (0.0–1.0). Computed from real transaction data. Not reviews."
+"6-signal adaptive trust score (0.0–1.0). Computed from behavioral data. Not reviews."
 
 Column 3 — 💰 TRANSACT
-"Pay only verified agents. 10% commission. Escrow protection."
+"Pay only verified agents. Trust API subscriptions. Escrow protection."
 
 Bottom text:
-"Open algorithm. Proprietary data. The formula is public — the behavioral dataset is the moat."
+"Open algorithm. Proprietary behavioral data. The formula is public — the dataset is the moat."
 
 This slide should include a product screenshot showing the marketplace search interface.
 
@@ -106,68 +106,73 @@ Heading: "6-Signal Trust Engine — Computed, Not Rated"
 
 Show a visual diagram or table of 6 signals:
 
-Signal 1: Identity Verification (10-35%) — Is this agent who it claims to be?
-Signal 2: Capability Match (10-30%) — Does it actually do what it says?
-Signal 3: Response Time (15-25%) — How fast does it execute?
-Signal 4: Execution Quality (15-30%) — Does it reliably succeed?
-Signal 5: Peer Review (5-15%) — What do independent auditors say?
-Signal 6: History (0-15%) — How long has it been reliable?
+Signal 1: Identity (10-35%) — Verified agent identity (DID, OAuth)
+Signal 2: Capability Match (10-30%) — Keyword overlap with task requirements  
+Signal 3: Response Time (15-25%) — Actual latency during execution
+Signal 4: Execution Quality (15-30%) — Task success rate, error handling
+Signal 5: Peer Review (5-15%) — QA Inspector + independent auditor ratings
+Signal 6: History (0-15%) — Transaction count, dispute rate, longevity
 
 Bottom insight box:
 "Weights are ADAPTIVE. New agents are judged on claims (65% identity+capability). Veterans are judged on results (55% execution+response). Trust is earned, not bought."
 
-Anti-gaming: Wilson Score cold-start + EWMA persistence + 2x failure penalty + 30-day decay
+Anti-gaming: Wilson Score cold-start + EWMA persistence + 2× failure penalty + 30-day decay
 
 ---
 
 SLIDE 6 — BUSINESS MODEL
 
-Heading: "4 Revenue Streams"
+Heading: "4 Revenue Streams — Trust API is Primary"
 
 Four quadrants:
 
-Quadrant 1 — 💳 Marketplace Commission (Day 1)
-"10% of every transaction. Min $0.01/tx."
+Quadrant 1 — 🔑 Trust API Subscriptions (PRIMARY — Day 1 post-LLC)
+"Free: 100/mo. Developer: $29/mo. Business: $99/mo. Enterprise: $199/mo. Pay-per-query: $0.001."
 
-Quadrant 2 — 🔑 Trust API Subscriptions (Day 1)
-"Free: 100/mo. Developer: $29/mo. Business: $99/mo. Pay-per-query: $0.001."
+Quadrant 2 — 💳 Marketplace Commission (Day 1 post-LLC)
+"10% of every transaction. Bonus revenue — not core."
 
-Quadrant 3 — 💰 Prepaid Balance Fees (Month 1)
+Quadrant 3 — 💰 Prepaid Balance Fees (Post-LLC)
 "3% convenience fee on Stripe top-ups."
 
-Quadrant 4 — ⚡ Premium API (Month 4-6)
+Quadrant 4 — ⚡ Premium API (Month 4-6 post-LLC)
 "Priority matching: $29-99/mo. SLA guarantees: $49-199/mo."
 
 Bottom stats bar:
-AI-First Advantage: ~$850/mo burn (tools + infra + legal, no salaries). 3 co-founders + AI agents. $10K prize = 12+ months runway.
+Why SaaS not Commission: Claude Marketplace charges 0%. Google, OpenAI building same. Trust API SaaS is immune to commission wars.
+AI-First: ~$850/mo burn (tools + infra + legal, no salaries). Pre-revenue until LLC + OPT (Aug 2026).
 
 ---
 
 SLIDE 7 — DISTRIBUTION (GO-TO-MARKET)
 
-Heading: "Every AI Assistant = Our Free Frontend"
+Heading: "Developer Flywheel → Platform → AI Economy"
 
-Show a visual flow diagram:
+Show a 3-phase flow:
 
-Claude Desktop → queries Agora MCP Server → gets trust-verified agent → executes task
-Gemini → queries Agora MCP Server → gets trust-verified agent → executes task  
-ChatGPT → queries Agora MCP Server → gets trust-verified agent → executes task
+Phase 1 — Developer Flywheel (Months 0-6, pre-LLC)
+🛠️ Free CLI tool: `npx agora-score` → instant trust report for any repo
+🏅 Embeddable trust badge for GitHub README → viral distribution
+📊 Free analytics dashboard → developer retention
+🔄 Claimed profiles: Auto-Crawler discovers → developer claims → gets badge
 
-Key insight box:
-"We don't need users to visit a website. AI assistants query our 8-tool MCP API automatically. Customer Acquisition Cost = $0."
+Phase 2 — Platform Stickiness (Post-LLC)
+🔑 Trust API SaaS ($29-199/mo)
+⚡ CI/CD integration (GitHub Actions trust gate)
+📰 "State of AI Trust" quarterly reports → thought leadership
 
-Bottom stats: 10,000+ MCP servers exist. 97M SDK downloads. Zero built-in trust verification.
+Phase 3 — AI Economy Bridge (12-24 months)
+🤖 Agent-to-agent autonomous discovery + payments
+⚖️ Compliance Engine for EU AI Act enterprises
+🏭 White-label Trust API for payment rails
 
-Three acquisition channels:
-🤖 Auto-Crawler: Seeds 100+ agents from public registries on Day 1 ($0)
-👩‍💻 Developer Outreach: GitHub/Discord communities, "list your agent" ($low)
-⚖️ Regulatory Pull: EU AI Act (Aug 2026) creates compliance demand ($0)
+Key insight: "Entry = free utility → Retention = analytics → Sharing = badge visibility → Revenue = Trust API SaaS"
 
 ---
 
 SLIDE 8 — COMPETITION
 
-Heading: "Everyone Verifies the Transaction. Nobody Verifies the Agent."
+Heading: "Everyone Scans Code. Nobody Tracks Behavior."
 
 Show a table with clear structure:
 
@@ -176,11 +181,11 @@ Intelligence (LLMs) | OpenAI, Google, Anthropic | Not our layer
 Connectivity (protocols) | MCP, A2A, UCP | Not our layer  
 Identity (who is this?) | Skyfire ($14.5M), Scalekit ($5.5M) | Not our layer
 Payments (how to pay) | Stripe, Coinbase, Circle | Not our layer
-Static Security (safe code?) | BlueRock.io (22-rule scan) | Not our layer
-Dynamic Trust (reliable agent?) | NOBODY | THIS IS US ✅
+Static Security (safe code?) | BlueRock, Glama, Smithery (10+ tools) | Not our layer
+Behavioral Trust (reliable?) | NOBODY | THIS IS US ✅
 
 Bottom insight:
-"Recall Network raised $42M but requires blockchain tokens. Skyfire validates WHO the agent is — not HOW WELL it performs. BlueRock scans code — not behavioral reliability. Agora is the only platform computing adaptive behavioral trust."
+"10+ tools scan MCP code for vulnerabilities before deployment. NONE track behavioral reliability AFTER deployment. Skyfire validates WHO. BlueRock validates WHAT. Agora validates HOW WELL — from real transactions, not static analysis."
 
 ---
 
@@ -252,13 +257,13 @@ SLIDE 11 — THE ASK
 Heading (very large): "$10,000"
 
 Three deliverables:
-→ 50 agents listed and verified on the marketplace
-→ Trust API beta with 3 enterprise pilot customers
-→ MCP registry registration — 10,000+ servers discover Agora automatically
+→ Free CLI tool + embeddable trust badge → developer flywheel launched
+→ Trust API beta ready for post-LLC monetization
+→ 50+ claimed profiles (not ghost listings)
 
 Bottom — summary row:
 THE PROBLEM | THE SOLUTION | THE ASK
-$600M in AI transactions, zero trust | 6-signal adaptive trust scoring across all platforms | $10,000
+$600M in agent transactions, nobody tracks reliability | 6-signal behavioral trust engine | $10,000
 
 Large closing text:
 AGORA — Verify AI. Trust the Future.
@@ -305,16 +310,16 @@ Contact: Vladimir.Putkov@su.suffolk.edu
 ## Q&A Подготовка (Top-5 жёстких вопросов)
 
 **"You're just a small team."**
-→ "Three co-founders plus AI agents that handle operations. Vladimir leads strategy, Amir owns the financials, Egor runs product and DevOps. ~$850/month burn — tools, infrastructure, and legal, no salaries. The $40K prize gives us years of runway. That's a survival advantage, not a weakness."
+→ "Three co-founders plus AI agents. Vladimir leads strategy, Amir owns financials, Egor runs product and DevOps. ~$850/month burn — that's a survival advantage, not a weakness."
 
 **"You have zero users."**
-→ "Our Auto-Crawler seeds 100+ agents from public MCP registries on Day 1. We don't wait for users — we discover existing supply automatically."
+→ "We have a developer flywheel: free CLI tool, embeddable trust badges, analytics dashboard. Developers come for the utility, stay for the data, share through GitHub badges."
 
 **"What about F-1 visa?"**
-→ "LLC and revenue are legally delayed until August 2026 OPT. But the trust engine is built and running right now. We're accumulating data — the asset that makes trust scores valuable."
+→ "LLC and revenue are delayed until August 2026 OPT. But the trust engine and developer community are being built now. We're accumulating behavioral data — the asset that makes trust scores valuable."
 
-**"What if Google builds this?"**
-→ "Google can't be a neutral judge of agents inside its own marketplace. That's like S&P rating its own bonds. Trust requires independence. We're the independent third-party evaluator — not a platform player."
+**"10+ MCP tools exist. What's different?"**
+→ "They scan code BEFORE deployment — static analysis. We track behavior AFTER deployment — runtime reliability. Different layer entirely. They're code linters. We're credit bureaus."
 
-**"Skyfire raised $14.5M. How do you compete?"**
-→ "Skyfire validates WHO the agent is. We verify HOW WELL it performs. Different layer. They're the passport office. We're the credit bureau. Complementary, not competitive."
+**"Anthropic/Google charge 0% commission."**
+→ "Exactly why our primary revenue is Trust API SaaS, not commission. Platform players will subsidize transactions forever. Nobody subsidizes independent trust verification."

@@ -8,53 +8,70 @@ last_updated: 2026-03-30
 
 # Financial Projections
 
-> **TL;DR:** Two scenarios (bear/base). AI-first model with ~$400-700/mo burn (no salaries, tools + infra only). 4 revenue streams. Month 1 revenue = $0 (payment system not yet built). First real revenue Month 2-3. Runway: 40-75 months on savings alone. Competition prize money extends further. Break-even target: ~$2,000-5,000/mo (covers tools + early marketing).
+> **TL;DR:** AI-first model with ~$850/mo burn (no salaries). Trust API SaaS is PRIMARY revenue (immune to Anthropic/Google 0% commission). F-1 visa = no revenue until LLC + OPT (Aug 2026). Pre-revenue phase builds developer community + trust data. Post-LLC: 4 revenue streams. Runway: 35-82 months on savings alone. Break-even target post-LLC: Month 9 (~$1,900/mo).
 
 ## Revenue Model: 4 Streams
 
 Revenue details and pricing: [04_BUSINESS_MODEL.md](04_BUSINESS_MODEL.md)
 
-| Stream | Year 1 Bear | Year 1 Base | Revenue Type |
-|--------|------------|------------|-------------|
-| Marketplace Commission | $18,000 | $48,000 | Per-transaction (10%) |
-| Trust API | $6,000 | $18,000 | SaaS subscriptions |
-| Prepaid Balance Fees | $200 | $1,200 | Convenience fees on top-ups |
-| Premium API | $2,400 | $9,600 | Creator subscriptions |
-| **Total Year 1** | **$26,600** | **$76,800** | |
+| Stream | Year 1 Bear | Year 1 Base | Revenue Type | Status |
+|--------|------------|------------|-------------|--------|
+| Trust API (PRIMARY) | $6,000 | $18,000 | SaaS subscriptions | Immune to commission wars |
+| Marketplace Commission | $8,000 | $24,000 | Per-transaction (10%) | Bonus, not core |
+| Prepaid Balance Fees | $200 | $1,200 | Convenience fees on top-ups | Post-LLC only |
+| Premium API | $2,400 | $9,600 | Creator subscriptions | Post-LLC only |
+| **Total Year 1** | **$16,600** | **$52,800** | | |
 
-## Monthly Projection (Base Case — Revised March 10, 2026)
+> **Why Trust API SaaS, not Commission:** Anthropic Claude Marketplace launched with 0% commission. Google/OpenAI building same. Commission revenue is vulnerable to platform subsidies. Trust API SaaS = defensible — nobody else has behavioral trust data.
 
-> **Note:** Month 1 revenue = $0 because Stripe Connect is not yet integrated. Revenue projections start from first payment capability.
+## Pre-Revenue Phase: Developer Flywheel (Now through Aug 2026)
 
-| Month | Listings | Active Consumers | Commission | Trust API | Promoted | Prepaid Fees | Total Revenue | Burn | Net |
-|-------|---------|-----------------|-----------|----------|---------|-------|--------------|------|-----|
-| 1 | 200 | 0 | $0 | $0 | $0 | $0 | $0 | $850 | -$850 |
-| 2 | 250 | 10 | $30 | $0 | $0 | $0 | $30 | $850 | -$820 |
-| 3 | 350 | 25 | $100 | $58 | $0 | $2 | $160 | $850 | -$690 |
-| 4 | 450 | 60 | $300 | $145 | $0 | $8 | $453 | $850 | -$397 |
-| 5 | 500 | 120 | $700 | $290 | $0 | $20 | $1,010 | $900 | +$110 |
-| 6 | 600 | 200 | $1,500 | $435 | $100 | $40 | $2,075 | $1,000 | +$1,075 |
-| 7 | 700 | 350 | $2,800 | $700 | $300 | $65 | $3,865 | $20,000 | -$16,135 |
-| 8 | 800 | 500 | $4,200 | $900 | $500 | $90 | $5,690 | $20,000 | -$14,310 |
-| 9 | 900 | 700 | $6,000 | $1,200 | $750 | $120 | $8,070 | $20,000 | -$11,930 |
-| 10 | 1,000 | 900 | $8,500 | $1,500 | $1,000 | $160 | $11,160 | $20,000 | -$8,840 |
-| 11 | 1,100 | 1,200 | $11,000 | $1,800 | $1,300 | $210 | $14,310 | $20,000 | -$5,690 |
-| 12 | 1,250 | 1,500 | $14,000 | $2,200 | $1,700 | $280 | $18,180 | $20,000 | -$1,820 |
+> **F-1 Visa Constraint:** No LLC, no revenue until OPT authorization (August 2026). This phase builds the asset that makes post-LLC revenue possible.
 
-**Key changes from previous projection (March 8):**
+| Month | Activity | Metric | Cost |
+|-------|----------|--------|------|
+| 1-3 | CLI tool + embeddable badge launch | 50 claimed profiles | $850/mo |
+| 3-6 | Analytics dashboard + community building | 200 developers using tool | $850/mo |
+| 4-6 | Suffolk competition + PR | Trust data accumulated | $850/mo |
 
-- Month 1: $25 → **$0** (payment system not built yet)
-- Month 3: $492 → **$160** (more realistic consumer acquisition timeline)
-- Month 1 listings: 30 → **200** (Curation Crawler auto-populates from MCP registries)
-- Month 7 burn jumps: seed round closes Month 6, team hires begin (~$25K/mo)
-- Phase 1 burn (Mon 1-6): **~$800-1,100/mo** (tools + infra + legal, no salaries)
-- **Months 5-6: Revenue exceeds burn** on tools-only model
+**What we accumulate (pre-revenue):**
+- Behavioral trust data from real API interactions
+- Developer community using free tools
+- GitHub badge impressions = brand awareness
+- CLI tool usage = proof of demand for Trust API SaaS
 
-**Revenue accelerators from agent economy (not modeled yet):**
+## Monthly Projection (Post-LLC, Base Case — Revised April 1, 2026)
 
-- x402 agent-to-agent micro-transactions (could 3-5x commission revenue)
-- Coinbase Agentic Wallets integration (reduces payment friction to zero)
-- Circle Nanopayments (makes $0.001 transactions profitable)
+> **Month 1 below = first month after LLC + OPT (approximately September 2026)**
+> **All revenue projections are post-LLC. No revenue assumed before LLC formation.**
+
+| Month | Listings | Active Consumers | Trust API | Commission | Promoted | Prepaid Fees | Total Revenue | Burn | Net |
+|-------|---------|-----------------|----------|-----------|---------|-------|--------------|------|-----|
+| 1 | 300 | 0 | $0 | $0 | $0 | $0 | $0 | $850 | -$850 |
+| 2 | 350 | 10 | $29 | $15 | $0 | $0 | $44 | $850 | -$806 |
+| 3 | 400 | 25 | $145 | $100 | $0 | $2 | $247 | $850 | -$603 |
+| 4 | 450 | 50 | $290 | $200 | $0 | $5 | $495 | $850 | -$355 |
+| 5 | 500 | 80 | $435 | $300 | $0 | $10 | $745 | $850 | -$105 |
+| 6 | 550 | 120 | $580 | $400 | $100 | $15 | $1,095 | $900 | +$195 |
+| 7 | 600 | 180 | $700 | $600 | $200 | $25 | $1,525 | $950 | +$575 |
+| 8 | 700 | 250 | $900 | $800 | $300 | $35 | $2,035 | $1,000 | +$1,035 |
+| 9 | 800 | 350 | $1,200 | $1,000 | $500 | $50 | $2,750 | $1,000 | +$1,750 |
+| 10-12 | Seed round closes → hire → Team scales | Revenue grows with team |
+
+**Key changes from previous projection:**
+
+- Revenue starts POST-LLC (Aug 2026), not Month 2 — F-1 legal compliance
+- Trust API SaaS listed FIRST as primary revenue column
+- More conservative consumer acquisition (organic flywheel, not paid)
+- Month 1 listings: 300 (from pre-revenue developer flywheel + claimed profiles)
+- Break-even: Month 6 post-LLC (organic growth), not Month 5 (inflated)
+
+**Revenue accelerators (not modeled yet):**
+
+- Circle Nanopayments ($43M real volume, 140M transactions — proven micro-payment rail)
+- GitHub Actions integration driving daily developer touchpoints
+- EU AI Act enforcement (Aug 2, 2026) creating enterprise compliance demand
+- White-label Trust API licensing to payment rails (Google UCP, Mastercard Agent Pay)
 
 ### Runway Analysis (Pre-Seed)
 
@@ -92,9 +109,9 @@ Same structure, 40% lower conversion, 2-month delay on every milestone.
 | Bookkeeping | $1,000/mo | $15/mo (AI finance) | 99% |
 | Dispute resolution | $3,000/mo | $25/mo (AI resolver) | 99% |
 | Total non-engineering ops | $9,500/mo | ~$100/mo | **99%** |
-| **Phase 1 total burn** | **$8,000-15,000/mo** | **~$400-700/mo** | **95%+** |
+| **Phase 1 total burn** | **$8,000-15,000/mo** | **~$850/mo** | **94%+** |
 
-This is not cost-cutting — it's a structural competitive advantage. No founder salaries in Phase 1. Revenue goes back into the business from day one.
+This is a structural competitive advantage. Pre-revenue phase (F-1 constraint) is actually a STRENGTH: we build community and data with near-zero burn while competitors spend millions on GTM.
 
 ---
 
@@ -139,8 +156,8 @@ This is not cost-cutting — it's a structural competitive advantage. No founder
 
 ## Open Questions
 
-1. **Hypothesis:** Month 7 burn jump assumes seed closes on schedule. If delayed, extend Phase 1 burn and slow hiring.
+1. **F-1 Constraint = Advantage:** Pre-revenue phase builds trust data and developer community at $850/mo. Post-LLC (Aug 2026), we launch with existing user base and behavioral dataset.
 2. **Hypothesis:** Promoted listings revenue assumes 5-10% creator conversion. Will validate with first cohort.
-3. **Unknown:** Float revenue depends on interest rates. Currently 4.5% APY. If rates drop to 2%, float becomes negligible.
-4. **Agent economy acceleration:** If x402 agent-to-agent transactions grow (headline: $600M annualized, real daily volume: ~$28K after removing wash trading), commission revenue could scale significantly. Circle Nanopayments making micro-transactions economically viable could dramatically increase transaction volume.
-5. **Payment infrastructure readiness:** Coinbase Agentic Wallets + Circle Nanopayments + Stripe x402 all launched Jan-Feb 2026. The payment rails are ready — the question is adoption speed.
+3. **Trust API SaaS pricing:** $29-199/mo tiers validated against Skyfire ($14.5M) and compliance tool pricing. May adjust after first 50 subscribers.
+4. **Agent economy acceleration:** Circle Nanopayments ($43M real volume, 140M transactions) proves micro-transaction rails work. Not modeled in base case — upside.
+5. **Commission as bonus:** Anthropic Claude Marketplace charges 0% commission. Our 10% commission is secondary to Trust API SaaS. If commission wars eliminate this stream, business model still works.
