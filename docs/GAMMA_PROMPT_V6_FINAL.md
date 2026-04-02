@@ -130,75 +130,83 @@ Developers                 Competitions               Partnerships              
 Blue arrow at bottom:
 → Initially, we target MCP developers with 16,000+ servers through GitHub & dev communities.
 
-===COPY END (PART 1)===
-
 ---
 
-## ЧАСТЬ 2 — слайды 6-10
-
-===COPY START (PART 2)===
-
-Continue the same presentation with 5 more slides. Same design: black background, blue headings, white text, column layouts, arrow insights.
-
----
-
-SLIDE 6 — HOW IT WORKS
-
-Blue heading: "Trust Engine"
-
-Six horizontal bars, each with icon + name + percentage:
-
-🪪 Identity ................ 10-35%
-🎯 Capability Match ........ 10-30%
-⚡ Response Time ........... 15-25%
-✅ Execution Quality ....... 15-30%
-👥 Peer Review ............. 5-15%
-📜 History ................. 0-15%
-
-Two-column insight below:
-
-Left: "New agents → 65% weight on claims"
-Right: "Veterans → 55% weight on results"
-
-Blue arrow at bottom:
-→ Weights adapt automatically. Trust is earned, not bought.
-
-Anti-gaming: Wilson Score + EWMA + 2× failure penalty + 30-day decay
-
----
-
-SLIDE 7 — COMPETITION
+SLIDE 6 — COMPETITION
 
 Blue heading: "Competition"
 
-Layered horizontal table, 3 rows:
+Show a horizontal spectrum line from left to right:
 
-Layer                           Who builds it                      Agora?
+Left side (red, 😡):                Center:                           Right side (green, 😊):
+"Static Analysis"                   "Use cases"                       "Behavioral Trust"
 
-WHO the agent is                Skyfire ($14.5M)                   ✗ Not us
-WHAT the code looks like        BlueRock, Glama, Smithery (10+)    ✗ Not us
-HOW WELL it performs            Nobody                             ✅ THIS IS US
+Old Players on left:
+[BlueRock logo]  [Glama logo]  [Smithery logo]
+"Code scanning"   "MCP registry"  "MCP registry"
+
+Startups on right, progressively better:
+[Skyfire logo]    [Recall Network logo]    **AGORA** (largest, blue)
+"Identity $14.5M"  "Blockchain $42M"       "Behavioral Trust"
+
+Below spectrum — Use case comparison table with green checkmarks:
+
+Example of use cases:                                    Agora   Skyfire   BlueRock   Glama
+
+I want to find a trustworthy AI agent for my task.        ✅       ❌        ❌        ❌
+I want to verify agent reliability AFTER deployment.      ✅       ❌        ❌        ❌
+I want to check if agent code is safe before use.         ✅       ❌        ✅        ❌
+I want to know WHO the agent is.                          ✅       ✅        ❌        ❌
+I want to compare agents by behavioral performance.       ✅       ❌        ❌        ❌
 
 Blue arrow at bottom:
-→ They're code linters. We're credit bureaus. Complementary, not competitive.
+→ The only product that covers the full cycle of AI agent trust.
 
 ---
 
-SLIDE 8 — ROADMAP
+SLIDE 7 — WHY WE ARE BETTER
 
-Blue heading: "Roadmap"
+Blue heading: "Why we are better"
 
-Three columns, timeline style:
+Six advantages in 2×3 grid, each with emoji icon + label + small image/screenshot:
 
-NOW                               6-18 MONTHS                        18-36 MONTHS
+Row 1:
 
-3 founders                        Trust API SaaS launch              Enterprise customers
-+ 7 AI agents                     1,000+ listings                    White-label Trust API
-~$850/mo burn                     $250K seed round                   5,000+ listings
-Working product                   EU AI Act (Aug 2026)               Series A
+🧠 Behavioral Trust                  🎁 Freemium Model                   🔄 Viral Features
+[Image: radar chart of               [Image: free tier pricing            [Image: GitHub badge
+ 6 trust signals]                     showing $0 entry]                   in a README file]
+
+Row 2:
+
+😊 Easy-To-Use                       🏗️ Own Infrastructure                📊 Open Algorithm
+[Image: clean marketplace             [Image: architecture diagram        [Image: trust formula
+ search interface]                     showing MCP + Supabase]              in calculator.ts]
 
 Blue arrow at bottom:
-→ Pre-revenue until LLC (Aug 2026). Building community & data now.
+→ Open formula. Proprietary data. AI-first ops at $850/mo.
+
+---
+
+SLIDE 8 — TRACTION
+
+Blue heading: "Traction"
+
+Three rows, each with icon/logo on left + achievement text on right:
+
+Row 1:
+👥 [people icon]
+Working product with 6-signal Trust Engine live in production
+
+Row 2:
+🏆 [trophy icon]
+Suffolk $40K Competition finalist — April 16, 2026
+
+Row 3:
+🤖 [robot icon]
+3 founders + 7 AI agents running all operations at $850/mo burn
+
+Blue arrow at bottom:
+→ Not a pitch. A working product. Live demo available.
 
 ---
 
@@ -206,47 +214,45 @@ SLIDE 9 — TEAM
 
 Blue heading: "Team"
 
-Three cards side by side with colored accents:
+Three columns, each with name + role + one-liner:
 
-[Red accent]                      [Blue accent]                      [Green accent]
 Vladimir Putkov                   Amirsaid Velikhanov                Egor Nikotin
 CEO / Strategy                    CFO / Finance                      CTO / Product
 
-Built the stack.                  3-year financial model.             Production deployment.
-Vision. Pitch.                    Defends every number.              MCP server. Live demo.
-Investor relations.               Unit economics.                    If it works — it's Egor.
+"Built the entire platform        "Built 3-year financial            "Deployed MCP server,
+ stack. Vision. Pitch."            model. Defends                     Trust Engine, marketplace
+                                   every number."                     to production."
 
-Right side — large stat:
-"3 founders + AI agents = output of a 12-person team"
-
-Cost comparison:
-Traditional: $15,000/mo
-Agora AI-First: $850/mo
+Stat below:
+Traditional startup burn: $15,000/mo
+Agora AI-first burn: $850/mo — same output.
 
 Blue arrow at bottom:
 → We don't just talk about AI infrastructure — we prove it works by running on it.
 
 ---
 
-SLIDE 10 — THE ASK
+SLIDE 10 — USE OF FUNDS
 
-Blue heading: "The Ask"
+Blue heading: "Use of funds"
 
-Giant centered number:
+Three rows, each with colored emoji icon + bold first word + description:
+
+🧱 Build developer flywheel (CLI tool, GitHub badges, analytics dashboard)
+
+👥 Fund freemium model to 50+ claimed agent profiles and 200+ developers
+
+💰 Prepare Trust API for post-LLC monetization and $$$ seed round
+
+Giant number centered below:
 
 $10,000
 
-Three deliverables below:
-→ Developer flywheel launched (CLI + badges + analytics)
-→ Trust API beta ready for post-LLC monetization
-→ 50+ verified, claimed agent profiles
-
-Bottom center, large:
+Bottom center:
 AGORA — Verify AI. Trust the Future.
+Vladimir.Putkov@su.suffolk.edu
 
-Contact: Vladimir.Putkov@su.suffolk.edu
-
-===COPY END (PART 2)===
+===COPY END===
 
 ---
 
