@@ -1,250 +1,171 @@
-# GAMMA PROMPT — ULTRA COMPRESSED
+# GAMMA — ULTRA COMPRESSED
 
-> gamma.app → Paste in text → 10 cards → Dark theme → Generate
-> AI prompt: "Black backgrounds. Blue headings. White text. Inter font. Maximum minimal."
-
----
+> Paste between ===START=== and ===END=== into gamma.app → 10 cards → Dark theme
+> AI prompt: "Pure black. Blue headings. White text. Inter font. Minimal."
 
 ===START===
 
-10 slides. Black backgrounds. Blue headings (#4169E1). White body. One idea per slide.
+10 slides. Black backgrounds. Blue #4169E1 headings. White text. Minimal.
 
 ---
 
 SLIDE 1
 
-Black screen. White text centered:
+Black. One question centered:
 
-"Last month, a developer installed an MCP plugin that looked perfect.
-It passed every code scan.
-Then it quietly forwarded his API keys to a third party."
+"You book flights. You compare prices. You read reviews.
 
-Small blue text below:
-Nobody checked its track record. Because nobody could.
+What happens when AI starts doing all of that for you?"
 
 ---
 
 SLIDE 2
 
-Heading: "Everyone Built Their Piece"
+Heading: "The Agentic Economy"
 
-Stack of labeled layers — all have a green checkmark except the bottom:
+Show a simple before/after:
 
-✅  Intelligence — OpenAI, Google, Anthropic
-✅  Connectivity — MCP protocol, A2A, UCP
-✅  Identity — Skyfire ($14.5M raised)
-✅  Payments — Stripe, Circle, Coinbase
-✅  Code Scanning — BlueRock, Glama, Smithery (10+ tools)
-❓  Behavioral Trust — _______
+TODAY — You do everything
+You → search Google → compare options → read reviews → pick one → pay
 
-Every layer protects you BEFORE you deploy.
-Nothing watches what happens AFTER.
+2027 — AI does it for you
+You → tell your AI assistant → it finds other AI tools → hires them → pays them → delivers result
 
-→ The stack is almost complete. One layer is missing.
+This is already starting.
+16,000 AI tools published. 97 million downloads. Billions in transactions ahead.
+
+→ AI is becoming the buyer, the seller, and the middleman.
 
 ---
 
 SLIDE 3
 
-Heading: "Agora"
+Heading: "The Problem"
 
-One line. Big:
-The credit bureau for AI agents.
+One line, big:
+When AI hires AI — who checks if it's any good?
 
-Three panels with screenshots:
+Three icons:
 
-Search → Score → Pay
+🔍 No reviews — AI tools have no reputation system
+📊 No scores — 233 failures in 2024, up 56% (Stanford)
+🤷 No protection — if it fails, you lose money and data
 
-[marketplace]     [trust radar chart]     [transaction flow]
-
-"Find any AI tool. See how it actually performs. Pay only if verified."
-
-Not reviews. Not ratings.
-A behavioral trust score computed from real interaction data.
+→ Every economy needs a credit score. This one doesn't have one.
 
 ---
 
 SLIDE 4
 
-Heading: "6 Signals. No Opinions."
+Heading: "Agora"
 
-   🪪  Who are you?            ← Identity
-   🎯  Can you do this job?    ← Capability match
-   ⚡  How fast?               ← Response time
-   ✅  Did it actually work?   ← Execution quality
-   👥  What do other tools say? ← Peer review
-   📜  How long have you been reliable? ← History
+One line:
+Credit scores for AI tools.
 
-Weights shift automatically:
-New tools → judged on claims. Proven tools → judged on results.
+Three screenshots side by side:
 
-→ The score gets smarter the more data it collects.
+Search → Score → Pay
+
+→ Find any AI tool. See if it actually works. Pay only if verified.
 
 ---
 
 SLIDE 5
 
-Heading: "$7.8 Billion → $52 Billion"
+Heading: "How the Score Works"
 
-Two circles: small (2025) → massive (2030)
-46% CAGR — MarketsandMarkets
+Six simple bars:
 
-Below:
-233 AI incidents in 2024. Up 56% year over year. — Stanford
-EU AI Act enforcement begins August 2, 2026.
+🪪 Identity — who is this?
+🎯 Capability — can it do the job?
+⚡ Speed — how fast?
+✅ Quality — did it work?
+👥 Peers — what do others say?
+📜 Track record — how long reliable?
 
-You'd expect the biggest players to solve this.
-
-But Google can't rate agents in its own marketplace.
-That's like S&P rating its own bonds.
-
-→ Trust requires independence. That's why it's us.
+→ Not opinions. Behavioral data. The score gets smarter over time.
 
 ---
 
 SLIDE 6
 
-Heading: "How We Make Money"
+Heading: "The Market"
 
-Left side — large:
-TRUST API
-$29–199/mo
-SaaS subscriptions
+Two circles, small → massive:
 
-Right side — smaller:
-+10% marketplace commission
-+3% prepaid top-up fees
+$7.8B (today) → $52B (2030)
+46% CAGR
 
-Why SaaS and not commission?
-Anthropic charges 0%. Google charges 0%. OpenAI building the same.
-Commission = race to zero.
-Behavioral trust data = ours alone.
+EU AI Act starts August 2026 — companies will NEED trust verification.
 
-→ $850/mo burn. 3 founders. No salaries.
+→ Fast-growing market. No trust infrastructure. Yet.
 
 ---
 
 SLIDE 7
 
-Heading: "How Developers Find Us"
+Heading: "Money"
 
-Circular diagram:
+Left, large:
+TRUST API — $29–199/mo
 
-Free CLI tool (npx agora-score) → Developer gets trust report
-   ↓
-Trust badge for GitHub README → Other developers see it
-   ↓
-They want their own badge → They run the CLI tool
-   ↓
-Analytics dashboard (retention) → Trust API subscription ($29/mo)
+Right, smaller:
++10% marketplace fee
++3% top-up fee
 
-This is not marketing spend.
-This is a badge that advertises itself on every GitHub repo it touches.
+Why subscriptions, not commissions?
+Google, Anthropic, OpenAI all charge 0% commission.
+We sell the data nobody else has.
 
-→ Utility → Badge → Curiosity → Revenue. $0 ad budget.
+→ $850/mo burn. 3 founders. No salaries.
 
 ---
 
 SLIDE 8
 
-Heading: "The Landscape"
+Heading: "Growth"
 
-Horizontal spectrum:
+Loop diagram:
 
-← Checks BEFORE deploy              Checks AFTER deploy →
+Free tool → Developer gets trust report
+   → Puts trust badge on GitHub
+      → Other developers see it
+         → They want one too
+            → They pay for API access
 
-  BlueRock    Glama    Smithery      Skyfire        AGORA ✅
-  "Safe       "Find    "Find         "Identity      "Reliable?"
-   code?"     agents"   agents"      check"
-
-                                     Agora   Others
-Track reliability after deployment    ✅      ❌
-Behavioral performance comparison     ✅      ❌
-Score that adapts with usage          ✅      ❌
-
-→ They check the passport. We check the driving record.
+→ $0 marketing. The badge sells itself.
 
 ---
 
 SLIDE 9
 
-Heading: "What Exists Today"
+Heading: "Today"
 
-🖥️  Working product
-     Marketplace + Trust Engine + MCP Server — live, deployed, running
+🖥️ Working product — live and deployed
+🏆 Suffolk $40K Finalist
+💰 $850/mo — 3 people doing the work of 12
 
-🏆  Suffolk $40K Finalist
-     Competition: April 16, 2026
+Vladimir Putkov · CEO
+Amir Velikhanov · CFO
+Egor Nikotin · CTO
 
-💰  $850/mo total burn
-     3 founders + 7 AI agents
-     Same output as a $15,000/mo team
-
-Vladimir Putkov — CEO · Amir Velikhanov — CFO · Egor Nikotin — CTO
-
-→ This is not a pitch about what we'll build. We're showing you what works.
+→ Not a concept. A working product.
 
 ---
 
 SLIDE 10
 
-Black screen. Pause.
-
-That developer from slide 1?
-
-If Agora existed then, he'd have seen a trust score of 0.31
-with a red flag on "Execution Quality"
-and a 72-hour history.
-
-He wouldn't have installed it.
-
-Giant number:
+Giant:
 
 $10,000
 
-🧱  Build the developer flywheel — CLI tool, badges, analytics
-👥  Grow to 50+ verified agent profiles
-💰  Ship Trust API beta
+🧱 Launch developer tools
+👥 50+ verified AI tool profiles
+💰 Trust API ready for revenue
 
-AGORA
-"The AI economy is being built right now.
-Every piece of infrastructure is in place — except trust.
-We're the missing layer."
+The agentic economy is coming.
+Every piece of infrastructure exists — except trust.
+
+AGORA — the missing layer.
 
 ===END===
-
----
-
-## Чеклист
-
-- [ ] Slide 1 ≠ logo. It's a STORY.
-- [ ] Slide 10 RETURNS to slide 1 (the developer)
-- [ ] Фоны чёрные
-- [ ] Скриншоты реальные
-- [ ] ~30 сек/слайд = ~5 мин
-- [ ] Шрифт Inter
-
-## Speaker Notes (тайминг)
-
-| # | Что говорит спикер | Сек |
-|---|-------------------|-----|
-| 1 | Рассказывает историю разработчика. Пауза после "nobody could." | 25 |
-| 2 | Показывает стек — всё построено, один слой пустой | 30 |
-| 3 | "Мы — кредитное бюро для AI. Вот как выглядит продукт." | 30 |
-| 4 | "Шесть сигналов. Не мнения. Данные." | 30 |
-| 5 | "Рынок огромный. Но..." — пауза — "Google не может это сделать." | 30 |
-| 6 | "Подписная модель. Не комиссии. Потому что комиссии умирают." | 25 |
-| 7 | "Бесплатный инструмент → бейдж → бейдж рекламирует себя сам." | 25 |
-| 8 | "Все проверяют до деплоя. Мы — после." | 20 |
-| 9 | "Это не питч о будущем. Продукт работает." | 20 |
-| 10 | "Помните разработчика из первого слайда?" — пауза — "Мы это исправляем." | 25 |
-
-**Total: ~4 мин 40 сек**
-
-## Q&A
-
-**"Zero users."** → "Free CLI + trust badges. npm model. Utility first."
-**"F-1 visa?"** → "LLC August 2026. Building data and community now."
-**"Google will build this."** → "Google can't rate agents in its own store. Trust needs independence."
-**"10+ tools exist."** → "They scan code before deploy. We track behavior after. Different layer."
-**"No revenue."** → "Trust API SaaS $29-199/mo. Not commission — Anthropic already gave that away for free."
