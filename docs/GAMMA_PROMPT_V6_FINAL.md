@@ -1,295 +1,306 @@
 # 🎯 GAMMA PROMPT v6 — Agora Pitch Deck (FINAL)
 
-> ## ИНСТРУКЦИЯ (НЕ КОПИРОВАТЬ В GAMMA):
+> ## КАК ИСПОЛЬЗОВАТЬ
 >
-> 1. gamma.app → "Create new" → **"Presentation"**
-> 2. **"Paste in text"** (НЕ "Generate")
-> 3. Скопируй между `===COPY START===` и `===COPY END===`
-> 4. **10 cards** → тёмная тема → **Generate**
-> 5. AI Agent: `"Pure black #0A0A0A backgrounds. Blue #4169E1 headings, large serif or bold sans. White body text. NO gradients, NO patterns. Revolut 2015 seed deck style — minimal, dark, high-contrast. Use emoji as icons."`
-> 6. Пройди по слайдам, замени placeholder на наши скриншоты
-> 7. Экспорт → PDF / PPTX
+> 1. gamma.app → Create new → **Presentation** → **Paste in text**
+> 2. Скопируй всё между `===START===` и `===END===`
+> 3. **10 cards** → тёмная тема → Generate
+> 4. AI Agent prompt: `"Black #0A0A0A backgrounds. Blue #4169E1 headings. White text. Inter font. Clean, dark, high-contrast. No decorations. Each slide = one idea + one visual."`
+> 5. Замени [placeholders] на реальные скриншоты → Export PDF
 
 ---
 
-===COPY START===
+===START===
 
-Create a 10-slide pitch deck presentation. Style reference: Revolut 2015 Seed Deck. Pure black backgrounds. Blue headings. One concept per slide. 3-4 visual columns per slide where applicable. Arrow → insight at the bottom of each slide.
+Create a 10-slide pitch deck. Clean dark style. Black backgrounds. One bold idea per slide with supporting visual. Minimal text — the presenter speaks, the slide reinforces.
 
-DESIGN RULES:
-- Every background: pure black (#0A0A0A)
-- Headings: electric blue (#4169E1), large, bold
-- Body text: white (#FFFFFF)
-- Use emoji as visual icons, not clip art
-- Each slide uses 3-4 column layout with icon + label + visual
-- Bottom of each slide: blue arrow → with one key insight line
-- Maximum ~20 words of large text. Supporting details smaller.
+DESIGN: Background #0A0A0A. Headings #4169E1 bold 48pt. Body white 20pt. Font Inter. No clip art. No stock photos. No gradients.
 
 ---
 
-SLIDE 1 — PROBLEM
+SLIDE 1 — HOOK
 
-Blue heading: "Problem"
+No heading. Black screen. One question in white, large, centered:
 
-One-liner below heading:
-Using AI agents without trust verification is broken
+"If you hired a contractor you've never met — wouldn't you check their reviews first?"
 
-Three columns, each with emoji + one-word label + description:
+Small line below, blue:
+AI agents can't do that yet.
 
-💸 Expensive
-"233 AI incidents in 2024. Average cost: $1.2M per failure."
-[Show image: broken robot or error screen]
-
-😤 Unreliable
-"10,000+ agents online. Zero behavioral trust scores."
-[Show image: question mark over AI agent icon]
-
-🦊 Opaque
-"No way to verify reliability before you pay."
-[Show image: black box with lock]
-
-Blue arrow at bottom:
-→ This industry is not disrupted yet.
+Bottom corner, subtle:
+AGORA — April 16, 2026
 
 ---
 
-SLIDE 2 — MARKET SIZE
+SLIDE 2 — THE GAP
 
-Blue heading: "Market Size"
+Blue heading: "The Missing Layer"
 
-Three columns with labels + icons on top:
+Show a visual stack diagram — like layers of a cake, each labeled:
 
-📈 AI Agent Market                    💰 Lost to Bad Agents               👥 Developers Building
-(growth arrow icon)                   (red minus icon)                     (people icon)
+TOP:     🧠 Intelligence — OpenAI, Google, Anthropic ✅
+         🔌 Connectivity — MCP, A2A protocols ✅
+         🪪 Identity — Skyfire, Scalekit ✅
+         💳 Payments — Stripe, Circle ✅
+         🔒 Code Security — BlueRock, Glama (10+ tools) ✅
+BOTTOM:  📊 Behavioral Trust — ???
 
-Three large gold/yellow circles below:
+Arrow pointing to the empty layer:
+"Everyone built the stack above. Nobody built the foundation below."
 
-$52 Bln                               $600M                                16,000+
-(2030, 46% CAGR)                      (annual unverified transactions)     (MCP servers published)
-
-Blue arrow at bottom:
-→ MCP ecosystem is initial target market: 16,000+ servers & 97M SDK downloads.
-
-Source: MarketsandMarkets 2025, PulseMCP, npm/PyPI
-
----
-
-SLIDE 3 — SOLUTION
-
-Blue heading: "Solution"
-
-Three columns with icon + one-word label:
-
-🔍 Discover                          🛡️ Verify                            💰 Transact
-
-Below each — product screenshot or mockup:
-
-[Marketplace search page              [Trust score breakdown               [Payment/checkout
- showing agent listings                showing 6-signal radar chart          flow with escrow
- with trust scores]                    and 0.82 score]                      and trust badge]
-
-Blue arrow at bottom:
-→ 1-minute demo: agora.market
+→ That's our layer.
 
 ---
 
-SLIDE 4 — BUSINESS MODEL
+SLIDE 3 — WHAT WE BUILD
 
-Blue heading: "Business model"
+Blue heading: "Agora"
 
-Two columns with icon + label:
+One sentence:
+The credit bureau for AI agents.
 
-🎁 Freemium                                         📈 Viral
+Three panels side-by-side, each with product screenshot:
 
-[Show Agora free tier:                               [Show pricing tiers:
- "Free trust scores                                   FREE — 100 queries/mo
-  Free CLI tool                                       DEVELOPER — $29/mo
-  Free badge for GitHub"]                              BUSINESS — $99/mo
-                                                       ENTERPRISE — $199/mo]
+🔍 Search                    🛡️ Score                     💰 Pay
+[Marketplace page:            [Trust breakdown:             [Transaction flow:
+ agent cards with              radar chart,                  escrow + trust
+ trust scores visible]         0.82 score, 6 bars]          badge on receipt]
 
-Three arrow points at bottom:
-→ Free trust scoring & badges for all developers — zero friction
-→ Need more? Subscribe to Trust API ($29-199/mo) or list premium
-→ Developers share badges on GitHub, new developers discover Agora — flywheel
+"Find any agent. See its behavioral trust score. Pay only if it's verified."
 
 ---
 
-SLIDE 5 — GO TO MARKET
+SLIDE 4 — HOW THE SCORE WORKS
 
-Blue heading: "Marketing"
+Blue heading: "6 Signals. Zero Opinions."
 
-Four columns with labels and numbers:
+Left side — one formula visualization:
 
-Developers                 Competitions               Partnerships               Growth Hacks
-(16,000+)                  (3+)                        (10M+)                      (?)
+   Trust Score = weighted average of:
 
-[GitHub logo               [Suffolk 40K logo           [MCP Protocol logo          [Top secret
- npm logo                   Y Combinator logo           Anthropic logo              folder icon]
- Discord logo]              Techstars logo]              Google Cloud logo]
+   🪪  Who are you?           ← Identity verification
+   🎯  Can you do this?       ← Capability match
+   ⚡  How fast?              ← Response time
+   ✅  Did it work?           ← Execution quality
+   👥  What do peers say?     ← Peer review
+   📜  How long reliable?     ← Transaction history
 
-Blue arrow at bottom:
-→ Initially, we target MCP developers with 16,000+ servers through GitHub & dev communities.
+Right side — key insight:
 
----
+"New agents: scored on claims (65% identity + capability)
+Veteran agents: scored on results (55% execution + speed)
 
-SLIDE 6 — COMPETITION
+Weights shift automatically as data accumulates."
 
-Blue heading: "Competition"
-
-Show a horizontal spectrum line from left to right:
-
-Left side (red, 😡):                Center:                           Right side (green, 😊):
-"Static Analysis"                   "Use cases"                       "Behavioral Trust"
-
-Old Players on left:
-[BlueRock logo]  [Glama logo]  [Smithery logo]
-"Code scanning"   "MCP registry"  "MCP registry"
-
-Startups on right, progressively better:
-[Skyfire logo]    [Recall Network logo]    **AGORA** (largest, blue)
-"Identity $14.5M"  "Blockchain $42M"       "Behavioral Trust"
-
-Below spectrum — Use case comparison table with green checkmarks:
-
-Example of use cases:                                    Agora   Skyfire   BlueRock   Glama
-
-I want to find a trustworthy AI agent for my task.        ✅       ❌        ❌        ❌
-I want to verify agent reliability AFTER deployment.      ✅       ❌        ❌        ❌
-I want to check if agent code is safe before use.         ✅       ❌        ✅        ❌
-I want to know WHO the agent is.                          ✅       ✅        ❌        ❌
-I want to compare agents by behavioral performance.       ✅       ❌        ❌        ❌
-
-Blue arrow at bottom:
-→ The only product that covers the full cycle of AI agent trust.
+→ Not a rating. Not a review. A behavioral credit score.
 
 ---
 
-SLIDE 7 — WHY WE ARE BETTER
+SLIDE 5 — THE MARKET
 
-Blue heading: "Why we are better"
+Blue heading: "$7.8 Billion → $52 Billion"
 
-Six advantages in 2×3 grid, each with emoji icon + label + small image/screenshot:
+Simple visual: two circles, small one on left labeled "2025", massive one on right labeled "2030".
 
-Row 1:
+Below: "46% CAGR — MarketsandMarkets"
 
-🧠 Behavioral Trust                  🎁 Freemium Model                   🔄 Viral Features
-[Image: radar chart of               [Image: free tier pricing            [Image: GitHub badge
- 6 trust signals]                     showing $0 entry]                   in a README file]
+Two supporting facts:
+📊 233 AI incidents in 2024, up 56% year over year — Stanford AI Index
+🏛️ EU AI Act enforcement begins August 2, 2026 — compliance demand incoming
 
-Row 2:
-
-😊 Easy-To-Use                       🏗️ Own Infrastructure                📊 Open Algorithm
-[Image: clean marketplace             [Image: architecture diagram        [Image: trust formula
- search interface]                     showing MCP + Supabase]              in calculator.ts]
-
-Blue arrow at bottom:
-→ Open formula. Proprietary data. AI-first ops at $850/mo.
+→ The market is growing. Trust failures are growing faster.
 
 ---
 
-SLIDE 8 — TRACTION
+SLIDE 6 — BUSINESS MODEL
 
-Blue heading: "Traction"
+Blue heading: "How We Make Money"
 
-Three rows, each with icon/logo on left + achievement text on right:
+Two columns:
 
-Row 1:
-👥 [people icon]
-Working product with 6-signal Trust Engine live in production
+Left — PRIMARY (large blue text):
 
-Row 2:
-🏆 [trophy icon]
-Suffolk $40K Competition finalist — April 16, 2026
+TRUST API
+$29/mo → $199/mo
+SaaS subscriptions
 
-Row 3:
-🤖 [robot icon]
-3 founders + 7 AI agents running all operations at $850/mo burn
+"Developers query agent trust scores via API.
+100 free queries/month.
+Pay to unlock more."
 
-Blue arrow at bottom:
-→ Not a pitch. A working product. Live demo available.
+Right — BONUS (smaller white text):
 
----
++ 10% marketplace commission
++ 3% prepaid top-up fees
++ $29-199/mo premium API (SLA, priority matching)
 
-SLIDE 9 — TEAM
+Bottom comparison:
 
-Blue heading: "Team"
+"Why SaaS, not commission?"
+Anthropic: 0% commission. Google: building same. OpenAI: building same.
+Commission = race to zero. Trust data = monopoly.
 
-Three columns, each with name + role + one-liner:
-
-Vladimir Putkov                   Amirsaid Velikhanov                Egor Nikotin
-CEO / Strategy                    CFO / Finance                      CTO / Product
-
-"Built the entire platform        "Built 3-year financial            "Deployed MCP server,
- stack. Vision. Pitch."            model. Defends                     Trust Engine, marketplace
-                                   every number."                     to production."
-
-Stat below:
-Traditional startup burn: $15,000/mo
-Agora AI-first burn: $850/mo — same output.
-
-Blue arrow at bottom:
-→ We don't just talk about AI infrastructure — we prove it works by running on it.
+→ ~$850/mo burn. 3 founders. No salaries. 35-82 months runway.
 
 ---
 
-SLIDE 10 — USE OF FUNDS
+SLIDE 7 — HOW DEVELOPERS FIND US
 
-Blue heading: "Use of funds"
+Blue heading: "The Flywheel"
 
-Three rows, each with colored emoji icon + bold first word + description:
+Show a circular loop diagram with 4 nodes:
 
-🧱 Build developer flywheel (CLI tool, GitHub badges, analytics dashboard)
+         ┌─── FREE CLI TOOL ───┐
+         │  npx agora-score     │
+         │  = instant trust     │
+         │    report            │
+         ▼                      │
+    ANALYTICS              TRUST BADGE
+    DASHBOARD       ←──    for GitHub
+    (retention)            README
+         │                 (sharing)
+         └──── TRUST API ──────┘
+              $29-199/mo
+              (revenue)
 
-👥 Fund freemium model to 50+ claimed agent profiles and 200+ developers
+"Entry: free utility nobody else gives.
+Retention: data they can't get elsewhere.
+Sharing: badge on their GitHub = our ad.
+Revenue: API subscription when they're hooked."
 
-💰 Prepare Trust API for post-LLC monetization and $$$ seed round
+→ Developers come for the tool. Stay for the data. Share through the badge.
 
-Giant number centered below:
+---
+
+SLIDE 8 — WHY NOT SOMEONE ELSE
+
+Blue heading: "Different Layer, Not Better Layer"
+
+Show a horizontal spectrum:
+
+← Before Deployment                    After Deployment →
+
+  BlueRock    Glama    Smithery         Skyfire         AGORA
+  (code       (MCP     (MCP             (identity       (behavioral
+   scan)      index)    index)          $14.5M)          trust)
+
+  "Is the code safe?"                  "Who is this?"   "Does it actually work?"
+
+Use case table with checkmarks:
+
+                                          Agora    Others
+Verify code safety before use              ✅       ✅
+Find agents by capability                  ✅       ✅
+Check WHO the agent is                     ✅       ✅ (Skyfire)
+Track reliability AFTER deployment         ✅       ❌
+Compare agents by behavioral performance   ✅       ❌
+Trust score that adapts over time          ✅       ❌
+
+→ They check the passport. We check the track record.
+
+---
+
+SLIDE 9 — WHAT WE HAVE TODAY
+
+Blue heading: "Not a Pitch. A Product."
+
+Three rows, each with icon on left and proof on right:
+
+🖥️  Working marketplace + Trust Engine + MCP Server
+     React/Vite frontend · Express orchestrator · 7 AI agents · Supabase
+     [Insert screenshot of live marketplace]
+
+🏆  Suffolk $40K Competition Finalist
+     April 16, 2026
+
+💰  $850/month total burn
+     3 founders + 7 AI agents = output of 12-person team
+     Traditional startup: $15,000/mo for same output
+
+Team:
+Vladimir Putkov — CEO / Strategy — built the platform, runs the pitch
+Amirsaid Velikhanov — CFO / Finance — built the financial model, defends every number
+Egor Nikotin — CTO / Product — deployed MCP server, Trust Engine, live demo
+
+→ We don't talk about AI-first operations. We prove it by running on $850/month.
+
+---
+
+SLIDE 10 — THE ASK
+
+Black screen. One giant number centered:
 
 $10,000
 
-Bottom center:
-AGORA — Verify AI. Trust the Future.
-Vladimir.Putkov@su.suffolk.edu
+Three lines below (icon + action):
 
-===COPY END===
+🧱  Build the developer flywheel — CLI tool, GitHub badges, analytics
+👥  Grow to 50+ claimed agent profiles and 200+ active developers
+💰  Ship Trust API beta — ready for revenue the day LLC is filed
+
+Closing line, large, centered:
+
+AGORA
+"Every economy needs a credit bureau.
+The AI economy doesn't have one.
+We're building it."
+
+Contact: Vladimir.Putkov@su.suffolk.edu
+
+===END===
 
 ---
 
-## Чеклист после генерации
+## Чеклист
 
-- [ ] Все фоны чёрные #0A0A0A
-- [ ] Заголовки синие #4169E1
-- [ ] Каждый слайд = 3-4 колонки + стрелка→инсайт внизу
-- [ ] Заменить placeholder на реальные скриншоты
-- [ ] Шрифт Inter/Montserrat (НЕ дефолтный)
-- [ ] Убрать водяные знаки Gamma
-- [ ] Каждый слайд читается за 3 сек
+- [ ] Фоны чёрные, без мусора
+- [ ] Слайд 1 = интрига (вопрос), НЕ логотип
+- [ ] Каждый слайд = одна мысль + один visual
+- [ ] Заменить [скриншоты] на реальные
+- [ ] Шрифт Inter
 - [ ] ~30 сек на слайд = ~5 минут
+- [ ] Убрать Gamma watermark
+
+## Narrative Arc (для спикера)
+
+| # | Слайд | Что говорит спикер | Время |
+|---|-------|-------------------|-------|
+| 1 | HOOK | "Imagine hiring someone you've never met..." — пауза — "AI agents do this millions of times a day. With zero verification." | 20 сек |
+| 2 | GAP | "Все построили свой кусок инфраструктуры. Payments, identity, security. Но один слой пустой." | 30 сек |
+| 3 | SOLUTION | "Agora — кредитное бюро для AI агентов. Вот как выглядит продукт." (показать демо) | 40 сек |
+| 4 | SCORE | "Шесть сигналов. Не мнения — данные. Новые агенты оцениваются по заявлениям, ветераны — по результатам." | 40 сек |
+| 5 | MARKET | "$7.8 billion сегодня. $52 billion через 4 года. И чем быстрее рынок растёт, тем больше нужен trust." | 25 сек |
+| 6 | MONEY | "Trust API подписки. Не комиссии — Anthropic уже даёт 0%. Мы продаём данные, которых нет ни у кого." | 30 сек |
+| 7 | FLYWHEEL | "Бесплатный инструмент → бейдж на GitHub → аналитика → платная API. Разработчики приходят за утилитой, платят за данные." | 30 сек |
+| 8 | COMPETITION | "Все проверяют до деплоя. Мы проверяем после. Это не конкуренция — это другой слой." | 25 сек |
+| 9 | TRACTION | "Работающий продукт. $850 в месяц на троих. Это не слайды — это живая система." | 25 сек |
+| 10 | ASK | "$10,000. Флайвил для разработчиков. 50 профилей. Trust API бета. Мы строим кредитное бюро для AI экономики." | 20 сек |
+
+**Total: ~4 мин 45 сек** (оставляет время на Q&A)
 
 ## Q&A (Top-5)
 
-**"You're just a small team."**
-→ "$850/month burn. Three founders plus AI. That's a survival advantage."
+**"You're just students."**
+→ "$850/month burn. Working product. 7 AI agents doing ops. We're not asking for a chance — we're showing it works."
 
-**"You have zero users."**
-→ "Free CLI tool + trust badges on GitHub. Utility first, revenue follows."
+**"Zero users."**
+→ "Free CLI tool plus trust badges for GitHub. Same playbook as npm and Shields.io. Utility first."
 
 **"F-1 visa?"**
-→ "LLC delayed until Aug 2026. Building community and behavioral data now."
+→ "LLC forms August 2026 with OPT. Until then we build community and trust data — the asset that makes revenue possible."
 
-**"10+ MCP tools exist."**
-→ "They scan code before deploy. We track behavior after. Linters vs credit bureaus."
+**"Google/Anthropic will build this."**
+→ "Google can't rate agents in its own marketplace. That's S&P rating its own bonds. Trust needs independence."
 
-**"Anthropic charges 0%."**
-→ "That's why Trust API SaaS is primary revenue. Nobody subsidizes independent verification."
+**"What if nobody pays for trust scores?"**
+→ "That's why we have pivot triggers. Month 3: <50 claimed profiles → standalone Trust API. Month 6: <$500/mo → enterprise compliance tool. We don't wait to fail."
 
 ## Источники
 
 | Факт | Источник |
 |------|---------|
 | 233 AI incidents, +56% | Stanford HAI AI Index 2025 |
-| $7.8B→$52.6B, 46% CAGR | MarketsandMarkets 2025 |
+| $7.8B → $52.6B, 46% CAGR | MarketsandMarkets 2025 |
 | 97M MCP SDK downloads | npm/PyPI, workos.com |
 | 16,000+ MCP servers | PulseMCP, dev.to |
 | EU AI Act Aug 2, 2026 | europa.eu |
