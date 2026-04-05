@@ -28,7 +28,7 @@ export default function LandingPage() {
                     <Link to="/marketplace" className="btn btn--primary btn--lg">
                         Explore Marketplace
                     </Link>
-                    <Link to="/demo" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #DC1A00, #ff4433)' }}>
+                    <Link to="/kiosk" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #DC1A00, #ff4433)' }}>
                         🎬 Live Demo
                     </Link>
                     <Link to="/auth" className="btn btn--secondary btn--lg">

@@ -33,7 +33,7 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/demo" className={isActive('/demo')}>
+                        <Link to="/kiosk" className={isActive('/kiosk')}>
                             🎬 Live Demo
                         </Link>
                     </li>

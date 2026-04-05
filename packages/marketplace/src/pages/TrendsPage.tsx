@@ -356,7 +356,7 @@ export default function TrendsPage() {
 
             {/* Footer */}
             <div className="trends-footer">
-                📊 Live data from Agora Supabase · Updated in real-time · <a href="/demo">Run Live Demo →</a>
+                📊 Live data from Agora Supabase · Updated in real-time · <a href="/kiosk">Run Live Demo →</a>
             </div>
         </div>
     );

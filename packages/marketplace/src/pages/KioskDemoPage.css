@@ -1,0 +1,757 @@
+/* ═══════════════════════════════════════════════════════════
+   KioskDemoPage — Cinematic Booth Demo
+   Optimized for big screens, 2m+ viewing distance
+   ZERO API dependencies — fully self-contained
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* ── Full-screen layout ─────────────────────────────────── */
+.kiosk {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top Bar ─────────────────────────────────────────────── */
+.kiosk-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+
+.kiosk-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kiosk-logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #DC1A00, #ff4433);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 0 30px rgba(220, 26, 0, 0.3);
+}
+
+.kiosk-logo-text {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.kiosk-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: rgba(220, 26, 0, 0.1);
+  border: 1px solid rgba(220, 26, 0, 0.3);
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ff4433;
+  letter-spacing: 0.05em;
+}
+
+.kiosk-badge-dot {
+  width: 10px;
+  height: 10px;
+  background: #DC1A00;
+  border-radius: 50%;
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #DC1A00; }
+  50% { opacity: 0.5; box-shadow: 0 0 16px #DC1A00; }
+}
+
+.kiosk-timer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ── Pipeline Stepper ────────────────────────────────────── */
+.kiosk-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 24px 40px;
+  flex-shrink: 0;
+}
+
+.kiosk-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.2);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.kiosk-step-icon {
+  font-size: 24px;
+  transition: transform 0.4s ease;
+}
+
+.kiosk-step.active {
+  color: #fff;
+  background: rgba(220, 26, 0, 0.15);
+  box-shadow: 0 0 30px rgba(220, 26, 0, 0.1);
+}
+
+.kiosk-step.active .kiosk-step-icon {
+  transform: scale(1.2);
+}
+
+.kiosk-step.done {
+  color: #22c55e;
+}
+
+.kiosk-step-arrow {
+  color: rgba(255,255,255,0.1);
+  font-size: 16px;
+  padding: 0 4px;
+}
+
+/* ── Main Stage ──────────────────────────────────────────── */
+.kiosk-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Phase Container ─────────────────────────────────────── */
+.kiosk-phase {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 80px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.kiosk-phase.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── Phase 0: Intro / Query ──────────────────────────────── */
+.phase-query {
+  flex-direction: column;
+  gap: 32px;
+  text-align: center;
+}
+
+.phase-query-businesses {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  justify-content: center;
+}
+
+.business-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 40px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  min-width: 280px;
+  transition: all 0.6s ease;
+}
+
+.business-card.buyer {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.05);
+}
+
+.business-card.seller {
+  border-color: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.05);
+}
+
+.business-icon {
+  font-size: 56px;
+}
+
+.business-name {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.business-role {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+
+.business-card.buyer .business-role {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.business-card.seller .business-role {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.business-agent {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.query-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.query-connector-line {
+  font-size: 40px;
+  color: rgba(220, 26, 0, 0.6);
+  animation: arrow-pulse 1.5s infinite;
+}
+
+@keyframes arrow-pulse {
+  0%, 100% { opacity: 0.4; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(4px); }
+}
+
+.query-connector-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #DC1A00;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.phase-query-text {
+  font-size: 28px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  max-width: 700px;
+  line-height: 1.4;
+}
+
+.phase-query-text .highlight {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── Phase 1: Search ─────────────────────────────────────── */
+.phase-search {
+  flex-direction: column;
+  gap: 40px;
+}
+
+.search-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.search-title span {
+  color: #fff;
+  font-weight: 700;
+}
+
+.search-candidates {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.candidate-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  min-width: 260px;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.candidate-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.candidate-card.selected {
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(34, 197, 94, 0.05);
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.1);
+}
+
+.candidate-card.rejected {
+  opacity: 0.25;
+  filter: grayscale(0.5);
+}
+
+.candidate-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.candidate-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.candidate-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.candidate-type {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+
+.candidate-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.candidate-score-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+}
+
+.candidate-score-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.candidate-score-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+}
+
+.candidate-score-fill.medium {
+  background: linear-gradient(90deg, #eab308, #facc15);
+}
+
+.candidate-score-fill.low {
+  background: linear-gradient(90deg, #DC1A00, #f87171);
+}
+
+.candidate-score-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  min-width: 56px;
+  text-align: right;
+}
+
+.candidate-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ── Phase 2: Trust Building ─────────────────────────────── */
+.phase-trust {
+  flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.trust-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.trust-header-agent {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.trust-header-agent .agent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #22c55e;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.trust-header-did {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: rgba(255,255,255,0.25);
+}
+
+.trust-components {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.trust-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trust-row.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.trust-row-icon {
+  font-size: 28px;
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.trust-row-label {
+  font-size: 18px;
+  font-weight: 600;
+  width: 140px;
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.7);
+}
+
+.trust-row-bar {
+  flex: 1;
+  height: 16px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+}
+
+.trust-row-fill {
+  height: 100%;
+  border-radius: 100px;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.trust-row-fill.high {
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.trust-row-fill.medium {
+  background: linear-gradient(90deg, #eab308, #facc15);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+}
+
+.trust-row-fill.low {
+  background: linear-gradient(90deg, #DC1A00, #f87171);
+  box-shadow: 0 0 20px rgba(220, 26, 0, 0.3);
+}
+
+.trust-row-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  width: 70px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Trust Composite ─────────────────────────────────────── */
+.trust-composite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.trust-composite-big {
+  text-align: center;
+}
+
+.trust-composite-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.trust-composite-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  transition: color 0.5s ease;
+}
+
+.trust-composite-level {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 8px;
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+
+/* ── Phase 3: Transaction ────────────────────────────────── */
+.phase-transaction {
+  flex-direction: column;
+  gap: 40px;
+  text-align: center;
+}
+
+.tx-check {
+  font-size: 72px;
+  animation: check-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes check-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.tx-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.tx-grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.tx-card {
+  padding: 24px 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  min-width: 180px;
+}
+
+.tx-card-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.tx-card-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.tx-card-value.green { color: #22c55e; }
+.tx-card-value.red { color: #DC1A00; }
+.tx-card-value.white { color: #fff; }
+.tx-card-value.blue { color: #60a5fa; }
+
+.tx-tagline {
+  font-size: 18px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+}
+
+.tx-tagline strong {
+  color: #DC1A00;
+  font-weight: 700;
+}
+
+/* ── Bottom Ticker ───────────────────────────────────────── */
+.kiosk-ticker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 16px 40px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 500;
+}
+
+.kiosk-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kiosk-ticker-value {
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Dialogue bubbles ────────────────────────────────────── */
+.phase-dialogue {
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  width: 100%;
+}
+
+.dialogue-bubble {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dialogue-bubble.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dialogue-bubble.buyer {
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.dialogue-bubble.seller {
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.dialogue-avatar {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.dialogue-body {
+  flex: 1;
+}
+
+.dialogue-sender {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dialogue-bubble.buyer .dialogue-sender { color: #60a5fa; }
+.dialogue-bubble.seller .dialogue-sender { color: #4ade80; }
+
+.dialogue-text {
+  font-size: 20px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ── Restart overlay ─────────────────────────────────────── */
+.kiosk-restart {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(0,0,0,0.9);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.kiosk-restart.visible {
+  opacity: 1;
+}
+
+.kiosk-restart-text {
+  font-size: 20px;
+  color: rgba(255,255,255,0.3);
+  font-weight: 500;
+}
+
+.kiosk-restart-icon {
+  font-size: 48px;
+}
+
+/* ── Utility ─────────────────────────────────────────────── */
+.color-high { color: #22c55e; }
+.color-medium { color: #eab308; }
+.color-low { color: #DC1A00; }

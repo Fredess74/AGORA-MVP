@@ -10,7 +10,7 @@ import AuthCallbackPage from './pages/AuthCallbackPage';
 import CreateAgentPage from './pages/CreateAgentPage';
 import DashboardPage from './pages/DashboardPage';
 import TrendsPage from './pages/TrendsPage';
-import DemoPage from './pages/DemoPage';
+import KioskDemoPage from './pages/KioskDemoPage';
 import SearchPage from './pages/SearchPage';
 import { useStore } from './store/useStore';
 
@@ -23,25 +23,33 @@ export default function App() {
     }, []);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <Navbar />
-            <main style={{ flex: 1 }}>
-                <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/marketplace" element={<MarketplacePage />} />
-                    <Route path="/marketplace/:slug" element={<ProductDetailPage />} />
-                    <Route path="/auth" element={<AuthPage />} />
-                    <Route path="/auth/callback" element={<AuthCallbackPage />} />
-                    <Route path="/create" element={<CreateAgentPage />} />
-                    <Route path="/dashboard" element={<DashboardPage />} />
-                    <Route path="/trends" element={<TrendsPage />} />
-                    <Route path="/demo" element={<DemoPage />} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </main>
-            <Footer />
-        </div>
+        <Routes>
+            {/* Kiosk: fullscreen, no navbar/footer */}
+            <Route path="/kiosk" element={<KioskDemoPage />} />
+
+            {/* All other routes: standard app shell */}
+            <Route path="*" element={
+                <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                    <Navbar />
+                    <main style={{ flex: 1 }}>
+                        <Routes>
+                            <Route path="/" element={<LandingPage />} />
+                            <Route path="/marketplace" element={<MarketplacePage />} />
+                            <Route path="/marketplace/:slug" element={<ProductDetailPage />} />
+                            <Route path="/auth" element={<AuthPage />} />
+                            <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                            <Route path="/create" element={<CreateAgentPage />} />
+                            <Route path="/dashboard" element={<DashboardPage />} />
+                            <Route path="/trends" element={<TrendsPage />} />
+
+                            <Route path="/search" element={<SearchPage />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </main>
+                    <Footer />
+                </div>
+            } />
+        </Routes>
     );
 }
 
