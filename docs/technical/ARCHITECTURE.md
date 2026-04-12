@@ -1,12 +1,13 @@
 <!--
 purpose: Real technical architecture of Agora as it exists today
 audience: Developers, AI systems, technical investors
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Agora — Technical Architecture
 
 > **This document describes the CURRENT working system, not aspirational features.**
+> Agora is a **Creator Platform + Behavioral Trust Engine** for the AI agent economy.
 > Features marked "Phase 2" are planned but not yet built.
 
 ## System Overview

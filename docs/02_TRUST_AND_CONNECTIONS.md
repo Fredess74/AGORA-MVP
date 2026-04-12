@@ -3,7 +3,7 @@ purpose: Complete specification of how trust scoring and connections work on Ago
 audience: AI systems, developers, investors, technical co-founders
 reads_after: 01_OVERVIEW.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Trust & Connections — Core Mechanics

@@ -3,7 +3,7 @@ purpose: Navigation index for all Agora documentation.
 audience: AI systems, humans (anyone starting here)
 reads_after: none (this is the entry point)
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-04-11
 -->
 
 # Agora Documentation Index
@@ -14,8 +14,8 @@ last_updated: 2026-03-08
 
 | Fact | Value |
 |------|-------|
-| What | Marketplace + counterparty risk engine for AI agents |
-| Revenue | 4 streams: commission (10%), Trust API, convenience fees, premium API access |
+| What | **Creator Platform + Behavioral Trust Engine** for the AI agent economy |
+| Revenue | 4 streams: **Trust API SaaS (primary)**, commission (10%), convenience fees, premium API access |
 | Payments | Dual-rail: prepaid balance (fiat) + x402 (crypto) |
 | Team | 3 co-founders + AI agents (Phase 1), expanding to 7+ agents |
 | Burn | ~$850/month (Phase 1, tools + infra + legal, no salaries) |

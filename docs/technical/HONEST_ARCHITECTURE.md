@@ -1,7 +1,7 @@
 <!--
 purpose: Honest system architecture — what exists vs what's planned
 audience: Developers, AI systems, pitch judges who do due diligence
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Agora — Honest Architecture Map
@@ -231,37 +231,44 @@ graph LR
 
 ---
 
-## 6. Competitive Positioning
+## 6. Competitive Positioning (Updated April 2026)
+
+> For full competitive intelligence, see [05_MARKET_AND_COMPETITION.md](../05_MARKET_AND_COMPETITION.md)
 
 ```
                     TRUST APPROACH
                     
-    Static Security              Dynamic Behavioral
-    (code scanning)              (interaction scoring)
+    Static / Pre-Deploy             Dynamic / Behavioral
+    (code scanning, audits)          (runtime interaction scoring)
          │                              │
-         │  BlueRock.io                 │  AGORA ⭐
-         │  • 9000+ servers scanned    │  • 6-signal EWMA trust
-         │  • 22-rule engine           │  • Adaptive weights
-         │  • OWASP/CWE mapping        │  • Wilson cold-start
-         │  • FREE                     │  • Sigmoid α
+         │  FabricLayer ($2.5M)        │  AGORA ⭐
+         │  • Trust Index (0-5.0)      │  • 6-signal EWMA trust
+         │  • 5,800+ services          │  • Adaptive 4-tier weights
+         │  • 23 sub-signals           │  • Wilson cold-start
+         │  • Free API                  │  • Sigmoid α
          │                              │  • 30-day decay
-         │  ≈ Penetration Test         │  ≈ Credit Rating
+         │  BlueRock.io                │  • Creator Platform
+         │  • 9000+ servers scanned    │
+         │  • 22-rule engine           │  ≈ Credit Rating
+         │  • FREE                     │
+         │                              │
+         │  ≈ Penetration Test         │
          │                              │
          ├──────────────────────────────┤
          │                              │
-    Infrastructure                 Trust + Discovery
-    (routing/auth)                 (scoring + marketplace)
+    Security / Infrastructure       Web3 Trust
+    (routing/auth/scanning)          (staking + on-chain scoring)
          │                              │
-         │  Bifrost (Maxim AI)         │  Smithery
-         │  • MCP Gateway              │  • MCP registry
-         │  • RBAC + Audit             │  • 4000+ servers
-         │  • Go, high-perf            │  • No trust scoring
-         │                              │
-         │  Composio ($29M)            │  Recall Network ($42M)
-         │  • Tool auth + SDK          │  • Blockchain AgentRank
-         │  • MCP support              │  • Web3 friction
-         │  • Integration focus        │  • Sybil-resistant
-         │                              │  • Token gated
+         │  Akto (funded)              │  Recall Network ($42M)
+         │  • MCP security platform    │  • AgentRank (on-chain)
+         │  • Discovery + red team     │  • $RECALL staking
+         │                              │  • Base L2
+         │  Composio ($29M)            │  • Token at $0.04 (-95%)
+         │  • Tool auth + SDK          │
+         │  • Managed MCP             │  Trent AI (€11M)
+         │                              │  • Agentic security
+         │  Glama, Smithery            │  • Layered defense
+         │  • MCP directories (free)   │
 ```
 
 ---

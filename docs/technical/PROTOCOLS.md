@@ -3,7 +3,7 @@ purpose: Real specification of AI protocols and agent economy payment infrastruc
 audience: AI systems, developers, investors, protocol implementers
 reads_after: technical/ARCHITECTURE.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Protocols & Agent Economy Infrastructure
@@ -19,7 +19,7 @@ Four protocols and a rapidly growing payment infrastructure layer define how AI 
 | **MCP** | Anthropic | Nov 2024 | AI tools discover and invoke external data/functions | Adopted by OpenAI, Google DeepMind, 97M+ SDK downloads, 16,000+ servers |
 | **A2A** | Google | Apr 2025 | AI agents communicate and delegate tasks to each other | 150+ orgs (Salesforce, SAP, Adobe), donated to Linux Foundation Jun 2025, v1.0 RC Nov 2025 |
 | **AP2** | Google | Sep 2025 | AI agents initiate and complete financial transactions | 60+ partners (Mastercard, PayPal, American Express, Coinbase, Shopify) |
-| **x402** | Coinbase | May 2025 | Instant stablecoin micropayments via HTTP 402 | **$600M annualized volume**, 50M+ transactions, Stripe integrated Feb 2026 |
+| **x402** | Coinbase | May 2025 | Instant stablecoin micropayments via HTTP 402 | **$24M verified 30-day volume** (April 2026), x402 Foundation (Linux), Stripe integrated Feb 2026 |
 
 ### Agent Economy Payment Infrastructure (NEW — 2026)
 
@@ -201,12 +201,11 @@ x402 revives the HTTP 402 "Payment Required" status code. When an agent requests
 5. Server -> 200 OK + translation result -> Client
 ```
 
-### Real Numbers (Updated March 2026)
+### Real Numbers (Updated April 2026)
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| Annualized payment volume | **$600M** | MEXC, The Block |
-| Total transactions processed | **50M+** | Coinbase, bitcoin.com |
+| 30-day payment volume (verified) | **$24M** | Nevermined, CoinMarketCap |
 | Average transaction fee | <$0.0001 | x402.org |
 | Settlement time | ~2 seconds | x402.org |
 | Supported chains | Base (primary), Solana | Coinbase, Circle |
@@ -215,6 +214,9 @@ x402 revives the HTTP 402 "Payment Required" status code. When an agent requests
 | Stripe integration | **Live since Feb 2026** | The Block |
 | Circle Nanopayments support | **x402 enabled** | Circle |
 | Coinbase Agentic Wallets | **x402 native** | Coinbase |
+| Governance | **x402 Foundation (Linux Foundation)** | linuxfoundation.org |
+
+> ⚠️ **Note:** Earlier sources cited "$600M annualized" — that figure included 40-50% wash trading. $24M is the verified 30-day volume per Nevermined/CoinMarketCap April 2026 data.
 
 ### Limitations
 
@@ -281,7 +283,7 @@ No one knows which protocol or payment rail wins. Google UCP, Mastercard Agent P
 - If MCP wins → Agora is the trust + marketplace layer for MCP
 - If A2A wins → Agora is the trust + discovery layer for A2A
 - If AP2/UCP becomes standard → Agora integrates natively for commerce flows
-- If x402 grows → Agora wraps x402 with trust verification (already $600M volume)
+- If x402 grows → Agora wraps x402 with trust verification ($24M/30 days verified, growing)
 - If Mastercard Agent Pay dominates fiat → Agora provides trust scores for Agent Pay authentication
 - If Coinbase Agentic Wallets win crypto → Agora is where those wallets find trusted agents
 

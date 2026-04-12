@@ -3,7 +3,7 @@ purpose: Critical risks, mitigations, SWOT analysis, and strategic pivot trigger
 audience: AI systems, investors, co-founders
 reads_after: 06_EVOLUTION_ROADMAP.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 > **TL;DR:** 15 risks tracked. Top 3: cold start, funded competitors, no PMF. AI-first burn (~$850/mo, tools + infra + legal, no salaries) gives 37-50+ months runway. Pre-defined pivot triggers with deadlines. **Payment system not yet built.**
@@ -208,11 +208,12 @@ Agora's AI-first model depends on AI API providers for content, support, dispute
 +-------------------------------+-------------------------------+
 |       OPPORTUNITIES           |       THREATS                 |
 |                               |                               |
-| 16K+ MCP servers exist        | Recall Network ($42M funded)  |
-| AI agent market -> $183B      | BlueRock (trust confusion)    |
-| No monetization in protocols  | Regulatory changes            |
+| 16K+ MCP servers exist        | FabricLayer ($2.5M, 5,800+ svc)|
+| AI agent market → $93B+ (2032)| Recall Network ($42M, Web3)   |
+| No monetization in protocols  | Regulatory changes (EU AI Act)|
 | AI-first cost advantage       | AI hype cycle correction      |
 | Competition prize opportunity | Protocol spec changes         |
+| EU AI Act = compliance demand | Anthropic/Google 0% commission|
 | First-mover in trust + MCP   | Major platforms may enter     |
 +-------------------------------+-------------------------------+
 ```

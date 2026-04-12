@@ -1,5 +1,7 @@
 # Competitive Intelligence — Deep Research (March 2026)
 
+> ⚠️ **SUPERSEDED:** This file contains March 2026 data. For current competitive intelligence (April 2026), see **[05_MARKET_AND_COMPETITION.md](../05_MARKET_AND_COMPETITION.md)** which includes 15+ competitors, Trust Stack analysis, and updated protocol war data.
+
 > Source: Gemini Deep Research, verified data with named sources
 > Date: 2026-03-14
 

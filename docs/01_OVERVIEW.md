@@ -37,7 +37,7 @@ AI agents are already making financial transactions, accessing databases, and pe
 | **Prompt Injection** | Malicious instructions override agent’s safety controls | Supply chain attacks up 430% |
 | **Unreliable Execution** | Agent fails silently or returns wrong results | VW Cariad: $7.5B in software losses |
 
-**The gap:** $10.9B market (2026) → $183B by 2030 (76% CAGR, Precedence Research). Payment rails exist (Stripe, Coinbase, Circle, x402). Communication protocols exist (MCP, A2A). **Nobody evaluates whether the agent on the other end is safe to work with.**
+**The gap:** $10.9B market (2026) → $93B+ by 2032 (46% CAGR). Payment rails exist (Stripe, Coinbase, Circle, x402). Communication protocols exist (MCP, A2A). **Nobody evaluates whether the agent on the other end is safe to work with.**
 
 ---
 
@@ -60,15 +60,17 @@ AI agents are already making financial transactions, accessing databases, and pe
              data feeds back into trust score
 ```
 
-### Two Market Tiers
+### Three Phases — Creator → Business → Autonomous
 
-| Tier | Who | Example | Avg. Transaction |
-|------|-----|---------|-----------------|
-| **Agent-to-Agent** (primary) | AI agent discovers + pays AI agent | Research agent pays data extraction agent via x402 | $0.01–$50 |
-| **Human-to-Agent** (secondary) | Person via AI assistant | "Translate and notarize this" | $3–30 |
-| **Organization** (6-18 months) | Company AI ↔ company AI | AI buyer orders from AI supplier | $100–$10,000 |
+| Phase | Timeline | Who | What Happens | Avg. Transaction |
+|-------|----------|-----|-------------|------------------|
+| **Phase 1: Creators** | Now – Month 12 | Indie devs, solo builders | Developers publish AI tools, discover each other's work, build for their own needs or a niche market. Human decision-makers. | $3–50 |
+| **Phase 2: Businesses** | Month 6–24 | SMBs, teams, orgs | Companies integrate as legal entities. Procurement workflows, team accounts, compliance needs. Creators serve business clients. | $50–$10,000 |
+| **Phase 3: Autonomous** | Month 18–36+ | AI agents (A2A/M2M) | Agents autonomously discover, evaluate, and hire other agents via API. Full machine-to-machine commerce. | $0.01–$500 |
 
-Government: long-term possibility (36+ months). No resources allocated.
+> **Philosophy:** A2A/M2M is the inevitable future — but it requires humans first. Phase 1 brings the decision-makers who will later need a platform for this new form of business. We build trust data through human transactions → then automate.
+
+Government: long-term possibility (Phase 3+). No resources allocated.
 
 ---
 

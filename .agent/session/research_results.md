@@ -79,3 +79,32 @@
 
 22. **Cloud Security Alliance** — Agentic Trust Framework (ATF). Zero trust for agents. Continuous verification.
     - Source: cloudsecurityalliance.org
+
+---
+
+## ADDITIONAL FINDINGS — April 11, 2026 (Session 2: Document Audit)
+
+23. **Recall Network** — $42M total funding (Multicoin Capital, Coinbase Ventures). Born from merger of Textile + 3Box Labs. AgentRank = on-chain reputation via competitive arenas + $RECALL staking. Built on Base L2. Token launched Oct 2025.
+    - $RECALL token = $0.04 (April 2026), -95% from ATH ($0.84). Market cap ~$10-35M.
+    - AgentRank uses: Performance (head-to-head competitions) + Certainty (staking). Skill-specific ratings.
+    - **Key difference from Agora:** Web3 approach (staking, on-chain) vs our Web2 SaaS approach.
+    - Source: coinmarketcap.com, recall.network, blocktelegraph.io, bitget.com
+
+24. **FabricLayer Trust Index** — officially launched **March 2026**. 5,800+ AI services scanned (up from ~2,500 at seed announcement). 23 sub-signals across 6 dimensions. Scoring 0-5.0. **FREE API** for programmatic trust checks. Featured Publisher Reports available (e.g., LangChain ecosystem).
+    - 6 dimensions: Vulnerability & Safety (25%), Operational Health (20%), Maintenance Activity (20%), Adoption (15%), Transparency (10%), Publisher Trust (10%).
+    - **All static/pre-deploy signals.** No behavioral/runtime scoring.
+    - Source: fabriclayer.ai, trust.fabriclayer.ai
+
+25. **Creator Economy for AI Developers (2026 trends):**
+    - Outcome-based pricing replacing flat subscriptions: charge for results, not tokens/compute.
+    - "Tool fatigue" driving consolidation: creators want single dashboards.
+    - Data sovereignty: creators increasingly want to own their audience data.
+    - "Vibe coding" commoditized development speed → competitive advantage shifts to finding revenue signals.
+    - Source: medium.com, stan.store, kdnuggets.com
+
+26. **Marketplace Phase Strategy (Etsy/Shopify precedent):**
+    - Phase 1: Supply & Velocity — focus on DX, community-led growth, simple monetization.
+    - Phase 2: Utility & Trust — orchestration, governance, sandbox/testing.
+    - Phase 3: Enterprise B2B — outcome-based pricing, strategic partnerships, human-in-the-loop.
+    - Etsy model = marketplace owns discovery. Shopify model = merchant owns relationship. Agora = hybrid.
+    - Source: multiple (mercury.com, chargebee.com, ibm.com, medium.com)

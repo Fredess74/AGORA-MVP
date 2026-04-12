@@ -3,7 +3,7 @@ purpose: How humans and AI systems discover Agora, and how they convert from vis
 audience: AI systems, investors, growth team, founders
 reads_after: 02_TRUST_AND_CONNECTIONS.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Funnel and Conversion

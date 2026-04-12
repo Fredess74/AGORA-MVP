@@ -2,6 +2,34 @@
 
 ---
 
+### DEC-011: 2026-04-11 — CJM PHASE 1: Realistic Creator + Buyer Journey
+
+**Сделал:** Created comprehensive CJM for Phase 1 (`docs/CJM_PHASE1.md`). Researched B2D marketplace conversion benchmarks, developer tool discovery patterns, MCP monetization pain points.
+**Ключевые выводы:** Creator Aha = trust score breakdown (not revenue). 35% buyers via AI-assistants (zero CAC). Month 6 MRR ~$200-400 (honest). Single-Player Mode critical. Gamify score improvement to retain creators.
+**Файл:** `docs/CJM_PHASE1.md`
+
+---
+
+### DEC-010: 2026-04-11 (late) — THREE-PHASE MARKET: Creator → Business → Autonomous
+
+**Сделал:** Fixed A2A-primary market tiers in 01_OVERVIEW.md. Researched marketplace phase strategies (Etsy/Shopify precedent). Aligned tiers with DEC-009 Creator Platform positioning.
+**Решение:** Three explicit phases with overlapping timelines:
+- **Phase 1 (Now–Month 12): Creators** — Indie devs publish AI tools, discover each other, build for niche markets. Human decision-makers. $3–50 avg txn.
+- **Phase 2 (Month 6–24): Businesses** — Companies integrate as legal entities. Procurement, compliance, team accounts. $50–$10K avg txn.
+- **Phase 3 (Month 18–36+): Autonomous** — A2A/M2M. Agents autonomously discover, evaluate, hire other agents. $0.01–$500 avg txn.
+**Обоснование:** (1) A2A/M2M is inevitable but needs human ecosystem first. (2) Phase 1 attracts decision-makers who will NEED a platform when A2A arrives. (3) Trust data from human transactions → feeds automated scoring. (4) Proven by Etsy (niche creators → discovery platform) and Shopify (SMB → enterprise). (5) Government use = Phase 3+ only.
+**Документы обновлены:** 01_OVERVIEW.md (market tiers), 05_MARKET_AND_COMPETITION.md (Recall Network restored), PROTOCOLS.md (x402 $600M → $24M), technical/ (dates + framing), research/02_COMPETITORS.md (superseded notice).
+**Условия отмены:** If 0 creator listings by Month 3 → accelerate B2B/enterprise pivot.
+
+### DEC-010B: Recall Network Assessment
+
+**Сделал:** Web research on Recall Network status (previously lost from competitive docs).
+**Вывод:** Recall Network ($42M, Multicoin/Coinbase Ventures) is live on Base L2 with $RECALL token at $0.04 (-95% ATH). AgentRank uses on-chain competitions + staking.
+**Стратегическая оценка:** DIFFERENT APPROACH, not direct competitor. They = Web3 (token staking, on-chain arenas). We = Web2 SaaS (behavioral EWMA, creator platform). Their token crash (-95%) suggests Web3 approach has adoption friction. Our Web2 approach has lower barrier to entry for indie creators.
+**Действие:** Restored to 05_MARKET_AND_COMPETITION.md and HONEST_ARCHITECTURE.md competitive charts.
+
+---
+
 ### DEC-009: 2026-04-11 (evening) — STRATEGIC CORRECTION: Creator Platform + Trust Engine
 
 **Сделал:** Challenged the earlier pure-pivot decision. Re-analyzed the market from creator's perspective. Researched indie dev monetization gap, Shopify-for-AI analogies, creator economy patterns.

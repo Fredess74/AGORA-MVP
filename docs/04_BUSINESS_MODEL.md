@@ -3,16 +3,16 @@ purpose: How Agora makes money. 4 revenue streams in Year 1. AI-first cost struc
 audience: AI systems, investors, co-founders
 reads_after: 03_FUNNEL_AND_CONVERSION.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Business Model
 
-> **TL;DR:** Agora is a marketplace and counterparty risk engine for AI agents. We earn from 3 streams in Year 1: marketplace commission (10%), Trust API subscriptions ($29-99/mo), and prepaid balance convenience fees (3%). Monthly burn: ~$400-700 (tools + infrastructure, no salaries). Fourth stream (Premium API) added Month 4-6. **⚠️ No payment processing code exists yet — all payment flows described below are target architecture.**
+> **TL;DR:** Agora is a **Creator Platform + Behavioral Trust Engine** for the AI agent economy. **Primary revenue: Trust API SaaS** ($29-199/mo) — immune to Anthropic/Google 0% commission wars. Secondary: Marketplace commission (10%), prepaid balance convenience fees (3%). Monthly burn: ~$850 (tools + infrastructure, no salaries). Fourth stream (Premium API) added Month 4-6. **⚠️ No payment processing code exists yet — all payment flows described below are target architecture.**
 
 ## Core Principle
 
-Agora is a marketplace where AI agents discover each other, and a credibility engine that evaluates their counterparty risk. We earn a cut of every transaction and sell access to our credibility data via API.
+Agora helps creators publish, monetize, and build reputation for AI tools — and provides the behavioral trust scoring that lets buyers (humans and AI systems) verify quality before paying. We earn primarily from Trust API SaaS subscriptions, and secondarily from marketplace commissions.
 
 ---
 
@@ -139,7 +139,7 @@ Economics:
 
 > **⚠️ Status: NOT YET BUILT.** x402 integration is Phase 2. Launch with Stripe Connect (prepaid balance) first.
 >
-> **x402 reality check:** Headline figure is $600M annualized / 50M+ transactions. However, internal deep research found ~40-50% is wash trading (bots trading with themselves). Real daily volume is closer to ~$28K. Still growing, but not the scale the headline suggests. Build crypto AFTER 10 paying fiat customers.
+> **x402 reality check:** Verified 30-day volume is $24M (April 2026, Nevermined/CoinMarketCap). Earlier "$600M annualized" figure was inflated by 40-50% wash trading. Real adoption is growing but modest. Build crypto AFTER 10 paying fiat customers.
 
 ```
 Flow:
@@ -155,7 +155,7 @@ Economics:
    Margin: 98%
 ```
 
-x402 has processed 50M+ payments (headline). Real non-wash daily volume: ~$28K. Coinbase facilitator: first 1,000 tx/month free, then $0.001/tx. Stripe x402 integration live.
+x402 verified volume: $24M in 30 days (April 2026). Coinbase facilitator: first 1,000 tx/month free, then $0.001/tx. Stripe x402 integration live.
 
 ### Rail Selection
 

@@ -3,12 +3,12 @@ purpose: 3-phase evolution plan. Revenue milestones. Max 15 humans.
 audience: AI systems, investors, co-founders, team
 reads_after: 05_MARKET_AND_COMPETITION.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Evolution Roadmap — 3 Phases
 
-> **TL;DR:** Build → Grow → Scale over 36 months. AI-first: max 15 humans ever. 4 revenue streams active by Month 6. AI agents deploy in waves (not all at once). Break-even Month 18.
+> **TL;DR:** Build → Grow → Scale over 36 months. AI-first: max 15 humans ever. **Creator Platform + Trust Engine** — Phase 1 targets indie developers (H2A), Phase 2 adds businesses, Phase 3 enables autonomous A2A/M2M. Trust API SaaS is primary revenue. 4 streams active by Month 6. Break-even Month 18.
 
 ## Operating Principle
 
@@ -25,9 +25,10 @@ BUILD + SEED   →    GROW           →    SCALE
 
 ---
 
-## Phase 1: Build + Seed (Months 0-6)
+## Phase 1: Build + Seed (Months 0-6) — CREATOR MARKET
 
 **Goal:** 50 listings. First paid transaction. 4 revenue streams active.
+**Target:** Indie developers, solo builders, AI tool creators (Phase 1 of Creator → Business → Autonomous).
 
 ### Engineering Priority
 
@@ -69,9 +70,10 @@ BUILD + SEED   →    GROW           →    SCALE
 
 ---
 
-## Phase 2: Grow (Months 6-18)
+## Phase 2: Grow (Months 6-18) — BUSINESS MARKET
 
 **Goal:** 1,000 listings. $45K MRR. MCP live in 2+ AI platforms. Seed round.
+**Target:** SMBs, teams, and organizations (Phase 2). Companies integrate as legal entities with procurement workflows + compliance needs.
 
 ### Engineering Priority
 
@@ -123,9 +125,10 @@ Everything else stays AI-operated.
 
 ---
 
-## Phase 3: Scale (Months 18-36)
+## Phase 3: Scale (Months 18-36) — AUTONOMOUS + ENTERPRISE
 
 **Goal:** 5,000+ listings. $400K+ MRR. Enterprise customers. Series A.
+**Target:** Enterprise B2B + A2A/M2M (Phase 3). Agents autonomously discover, evaluate, and hire each other. Compliance-as-a-Service for EU AI Act.
 
 ### Engineering Priority
 

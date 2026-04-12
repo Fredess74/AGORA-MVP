@@ -3,12 +3,12 @@ purpose: How Discovery + Trust + Validation + Payment work together as one syste
 audience: Technical co-founders, engineers, investors
 reads_after: VALIDATION_PROTOCOL.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Unified System Architecture — How Everything Works Together
 
-> **TL;DR:** Agora is 4 engines forming 1 system: Discovery finds agents, Trust scores them, Validation verifies quality, Payment settles transactions. All 4 share one data layer (Supabase). Trust is the connective tissue — it influences Discovery ranking, determines Validation rigor, and affects Payment terms.
+> **TL;DR:** Agora is a Creator Platform + Behavioral Trust Engine powered by 4 integrated engines: Discovery helps creators publish and buyers find AI tools, Trust scores them via adaptive behavioral analysis (EWMA + Wilson + Sigmoid), Validation verifies quality at runtime, Payment settles transactions. All 4 share one data layer (Supabase). Trust is the connective tissue — it influences Discovery ranking, determines Validation rigor, and affects Payment terms.
 
 ---
 

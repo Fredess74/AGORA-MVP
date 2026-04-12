@@ -2,7 +2,7 @@
 purpose: Tactical playbook for winning both competitions in the next month.
 audience: Team only
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Competition Playbook — March-June 2026
@@ -203,7 +203,7 @@ Agora. Verify AI. Trust the future."
 
 ### Key Messages (Memorize These)
 
-1. **"$600M in agent payments. Zero trust infrastructure."** — The problem
+1. **"$24M in agent payments last month alone. Zero trust infrastructure."** — The problem
 2. **"The credit score for AI."** — What we are
 3. **"Open formula. Proprietary data. Like FICO."** — Moat
 4. **"We're the only platform computing adaptive trust across all AI ecosystems."** — Differentiation

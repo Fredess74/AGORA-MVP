@@ -3,7 +3,7 @@ purpose: Financial projections, scenarios, and funding requirements. AI-first co
 audience: Investors, co-founders
 reads_after: 07_RISK_ANALYSIS.md
 language: English
-last_updated: 2026-03-30
+last_updated: 2026-04-11
 -->
 
 # Financial Projections

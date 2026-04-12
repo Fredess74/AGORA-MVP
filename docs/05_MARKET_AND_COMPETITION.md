@@ -215,17 +215,17 @@ All systems solve logistics: **HOW** do agents discover, authorize, pay? None so
 
 ### NEW Funded Competitors (Q1 2026)
 
-| Competitor | Funding | Focus | Threat to Agora |
-|-----------|---------|-------|-----------------|
-| **FabricLayer** | $2.5M seed (Feb 2026) | "Trust Index" for AI tools — transparency, data handling, performance scores | 🔴 DIRECT — similar product concept |
+| **FabricLayer** | $2.5M seed (Feb 2026) | "Trust Index" — 5,800+ AI services scanned, free API, 23 sub-signals across 6 dimensions, scoring 0-5.0 | 🔴 DIRECT — similar product, launched Mar 2026 |
 | **OpenBox AI** | $5M seed (Mar 2026) | Enterprise AI trust platform — governance, verification, oversight | 🔴 DIRECT — enterprise trust |
 | **Trent AI** | €11M seed (Apr 2026) | Layered security for agentic era autonomous workflows | 🟠 ADJACENT — security, not trust scoring |
+| **Recall Network** | $42M total (Multicoin Capital, Coinbase Ventures) | AgentRank — on-chain reputation via competitive arenas + $RECALL staking. Web3/Base L2. Token at $0.04 (-95% ATH) | 🟠 DIFFERENT APPROACH — Web3 staking vs our Web2 behavioral scoring |
 | **Tumeryk** | Funded | AI Trust Score™ (trademarked) — adversarial testing: hallucination, prompt injection | 🟠 ADJACENT — pre-deploy testing |
 | **Akto** | Funded (Jun 2025) | First MCP security platform — discovery, red teaming, real-time monitoring | 🟠 ADJACENT — security scanning |
 | **NeuralTrust** | Seed (2022) | AI gateway, zero-trust security, automated red teaming | 🟡 PERIPHERAL — general AI security |
 | **BlueRock** | F4 Fund backed | Runtime monitoring, pre-execution enforcement for 9,000+ MCP servers | 🟠 ADJACENT — monitoring |
 
 > ⚠️ **$40M+ deployed to MCP security seed rounds in Q1 2026 alone.** (Source: SoftwareStrategiesBlog)
+> Recall Network represents an additional **$42M in Web3 AI trust infrastructure.**
 
 ### MCP Discovery Platforms (Not Trust, But Overlap)
 
@@ -247,17 +247,17 @@ All systems solve logistics: **HOW** do agents discover, authorize, pay? None so
 
 ### Updated Competitive Comparison
 
-| Capability | FabricLayer | Akto | BlueRock | Glama | Skyfire | **Agora** |
-|-----------|------------|------|---------|-------|---------|----------|
-| Trust scoring (behavioral) | Static index | No | No | No | No | **Yes (EWMA + adaptive 4-tier)** |
-| Runtime monitoring | No | Yes | Yes | No | No | **Planned** |
-| Creator marketplace | No | No | No | Directory | No | **Yes** |
-| Creator monetization | No | No | No | No | No | **Yes (planned)** |
-| Embeddable badge | No | No | No | No | No | **Planned** |
-| CLI tool | No | CLI | CLI | No | No | **Planned** |
-| Payment processing | No | No | No | No | Yes | **Planned** |
-| Skills category | No | No | No | No | No | **Yes (10 built)** |
-| MCP-native discovery | No | Scanning | Scanning | Yes | No | **Yes** |
+| Capability | FabricLayer | Recall Network | Akto | BlueRock | Glama | Skyfire | **Agora** |
+|-----------|------------|---------------|------|---------|-------|---------|----------|
+| Trust scoring (behavioral) | Static index (23 signals) | On-chain staking | No | No | No | No | **Yes (EWMA + adaptive 4-tier)** |
+| Runtime monitoring | No | On-chain arenas | Yes | Yes | No | No | **Planned** |
+| Creator marketplace | No | Skill markets (Web3) | No | No | Directory | No | **Yes** |
+| Creator monetization | No | Token staking | No | No | No | No | **Yes (planned)** |
+| Embeddable badge | No | No | No | No | No | No | **Planned** |
+| CLI tool | No | No | CLI | CLI | No | No | **Planned** |
+| Payment processing | No | $RECALL token | No | No | No | Yes | **Planned** |
+| Skills category | No | Skill-specific arenas | No | No | No | No | **Yes (10 built)** |
+| MCP-native discovery | No | No (Web3 focus) | Scanning | Scanning | Yes | No | **Yes** |
 
 ### The Key Insight (Updated)
 
