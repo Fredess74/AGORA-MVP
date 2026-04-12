@@ -2,7 +2,7 @@
 purpose: What the MVP is, who it's for, what's in it. Musk Algorithm applied.
 audience: Team, judges, investors
 language: English
-last_updated: 2026-03-08
+last_updated: 2026-04-11
 -->
 
 # MVP Concept — Agora
@@ -10,13 +10,13 @@ last_updated: 2026-03-08
 ## The One-Liner (Pick Your Audience)
 
 | Audience | One-Liner |
-|----------|-----------|
-| **Everyone** | **"We're Carfax for AI — before you trust an AI with your data or money, you check its Agora score."** |
-| Investors | "The FICO score for AI agents. Before machines spend money on each other, they check us." |
-| Developers | "List your AI agent. Get a trust score. Get paid. No sales team needed." |
-| Enterprise | "42% of companies abandoned AI in 2025 because they picked wrong vendors. We fix that." |
-| Press | "Your AI assistant is about to hire a stranger. Nobody's checking their references. We are." |
-| Pitch Hook | "McDonald's AI vendor leaked 64 million records. VW lost $7.5 billion on unreliable AI software. The AI economy has zero quality control. We're building it." |
+|----------|--------|
+| **Everyone** | **"The place where AI tool creators publish, get trust-verified, and earn — the Etsy for the AI economy."** |
+| Investors | "Creator platform + behavioral trust engine. Indie devs publish AI tools. Buyers find trusted ones. Creators earn per use." |
+| Developers | "List your AI agent. Get a behavioral trust score. Embed a badge. Get paid. No sales team needed." |
+| Enterprise | "42% of companies abandoned AI in 2025 because they picked wrong vendors. We score agents on behavior, not marketing." |
+| Press | "16,000 AI tools exist. Zero way to know which ones actually work. We're building the quality layer." |
+| Pitch Hook | "$40M in seed funding went to AI security startups this quarter. But nobody built where creators earn and buyers find trusted tools. We did." |
 
 ---
 
@@ -63,20 +63,19 @@ Musk Step 2: deleted 3 features from previous version. If we're not adding them 
 |---|---------|-------------------|
 | 1 | **Agent Catalog** — searchable list with trust scores | Without this, no marketplace |
 | 2 | **Trust Score on Every Card** — 0.0-1.0, computed, not rated | This IS Agora. Remove this = remove the company |
-| 3 | **MCP Server** — AI assistants discover us automatically | Primary growth channel. Zero marketing spend |
-| 4 | **Stripe Checkout** — top up balance, one-click buy | Without payment = no revenue |
-| 5 | **Creator Listing Flow** — sign up, list your agent | Without supply = no marketplace |
+| 3 | **Creator Listing Flow** — sign up, list your agent, see analytics | Without supply = no marketplace |
+| 4 | **MCP Server** — AI assistants discover us automatically | Primary growth channel |
+| 5 | **Embeddable Trust Badge** — SVG for GitHub README | Viral distribution (Shields.io model) |
 
-### What We DELETED from MVP
+### What We DELETED from MVP (and status)
 
-| Deleted | Why |
-|---------|-----|
-| ~~Free Trust Badge~~ | Growth hack. Month 2. Not MVP |
-| ~~Creator Analytics Dashboard~~ | Nice-to-have. Show earnings only |
-| ~~Advanced User Profiles~~ | Login + balance. That's it |
-| ~~x402 Crypto Payments~~ | Adds 2 weeks. Fiat first |
-| ~~Escrow/Disputes~~ | Honor system first. Add when needed |
-| ~~Agent Detail Page (full)~~ | Simple modal. Full page later |
+| Feature | Status | Why |
+|---------|--------|-----|
+| ~~Stripe Checkout~~ | Deferred to post-LLC (Aug 2026) | F-1 visa blocks revenue |
+| ~~x402 Crypto Payments~~ | Deferred | Fiat first, post-LLC |
+| ~~Escrow/Disputes~~ | Deferred | Honor system first |
+| ~~CLI Tool `npx agora-trust`~~ | P0 post-pitch | Developer flywheel entry point |
+| ~~Trust API (public endpoint)~~ | P0 post-pitch | Core revenue product |
 
 ---
 
@@ -109,17 +108,22 @@ Musk Step 2: deleted 3 features from previous version. If we're not adding them 
 
 ---
 
-## Revenue — Simplified
+## Revenue — Updated (SaaS-First)
 
-**One number to remember: 10% of every transaction.**
+**Primary: Trust API SaaS subscriptions**
 
-At $5 average transaction:
+| Tier | Price | What You Get |
+|------|-------|-------------|
+| Free | $0 | 100 trust queries/mo, basic badge |
+| Pro | $29/mo | 5K queries, analytics dashboard, priority badge |
+| Business | $99/mo | 50K queries, CI/CD integration, bulk scoring |
+| Enterprise | $199/mo | Unlimited, SLA, compliance reports |
 
-- 100 transactions/day = $50/day revenue = $1,500/mo
-- 1,000/day = $15,000/mo
-- 10,000/day = $150,000/mo
+**Secondary: 10% marketplace commission** (bonus, not core — Claude Marketplace offers 0%)
 
-Burn: $4,900/mo. Break-even at ~170 transactions/day.
+> **Why SaaS-first:** Anthropic, Google, OpenAI all building zero-fee marketplaces. Commission = race to zero. Trust data = monopoly asset nobody else has.
+
+Burn: ~$850/mo. Break-even at ~30 Pro subscribers or ~85 transactions/day.
 
 ---
 

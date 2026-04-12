@@ -1,6 +1,6 @@
 # AGORA
 
-**Marketplace & Counterparty Risk Engine for the AI Agent Economy** — behavioral credibility scores, searchable agent registry, and dual-rail payments (fiat + x402).
+**Creator Platform & Behavioral Trust Engine for the AI Agent Economy** — the place where indie developers publish, monetize, and build reputation for AI agents, MCP servers, and Skills. Behavioral trust scoring (EWMA + Wilson + Sigmoid) is our core IP — the missing layer in the agentic commerce stack that Visa, Google, and Stripe don't build.
 
 ## 👥 Team
 
@@ -105,18 +105,34 @@ User Query → FormulatorAgent (Gemini) → MCP search (Supabase)
 
 ## Revenue Model
 
-| Stream | Pricing | Timeline |
-|--------|---------|----------|
-| Marketplace Commission | 10% per transaction | Day 1 |
-| Trust API Subscriptions | Free/29/99/mo | Day 1 |
-| Prepaid Balance Fees | 3% convenience | Month 1 |
-| Premium API | $29-199/mo | Month 4-6 |
+| Stream | Pricing | Timeline | Priority |
+|--------|---------|----------|----------|
+| Trust API SaaS | Free/$29/$99/$199 mo | Day 1 (post-LLC) | 🔴 PRIMARY |
+| Marketplace Commission | 10% per transaction | Day 1 (post-LLC) | 🟡 SECONDARY |
+| Featured Listings / Badges | $9-29/mo per creator | Month 2 | 🟡 SECONDARY |
+| Compliance API (EU AI Act) | $5K-50K/year | Month 6-12 | 🔵 PHASE 2 |
+
+> **Why SaaS-first:** Claude Marketplace = 0% commission. Google UCP = native discovery. Commission revenue is vulnerable to platform zero-fee strategies. Trust data = monopoly asset.
 
 Phase 1 burn: ~$850/mo (tools + infra + legal, no salaries). Break-even target: ~$2,000-5,000/mo.
 
 **Product Architecture (DEC-008):**
-- **Website (agora.market):** Search, listing management, analytics. NO in-browser chat.
+- **Website (agora.market):** Creator platform — publish, manage listings, analytics dashboard. Consumer side — search, compare trust scores, buy. NO in-browser chat.
 - **AI Assistants (Claude/Gemini/ChatGPT):** Agent discovery + execution via Agora MCP Server.
+- **CLI Tool (planned):** `npx agora-trust` — free trust report for any GitHub repo/MCP server.
+- **Embeddable Badge (planned):** SVG trust badge for GitHub READMEs — viral distribution.
+- **Trust API (planned):** Public JSON endpoint for programmatic trust queries.
+
+**Positioning (DEC-009, April 2026):**
+- Agora = **Creator Platform** (Etsy/npm for AI) + **Behavioral Trust Engine** (FICO for AI)
+- We complement Visa (identity), Google (governance), Stripe (payments) — we are the **behavioral trust layer** they don't build
+- Target: indie developers and small teams who build AI tools but have 0 distribution and 0 monetization
+
+**Competitive Context (April 2026):**
+- 15+ funded competitors in adjacent spaces ($40M+ in sector seed funding)
+- Big Tech building closed ecosystems: Claude Marketplace (0% commission), Google UCP, OpenAI ACP
+- Our defensible moat: adaptive 6-component behavioral trust scoring (calculator.ts, 323 lines, 31 tests)
+- Nobody answers "how WELL will this agent perform" — Visa checks identity, MC checks authorization, we check quality
 
 ## Development Commands
 

@@ -2,6 +2,26 @@
 
 ---
 
+### DEC-009: 2026-04-11 (evening) — STRATEGIC CORRECTION: Creator Platform + Trust Engine
+
+**Сделал:** Challenged the earlier pure-pivot decision. Re-analyzed the market from creator's perspective. Researched indie dev monetization gap, Shopify-for-AI analogies, creator economy patterns.
+**Решение:** **Corrected pivot**: Not "kill the marketplace" → "reposition the marketplace as a Creator Platform." Agora = **Etsy for AI tools + FICO for AI quality.** The marketplace LIVES — but as a creator empowerment platform, not as an App Store competitor.
+**Key insight:** Nobody serves the indie AI developer. Glama/Smithery = free directories (0 monetization). Claude Marketplace = enterprise-only. Google UCP = for Walmart. AWS Marketplace = $25K minimum. **Agora is the only place where a solo creator can publish, get trust-verified, and earn.**
+**Обоснование:** (1) Big Tech serves corporations, not indie creators. (2) 16K+ MCP servers, 0 monetization for creators. (3) Marketplace + Trust Engine = category creation. (4) Trust = quality layer of marketplace, not standalone product. (5) Revenue: SaaS primary, commission secondary, creator upsells = new stream.
+**Narrative:** "Every creator economy needs a quality layer. The AI economy doesn't have one. We're building it."
+**Documents updated:** CONTEXT.md, 01_OVERVIEW.md, 05_MARKET_AND_COMPETITION.md, MVP_CONCEPT.md, GAMMA_PROMPT_V6_FINAL.md
+**Условия отмены:** Month 3: <20 creator listings and 0 CLI downloads → pivot to standalone Trust API.
+
+### 2026-04-11 — STRATEGIC PIVOT: Infrastructure-First (CORRECTED by DEC-009)
+**Решение:** ~~Marketplace → pure infrastructure~~ → **Corrected**: Marketplace LIVES as Creator Platform. Trust Engine = quality layer.
+**Файлы:** Updated in DEC-009 sweep.
+
+### 2026-04-11 — POSITIONING: "Missing Piece in the Trust Stack" (CONFIRMED)
+**Решение:** ✅ CONFIRMED — Complementary to Big Tech + Creator Platform that Big Tech doesn't serve.
+**Файлы:** Updated in DEC-009 sweep.
+
+---
+
 ### 2026-04-01 — Trust API SaaS as PRIMARY revenue
 **Сделал:** Repositioned Trust API SaaS ($29-199/mo) as primary revenue stream across all docs. Commission (10%) moved to "bonus, not core."
 **Почему:** Anthropic Claude Marketplace launched with 0% commission. Google and OpenAI building same. Commission revenue is vulnerable to platform subsidies. Trust API SaaS = defensible — nobody else has behavioral trust data.

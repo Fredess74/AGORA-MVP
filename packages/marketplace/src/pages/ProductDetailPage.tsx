@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { fetchProductBySlug } from '../lib/database';
 import { Product } from '../types';
 import TrustBadge from '../components/TrustBadge';
+import TrustAssessment from '../components/TrustAssessment';
 import TryAgent from '../components/TryAgent';
 import PricingTiers from '../components/PricingTiers';
 import ReviewSection from '../components/ReviewSection';
@@ -182,6 +183,9 @@ export default function ProductDetailPage() {
                             }
                         </div>
                     </div>
+
+                    {/* Live Trust Assessment */}
+                    <TrustAssessment product={product} />
 
                     {/* Quick Start */}
                     <div className="card">

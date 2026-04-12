@@ -1,9 +1,9 @@
-﻿<!--
+<!--
 purpose: Market sizing, named competitors, and strategic positioning based on real data.
 audience: AI systems, investors, co-founders
 reads_after: 04_BUSINESS_MODEL.md
 language: English
-last_updated: 2026-03-10
+last_updated: 2026-04-11
 -->
 
 # Market & Competition
@@ -22,7 +22,7 @@ Global AI agent market: $10.91B in 2026, projected 46% CAGR.
 | Enterprise AI agent deployment | 25% of enterprises | 40% projected | 50%+ | Majority | Gartner |
 | SaaS pricing shift to usage-based | 83% of AI-native SaaS | Growing | Dominant | Standard | Deloitte |
 
-### Protocol Ecosystem Size
+### Protocol Ecosystem Size (Updated April 2026)
 
 | Metric | Value | Source |
 |--------|-------|--------|
@@ -30,12 +30,16 @@ Global AI agent market: $10.91B in 2026, projected 46% CAGR.
 | Published MCP servers | 16,000+ | MCP registries, dev.to |
 | A2A partner organizations | 150+ | Google, Linux Foundation |
 | AP2 launch partners | 60+ | Google (Mastercard, PayPal, Shopify) |
-| x402 annualized volume | **$600M** | MEXC, The Block |
-| x402 total transactions | **50M+** | Coinbase, bitcoin.com |
+| x402 30-day volume (verified) | **$24M** | Nevermined, CoinMarketCap (April 2026) |
+| Stablecoin total volume (2025) | **$33 trillion** | Forbes, CryptoRank |
+| AAIF members | 170+ | Linux Foundation (April 2026) |
+| MCP security sector seed funding | $40M+ | SoftwareStrategiesBlog |
 | MCP monetization built in | None | Protocol specification |
 | MCP trust verification built in | None | Protocol specification |
 
-The gap is clear: massive supply of AI tools, growing payment infrastructure, **zero standardized trust**, zero marketplace for agent discovery.
+> ⚠️ **Previous version cited x402 "$600M annualized" — that figure included 40-50% wash trading. Corrected to $24M verified 30-day volume per Nevermined/CoinMarketCap April 2026 data.**
+
+The gap is clear: massive supply of AI tools, growing payment infrastructure, **zero behavioral trust scoring**, fragmented creator monetization.
 
 ---
 
@@ -97,90 +101,176 @@ The gap is clear: massive supply of AI tools, growing payment infrastructure, **
 
 ---
 
-## Agent Economy Payment Infrastructure (NOT Competitors — Complementary)
+## The Agentic Commerce Trust Stack (April 2026)
 
-Major financial institutions and crypto platforms are building payment rails for AI agents. ALL launched Jan-Feb 2026. NONE provide trust scoring.
+> **Key Positioning Insight:** Every protocol solves ONE problem. Nobody solves behavioral trust.
+
+```
+THE AGENTIC COMMERCE TRUST STACK
+
+┌────────────────────────────────────────────────────┐
+│  Settlement     x402 / Stripe MPP / Visa IC       │ ← Who pays?
+├────────────────────────────────────────────────────┤
+│  Discovery      ACP / UCP / MCP registries        │ ← What's available?
+├────────────────────────────────────────────────────┤
+│  Governance     AP2 / Mastercard Verifiable Intent │ ← Is this authorized?
+├────────────────────────────────────────────────────┤
+│  Identity       Visa TAP / Skyfire / Scalekit      │ ← Is this a real agent?
+├════════════════════════════════════════════════════╡
+│  BEHAVIORAL     ★ AGORA ★                         │ ← Will this agent
+│  TRUST          Trust Engine v2                    │   PERFORM WELL?
+└────────────────────────────────────────────────────┘
+
+"Everyone verifies WHO the agent is. Nobody verifies HOW WELL it works."
+```
+
+---
+
+## Agent Economy Infrastructure (Complementary, NOT Competitors)
+
+### NEW: Visa Intelligent Commerce Connect (April 8, 2026)
+
+| Aspect | Detail |
+|--------|--------|
+| Launched | **April 8, 2026** (pilot phase) |
+| What it does | Protocol-agnostic "on-ramp" for agentic commerce. Single integration for agent-initiated payments |
+| Supports | TAP, MPP, ACP, UCP — ALL protocols through one gateway |
+| Partners | AWS, Aldar, Highnote, Mesh, Payabli, Diddo, Sumvin |
+| Trust scoring | **None** — payment gateway only |
+| Source | visa.com, techinformed.com |
+
+### NEW: Stripe Machine Payments Protocol (MPP) (March 18, 2026)
+
+| Aspect | Detail |
+|--------|--------|
+| Launched | **March 18, 2026** |
+| What it does | Session-based streaming micropayments. $0.01 USDC minimum. Batch settlement |
+| Key feature | Supports stablecoins + fiat (cards, BNPL) via Stripe infrastructure |
+| Trust scoring | **None** |
+| Source | workos.com, formo.so |
+
+### NEW: x402 Foundation (Linux Foundation)
+
+| Aspect | Detail |
+|--------|--------|
+| Status | Under Linux Foundation governance. Founding members: Cloudflare, Google, Visa, Mastercard, Stripe |
+| Volume | **$24M in 30-day period** (April 2026, verified via Nevermined/CoinMarketCap) |
+| Key integration | Nevermined + Visa IC + x402 = fiat settlement through existing Visa card rails |
+| Trust scoring | **None** |
 
 ### Google Universal Commerce Protocol (UCP)
 
 | Aspect | Detail |
 |--------|--------|
 | Launched | January 2026 |
-| What it does | Standardizes agent-to-agent shopping: Checkout, Identity Linking, Order Management |
-| Partners | Shopify, Walmart, Target, Etsy, Wayfair, 20+ global partners |
-| Compatibility | A2A, MCP, x402 |
+| What it does | Standardizes agent commerce: discovery, cart, checkout, order management |
+| Partners | Shopify, Walmart, Target, Etsy, Wayfair |
+| Compatibility | MCP, A2A, AP2 bindings |
+| Trust scoring | **None** — merchant remains MoR, no quality assessment |
+
+### Mastercard Agent Pay + Verifiable Intent
+
+| Aspect | Detail |
+|--------|--------|
+| Launched | Agent Pay 2024; **Verifiable Intent March 2026** (open-source, with Google) |
+| What it does | Cryptographic proof: user identity + instructions + transaction outcome = tamper-resistant record |
+| Partners | Google (AP2), Fiserv, IBM, Adyen |
+| Trust scoring | **None** — verifies THE TRANSACTION intent, not THE AGENT quality |
+
+### OpenAI Agentic Commerce Protocol (ACP)
+
+| Aspect | Detail |
+|--------|--------|
+| Co-developed with | Stripe (Apache 2.0 license) |
+| Status | **Pivoted** from Instant Checkout to ChatGPT Apps (merchant-specific) |
+| Focus | Product discovery + structured feeds. Checkout delegated to merchant apps |
+| Partners | Shopify, Etsy, Instacart, Walmart, Target |
 | Trust scoring | **None** |
-| Agora opportunity | Trust layer for UCP commerce flows. UCP handles checkout; Agora verifies agent reliability pre-checkout. |
 
-### Mastercard Agent Pay
-
-| Aspect | Detail |
-|--------|--------|
-| Launched | 2024, major expansion 2026 |
-| What it does | Agentic Tokens (tokenized cards for AI agents) + Verifiable Intent (cryptographic audit trail) |
-| Partners | Microsoft Azure OpenAI, Banco Santander (live pilot), Cloudflare, Google |
-| Key feature | Open-source Verifiable Intent framework — links consumer identity + AI instructions + transaction outcome |
-| Trust scoring | **None** — verifies THE TRANSACTION, not THE AGENT |
-| Agora opportunity | Trust scores feed into Agent Pay authentication. Agora scores agent reliability; Mastercard handles payment execution. |
-
-### Coinbase Agentic Wallets
+### Anthropic Claude Marketplace
 
 | Aspect | Detail |
 |--------|--------|
-| Launched | February 2026 |
-| What it does | Non-custodial wallets for AI agents. Gasless trading on Base. Programmable spending policies. x402 native. |
-| Scale | 50M+ transactions processed. Agent Skills repository for developers. |
-| Key feature | Private keys in TEEs, never exposed to LLMs |
-| Trust scoring | **None** — has KYT (Know Your Transaction) for compliance, but no behavioral trust |
-| Agora opportunity | Coinbase wallets = the wallet agents use. Agora = marketplace where agents with Coinbase wallets find and verify each other. |
-
-### Circle Nanopayments
-
-| Aspect | Detail |
-|--------|--------|
-| Launched | February 2026 (private beta) |
-| What it does | Gasless USDC micropayments. Batched settlement: 1,000 tx for ~$0.01 in gas. x402 enabled. |
-| Key feature | Circle Paymaster — gas fees paid in USDC, not ETH. Off-chain authorization + on-chain batch settlement. |
+| Launched | **March 2026** (limited preview) |
+| Commission | **0% commission** — distribution channel, not revenue source for Anthropic |
+| Partners | Snowflake, Harvey, Replit, GitLab, Lovable, Rogo |
+| Audience | Enterprise (annual API spending commitments) |
 | Trust scoring | **None** |
-| Agora opportunity | Makes $0.001 transactions economically viable. Critical for Agora's micro-transaction commission model. |
+| Agora impact | **Kills commission-based revenue model.** Validates SaaS-first approach. |
 
-### Why These Are Complementary, Not Competitive
+### Why These Are Complementary
 
-All 4 systems solve the same problem: **HOW do agents pay?** None of them solve: **SHOULD agents pay THIS agent?**
+All systems solve logistics: **HOW** do agents discover, authorize, pay? None solve quality: **HOW WELL** will this agent perform?
 
+- Visa IC Connect = the payment gateway
 - UCP = the checkout protocol
 - Agent Pay = the card
-- Agentic Wallets = the wallet
-- Nanopayments = the cash register
-- **Agora = the trust score + marketplace** that determines WHO gets paid
+- ACP = the discovery feed
+- x402 / MPP = the micropayment rails
+- **Agora = the behavioral trust layer** that determines QUALITY before payment
 
 ---
 
-## Named Trust Competitors
+## Named Trust & Security Competitors (Updated April 2026)
 
-## Competitive Comparison
+### NEW Funded Competitors (Q1 2026)
 
-| Capability | Skyfire | Masumi | ERC-8004 | Scalekit | MCP native | **Agora** |
-|-----------|---------|--------|----------|----------|-----------|-----------|
-| Agent identity | Yes (KYA) | Yes (DID) | Yes (NFT) | Yes (auth) | Basic | **Yes (DID + auth)** |
-| Trust scoring (behavioral) | No | No | Raw data only | No | No | **Yes (EWMA + adaptive 4-tier)** |
-| Anti-gaming | No | No | No | No | No | **Planned (4 designed)** |
-| ZK proof verification | No | No | zkML (validator) | No | No | **Planned (Groth16)** |
-| Marketplace / discovery | No | No | No | No | No | **Yes** |
-| Payment processing | Yes | No | No | No | No | **Planned (Stripe + x402)** |
-| Multi-protocol support | 1-2 | 1 | 1 (ETH) | 1 | 1 | **4 (MCP + A2A + AP2 + x402)** |
-| Revenue model | Tx fees | On-chain | N/A | SaaS | N/A | **Hybrid SaaS + commission** |
+| Competitor | Funding | Focus | Threat to Agora |
+|-----------|---------|-------|-----------------|
+| **FabricLayer** | $2.5M seed (Feb 2026) | "Trust Index" for AI tools — transparency, data handling, performance scores | 🔴 DIRECT — similar product concept |
+| **OpenBox AI** | $5M seed (Mar 2026) | Enterprise AI trust platform — governance, verification, oversight | 🔴 DIRECT — enterprise trust |
+| **Trent AI** | €11M seed (Apr 2026) | Layered security for agentic era autonomous workflows | 🟠 ADJACENT — security, not trust scoring |
+| **Tumeryk** | Funded | AI Trust Score™ (trademarked) — adversarial testing: hallucination, prompt injection | 🟠 ADJACENT — pre-deploy testing |
+| **Akto** | Funded (Jun 2025) | First MCP security platform — discovery, red teaming, real-time monitoring | 🟠 ADJACENT — security scanning |
+| **NeuralTrust** | Seed (2022) | AI gateway, zero-trust security, automated red teaming | 🟡 PERIPHERAL — general AI security |
+| **BlueRock** | F4 Fund backed | Runtime monitoring, pre-execution enforcement for 9,000+ MCP servers | 🟠 ADJACENT — monitoring |
 
-### The Key Insight
+> ⚠️ **$40M+ deployed to MCP security seed rounds in Q1 2026 alone.** (Source: SoftwareStrategiesBlog)
 
-Every competitor solves a piece of the problem:
+### MCP Discovery Platforms (Not Trust, But Overlap)
 
-- Skyfire: identity + payments (but no behavioral trust scoring — and went silent in 2026)
-- Masumi: identity + logging (but no marketplace, no payments)
-- ERC-8004: on-chain raw data (but no scoring algorithm, no marketplace)
-- Scalekit: authentication (but nothing else)
+| Platform | What It Does | Monetization | Trust Scoring |
+|---------|-------------|-------------|---------------|
+| **Glama.ai** | MCP discovery + LLM gateway | Free | ❌ None |
+| **Smithery** | MCP hosting + marketplace | Free/enterprise | ❌ None |
+| **Composio** | Managed MCP + built-in auth | Freemium | ❌ None |
+| **MCP Market** | Community directory | Free | ❌ None |
 
-No one does **real-time, adaptive, per-transaction trust scoring**. ERC-8004 stores the data. Agora is the analytics engine that interprets it.
+### Legacy Competitors (From Previous Analysis)
+
+| Competitor | Status | Threat |
+|-----------|--------|--------|
+| **Skyfire** | $14.5M raised. Went silent since Jan 2026 | 🟡 Declining |
+| **ERC-8004** | 10K+ agents registered (testnet). Raw data, no scoring | 🟡 Complementary |
+| **Masumi Network** | Cardano-based DIDs. Small ecosystem | 🟢 Low |
+| **Scalekit** | Auth-only. Narrow scope | 🟢 Low |
+
+### Updated Competitive Comparison
+
+| Capability | FabricLayer | Akto | BlueRock | Glama | Skyfire | **Agora** |
+|-----------|------------|------|---------|-------|---------|----------|
+| Trust scoring (behavioral) | Static index | No | No | No | No | **Yes (EWMA + adaptive 4-tier)** |
+| Runtime monitoring | No | Yes | Yes | No | No | **Planned** |
+| Creator marketplace | No | No | No | Directory | No | **Yes** |
+| Creator monetization | No | No | No | No | No | **Yes (planned)** |
+| Embeddable badge | No | No | No | No | No | **Planned** |
+| CLI tool | No | CLI | CLI | No | No | **Planned** |
+| Payment processing | No | No | No | No | Yes | **Planned** |
+| Skills category | No | No | No | No | No | **Yes (10 built)** |
+| MCP-native discovery | No | Scanning | Scanning | Yes | No | **Yes** |
+
+### The Key Insight (Updated)
+
+**Pre-deploy vs. Post-deploy:**
+- FabricLayer, Akto, BlueRock, Tumeryk = **static scanning** ("Is the code safe?")
+- Visa TAP, Skyfire, Scalekit = **identity** ("Is this a real agent?")
+- Mastercard Verifiable Intent = **governance** ("Was this authorized?")
+- **Agora = behavioral trust** ("Does this agent actually perform well over time?")
+
+**Creator economics gap:**
+- ALL competitors focus on enterprise security or protocol infrastructure
+- NONE provide a place where indie developers can publish, monetize, and build reputation
+- Agora = Etsy for AI tools + FICO for AI quality — unique combination
 
 ---
 
@@ -211,13 +301,16 @@ No one does **real-time, adaptive, per-transaction trust scoring**. ERC-8004 sto
 
 | Factor | Evidence | Source |
 |--------|----------|--------|
-| Agent payment infrastructure launched | Google UCP (Jan 2026), Coinbase Agentic Wallets (Feb 2026), Circle Nanopayments (Feb 2026), Mastercard Agent Pay (2024-2026) | Multiple |
-| x402 reaching scale | **$600M annualized**, 50M+ transactions, Stripe integrated | The Block, MEXC |
+| Full payment stack live (April 2026) | Visa IC Connect (Apr 8), Stripe MPP (Mar 18), x402 Foundation (Linux), Google UCP (Jan), MC Verifiable Intent (Mar) | Multiple |
+| x402 verified volume | **$24M in 30 days** (corrected from inflated $600M) | Nevermined, CoinMarketCap |
+| Stablecoin ecosystem | $33 trillion total volume in 2025 | Forbes, CryptoRank |
+| AAIF standardization | 170+ members, governs MCP + AGENTS.md + goose + x402 | Linux Foundation |
 | MCP ecosystem matured | 97M SDK downloads, 16,000+ servers, all major AI providers | npm/PyPI, dev.to |
-| Agent-to-agent transactions happening | Autonomous agents paying for API calls, compute, data access via x402 | Coinbase, bitcoin.com |
+| $40M+ in MCP security seed rounds | FabricLayer ($2.5M), OpenBox ($5M), Trent AI (€11M), Akto, etc. | Multiple |
+| Claude Marketplace | 0% commission, enterprise-only, limited preview | Anthropic, Mar 2026 |
 | McKinsey forecast | $3–5T agent-mediated commerce by 2030 | Forbes |
-| Enterprise deployment | 40% of enterprise apps will include AI agents by end 2026 | Gartner |
-| Trust gap confirmed | ZERO systems provide behavioral trust scoring for AI agents | Our analysis |
+| EU AI Act enforcement | August 2, 2026 — €193K-600K compliance, €35M fines | europa.eu |
+| Behavioral trust gap | 15+ competitors in adjacent spaces, ZERO do behavioral runtime trust | Our analysis (April 2026) |
 
 ### Window Duration
 

@@ -36,19 +36,19 @@ SLIDE 2 — THE GAP
 
 Blue heading: "The Missing Layer"
 
-Show a visual stack diagram — like layers of a cake, each labeled:
+Show the Trust Stack diagram — layers of infrastructure, each labeled:
 
-TOP:     🧠 Intelligence — OpenAI, Google, Anthropic ✅
-         🔌 Connectivity — MCP, A2A protocols ✅
-         🪪 Identity — Skyfire, Scalekit ✅
-         💳 Payments — Stripe, Circle ✅
-         🔒 Code Security — BlueRock, Glama (10+ tools) ✅
+TOP:     💳 Settlement — x402, Stripe MPP, Visa IC Connect ✅
+         🔍 Discovery — ACP, UCP, MCP registries ✅
+         🔐 Governance — AP2, Mastercard Verifiable Intent ✅
+         🪪 Identity — Visa TAP, Skyfire, Scalekit ✅
 BOTTOM:  📊 Behavioral Trust — ???
 
 Arrow pointing to the empty layer:
-"Everyone built the stack above. Nobody built the foundation below."
+"$40 million in seed funding went to security startups this quarter.
+But nobody built the layer that answers: will this agent actually work?"
 
-→ That's our layer.
+→ That's our layer. And there's no marketplace where creators earn from it.
 
 ---
 
@@ -57,16 +57,18 @@ SLIDE 3 — WHAT WE BUILD
 Blue heading: "Agora"
 
 One sentence:
-The credit bureau for AI agents.
+The creator platform and credit bureau for AI agents.
 
 Three panels side-by-side, each with product screenshot:
 
-🔍 Search                    🛡️ Score                     💰 Pay
-[Marketplace page:            [Trust breakdown:             [Transaction flow:
- agent cards with              radar chart,                  escrow + trust
- trust scores visible]         0.82 score, 6 bars]          badge on receipt]
+🔍 Publish & Discover          🛡️ Trust Score               💰 Earn
+[Marketplace page:              [Trust breakdown:             [Creator dashboard:
+ agent cards with                radar chart,                  $89 earned,
+ trust scores visible]           0.82 score, 6 bars]          47 transactions]
 
-"Find any agent. See its behavioral trust score. Pay only if it's verified."
+"Indie devs publish AI tools. Buyers find trusted ones. Creators earn per use."
+
+Small text below: "Think: Etsy meets npm meets Shields.io — for AI."
 
 ---
 
@@ -174,29 +176,29 @@ Revenue: API subscription when they're hooked."
 
 SLIDE 8 — WHY NOT SOMEONE ELSE
 
-Blue heading: "Different Layer, Not Better Layer"
+Blue heading: "Different Layer, Different Market"
 
-Show a horizontal spectrum:
+Two comparison blocks:
 
-← Before Deployment                    After Deployment →
+BLOCK 1 — "Who else does trust?" (competitors with FUNDING):
 
-  BlueRock    Glama    Smithery         Skyfire         AGORA
-  (code       (MCP     (MCP             (identity       (behavioral
-   scan)      index)    index)          $14.5M)          trust)
+  FabricLayer ($2.5M)  → Static trust index. No marketplace. No creators.
+  Akto (funded)        → MCP security scanning. No trust scores.
+  Trent AI (€11M)      → Agentic security. Enterprise-only.
+  BlueRock             → Runtime monitoring. No marketplace.
 
-  "Is the code safe?"                  "Who is this?"   "Does it actually work?"
+  All check BEFORE deployment.
+  NONE check AFTER. NONE help creators earn.
 
-Use case table with checkmarks:
+BLOCK 2 — "Who else has a marketplace?"
 
-                                          Agora    Others
-Verify code safety before use              ✅       ✅
-Find agents by capability                  ✅       ✅
-Check WHO the agent is                     ✅       ✅ (Skyfire)
-Track reliability AFTER deployment         ✅       ❌
-Compare agents by behavioral performance   ✅       ❌
-Trust score that adapts over time          ✅       ❌
+  Glama, Smithery      → Free directories. No monetization. No trust scores.
+  Claude Marketplace   → Enterprise-only. 0% commission. Invitation.
+  Google UCP           → For Walmart/Target. Not for indie devs.
 
-→ They check the passport. We check the track record.
+  None have: behavioral trust + creator revenue + embeddable badge.
+
+→ They check the code. We check the track record. And we pay the creator.
 
 ---
 
@@ -290,10 +292,13 @@ Contact: Vladimir.Putkov@su.suffolk.edu
 → "LLC forms August 2026 with OPT. Until then we build community and trust data — the asset that makes revenue possible."
 
 **"Google/Anthropic will build this."**
-→ "Google can't rate agents in its own marketplace. That's S&P rating its own bonds. Trust needs independence."
+→ "Google UCP is for Walmart. Claude Marketplace is enterprise-only with 0% commission. Neither serves the indie developer who built an amazing MCP server and wants to earn from it. Plus — Google can't rate agents in its own marketplace. That's S&P rating its own bonds. Trust needs independence."
+
+**"FabricLayer raised $2.5M doing the same thing."**
+→ "FabricLayer does static trust scoring — pre-deploy. We do behavioral trust — post-deploy, runtime, adaptive. They check the resume. We check the job performance. And they don't have a marketplace where creators earn. Different product."
 
 **"What if nobody pays for trust scores?"**
-→ "That's why we have pivot triggers. Month 3: <50 claimed profiles → standalone Trust API. Month 6: <$500/mo → enterprise compliance tool. We don't wait to fail."
+→ "EU AI Act enforcement starts August 2, 2026. €193K-600K compliance cost per high-risk system. €35M fines. Trust data isn't optional — it's legally required. That's why we have pivot triggers. Month 3: <50 claimed profiles → standalone Trust API. Month 6: <$500/mo → enterprise compliance tool."
 
 ## Источники
 
