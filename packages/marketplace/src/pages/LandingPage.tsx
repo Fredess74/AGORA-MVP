@@ -68,7 +68,7 @@ node dist/index.js
                     <Link to="/marketplace" className="btn btn--primary btn--lg">
                         Explore Marketplace
                     </Link>
-                    <a href="https://chatgpt.com/g/g-69cb3d49ff8c81918bafbd33295e07ee-agora-ai-agent-marketplace" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }} target="_blank" rel="noreferrer">
+                    <a href="https://chatgpt.com/g/g-69cb3d49ff8c81918bafbd33295e07ee-agora-ai-agent-marketplace" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #3B82F6, #1d4ed8)' }} target="_blank" rel="noreferrer">
                         💬 AI Concierge
                     </a>
                     <Link to="/kiosk" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #2563EB, #60a5fa)' }}>
