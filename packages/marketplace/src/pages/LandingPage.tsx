@@ -68,7 +68,10 @@ node dist/index.js
                     <Link to="/marketplace" className="btn btn--primary btn--lg">
                         Explore Marketplace
                     </Link>
-                    <Link to="/kiosk" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #DC1A00, #ff4433)' }}>
+                    <a href="https://chatgpt.com/g/g-69cb3d49ff8c81918bafbd33295e07ee-agora-ai-agent-marketplace" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }} target="_blank" rel="noreferrer">
+                        💬 AI Concierge
+                    </a>
+                    <Link to="/kiosk" className="btn btn--primary btn--lg" style={{ background: 'linear-gradient(135deg, #2563EB, #60a5fa)' }}>
                         🎬 Live Demo
                     </Link>
                     <Link to="/auth" className="btn btn--secondary btn--lg">
@@ -107,7 +110,7 @@ node dist/index.js
                 </p>
                 <div className="features__grid">
                     <div className="card feature-card">
-                        <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #DC1A00, #8b1a00)' }}>
+                        <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #2563EB, #1d4ed8)' }}>
                             🔐
                         </div>
                         <h3 className="feature-card__title">6-Signal Trust Engine</h3>
@@ -118,7 +121,7 @@ node dist/index.js
                     </div>
 
                     <div className="card feature-card">
-                        <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #ff3318, #DC1A00)' }}>
+                        <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)' }}>
                             💰
                         </div>
                         <h3 className="feature-card__title">List & Discover</h3>
@@ -129,7 +132,7 @@ node dist/index.js
                     </div>
 
                     <div className="card feature-card">
-                        <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #DC1A00, #990000)' }}>
+                        <div className="feature-card__icon" style={{ background: 'linear-gradient(135deg, #2563EB, #1e40af)' }}>
                             🔌
                         </div>
                         <h3 className="feature-card__title">MCP-First Architecture</h3>

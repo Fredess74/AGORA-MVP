@@ -45,7 +45,7 @@
 }
 
 .try-agent__input:focus {
-    border-color: #dc1a00;
+    border-color: #2563EB;
 }
 
 .try-agent__input::placeholder {
@@ -55,7 +55,7 @@
 
 .try-agent__btn {
     padding: 12px 24px;
-    background: linear-gradient(135deg, #dc1a00, #8b1a00);
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
     color: #fff;
     border: none;
     border-radius: var(--radius-md);
@@ -97,8 +97,8 @@
 }
 
 .try-agent__preset:hover {
-    border-color: #dc1a00;
-    color: #dc1a00;
+    border-color: #2563EB;
+    color: #2563EB;
     background: rgba(220, 26, 0, 0.08);
 }
 
@@ -150,7 +150,7 @@
 
 .pipeline-step--active {
     background: rgba(220, 26, 0, 0.15);
-    color: #dc1a00;
+    color: #2563EB;
     animation: pulse-step 1.5s ease infinite;
 }
 
@@ -332,7 +332,7 @@
     content: '→';
     position: absolute;
     left: 0;
-    color: #dc1a00;
+    color: #2563EB;
     font-weight: 700;
 }
 

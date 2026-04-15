@@ -25,7 +25,7 @@
     border-radius: 999px;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #dc1a00;
+    color: #2563EB;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: var(--space-3);
@@ -209,7 +209,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #dc1a00, #ff4d35);
+    background: linear-gradient(90deg, #2563EB, #60a5fa);
 }
 
 .whitespace-card__score {
@@ -223,7 +223,7 @@
     justify-content: center;
     border-radius: 50%;
     background: rgba(220, 26, 0, 0.12);
-    color: #dc1a00;
+    color: #2563EB;
     font-weight: 800;
     font-size: 0.85rem;
 }
@@ -367,7 +367,7 @@
 }
 
 .trends-footer a {
-    color: #dc1a00;
+    color: #2563EB;
     text-decoration: none;
 }
 

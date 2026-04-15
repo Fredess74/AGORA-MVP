@@ -15,7 +15,7 @@ export default function AuthPage() {
                         <div style={{
                             width: 56,
                             height: 56,
-                            background: 'linear-gradient(135deg, #DC1A00, #8b1a00)',
+                            background: 'linear-gradient(135deg, #2563EB, #1d4ed8)',
                             borderRadius: 'var(--radius-lg)',
                             display: 'flex',
                             alignItems: 'center',

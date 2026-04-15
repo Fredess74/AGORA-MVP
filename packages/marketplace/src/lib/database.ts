@@ -465,26 +465,68 @@ const AGORA_SEED_LISTINGS: Product[] = [
 ];
 
 export async function fetchProducts(): Promise<Product[]> {
+    // Strategy: SDK first (5s) → Direct REST fallback (8s) → Seed listings
     try {
-        // Race Supabase vs 3s timeout so seed listings always load
-        const result = await Promise.race([
-            supabase.from('listings').select('*').eq('status', 'active').order('created_at', { ascending: false }),
-            new Promise<{ data: null; error: { message: string } }>((resolve) =>
-                setTimeout(() => resolve({ data: null, error: { message: 'Supabase timeout' } }), 8000)
-            ),
-        ]);
-
-        const { data, error } = result;
-        if (error) {
-            console.warn('Supabase unavailable, showing seed listings:', error.message);
-            return AGORA_SEED_LISTINGS;
+        const dbProducts = await fetchFromSupabase();
+        
+        if (dbProducts.length > 0) {
+            // DB has data — merge with seed listings, deduplicating by slug
+            const dbSlugs = new Set(dbProducts.map(p => p.slug));
+            const uniqueSeeds = AGORA_SEED_LISTINGS.filter(p => !dbSlugs.has(p.slug));
+            console.log(`✅ Loaded ${dbProducts.length} from Supabase + ${uniqueSeeds.length} seed-only`);
+            return [...dbProducts, ...uniqueSeeds];
         }
 
-        const dbProducts = (data || []).map(mapDbListing);
-        return [...AGORA_SEED_LISTINGS, ...dbProducts];
-    } catch {
+        return AGORA_SEED_LISTINGS;
+    } catch (e) {
+        console.warn('All fetch strategies failed:', e);
         return AGORA_SEED_LISTINGS;
     }
+}
+
+/** Try Supabase SDK first, then fall back to direct REST API */
+async function fetchFromSupabase(): Promise<Product[]> {
+    // Attempt 1: Supabase SDK (5s timeout)
+    try {
+        const result = await Promise.race([
+            supabase.from('listings').select('*').eq('status', 'active').order('trust_score', { ascending: false }),
+            new Promise<{ data: null; error: { message: string } }>((resolve) =>
+                setTimeout(() => resolve({ data: null, error: { message: 'SDK timeout' } }), 5000)
+            ),
+        ]);
+        if (!result.error && result.data && result.data.length > 0) {
+            console.log('✅ Supabase SDK loaded', result.data.length, 'listings');
+            return result.data.map(mapDbListing);
+        }
+        console.warn('SDK failed, trying REST...', result.error?.message);
+    } catch (e) {
+        console.warn('SDK error, trying REST...', e);
+    }
+
+    // Attempt 2: Direct PostgREST fetch (works when SDK hangs)
+    try {
+        const url = 'https://fnwrqgmaqempmcvcozqa.supabase.co/rest/v1/listings?status=eq.active&order=trust_score.desc';
+        const resp = await Promise.race([
+            fetch(url, {
+                headers: {
+                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZud3JxZ21hcWVtcG1jdmNvenFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDczMTcsImV4cCI6MjA4NzEyMzMxN30.B-0CYbHYASGqsuld1yBt-qrcwQznJHX4BkM81psxb-0',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZud3JxZ21hcWVtcG1jdmNvenFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDczMTcsImV4cCI6MjA4NzEyMzMxN30.B-0CYbHYASGqsuld1yBt-qrcwQznJHX4BkM81psxb-0',
+                },
+            }),
+            new Promise<Response>((_, reject) =>
+                setTimeout(() => reject(new Error('REST timeout')), 8000)
+            ),
+        ]);
+        if (resp.ok) {
+            const data = await resp.json();
+            console.log('✅ REST API loaded', data.length, 'listings');
+            return (data || []).map(mapDbListing);
+        }
+    } catch (e) {
+        console.warn('REST fallback also failed:', e);
+    }
+
+    return [];
 }
 
 export async function fetchProductBySlug(slug: string): Promise<Product | null> {
@@ -492,18 +534,38 @@ export async function fetchProductBySlug(slug: string): Promise<Product | null> 
     const seedProduct = AGORA_SEED_LISTINGS.find(p => p.slug === slug);
     if (seedProduct) return seedProduct;
 
-    const { data, error } = await supabase
-        .from('listings')
-        .select('*')
-        .eq('slug', slug)
-        .single();
+    // Try Supabase SDK (3s timeout)
+    try {
+        const result = await Promise.race([
+            supabase.from('listings').select('*').eq('slug', slug).single(),
+            new Promise<{ data: null; error: { message: string } }>((resolve) =>
+                setTimeout(() => resolve({ data: null, error: { message: 'SDK timeout' } }), 3000)
+            ),
+        ]);
+        if (!result.error && result.data) {
+            return mapDbListing(result.data);
+        }
+    } catch { /* fall through */ }
 
-    if (error) {
-        console.error('Error fetching listing:', error);
-        return null;
-    }
+    // REST API fallback
+    try {
+        const url = `https://fnwrqgmaqempmcvcozqa.supabase.co/rest/v1/listings?slug=eq.${encodeURIComponent(slug)}&limit=1`;
+        const resp = await Promise.race([
+            fetch(url, {
+                headers: {
+                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZud3JxZ21hcWVtcG1jdmNvenFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDczMTcsImV4cCI6MjA4NzEyMzMxN30.B-0CYbHYASGqsuld1yBt-qrcwQznJHX4BkM81psxb-0',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZud3JxZ21hcWVtcG1jdmNvenFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDczMTcsImV4cCI6MjA4NzEyMzMxN30.B-0CYbHYASGqsuld1yBt-qrcwQznJHX4BkM81psxb-0',
+                },
+            }),
+            new Promise<Response>((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000)),
+        ]);
+        if (resp.ok) {
+            const rows = await resp.json();
+            if (rows && rows.length > 0) return mapDbListing(rows[0]);
+        }
+    } catch { /* fall through */ }
 
-    return data ? mapDbListing(data) : null;
+    return null;
 }
 
 export async function fetchProductsByCategory(category: string): Promise<Product[]> {

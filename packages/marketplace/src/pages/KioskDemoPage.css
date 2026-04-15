@@ -37,13 +37,13 @@
 .kiosk-logo-icon {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, #DC1A00, #ff4433);
+  background: linear-gradient(135deg, #2563EB, #60a5fa);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  box-shadow: 0 0 30px rgba(220, 26, 0, 0.3);
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.3);
 }
 
 .kiosk-logo-text {
@@ -57,26 +57,26 @@
   align-items: center;
   gap: 10px;
   padding: 8px 20px;
-  background: rgba(220, 26, 0, 0.1);
-  border: 1px solid rgba(220, 26, 0, 0.3);
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.3);
   border-radius: 100px;
   font-size: 16px;
   font-weight: 700;
-  color: #ff4433;
+  color: #60a5fa;
   letter-spacing: 0.05em;
 }
 
 .kiosk-badge-dot {
   width: 10px;
   height: 10px;
-  background: #DC1A00;
+  background: #2563EB;
   border-radius: 50%;
   animation: pulse-glow 2s infinite;
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px #DC1A00; }
-  50% { opacity: 0.5; box-shadow: 0 0 16px #DC1A00; }
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #2563EB; }
+  50% { opacity: 0.5; box-shadow: 0 0 16px #2563EB; }
 }
 
 .kiosk-timer {
@@ -116,8 +116,8 @@
 
 .kiosk-step.active {
   color: #fff;
-  background: rgba(220, 26, 0, 0.15);
-  box-shadow: 0 0 30px rgba(220, 26, 0, 0.1);
+  background: rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.1);
 }
 
 .kiosk-step.active .kiosk-step-icon {
@@ -244,7 +244,7 @@
 
 .query-connector-line {
   font-size: 40px;
-  color: rgba(220, 26, 0, 0.6);
+  color: rgba(37, 99, 235, 0.6);
   animation: arrow-pulse 1.5s infinite;
 }
 
@@ -256,7 +256,7 @@
 .query-connector-label {
   font-size: 14px;
   font-weight: 600;
-  color: #DC1A00;
+  color: #2563EB;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -387,7 +387,7 @@
 }
 
 .candidate-score-fill.low {
-  background: linear-gradient(90deg, #DC1A00, #f87171);
+  background: linear-gradient(90deg, #dc2626, #f87171);
 }
 
 .candidate-score-value {
@@ -508,8 +508,8 @@
 }
 
 .trust-row-fill.low {
-  background: linear-gradient(90deg, #DC1A00, #f87171);
-  box-shadow: 0 0 20px rgba(220, 26, 0, 0.3);
+  background: linear-gradient(90deg, #dc2626, #f87171);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
 }
 
 .trust-row-value {
@@ -620,7 +620,7 @@
 }
 
 .tx-card-value.green { color: #22c55e; }
-.tx-card-value.red { color: #DC1A00; }
+.tx-card-value.red { color: #dc2626; }
 .tx-card-value.white { color: #fff; }
 .tx-card-value.blue { color: #60a5fa; }
 
@@ -631,7 +631,7 @@
 }
 
 .tx-tagline strong {
-  color: #DC1A00;
+  color: #2563EB;
   font-weight: 700;
 }
 
@@ -754,4 +754,4 @@
 /* ── Utility ─────────────────────────────────────────────── */
 .color-high { color: #22c55e; }
 .color-medium { color: #eab308; }
-.color-low { color: #DC1A00; }
+.color-low { color: #dc2626; }

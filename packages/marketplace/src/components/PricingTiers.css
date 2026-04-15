@@ -36,14 +36,14 @@
 }
 
 .pricing-card--popular {
-    border-color: #dc1a00;
+    border-color: #2563EB;
 }
 
 .pricing-card__badge {
     position: absolute;
     top: -10px;
     right: 16px;
-    background: linear-gradient(135deg, #dc1a00, #8b1a00);
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
     color: #fff;
     font-size: 0.65rem;
     font-weight: 700;
@@ -110,7 +110,7 @@
 
 .pricing-card__btn:hover:not(:disabled) {
     background: rgba(220, 26, 0, 0.1);
-    border-color: #dc1a00;
+    border-color: #2563EB;
 }
 
 .pricing-card__btn--current {
@@ -121,7 +121,7 @@
 }
 
 .pricing-card--unlimited .pricing-card__btn:not(.pricing-card__btn--current) {
-    background: linear-gradient(135deg, #dc1a00, #8b1a00);
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
     border-color: transparent;
     color: #fff;
 }
@@ -188,7 +188,7 @@
 }
 
 .review-form__input:focus {
-    border-color: #dc1a00;
+    border-color: #2563EB;
 }
 
 .review-form__row {
@@ -211,7 +211,7 @@
 
 .review-form__submit {
     padding: 8px 20px;
-    background: linear-gradient(135deg, #dc1a00, #8b1a00);
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
     border: none;
     border-radius: var(--radius-md);
     color: #fff;
@@ -337,7 +337,7 @@
 }
 
 .usage-stat--primary .usage-stat__value {
-    color: #dc1a00;
+    color: #2563EB;
 }
 
 .usage-plan-bar {

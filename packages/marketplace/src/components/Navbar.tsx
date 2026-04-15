@@ -13,7 +13,7 @@ export default function Navbar() {
             <div className="navbar__inner">
                 <Link to="/" className="navbar__logo">
                     <span className="navbar__logo-icon" style={{
-                        background: 'linear-gradient(135deg, #DC1A00, #8b1a00)',
+                        background: 'linear-gradient(135deg, #2563EB, #1d4ed8)',
                         fontSize: '16px',
                         fontWeight: 800,
                         letterSpacing: '0.05em',
@@ -36,6 +36,11 @@ export default function Navbar() {
                         <Link to="/kiosk" className={isActive('/kiosk')}>
                             🎬 Live Demo
                         </Link>
+                    </li>
+                    <li>
+                        <a href="https://chatgpt.com/g/g-69cb3d49ff8c81918bafbd33295e07ee-agora-ai-agent-marketplace" className="navbar__link" target="_blank" rel="noreferrer">
+                            💬 AI Concierge
+                        </a>
                     </li>
                     <li>
                         <Link to="/trends" className={isActive('/trends')}>

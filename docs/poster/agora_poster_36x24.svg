@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400">
+<defs>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap');
+    text { font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+  </style>
+  <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#1e3a8a"/>
+    <stop offset="100%" stop-color="#3b82f6"/>
+  </linearGradient>
+</defs>
+
+<!-- ═══ BACKGROUND ═══ -->
+<rect width="3600" height="2400" fill="white"/>
+
+<!-- Top accent bar -->
+<rect width="3600" height="8" fill="url(#headerGrad)"/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--                    LEFT COLUMN  (x=80, w=1080)            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- TITLE -->
+<text x="100" y="200" font-size="170" font-weight="900" fill="#0f172a" letter-spacing="-6">AGORA</text>
+<text x="105" y="260" font-size="34" font-weight="500" fill="#475569">The Trust Marketplace for AI Agents</text>
+
+<!-- Thin divider -->
+<line x1="100" y1="300" x2="500" y2="300" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+
+<!-- KPI SECTION -->
+<text x="100" y="375" font-size="22" font-weight="700" fill="#3b82f6" letter-spacing="5">MARKET OPPORTUNITY</text>
+
+<text x="100" y="500" font-size="120" font-weight="900" fill="#1e40af">$5.2B+</text>
+<text x="100" y="545" font-size="30" font-weight="500" fill="#475569">Transaction Volume by 2028</text>
+
+<text x="100" y="680" font-size="120" font-weight="900" fill="#2563eb">10,000+</text>
+<text x="100" y="725" font-size="30" font-weight="500" fill="#475569">AI Tools on the Market Today</text>
+
+<text x="100" y="860" font-size="120" font-weight="900" fill="#3b82f6">100M+</text>
+<text x="100" y="905" font-size="30" font-weight="500" fill="#475569">AI Agents Projected by 2027</text>
+
+<!-- THE PROBLEM -->
+<line x1="100" y1="970" x2="1100" y2="970" stroke="#e2e8f0" stroke-width="2"/>
+<text x="100" y="1040" font-size="48" font-weight="800" fill="#0f172a">The Problem</text>
+
+<circle cx="130" cy="1115" r="10" fill="#ef4444"/>
+<text x="160" y="1125" font-size="32" font-weight="500" fill="#334155">No quality standards for AI tools</text>
+
+<circle cx="130" cy="1190" r="10" fill="#ef4444"/>
+<text x="160" y="1200" font-size="32" font-weight="500" fill="#334155">Fragmented trust infrastructure</text>
+
+<circle cx="130" cy="1265" r="10" fill="#ef4444"/>
+<text x="160" y="1275" font-size="32" font-weight="500" fill="#334155">No monetization for creators</text>
+
+<!-- THE SOLUTION -->
+<line x1="100" y1="1340" x2="1100" y2="1340" stroke="#e2e8f0" stroke-width="2"/>
+<text x="100" y="1415" font-size="48" font-weight="800" fill="#0f172a">The Solution</text>
+
+<text x="100" y="1485" font-size="32" font-weight="500" fill="#334155">A unified marketplace where every</text>
+<text x="100" y="1530" font-size="32" font-weight="500" fill="#334155">AI tool is verified, scored, and</text>
+<text x="100" y="1575" font-size="32" font-weight="500" fill="#334155">monetized — enabling agents to</text>
+<text x="100" y="1620" font-size="32" font-weight="500" fill="#334155">discover and transact with</text>
+<text x="100" y="1665" font-size="32" font-weight="700" fill="#1e3a8a">confidence and autonomy.</text>
+
+<!-- Origin -->
+<rect x="100" y="1730" width="1000" height="120" rx="16" fill="#f1f5f9"/>
+<text x="140" y="1780" font-size="30" font-weight="700" fill="#1e3a8a" font-style="italic">ἀγορά</text>
+<text x="270" y="1780" font-size="28" font-weight="400" fill="#475569">— Ancient Greek: "to gather"</text>
+<text x="140" y="1822" font-size="26" font-weight="500" fill="#64748b">The public square for the AI economy</text>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--                  MIDDLE COLUMN  (center=1800)             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- Header section -->
+<text x="1800" y="135" font-size="24" font-weight="700" fill="#64748b" text-anchor="middle" letter-spacing="6">THE SHIFT</text>
+<text x="1800" y="210" font-size="56" font-weight="900" fill="#0f172a" text-anchor="middle">The Agentic Economy</text>
+<text x="1800" y="270" font-size="30" font-weight="400" fill="#475569" text-anchor="middle">AI is becoming the buyer, the seller,</text>
+<text x="1800" y="310" font-size="30" font-weight="400" fill="#475569" text-anchor="middle">and the middleman — simultaneously.</text>
+
+<!-- TRUST SCORE RING -->
+<g transform="translate(1800, 770)">
+  <!-- Subtle glow background -->
+  <circle cx="0" cy="0" r="340" fill="#f8fafc"/>
+
+  <!-- Background ring -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#e2e8f0" stroke-width="44"/>
+
+  <!-- Segment 1: Identity — 0° to 60° -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#1e40af" stroke-width="44"
+    stroke-dasharray="300 1585" stroke-dashoffset="471" stroke-linecap="round" transform="rotate(-90)"/>
+  <!-- Segment 2: Capability — 60° to 120° -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#2563eb" stroke-width="44"
+    stroke-dasharray="300 1585" stroke-dashoffset="157" stroke-linecap="round" transform="rotate(-90)"/>
+  <!-- Segment 3: Speed — 120° to 180° -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#3b82f6" stroke-width="44"
+    stroke-dasharray="300 1585" stroke-dashoffset="-157" stroke-linecap="round" transform="rotate(-90)"/>
+  <!-- Segment 4: Quality — 180° to 240° -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#60a5fa" stroke-width="44"
+    stroke-dasharray="300 1585" stroke-dashoffset="-471" stroke-linecap="round" transform="rotate(-90)"/>
+  <!-- Segment 5: Peers — 240° to 300° -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#93c5fd" stroke-width="44"
+    stroke-dasharray="300 1585" stroke-dashoffset="-785" stroke-linecap="round" transform="rotate(-90)"/>
+  <!-- Segment 6: Track Record — 300° to 360° -->
+  <circle cx="0" cy="0" r="300" fill="none" stroke="#bfdbfe" stroke-width="44"
+    stroke-dasharray="300 1585" stroke-dashoffset="-1099" stroke-linecap="round" transform="rotate(-90)"/>
+
+  <!-- Center content -->
+  <text x="0" y="-20" font-size="110" font-weight="900" fill="#0f172a" text-anchor="middle">0.92</text>
+  <text x="0" y="35" font-size="28" font-weight="700" fill="#3b82f6" text-anchor="middle" letter-spacing="4">TRUST SCORE</text>
+  <text x="0" y="75" font-size="22" font-weight="400" fill="#94a3b8" text-anchor="middle">Behavioral · Verified · Real-time</text>
+</g>
+
+<!-- Tagline under ring -->
+<text x="1800" y="1160" font-size="36" font-weight="800" fill="#0f172a" text-anchor="middle">Six signals. Zero opinions.</text>
+<text x="1800" y="1208" font-size="30" font-weight="600" fill="#3b82f6" text-anchor="middle">Gets smarter with every transaction.</text>
+
+<!-- TRUST PILLARS — 2 columns, 3 rows -->
+<!-- Left sub-col (x~1320) -->
+<circle cx="1260" cy="1310" r="14" fill="#1e40af"/>
+<text x="1290" y="1320" font-size="30" font-weight="700" fill="#0f172a">Identity</text>
+<text x="1290" y="1355" font-size="26" font-weight="400" fill="#64748b">Who built it?</text>
+
+<circle cx="1260" cy="1425" r="14" fill="#3b82f6"/>
+<text x="1290" y="1435" font-size="30" font-weight="700" fill="#0f172a">Speed</text>
+<text x="1290" y="1470" font-size="26" font-weight="400" fill="#64748b">How fast?</text>
+
+<circle cx="1260" cy="1540" r="14" fill="#93c5fd"/>
+<text x="1290" y="1550" font-size="30" font-weight="700" fill="#0f172a">Peers</text>
+<text x="1290" y="1585" font-size="26" font-weight="400" fill="#64748b">What do others say?</text>
+
+<!-- Right sub-col (x~1860) -->
+<circle cx="1860" cy="1310" r="14" fill="#2563eb"/>
+<text x="1890" y="1320" font-size="30" font-weight="700" fill="#0f172a">Capability</text>
+<text x="1890" y="1355" font-size="26" font-weight="400" fill="#64748b">Can it do the job?</text>
+
+<circle cx="1860" cy="1425" r="14" fill="#60a5fa"/>
+<text x="1890" y="1435" font-size="30" font-weight="700" fill="#0f172a">Quality</text>
+<text x="1890" y="1470" font-size="26" font-weight="400" fill="#64748b">Did it deliver?</text>
+
+<circle cx="1860" cy="1540" r="14" fill="#bfdbfe"/>
+<text x="1890" y="1550" font-size="30" font-weight="700" fill="#0f172a">Track Record</text>
+<text x="1890" y="1585" font-size="26" font-weight="400" fill="#64748b">Consistent over time?</text>
+
+<!-- Explanation -->
+<text x="1800" y="1680" font-size="26" font-weight="400" fill="#64748b" text-anchor="middle">New tools scored on claims. Veterans scored on results.</text>
+<text x="1800" y="1718" font-size="26" font-weight="400" fill="#64748b" text-anchor="middle">Weights shift automatically with each transaction.</text>
+
+<!-- TEAM -->
+<line x1="1300" y1="1790" x2="2300" y2="1790" stroke="#e2e8f0" stroke-width="2"/>
+<text x="1800" y="1850" font-size="22" font-weight="700" fill="#94a3b8" text-anchor="middle" letter-spacing="6">THE TEAM</text>
+
+<text x="1500" y="1920" font-size="32" font-weight="800" fill="#0f172a" text-anchor="middle">Vladimir Putkov</text>
+<text x="1500" y="1960" font-size="24" font-weight="500" fill="#475569" text-anchor="middle">CEO · Vision &amp; Strategy</text>
+
+<text x="1800" y="1920" font-size="32" font-weight="800" fill="#0f172a" text-anchor="middle">Amir Velikhanov</text>
+<text x="1800" y="1960" font-size="24" font-weight="500" fill="#475569" text-anchor="middle">CFO · Finance &amp; Ops</text>
+
+<text x="2100" y="1920" font-size="32" font-weight="800" fill="#0f172a" text-anchor="middle">Egor Nikotin</text>
+<text x="2100" y="1960" font-size="24" font-weight="500" fill="#475569" text-anchor="middle">CTO · Engineering</text>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--                   RIGHT COLUMN  (x=2480, w=1040)          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- HOW IT WORKS -->
+<rect x="2480" y="60" width="1060" height="700" rx="20" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="2530" y="140" font-size="44" font-weight="800" fill="#0f172a">How It Works</text>
+
+<!-- Step 1 -->
+<circle cx="2570" cy="240" r="30" fill="#3b82f6"/>
+<text x="2570" y="250" font-size="28" font-weight="900" fill="white" text-anchor="middle">1</text>
+<text x="2625" y="232" font-size="34" font-weight="700" fill="#0f172a">Developers</text>
+<text x="2625" y="272" font-size="28" font-weight="400" fill="#475569">Build, publish &amp; earn</text>
+
+<!-- Arrow -->
+<line x1="2570" y1="290" x2="2570" y2="340" stroke="#93c5fd" stroke-width="4"/>
+<polygon points="2555,333 2570,358 2585,333" fill="#93c5fd"/>
+
+<!-- Step 2 -->
+<circle cx="2570" cy="405" r="30" fill="#6366f1"/>
+<text x="2570" y="415" font-size="28" font-weight="900" fill="white" text-anchor="middle">2</text>
+<text x="2625" y="397" font-size="34" font-weight="700" fill="#0f172a">Trust Engine</text>
+<text x="2625" y="437" font-size="28" font-weight="400" fill="#475569">Verify, score &amp; monitor</text>
+
+<!-- Arrow -->
+<line x1="2570" y1="455" x2="2570" y2="505" stroke="#93c5fd" stroke-width="4"/>
+<polygon points="2555,498 2570,523 2585,498" fill="#93c5fd"/>
+
+<!-- Step 3 -->
+<circle cx="2570" cy="570" r="30" fill="#a855f7"/>
+<text x="2570" y="580" font-size="28" font-weight="900" fill="white" text-anchor="middle">3</text>
+<text x="2625" y="562" font-size="34" font-weight="700" fill="#0f172a">AI Agents</text>
+<text x="2625" y="602" font-size="28" font-weight="400" fill="#475569">Discover &amp; transact safely</text>
+
+
+<!-- BUSINESS MODEL -->
+<rect x="2480" y="800" width="1060" height="570" rx="20" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="2530" y="878" font-size="44" font-weight="800" fill="#0f172a">Business Model</text>
+
+<!-- Rev 1 -->
+<circle cx="2570" cy="970" r="26" fill="#dbeafe"/>
+<text x="2570" y="980" font-size="22" font-weight="900" fill="#2563eb" text-anchor="middle">$</text>
+<text x="2620" y="963" font-size="32" font-weight="700" fill="#0f172a">Transaction Fees</text>
+<text x="2620" y="1000" font-size="26" font-weight="400" fill="#475569">Revenue share on usage</text>
+
+<!-- Rev 2 -->
+<circle cx="2570" cy="1080" r="26" fill="#dbeafe"/>
+<text x="2570" y="1090" font-size="22" font-weight="900" fill="#2563eb" text-anchor="middle">$</text>
+<text x="2620" y="1073" font-size="32" font-weight="700" fill="#0f172a">Premium Badges</text>
+<text x="2620" y="1110" font-size="26" font-weight="400" fill="#475569">Verified trust certification</text>
+
+<!-- Rev 3 -->
+<circle cx="2570" cy="1190" r="26" fill="#dbeafe"/>
+<text x="2570" y="1200" font-size="22" font-weight="900" fill="#2563eb" text-anchor="middle">$</text>
+<text x="2620" y="1183" font-size="32" font-weight="700" fill="#0f172a">Enterprise API</text>
+<text x="2620" y="1220" font-size="26" font-weight="400" fill="#475569">White-label integrations</text>
+
+
+<!-- STRATEGIC ROADMAP -->
+<rect x="2480" y="1410" width="1060" height="520" rx="20" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="2530" y="1490" font-size="44" font-weight="800" fill="#0f172a">Roadmap</text>
+
+<!-- Phase 1 -->
+<rect x="2530" y="1540" width="130" height="44" rx="10" fill="#3b82f6"/>
+<text x="2595" y="1570" font-size="22" font-weight="800" fill="white" text-anchor="middle">Phase 1</text>
+<text x="2685" y="1558" font-size="30" font-weight="700" fill="#0f172a">Supply Platform</text>
+<text x="2685" y="1594" font-size="26" font-weight="400" fill="#475569">API, SDKs, tools directory</text>
+
+<!-- Phase 2 -->
+<rect x="2530" y="1640" width="130" height="44" rx="10" fill="#6366f1"/>
+<text x="2595" y="1670" font-size="22" font-weight="800" fill="white" text-anchor="middle">Phase 2</text>
+<text x="2685" y="1658" font-size="30" font-weight="700" fill="#0f172a">Marketplace</text>
+<text x="2685" y="1694" font-size="26" font-weight="400" fill="#475569">Payments &amp; transactions</text>
+
+<!-- Phase 3 -->
+<rect x="2530" y="1740" width="130" height="44" rx="10" fill="#a855f7"/>
+<text x="2595" y="1770" font-size="22" font-weight="800" fill="white" text-anchor="middle">Phase 3</text>
+<text x="2685" y="1758" font-size="30" font-weight="700" fill="#0f172a">Full Orchestration</text>
+<text x="2685" y="1794" font-size="26" font-weight="400" fill="#475569">Autonomous AI economy</text>
+
+
+<!-- ═══ BOTTOM BAR ═══ -->
+<rect y="2060" width="3600" height="340" fill="#0f172a" rx="0"/>
+
+<!-- Bottom bar content -->
+<text x="100" y="2200" font-size="50" font-weight="900" fill="white">AGORA</text>
+<text x="100" y="2250" font-size="26" font-weight="400" fill="#94a3b8">Trust Infrastructure for Autonomous Commerce</text>
+
+<!-- Gartner quote -->
+<text x="1800" y="2180" font-size="28" font-weight="500" fill="#e2e8f0" text-anchor="middle" font-style="italic">"By 2027, 80% of online purchases will involve an AI agent."</text>
+<text x="1800" y="2220" font-size="22" font-weight="400" fill="#64748b" text-anchor="middle">— Gartner</text>
+
+<!-- Contact -->
+<text x="3500" y="2180" font-size="34" font-weight="700" fill="#3b82f6" text-anchor="end">agora.market</text>
+<text x="3500" y="2220" font-size="24" font-weight="400" fill="#64748b" text-anchor="end">Suffolk University · $40K Competition</text>
+<text x="3500" y="2256" font-size="24" font-weight="400" fill="#64748b" text-anchor="end">April 2026</text>
+
+</svg>

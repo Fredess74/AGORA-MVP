@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import { fetchProductBySlug } from '../lib/database';
+import { useStore } from '../store/useStore';
 import { Product } from '../types';
 import TrustBadge from '../components/TrustBadge';
 import TrustAssessment from '../components/TrustAssessment';
@@ -49,6 +50,7 @@ function typeIcon(type: Product['type']): string {
 
 export default function ProductDetailPage() {
     const { slug } = useParams<{ slug: string }>();
+    const { products } = useStore();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [refreshKey, setRefreshKey] = useState(0);
@@ -68,12 +70,22 @@ export default function ProductDetailPage() {
         async function load() {
             if (!slug) return;
             setLoading(true);
+            
+            // First: check already-loaded store products (instant)
+            const fromStore = products.find(p => p.slug === slug);
+            if (fromStore) {
+                setProduct(fromStore);
+                setLoading(false);
+                return;
+            }
+            
+            // Fallback: fetch from database
             const p = await fetchProductBySlug(slug);
             setProduct(p);
             setLoading(false);
         }
         load();
-    }, [slug]);
+    }, [slug, products]);
 
     if (loading) {
         return (
